@@ -12,7 +12,7 @@ function LocationDetailPage() {
                 return;
             }
 
-            const response = await fetch(`http://localhost:8080/api/locations/${locationId}`);
+            const response = await fetch(`/api/locations/${locationId}`);
 
             if (response.ok) {
                 const data = await response.json();

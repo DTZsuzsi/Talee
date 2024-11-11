@@ -10,13 +10,13 @@ const Home = () => {
 
     useEffect(() => {
         async function fetchEvents() {
-            const response = await fetch('http://localhost:8080/events');
+            const response = await fetch('/api/events');
             const data = await response.json();
             setEvents(data);
         }
 
         async function fetchLocations() {
-            const response = await fetch('http://localhost:8080/api/locations');
+            const response = await fetch('/api/locations');
             const data = await response.json();
             setLocations(data);
         }

@@ -4,7 +4,7 @@ import Button from "../../main/components/atoms/Button";
 function DeleteButton(){
    
 async function deleteEvent(id){
-const response=await fetch(`http://localhost:8080/events/${id}`, {
+const response=await fetch(`/api/events/${id}`, {
     method: 'DELETE'
 });
 const data=await response.json();

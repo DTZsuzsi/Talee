@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/events")
-@CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/api/events")
+
 public class EventController {
     private final EventService eventService;
    @Autowired
