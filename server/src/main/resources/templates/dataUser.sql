@@ -1,0 +1,1 @@
+INSERT INTO user (username) VALUES ('Marianna Molnár'), ('Máté Pojbics'), ('Zsuzsa Ditrói-Tóth');

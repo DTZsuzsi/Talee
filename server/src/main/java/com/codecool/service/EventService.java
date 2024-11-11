@@ -23,7 +23,7 @@ public class EventService {
     public EventDTO getEventById(int id) {
         Event event = eventRepository.findEventById(id);
         return new EventDTO(event.getId(), event.getDate(), event.getName(), event.getDescription(), event.getLocation_id(),
-                null, event.getOwner(), event.getSize(), null, event.getStatus(), event.getTimestamp());
+                event.getUsers(), event.getOwner(), event.getSize(), event.getTags(), event.getStatus(), event.getTimestamp());
 
     }
 
