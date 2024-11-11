@@ -1,0 +1,51 @@
+package com.codecool.controller;
+
+import com.codecool.DTO.EventDTO;
+import com.codecool.DTO.NewEventDTO;
+import com.codecool.model.events.Event;
+import com.codecool.service.EventService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/events")
+@CrossOrigin(origins = "http://localhost:5173")
+public class EventController {
+    private final EventService eventService;
+   @Autowired
+    public EventController(EventService eventService) {
+        this.eventService = eventService;
+    }
+
+    @GetMapping("/{eventId}")
+    public EventDTO getEventById(@PathVariable int eventId) {
+       return eventService.getEventById(eventId);
+    }
+
+    @PostMapping("")
+    public int createEvent(@RequestBody NewEventDTO newEventDTO) {
+       return eventService.addEvent(newEventDTO);
+    }
+
+    @GetMapping("")
+    public List<EventDTO> getAllEvents() {
+       return eventService.getAllEvents();
+    }
+
+    @PatchMapping("/{eventId}/modify")
+    public boolean modifyEvent(@PathVariable int eventId, @RequestBody EventDTO eventDTO) {
+       return eventService.modifyEvent(eventDTO);
+    }
+
+    @DeleteMapping("/{eventId}")
+    public boolean deleteEvent(@PathVariable int eventId) {
+       return eventService.deleteEventById(eventId);
+    }
+
+
+
+}
