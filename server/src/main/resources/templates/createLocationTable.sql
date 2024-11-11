@@ -1,17 +1,4 @@
-DROP TABLE IF EXISTS locations;
 
-CREATE TABLE locations
-(
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(300),
-    address VARCHAR(300),
-    phone VARCHAR(50),
-    email VARCHAR(255),
-    website VARCHAR(300),
-    facebook VARCHAR(300),
-    instagram VARCHAR(300),
-    description VARCHAR(300)
-);
 
 INSERT INTO locations (name, address, phone, email, website, facebook, instagram, description)
 VALUES ('Fővárosi Állat- és Növénykert', '1146 Budapest, Állatkerti krt. 6-12.',

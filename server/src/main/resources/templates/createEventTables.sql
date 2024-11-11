@@ -1,21 +1,6 @@
-DROP TABLE IF EXISTS events;
 
-CREATE TABLE events
-(
-    id          SERIAL PRIMARY KEY,
-    date        DATE,
-    name        VARCHAR(300),
-    description VARCHAR(300),
-    location_id INT,
-    owner       VARCHAR(100),
-    size        VARCHAR(50),
-    users       VARCHAR[],
-    tags        VARCHAR[],
-    status      VARCHAR(300),
-    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
 
-INSERT INTO events (date, name, description, location_id, owner, size, users, tags, status)
+INSERT INTO event (date, name, description, location_id, owner, size, users, tags, status)
 VALUES ('2024-11-02', 'Állatkertek éjszakája', 'Éjjel is jöhettek', 1, 'Marianna Molnár', 'BIG',
         ARRAY ['gyerekes', 'kaland'],
         ARRAY ['állatos', 'családos'], 'COMING'),
