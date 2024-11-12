@@ -2,11 +2,8 @@ package com.codecool.controller;
 
 import com.codecool.DTO.EventDTO;
 import com.codecool.DTO.NewEventDTO;
-import com.codecool.model.events.Event;
 import com.codecool.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -1,25 +1,52 @@
 package com.codecool.model.events;
 
+import com.codecool.model.Tag;
+import com.codecool.model.User;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Event {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private LocalDate date;
     private String name;
     private String description;
     private int location_id;
-    private Set<String> users;
+
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "event_user", // Join table name
+            joinColumns = @JoinColumn(name = "event_id"), // Foreign key in join table for Event
+            inverseJoinColumns = @JoinColumn(name = "user_id") // Foreign key in join table for User
+    )    private Set<User> users;
     private String owner;
-    private EventSize size;
-    private Set<String> tags;
-    private EventStatus status;
+    private String size;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "event_tag", // join table name
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private Set<Tag> tags;
+    private String status;
     private Timestamp timestamp;
 
 
-    public Event(int id, LocalDate date, String name, String description, int location_id, Set<String> users, String owner, EventSize size, Set<String> tags, EventStatus status, Timestamp timestamp) {
+
+    public Event(int id, LocalDate date, String name, String description, int location_id, Set<User> users, String owner, String size, Set<Tag> tags, String status, Timestamp timestamp) {
         this.id = id;
         this.date = date;
         this.name = name;
@@ -38,7 +65,7 @@ public class Event {
         this.timestamp = timestamp;
     }
 
-    public Event(LocalDate date, String name, String description, int location_id,  String owner, EventSize size, Set<String> tags, EventStatus status) {
+    public Event(LocalDate date, String name, String description, int location_id, String owner, String size, Set<Tag> tags, String status) {
         this.date = date;
         this.name = name;
         this.description = description;
@@ -49,47 +76,6 @@ public class Event {
         this.status = status;
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public int getLocation_id() {
-        return location_id;
-    }
-
-    public Set<String> getUsers() {
-        return users;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public EventSize getSize() {
-        return size;
-    }
-
-    public Set<String> getTags() {
-        return tags;
-    }
-
-    public EventStatus getStatus() {
-        return status;
-    }
-
-    public Timestamp getTimestamp() {
-        return timestamp;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
 }
+

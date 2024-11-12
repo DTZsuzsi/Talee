@@ -1,0 +1,1 @@
+INSERT INTO tag(name) VALUES ('big'), ('romantic'),('family friendly');
