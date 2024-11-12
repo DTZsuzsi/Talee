@@ -7,14 +7,14 @@ function AllTagCategoriesPage(){
     const [newAdmitted, setNewAdmitted]=useState(false);
 
     useEffect(()=>{
-     async function fetchTags(){
+     async function fetchTagCategories(){
          const response= await fetch ('api/tagcategories');
          const data= await response.json();
          setTagCategories(data);
          console.log(data);
      }
  
-     fetchTags();
+     fetchTagCategories();
     }, [newAdmitted])
     
 
