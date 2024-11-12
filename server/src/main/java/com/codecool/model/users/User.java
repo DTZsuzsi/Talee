@@ -10,6 +10,7 @@ import java.util.Set;
 @Entity
 @Data
 @Accessors(fluent = true)
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,5 +24,6 @@ public class User {
 //    private Set<Location> locations;
 
     @ManyToOne
+//    @JoinColumn(name = "role_id")
     private Role role;
 }

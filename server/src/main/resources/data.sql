@@ -1,4 +1,10 @@
-INSERT INTO event (date, name, description, location_id, owner, size, status)
+INSERT INTO role(name)
+VALUES ('user'), ('admin');
+
+INSERT INTO users(username, role_id)
+VALUES ('matet', 2), ('zsuzsi', 1), ('marian', 1);
+
+INSERT INTO events (date, name, description, location_id, owner, size, status)
 VALUES ('2024-11-02', 'Állatkertek éjszakája', 'Éjjel is jöhettek', 1, 'Marianna Molnár', 'BIG',
         'COMING'),
        ('2025-01-01', 'Örökbefogadási nap', 'fogadjatok örökbe állatot', 1, 'Marianna Molnár', 'BIG',
@@ -21,4 +27,16 @@ VALUES ('2024-11-02', 'Állatkertek éjszakája', 'Éjjel is jöhettek', 1, 'Mar
        ('2025-03-15', 'Március 15. Nemzeti Ünnep', 'Ünnepi megemlékezések a belvárosban', 10, 'Magyarország Kormánya',
         'VERY_BIG',  'COMING');
 
-INSERT INTO tag(name) VALUES ('big'), ('romantic'),('family friendly');
+INSERT INTO tag(name)
+VALUES ('big'), ('romantic'),('family friendly');
+
+INSERT INTO locations (name, address, phone, email, website, facebook, instagram, description)
+VALUES ('Fővárosi Állat- és Növénykert', '1146 Budapest, Állatkerti krt. 6-12.',
+        '06 1 273 4901', 'allatkert@email.hu', 'https://zoobudapest.com/',
+        'https://www.facebook.com/allatkert', 'https://www.instagram.com/zoobudapest',
+        'Budapest legnagyobb állatkertje'),
+       ('Margitsziget', '1138 Budapest, Margitsziget', '', '',
+        'https://hu.wikipedia.org/wiki/Margit-sziget', 'https://www.facebook.com/Margitsziget.oldal?fref=ts',
+        '', 'A Margitsziget, mely a helyiek kedvenc városrésze és Budapest zöld szíve, a Duna közepén a Margit híd és az Árpád híd között terül el. Néhány szállodától és sportlétesítménytől eltekintve valójában egy nagy zöld park, árnyas sétányokkal és padokkal, ezért randi- és piknikhelyszínnek is kiváló.');
+
+
