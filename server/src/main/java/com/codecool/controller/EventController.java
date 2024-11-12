@@ -1,7 +1,7 @@
 package com.codecool.controller;
 
-import com.codecool.DTO.EventDTO;
-import com.codecool.DTO.NewEventDTO;
+import com.codecool.DTO.eventDTO.EventDTO;
+import com.codecool.DTO.eventDTO.NewEventDTO;
 import com.codecool.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,12 +23,12 @@ public class EventController {
        return eventService.getEventById(eventId);
     }
 
-    @PostMapping("")
+    @PostMapping
     public int createEvent(@RequestBody NewEventDTO newEventDTO) {
        return eventService.addEvent(newEventDTO);
     }
 
-    @GetMapping("")
+    @GetMapping
     public List<EventDTO> getAllEvents() {
        return eventService.getAllEvents();
     }

@@ -1,11 +1,13 @@
-package com.codecool.model;
+package com.codecool.model.tags;
 
 import com.codecool.model.events.Event;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
@@ -19,6 +21,11 @@ public class Tag {
 private String name;
     @ManyToMany(mappedBy = "tags")
 private Set<Event> event;
+    @ManyToOne
+    @JoinColumn(name="tag_category_id")
+    private TagCategory category;
+    @CreationTimestamp
+    private Timestamp createdAt;
 
 
 }
