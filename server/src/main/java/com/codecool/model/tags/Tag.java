@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
@@ -22,6 +24,8 @@ private Set<Event> event;
     @ManyToOne
     @JoinColumn(name="tag_category_id")
     private TagCategory category;
+    @CreationTimestamp
+    private Timestamp createdAt;
 
 
 }
