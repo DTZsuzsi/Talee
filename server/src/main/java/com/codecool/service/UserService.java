@@ -1,7 +1,7 @@
 package com.codecool.service;
 
-import com.codecool.DTO.NewUserDTO;
-import com.codecool.DTO.UserDTO;
+import com.codecool.DTO.user.NewUserDTO;
+import com.codecool.DTO.user.UserDTO;
 import com.codecool.exceptions.UserNotFoundException;
 import com.codecool.model.users.User;
 import com.codecool.repository.UserRepository;
@@ -63,15 +63,5 @@ public class UserService {
                 user.events(),
                 user.role()
         );
-    }
-
-    private User makeUserFromDTO(UserDTO userDTO) {
-        User user = new User();
-
-        user.username(userDTO.username());
-        user.events(userDTO.events());
-        user.role(userDTO.role());
-
-        return user;
     }
 }
