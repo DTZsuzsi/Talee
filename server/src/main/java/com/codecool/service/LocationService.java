@@ -59,6 +59,10 @@ public class LocationService {
     return locationRepository.save(newLocation).getId();
   }
 
+  public boolean deleteLocation(int id) {
+    return locationRepository.deleteLocationById(id);
+  }
+
   //TODO implement rest of CRUD operations - delete, patch
 
 
