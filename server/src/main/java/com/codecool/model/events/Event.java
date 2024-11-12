@@ -1,7 +1,7 @@
 package com.codecool.model.events;
 
 import com.codecool.model.Tag;
-import com.codecool.model.User;
+import com.codecool.model.users.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

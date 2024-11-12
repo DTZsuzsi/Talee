@@ -1,7 +1,7 @@
 package com.codecool.DTO;
 
 import com.codecool.model.Tag;
-import com.codecool.model.User;
+import com.codecool.model.users.User;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
