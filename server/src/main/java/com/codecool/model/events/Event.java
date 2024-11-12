@@ -1,7 +1,8 @@
 package com.codecool.model.events;
 
 import com.codecool.model.tags.Tag;
-import com.codecool.model.User;
+
+import com.codecool.model.users.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,7 +44,6 @@ public class Event {
     )
     private Set<Tag> tags;
     private String status;
-    @CreationTimestamp
     private Timestamp timestamp;
 
 
