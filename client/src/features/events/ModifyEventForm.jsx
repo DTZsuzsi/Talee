@@ -18,7 +18,7 @@ function ModifyEventForm() {
       if (!eventId) return;
 
       try {
-        const response = await fetch(`http://localhost:8080/events/${eventId}`);
+        const response = await fetch(`/api/events/${eventId}`);
         if (!response.ok) throw new Error(`Failed to fetch event: ${response.statusText}`);
         const data = await response.json();
         setEvent(data);

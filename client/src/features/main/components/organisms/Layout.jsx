@@ -3,7 +3,7 @@ import Header from "./Header";
 import Divider from "../atoms/Divider";
 const Layout = () => {
     return (
-        <div >
+        <div className="bg-background text-text dark:bg-text dark:text-background font-sans">
             <Header />
             <Divider />
             <Outlet />

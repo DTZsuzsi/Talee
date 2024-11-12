@@ -18,7 +18,7 @@ function NewLocationForm() {
 
     async function handleNewLocation(e) {
         e.preventDefault();
-        const response = await fetch('http://localhost:8080/api/locations', {
+        const response = await fetch('/api/locations', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newLocation)

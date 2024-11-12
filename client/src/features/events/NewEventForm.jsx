@@ -21,7 +21,7 @@ function NewEventForm() {
 
   async function handleNewEvent(e) {
     e.preventDefault();
-    const response = await fetch('http://localhost:8080/events', {
+    const response = await fetch('/api/events', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newEvent),

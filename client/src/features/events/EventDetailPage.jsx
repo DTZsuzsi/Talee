@@ -17,7 +17,7 @@ useEffect(()=>{
             return;
           }
       
-        const response=await fetch(`http://localhost:8080/events/${eventId}`);
+        const response=await fetch(`/api/events/${eventId}`);
         
 
 

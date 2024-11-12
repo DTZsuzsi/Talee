@@ -1,3 +1,4 @@
+
 //package com.codecool.controller;
 //
 //import com.codecool.DTO.locationDTO.LocationDTO;
@@ -36,3 +37,4 @@
 //    return locationService.addLocation(location);
 //  }
 //}
+
