@@ -1,6 +1,6 @@
 package com.codecool.model.events;
 
-import com.codecool.model.Tag;
+import com.codecool.model.tags.Tag;
 import com.codecool.model.User;
 import jakarta.persistence.*;
 import lombok.Getter;

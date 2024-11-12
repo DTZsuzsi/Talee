@@ -11,7 +11,7 @@ import ModifyEventForm from './features/events/ModifyEventForm.jsx';
 
 import NewLocationForm from "./features/locations/NewLocationForm.jsx";
 import LocationDetailPage from "./features/locations/LocationDetailPage.jsx";
-import { useEffect, useState } from 'react';
+import AllTagsPage from './features/tag/AllTagsPage.jsx';
 
 
 
@@ -49,7 +49,8 @@ function App() {
         
         {path: 'locations/:locationId',
           element:<LocationDetailPage/>
-        }
+        },
+        {path: 'tags', element: <AllTagsPage/>}
       ],
     }
   ]);

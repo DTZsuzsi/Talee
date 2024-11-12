@@ -1,6 +1,6 @@
 package com.codecool.DTO;
 
-import com.codecool.model.Tag;
+import com.codecool.model.tags.Tag;
 
 import java.time.LocalDate;
 import java.util.Set;

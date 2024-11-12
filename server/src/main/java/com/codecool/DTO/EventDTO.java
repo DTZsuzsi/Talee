@@ -1,6 +1,6 @@
 package com.codecool.DTO;
 
-import com.codecool.model.Tag;
+import com.codecool.model.tags.Tag;
 import com.codecool.model.User;
 
 import java.sql.Timestamp;
