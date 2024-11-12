@@ -5,6 +5,8 @@ import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -17,6 +19,6 @@ public class TagCategory {
     private String color;
     @OneToMany (mappedBy = "category")
     private Set<Tag> tags;
-    @CreationTimestamp
-    private Timestamp createdAt;
+
+    private Timestamp createdAt=Timestamp.valueOf(LocalDateTime.now());
 }

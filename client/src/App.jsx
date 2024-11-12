@@ -12,6 +12,7 @@ import ModifyEventForm from './features/events/ModifyEventForm.jsx';
 import NewLocationForm from "./features/locations/NewLocationForm.jsx";
 import LocationDetailPage from "./features/locations/LocationDetailPage.jsx";
 import AllTagsPage from './features/tag/AllTagsPage.jsx';
+import AllTagCategoriesPage from './features/tag/AllTagCategoriesPage.jsx';
 
 
 
@@ -50,7 +51,8 @@ function App() {
         {path: 'locations/:locationId',
           element:<LocationDetailPage/>
         },
-        {path: 'tags', element: <AllTagsPage/>}
+        {path: '/tags', element: <AllTagsPage/>},
+        {path: '/tagcategories', element: <AllTagCategoriesPage/>}
       ],
     }
   ]);
