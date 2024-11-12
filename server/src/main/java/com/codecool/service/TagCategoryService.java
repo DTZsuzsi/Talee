@@ -27,4 +27,9 @@ public class TagCategoryService {
         }
         return tagCategoriesDTO;
     }
+
+    public long createNewTagCategory(TagCategoryDTO tagCategoryDTO) {
+        TagCategory tagCategory = new TagCategory(tagCategoryDTO.name(), tagCategoryDTO.color());
+       return tagCategoryRepository.save(tagCategory).getId();
+    }
 }
