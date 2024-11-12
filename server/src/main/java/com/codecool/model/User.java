@@ -1,6 +1,7 @@
 package com.codecool.model;
 
 import com.codecool.model.events.Event;
+import com.codecool.model.location.Location;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,5 +18,6 @@ public class User {
     private String username;
     @ManyToMany(mappedBy = "users")
     private Set<Event> event;
+
 
 }

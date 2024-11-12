@@ -2,6 +2,7 @@ package com.codecool.model.events;
 
 import com.codecool.model.Tag;
 import com.codecool.model.User;
+import com.codecool.model.location.Location;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,10 @@ public class Event {
     private LocalDate date;
     private String name;
     private String description;
-    private int location_id;
+
+    @ManyToOne
+    private Location location;
+//    private int location_id;
 
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -46,12 +50,12 @@ public class Event {
 
 
 
-    public Event(int id, LocalDate date, String name, String description, int location_id, Set<User> users, String owner, String size, Set<Tag> tags, String status, Timestamp timestamp) {
+    public Event(int id, LocalDate date, String name, String description, Location location, Set<User> users, String owner, String size, Set<Tag> tags, String status, Timestamp timestamp) {
         this.id = id;
         this.date = date;
         this.name = name;
         this.description = description;
-        this.location_id = location_id;
+        this.location = location;
 
         if (users != null) {
             this.users = new HashSet<>();
@@ -65,11 +69,11 @@ public class Event {
         this.timestamp = timestamp;
     }
 
-    public Event(LocalDate date, String name, String description, int location_id, String owner, String size, Set<Tag> tags, String status) {
+    public Event(LocalDate date, String name, String description, Location location, String owner, String size, Set<Tag> tags, String status) {
         this.date = date;
         this.name = name;
         this.description = description;
-        this.location_id = location_id;
+        this.location = location;
         this.owner = owner;
         this.size = size;
         this.tags = tags;
