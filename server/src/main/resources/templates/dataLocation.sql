@@ -1,6 +1,6 @@
 
 
-INSERT INTO locations (name, address, phone, email, website, facebook, instagram, description)
+INSERT INTO location (name, address, phone, email, website, facebook, instagram, description)
 VALUES ('Fővárosi Állat- és Növénykert', '1146 Budapest, Állatkerti krt. 6-12.',
         '06 1 273 4901', 'allatkert@email.hu', 'https://zoobudapest.com/',
         'https://www.facebook.com/allatkert', 'https://www.instagram.com/zoobudapest',
