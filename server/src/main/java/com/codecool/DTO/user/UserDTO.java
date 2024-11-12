@@ -1,4 +1,4 @@
-package com.codecool.DTO;
+package com.codecool.DTO.user;
 
 import com.codecool.model.events.Event;
 import com.codecool.model.users.Role;
