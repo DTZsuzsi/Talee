@@ -8,7 +8,9 @@ export default {
     extend: {
       colors: {
         background: '#00ffa2',
-        text: '#004466'
+        text: '#004466',
+        darkBackground: '#004466',
+        darkText: '#00ffa2'
       },
       fontFamily: {
         sans: ['Montserrat', 'sans-serif'],
