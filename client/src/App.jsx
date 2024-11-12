@@ -11,11 +11,12 @@ import ModifyEventForm from './features/events/ModifyEventForm.jsx';
 
 import NewLocationForm from "./features/locations/NewLocationForm.jsx";
 import LocationDetailPage from "./features/locations/LocationDetailPage.jsx";
+import { useEffect, useState } from 'react';
 
 
 
 function App() {
-  const router = createBrowserRouter([
+   const router = createBrowserRouter([
     {
       path: "/",
       element: <Layout />,
