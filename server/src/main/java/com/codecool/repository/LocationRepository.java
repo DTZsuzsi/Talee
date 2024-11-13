@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LocationRepository extends JpaRepository<Location, Integer> {
-  Location getLocationById(int id);
+  Location getLocationById(long id);
 
-  int deleteLocationById(int id);
+  int deleteLocationById(long id);
 }

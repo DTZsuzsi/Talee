@@ -28,7 +28,7 @@ public class LocationService {
     return locations.stream().map(LocationService::createLocationDTO).collect(Collectors.toSet());
   }
 
-  public LocationDTO getLocationById(int id) {
+  public LocationDTO getLocationById(long id) {
     Location location = locationRepository.getLocationById(id);
     return createLocationDTO(location);
   }
@@ -43,7 +43,7 @@ public class LocationService {
             location.getAdminUser());
   }
 
-  public int addLocation(NewLocationDTO location) {
+  public long addLocation(NewLocationDTO location) {
     Location newLocation = new Location();
     newLocation.setName(location.name());
     newLocation.setAddress(location.address());

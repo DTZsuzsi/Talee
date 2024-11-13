@@ -30,7 +30,7 @@ public class LocationController {
   }
 
   @PostMapping
-  public int addLocation(@RequestBody NewLocationDTO location) {
+  public long addLocation(@RequestBody NewLocationDTO location) {
     return locationService.addLocation(location);
   }
 
