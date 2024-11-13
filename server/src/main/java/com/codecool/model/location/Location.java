@@ -32,6 +32,7 @@ public class Location {
   @JoinColumn(name = "user_id")
   private User adminUser;
 
+
 //  private OpeningHours openingHours;
   @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<Event> events;
