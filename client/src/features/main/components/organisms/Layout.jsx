@@ -3,8 +3,8 @@ import Header from "./Header";
 import Divider from "../atoms/Divider";
 const Layout = () => {
     return (
-      <div className="h-screen w-screen transition-colors duration-300 bg-background text-text dark:bg-darkBackground dark:text-darkText font-sans">
-        <div className="w-8/12 mx-auto py-5">
+      <div className="w-screen transition-colors duration-300 bg-background text-text dark:bg-darkBackground dark:text-darkText font-sans py-8 min-h-screen">
+        <div className="w-8/12 mx-auto">
           <Header />
           <Divider />
           <Outlet />
