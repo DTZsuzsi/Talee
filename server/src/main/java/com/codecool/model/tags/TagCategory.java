@@ -2,10 +2,8 @@ package com.codecool.model.tags;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -17,7 +15,7 @@ public class TagCategory {
     private long id;
     private String name;
     private String color;
-    @OneToMany (mappedBy = "category")
+    @OneToMany (mappedBy = "tagCategory")
     private Set<Tag> tags;
 
     private Timestamp createdAt=Timestamp.valueOf(LocalDateTime.now());

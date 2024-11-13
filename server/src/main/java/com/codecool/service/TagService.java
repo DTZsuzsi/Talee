@@ -5,10 +5,10 @@ import com.codecool.model.tags.Tag;
 import com.codecool.model.tags.TagCategory;
 import com.codecool.repository.TagCategoryRepository;
 import com.codecool.repository.TagRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +24,7 @@ public class TagService {
     public List<TagDTO> getAllTags() {
         return tagRepository.findAll().stream()
                 .map(tag -> {
-                    Long categoryId = (tag.getCategory() != null) ? tag.getCategory().getId() : 1;
+                    Long categoryId = (tag.getTagCategory() != null) ? tag.getTagCategory().getId() : 1;
                     return new TagDTO(tag.getId(), tag.getName(), categoryId, tag.getCreatedAt());
                 })
                 .collect(Collectors.toList());
@@ -36,4 +36,14 @@ public class TagService {
         Tag newTag=new Tag(tagDTO.name(), tagCategory);
         return tagRepository.save(newTag).getId();
     }
+
+    @Transactional
+    public boolean deleteById(long id) {
+        if (tagRepository.existsById(id)) {
+            tagRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
 }
