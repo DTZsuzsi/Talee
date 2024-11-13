@@ -31,13 +31,13 @@ public class Event {
     private Location location;
 //    private int location_id;
 
-
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "event_user", // Join table name
             joinColumns = @JoinColumn(name = "event_id"), // Foreign key in join table for Event
             inverseJoinColumns = @JoinColumn(name = "user_id") // Foreign key in join table for User
-    )    private Set<User> users;
+    )
+    private Set<User> users;
     private String owner;
     private String size;
     @ManyToMany(cascade = CascadeType.ALL)

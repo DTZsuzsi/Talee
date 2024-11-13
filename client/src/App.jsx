@@ -2,8 +2,8 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css'
 import Home from "./features/main/Home.jsx";
 import Welcome from "./features/welcome/Welcome.jsx";
-
 import Layout from "./features/main/components/organisms/Layout.jsx";
+
 import EventDetailPage from './features/events/EventDetailPage.jsx';
 import NewEventForm from './features/events/NewEventForm.jsx';
 
@@ -15,39 +15,22 @@ import AllTagsPage from './features/tag/AllTagsPage.jsx';
 import AllTagCategoriesPage from './features/tag/AllTagCategoriesPage.jsx';
 
 
+import EventRoutes from "./features/events/EventRoutes.jsx";
+import LocationsRoutes from "./features/locations/LocationRoutes.jsx";
+import UserRoutes from './features/users/UserRoutes.jsx';
+
 
 function App() {
    const router = createBrowserRouter([
     {
-      path: "/",
       element: <Layout />,
       children: [
-        {
-          path: "/",
-          element: <Home />,
-        },
-        {
-          path: "/welcome",
-          element: <Welcome />,
-        },
-        {
-          path:'/events/:eventId',
-          element:<EventDetailPage/>
-        },
-        {
-          path:'/events/new',
-          element:<NewEventForm/>,
-        },
-        {
-
-          path:'/events/:eventId/modify',
-          element:<ModifyEventForm/>},
-
-         { path:'/locations/new',
-          element:<NewLocationForm/>,
-
-        },
-        
+        { path: "/", element: <Home /> },
+        { path: "/welcome", element: <Welcome /> },
+     
+        { path: "/events", children: EventRoutes },
+        { path: "/locations", children: LocationsRoutes },
+        { path: "/users", children: UserRoutes}
         {path: 'locations/:locationId',
           element:<LocationDetailPage/>
         },
@@ -56,6 +39,8 @@ function App() {
       ],
     }
   ]);
+
+  
 
   return (
     <RouterProvider router={router} />
