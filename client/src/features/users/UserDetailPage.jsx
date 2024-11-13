@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 function UserDetailPage() {
     const [user, setUser] = useState(null);
-    const userId = useParams();
+    const {userId} = useParams();
 
     useEffect(() => {
         async function fetchUser() {
@@ -26,7 +26,7 @@ function UserDetailPage() {
 
     return (
         <>
-            <p> {user.name} </p>
+            <p> {user && user.username} </p>
         </>
     )
 }

@@ -1,7 +1,12 @@
+import { Route, Routes } from "react-router-dom";
 import UserDetailPage from "./UserDetailPage";
 
-const UserRoutes = [
-        { path: ":userId", element: <UserDetailPage /> },
-];
+function UserRoutes() {
+        return (
+                <Routes>
+                        <Route index path=":userId" element={<UserDetailPage />} />
+                </Routes>
+        );
+}
     
 export default UserRoutes;
