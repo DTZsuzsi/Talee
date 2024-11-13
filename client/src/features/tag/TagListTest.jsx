@@ -13,6 +13,8 @@ const tagCategories = [
 	{ id: 8, name: 'other', color: 'purple' },
 ];
 
+//TODO: Remove this after implementing. This is only for testing purposes
+
 const TagListTest = () => {
 	return (
 		<div>
