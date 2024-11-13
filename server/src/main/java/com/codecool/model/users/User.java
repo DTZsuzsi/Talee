@@ -1,6 +1,7 @@
 package com.codecool.model.users;
 
 import com.codecool.model.events.Event;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -10,7 +11,7 @@ import java.util.Set;
 @Entity
 @Data
 @Accessors(fluent = true)
-@Table(name = "users")
+@Table(name = "talee_user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +25,5 @@ public class User {
 //    private Set<Location> locations;
 
     @ManyToOne
-//    @JoinColumn(name = "role_id")
     private Role role;
 }

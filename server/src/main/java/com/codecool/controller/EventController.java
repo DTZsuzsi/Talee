@@ -1,7 +1,7 @@
 package com.codecool.controller;
 
-import com.codecool.DTO.eventDTO.EventDTO;
-import com.codecool.DTO.eventDTO.NewEventDTO;
+import com.codecool.DTO.event.EventDTO;
+import com.codecool.DTO.event.NewEventDTO;
 import com.codecool.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

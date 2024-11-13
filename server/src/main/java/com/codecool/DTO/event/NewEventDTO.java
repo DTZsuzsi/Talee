@@ -1,7 +1,7 @@
-package com.codecool.DTO.eventDTO;
+package com.codecool.DTO.event;
 
 import com.codecool.model.tags.Tag;
-import com.codecool.model.location.Location;
+import com.codecool.model.locations.Location;
 import java.time.LocalDate;
 import java.util.Set;
 

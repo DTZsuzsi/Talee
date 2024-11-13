@@ -1,9 +1,9 @@
 package com.codecool.service;
 
 
-import com.codecool.DTO.locationDTO.LocationDTO;
-import com.codecool.DTO.locationDTO.NewLocationDTO;
-import com.codecool.model.location.Location;
+import com.codecool.DTO.location.LocationDTO;
+import com.codecool.DTO.location.NewLocationDTO;
+import com.codecool.model.locations.Location;
 import com.codecool.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.codecool.model.location;
+package com.codecool.model.locations;
 
 import com.codecool.model.events.Event;
 import com.codecool.model.users.User;
@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.DayOfWeek;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity

@@ -1,4 +1,4 @@
-package com.codecool.model.location;
+package com.codecool.model.locations;
 
 import java.time.DayOfWeek;
 import java.util.EnumMap;

@@ -1,7 +1,7 @@
 INSERT INTO role(name)
 VALUES ('user'), ('admin');
 
-INSERT INTO users(username, role_id)
+INSERT INTO talee_user(username, role_id)
 VALUES ('matet', 2), ('zsuzsi', 1), ('marian', 1);
 
 INSERT INTO location (name, address, phone, email, website, facebook, instagram, description)

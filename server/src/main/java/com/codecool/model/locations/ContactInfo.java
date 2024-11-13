@@ -1,4 +1,4 @@
-package com.codecool.model.location;
+package com.codecool.model.locations;
 
 public class ContactInfo {
   private String address;

@@ -1,8 +1,8 @@
 
 package com.codecool.controller;
 
-import com.codecool.DTO.locationDTO.LocationDTO;
-import com.codecool.DTO.locationDTO.NewLocationDTO;
+import com.codecool.DTO.location.LocationDTO;
+import com.codecool.DTO.location.NewLocationDTO;
 import com.codecool.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,6 +1,6 @@
 package com.codecool.controller;
 
-import com.codecool.DTO.tagDTO.TagCategoryDTO;
+import com.codecool.DTO.tag.TagCategoryDTO;
 import com.codecool.service.TagCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

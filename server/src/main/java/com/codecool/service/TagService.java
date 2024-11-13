@@ -1,6 +1,6 @@
 package com.codecool.service;
 
-import com.codecool.DTO.tagDTO.TagDTO;
+import com.codecool.DTO.tag.TagDTO;
 import com.codecool.model.tags.Tag;
 import com.codecool.model.tags.TagCategory;
 import com.codecool.repository.TagCategoryRepository;
@@ -8,7 +8,6 @@ import com.codecool.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

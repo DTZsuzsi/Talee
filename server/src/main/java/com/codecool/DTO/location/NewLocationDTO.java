@@ -1,7 +1,6 @@
-package com.codecool.DTO.locationDTO;
+package com.codecool.DTO.location;
 
 
-import com.codecool.model.location.OpeningHours;
 import com.codecool.model.users.User;
 
 //TODO use ContactInfoDTO, OpeningHoursDTO instead?
