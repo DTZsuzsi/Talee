@@ -31,6 +31,7 @@ function App() {
         { path: "/events", children: EventRoutes },
         { path: "/locations", children: LocationsRoutes },
         { path: "/users", children: UserRoutes},
+        
         {path: 'locations/:locationId',
           element:<LocationDetailPage/>
         },
