@@ -4,5 +4,5 @@ import com.codecool.model.tags.TagCategory;
 
 import java.sql.Timestamp;
 
-public record NewTagDTO(String name, TagCategory category) {
+public record NewTagDTO(String name, long categoryId) {
 }

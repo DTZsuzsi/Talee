@@ -3,9 +3,7 @@ package com.codecool.controller;
 import com.codecool.DTO.tagDTO.TagDTO;
 import com.codecool.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,4 +21,12 @@ public class TagController {
     public List<TagDTO> getTags() {
        return tagService.getAllTags();
 }
+
+@PostMapping
+    public long addTag(@RequestBody TagDTO tagDTO) {
+       return tagService.addTag(tagDTO);
 }
+}
+
+
+
