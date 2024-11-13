@@ -26,19 +26,15 @@ public class LocationService {
   public Set<LocationDTO> getAllLocations() {
     Set<Location> locations = new HashSet<>(locationRepository.findAll());
 
-    return locations.stream().map(location -> new LocationDTO(
-            location.getId(),
-            location.getName(),
-            location.getAddress(),
-            location.getPhone(),
-            location.getEmail(),
-            location.getDescription(),
-            location.getAdminUser()
-    )).collect(Collectors.toSet());
+    return locations.stream().map(LocationService::createLocationDTO).collect(Collectors.toSet());
   }
 
   public LocationDTO getLocationById(int id) {
     Location location = locationRepository.getLocationById(id);
+    return createLocationDTO(location);
+  }
+
+  private static LocationDTO createLocationDTO(Location location) {
     return new LocationDTO(location.getId(),
             location.getName(),
             location.getAddress(),
@@ -65,7 +61,18 @@ public class LocationService {
     return locationRepository.deleteLocationById(id);
   }
 
-  //TODO implement rest of CRUD operations - delete, patch
+  public boolean updateLocation(LocationDTO location) {
+    Location updatedLocation = new Location();
+    updatedLocation.setId(location.id());
+    updatedLocation.setName(location.name());
+    updatedLocation.setAddress(location.address());
+    updatedLocation.setPhone(location.phone());
+    updatedLocation.setEmail(location.email());
+    updatedLocation.setDescription(location.description());
+    updatedLocation.setAdminUser(location.adminUser());
+    return locationRepository.save(updatedLocation).getId() != 0;
+  }
+
 
 
 }

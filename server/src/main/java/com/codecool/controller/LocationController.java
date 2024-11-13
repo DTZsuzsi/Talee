@@ -42,9 +42,9 @@ public class LocationController {
     return locationService.deleteLocation(id);
   }
 
-//  @PatchMapping("/{id}")
-//  public boolean updateLocation(@PathVariable int id, @RequestBody LocationDTO location) {
-//    return locationService.updateLocation(location);
-//  }
+  @PatchMapping
+  public boolean updateLocation(@RequestBody LocationDTO location) {
+    return locationService.updateLocation(location);
+  }
 }
 
