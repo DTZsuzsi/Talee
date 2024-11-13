@@ -3,6 +3,7 @@ package com.codecool.service;
 
 import com.codecool.DTO.locationDTO.LocationDTO;
 import com.codecool.DTO.locationDTO.NewLocationDTO;
+import com.codecool.exceptions.LocationNotFoundException;
 import com.codecool.model.location.Location;
 import com.codecool.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,9 @@ public class LocationService {
   }
 
   public LocationDTO getLocationById(long id) {
-    Location location = locationRepository.getLocationById(id);
-    return createLocationDTO(location);
+    return locationRepository.findById(id)
+            .map(LocationService::createLocationDTO)
+            .orElseThrow(() -> new LocationNotFoundException(id));
   }
 
   private static LocationDTO createLocationDTO(Location location) {
@@ -56,20 +58,21 @@ public class LocationService {
   }
 
   @Transactional
-  public int deleteLocation(int id) {
+  public long deleteLocation(long id) {
     return locationRepository.deleteLocationById(id);
   }
 
   public boolean updateLocation(LocationDTO location) {
-    Location updatedLocation = new Location();
-    updatedLocation.setId(location.id());
-    updatedLocation.setName(location.name());
-    updatedLocation.setAddress(location.address());
-    updatedLocation.setPhone(location.phone());
-    updatedLocation.setEmail(location.email());
-    updatedLocation.setDescription(location.description());
-    updatedLocation.setAdminUser(location.adminUser());
-    return locationRepository.save(updatedLocation).getId() != 0;
+    Location existingLocation = locationRepository.findById(location.id())
+            .orElseThrow(() -> new LocationNotFoundException(location.id()));
+
+    existingLocation.setName(location.name());
+    existingLocation.setAddress(location.address());
+    existingLocation.setPhone(location.phone());
+    existingLocation.setEmail(location.email());
+    existingLocation.setDescription(location.description());
+    existingLocation.setAdminUser(location.adminUser());
+    return locationRepository.save(existingLocation).getId() != 0;
   }
 
 
