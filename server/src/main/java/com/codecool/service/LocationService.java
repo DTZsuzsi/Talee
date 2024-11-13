@@ -1,50 +1,69 @@
-//package com.codecool.service;
-//
-//import com.codecool.DAO.locationDAO.LocationDAO;
-//import com.codecool.DTO.locationDTO.LocationDTO;
-//import com.codecool.DTO.locationDTO.NewLocationDTO;
-//import com.codecool.model.location.Location;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Service;
-//
-//import java.util.Set;
-//import java.util.stream.Collectors;
-//
-//@Service
-//public class LocationService {
+package com.codecool.service;
+
+
+import com.codecool.DTO.locationDTO.LocationDTO;
+import com.codecool.DTO.locationDTO.NewLocationDTO;
+import com.codecool.model.location.Location;
+import com.codecool.repository.LocationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+@Service
+public class LocationService {
 //  private final LocationDAO locationDAO;
-//
-//  @Autowired
-//  public LocationService(LocationDAO locationDAO) {
-//    this.locationDAO = locationDAO;
-//  }
-//
-//  public Set<LocationDTO> getAllLocations() {
-//    Set<Location> locations = locationDAO.getAllLocations();
-//
-//    return locations.stream().map(location -> new LocationDTO(
-//            location.getId(),
-//            location.getName(),
-//            location.getAddress(),
-//            location.getPhone(),
-//            location.getEmail(),
-//            location.getDescription()
-//    )).collect(Collectors.toSet());
-//  }
-//
-//  public LocationDTO getLocationById(int id) {
-//    Location location = locationDAO.getLocationById(id);
-//    return new LocationDTO(location.getId(),
-//            location.getName(),
-//            location.getAddress(),
-//            location.getPhone(),
-//            location.getEmail(),
-//            location.getDescription());
-//  }
-//
-//  public int addLocation(NewLocationDTO location) {
-//    return locationDAO.addLocation(location);
-//  }
-//
-//  //TODO implement rest of CRUD operations
-//}
+  private final LocationRepository locationRepository;
+
+  @Autowired
+  public LocationService(LocationRepository locationRepository) {
+    this.locationRepository = locationRepository;
+  }
+
+  public Set<LocationDTO> getAllLocations() {
+    Set<Location> locations = new HashSet<>(locationRepository.findAll());
+
+    return locations.stream().map(location -> new LocationDTO(
+            location.getId(),
+            location.getName(),
+            location.getAddress(),
+            location.getPhone(),
+            location.getEmail(),
+            location.getDescription(),
+            location.getAdminUser()
+    )).collect(Collectors.toSet());
+  }
+
+  public LocationDTO getLocationById(int id) {
+    Location location = locationRepository.getLocationById(id);
+    return new LocationDTO(location.getId(),
+            location.getName(),
+            location.getAddress(),
+            location.getPhone(),
+            location.getEmail(),
+            location.getDescription(),
+            location.getAdminUser());
+  }
+
+  public int addLocation(NewLocationDTO location) {
+    Location newLocation = new Location();
+    newLocation.setName(location.name());
+    newLocation.setAddress(location.address());
+    newLocation.setPhone(location.phone());
+    newLocation.setEmail(location.email());
+    newLocation.setDescription(location.description());
+    newLocation.setAdminUser(location.adminUser());
+
+    return locationRepository.save(newLocation).getId();
+  }
+
+  public boolean deleteLocation(int id) {
+    return locationRepository.deleteLocationById(id);
+  }
+
+  //TODO implement rest of CRUD operations - delete, patch
+
+
+}
