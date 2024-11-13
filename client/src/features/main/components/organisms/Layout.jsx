@@ -5,9 +5,11 @@ const Layout = () => {
     return (
       <div className="h-screen w-screen transition-colors duration-300 bg-background text-text dark:bg-darkBackground dark:text-darkText font-sans">
         <div className="w-8/12 mx-auto py-5">
-          <Header />
-          <Divider />
-          <Outlet />
+            <Header />
+            <Divider />
+            <main>
+                <Outlet />
+            </main>
         </div>
       </div>
     );

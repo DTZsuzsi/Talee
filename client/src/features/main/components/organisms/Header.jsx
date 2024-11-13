@@ -27,7 +27,6 @@ const Header = () => {
                 <BiggerOnHover>
  <a href="/events/new" className="flex items-center">
                         <h1 className="text-3xl text-bold mx-5">Add Event</h1>
-
                     </a>
                 </BiggerOnHover>
                 

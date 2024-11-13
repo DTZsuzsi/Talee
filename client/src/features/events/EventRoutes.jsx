@@ -1,11 +1,16 @@
 import NewEventForm from "./NewEventForm";
 import EventDetailPage from "./EventDetailPage";
 import ModifyEventForm from "./ModifyEventForm";
+import { Route, Routes } from "react-router-dom";
 
-const EventsRoutes = [
-    { path: "new", element: <NewEventForm /> },
-    { path: ":eventId", element: <EventDetailPage /> },
-    { path: ":eventId/modify", element: <ModifyEventForm /> },
-  ];
-  
-  export default EventsRoutes;
+function EventsRoutes() {
+  return (
+    <Routes>
+      <Route path="new" element={<NewEventForm />} />
+      <Route path=":eventId" element={<EventDetailPage />} />
+      <Route path=":eventId/modify" element={<ModifyEventForm />} />
+    </Routes>
+  );
+}
+
+export default EventsRoutes;

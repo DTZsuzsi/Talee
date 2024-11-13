@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import HomeCard from "./components/molecules/HomeCard.jsx";
-import StateChangeButton from "./components/molecules/StateChangeButton.jsx";
+import HomeCard from "../molecules/HomeCard.jsx";
+import StateChangeButton from "../molecules/StateChangeButton.jsx";
 
 const Home = () => {
     const [mode, setMode] = useState('locations');
