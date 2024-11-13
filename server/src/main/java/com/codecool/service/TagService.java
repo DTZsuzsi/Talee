@@ -9,7 +9,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +24,7 @@ public class TagService {
     public List<TagDTO> getAllTags() {
         return tagRepository.findAll().stream()
                 .map(tag -> {
-                    Long categoryId = (tag.getCategory() != null) ? tag.getCategory().getId() : 1;
+                    Long categoryId = (tag.getTagCategory() != null) ? tag.getTagCategory().getId() : 1;
                     return new TagDTO(tag.getId(), tag.getName(), categoryId, tag.getCreatedAt());
                 })
                 .collect(Collectors.toList());
