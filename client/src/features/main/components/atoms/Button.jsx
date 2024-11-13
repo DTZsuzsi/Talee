@@ -1,5 +1,6 @@
 import BiggerOnHover from "./BiggerOnHover";
 
+// eslint-disable-next-line react/prop-types
 const Button = ({ children, onClick, className = "", bgColor = "bg-blue-500", textColor = "text-white", ...props }) => (
     <BiggerOnHover>
         <button

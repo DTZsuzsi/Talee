@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import HomeCard from "./components/molecules/HomeCard.jsx";
-import StateChangeButton from "./components/molecules/StateChangeButton.jsx";
+import HomeCard from "../molecules/HomeCard.jsx";
+import StateChangeButton from "../molecules/StateChangeButton.jsx";
 
 const Home = () => {
     const [mode, setMode] = useState('locations');
@@ -54,7 +54,7 @@ const Home = () => {
 
     return (
         <div className="w-full mx-auto p-4">
-            <div className="flex">
+            <div className="flex flex-col">
                 <div className="w-full max-w-sm">
                     <div className="h-20 flex justify-between items-center">
                         <StateChangeButton onClick={setEventState} active={mode == 'events'}>Events</StateChangeButton>

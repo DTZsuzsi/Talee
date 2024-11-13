@@ -7,6 +7,7 @@ import com.codecool.model.location.Location;
 import com.codecool.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -59,7 +60,8 @@ public class LocationService {
     return locationRepository.save(newLocation).getId();
   }
 
-  public boolean deleteLocation(int id) {
+  @Transactional
+  public int deleteLocation(int id) {
     return locationRepository.deleteLocationById(id);
   }
 
