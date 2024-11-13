@@ -63,7 +63,7 @@ public class ReportService {
         var report = new Report();
         report.setTitle(reportRequest.title());
         report.setDescription(reportRequest.description());
-        report.setReportType(reportRequest.type());
+        report.setReportType(reportRequest.reportType());
         reportRepository.saveAndFlush(report);
         return new ReportResDTO(report.getId(), report.getTitle(),
                                 report.getCreatedAt());
