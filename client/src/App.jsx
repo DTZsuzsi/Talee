@@ -16,25 +16,32 @@ import UserRoutes from './features/users/UserRoutes.jsx';
 import TagListTest from './features/tag/TagListTest.jsx';
 
 function App() {
-	const router = createBrowserRouter([
-		{
-			element: <Layout />,
-			children: [
-				{ path: '/', element: <Home /> },
-				{ path: '/welcome', element: <Welcome /> },
+   const router = createBrowserRouter([
+    {
+      element: <Layout />,
+      children: [
+        { path: "/", element: <Home /> },
+        { path: "/welcome", element: <Welcome /> },
+     
+        { path: "/events", children: EventRoutes },
+        { path: "/locations", children: LocationsRoutes },
+        { path: "/users", children: UserRoutes},
+        
+        { path: 'locations/:locationId',
+          element:<LocationDetailPage/>
+        },
+        { path: '/tags', element: <AllTagsPage/>},
+        { path: '/tagcategories', element: <AllTagCategoriesPage/>}
+        { path: '/test-tags', element: <TagListTest /> }
+      ],
+    }
+  ]);
 
-				{ path: '/events', children: EventRoutes },
-				{ path: '/locations', children: LocationsRoutes },
-				{ path: '/users', children: UserRoutes },
-				{ path: 'locations/:locationId', element: <LocationDetailPage /> },
-				{ path: '/tags', element: <AllTagsPage /> },
-        { path: '/tagcategories', element: <AllTagCategoriesPage /> },
-        {path: '/test-tags', element: <TagListTest />}
-			],
-		},
-	]);
+  
 
-	return <RouterProvider router={router} />;
+  return (
+    <RouterProvider router={router} />
+  );
 }
 
 export default App;
