@@ -20,6 +20,7 @@ public class Report {
     private long id;
     private String title;
     private String description;
+    @Enumerated(EnumType.STRING)  // Store ReportType as a String (e.g., "BUG" or "CONTENT")
     private ReportType reportType;
     private boolean issued;
     private boolean solved;
