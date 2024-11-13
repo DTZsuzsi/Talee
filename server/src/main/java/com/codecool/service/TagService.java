@@ -5,6 +5,7 @@ import com.codecool.model.tags.Tag;
 import com.codecool.model.tags.TagCategory;
 import com.codecool.repository.TagCategoryRepository;
 import com.codecool.repository.TagRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,4 +37,14 @@ public class TagService {
         Tag newTag=new Tag(tagDTO.name(), tagCategory);
         return tagRepository.save(newTag).getId();
     }
+
+    @Transactional
+    public boolean deleteById(long id) {
+        if (tagRepository.existsById(id)) {
+            tagRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
 }
