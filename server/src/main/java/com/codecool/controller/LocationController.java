@@ -37,11 +37,11 @@ public class LocationController {
     return locationService.addLocation(location);
   }
 
-//  @DeleteMapping("/{id}")
-//  public boolean deleteLocation(@PathVariable int id) {
-//    return locationService.deleteLocation(id);
-//  }
-//
+  @DeleteMapping("/{id}")
+  public boolean deleteLocation(@PathVariable int id) {
+    return locationService.deleteLocation(id);
+  }
+
 //  @PatchMapping("/{id}")
 //  public boolean updateLocation(@PathVariable int id, @RequestBody LocationDTO location) {
 //    return locationService.updateLocation(location);
