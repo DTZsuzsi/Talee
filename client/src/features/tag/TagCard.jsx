@@ -9,7 +9,7 @@ const TagCard = ({ tag }) => {
 	return (
 		<div
 			style={{ backgroundColor: `${tag.color}` }}
-			className='px-2 py-1 m-2 rounded-lg opacity-90 hover:opacity-70 relative'
+			className='px-2 py-1 m-2 rounded-lg opacity-90 hover:opacity-80 hover:scale-105 relative ring-1 ring-slate-900 shadow-lg ease-in-out duration-200'
 		>
 			<button
 				onClick={handleRemove}
@@ -17,7 +17,7 @@ const TagCard = ({ tag }) => {
 				X
 			</button>
 			<h1
-				className='text-3xl text-white font-semibold text-outline '
+				className='text-3xl text-white font-semibold text-outline'
 				style={{
 					textShadow:
 						'1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000',
