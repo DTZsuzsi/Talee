@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class LocationService {
-//  private final LocationDAO locationDAO;
   private final LocationRepository locationRepository;
 
   @Autowired

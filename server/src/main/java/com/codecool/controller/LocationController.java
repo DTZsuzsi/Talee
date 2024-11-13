@@ -11,7 +11,6 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/locations")
-//@CrossOrigin(origins = "http://localhost:5173")
 public class LocationController {
   private final LocationService locationService;
 
@@ -19,8 +18,6 @@ public class LocationController {
   public LocationController(LocationService locationService) {
     this.locationService = locationService;
   }
-
-  //TODO deleteapping, patchmapping
 
   @GetMapping
   public Set<LocationDTO> getLocations() {
