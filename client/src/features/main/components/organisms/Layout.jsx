@@ -1,5 +1,3 @@
-/** @format */
-
 import { Outlet } from 'react-router-dom';
 import Header from './Header';
 import Divider from '../atoms/Divider';
