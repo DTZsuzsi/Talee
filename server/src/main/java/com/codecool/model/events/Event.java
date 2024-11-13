@@ -27,6 +27,7 @@ public class Event {
     private String description;
 
     @ManyToOne
+    @JoinColumn(name = "location_id")
     private Location location;
 //    private int location_id;
 
