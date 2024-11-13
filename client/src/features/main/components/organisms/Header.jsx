@@ -1,5 +1,3 @@
-/** @format */
-
 import { CgProfile } from 'react-icons/cg';
 import { FaSearch } from 'react-icons/fa';
 import { ImAccessibility } from 'react-icons/im';
