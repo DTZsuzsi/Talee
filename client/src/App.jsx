@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 
 import Welcome from './features/welcome/Welcome.jsx';
-import Layout from './features/main/components/organisms/Layout.jsx';
+import LocationDetailPage from "./features/locations/LocationDetailPage.jsx";
 import AllTagsPage from './features/tag/AllTagsPage.jsx';
 import AllTagCategoriesPage from './features/tag/AllTagCategoriesPage.jsx';
 import EventRoutes from './features/events/EventRoutes.jsx';
