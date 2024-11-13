@@ -60,7 +60,7 @@ function NewLocationForm() {
                     <InputField
                         label="Email"
                         type="text"
-                        value={newLocation.location_id}
+                        value={newLocation.email}
                         onChange={(e) => setNewLocation({...newLocation, email: e.target.value})}
                     />
                     <InputField

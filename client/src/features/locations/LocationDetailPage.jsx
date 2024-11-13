@@ -55,7 +55,7 @@ function LocationDetailPage() {
 
             </div>
             <div>
-                <Link to={`/locations/${locationId}/modify`}>
+                <Link to={`/locations/${locationId}/update`}>
                     <  HiMiniPencilSquare className="h-10 w-10 text-blue-600 mr-2"/>
 
                 </Link>
