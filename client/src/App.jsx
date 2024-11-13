@@ -2,13 +2,13 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 
 import Welcome from './features/welcome/Welcome.jsx';
-import LocationDetailPage from "./features/locations/LocationDetailPage.jsx";
 import AllTagsPage from './features/tag/AllTagsPage.jsx';
 import AllTagCategoriesPage from './features/tag/AllTagCategoriesPage.jsx';
 import EventRoutes from './features/events/EventRoutes.jsx';
 import LocationsRoutes from './features/locations/LocationRoutes.jsx';
 import UserRoutes from './features/users/UserRoutes.jsx';
 import Home from "./features/main/components/organisms/Home.jsx";
+import Layout from "./features/main/components/organisms/Layout.jsx";
 
 function App() {
   return (
