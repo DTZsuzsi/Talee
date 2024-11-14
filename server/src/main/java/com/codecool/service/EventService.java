@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class EventService {
@@ -102,5 +103,13 @@ public class EventService {
         return new LocationInEvent(location.getId(), location.getName());
     }
 
+    public boolean deleteTagFromEvent(int eventId, int tagId){
+        Event event = eventRepository.findEventById(eventId);
+        Set<Tag> tags=event.getTags();
+        Set<Tag> updatedTags=tags.stream().filter(tag -> tag.getId()!=tagId).collect(Collectors.toSet());
+
+        event.setTags(updatedTags);
+        return eventRepository.save(event).getId()>0;
+    }
 
 }

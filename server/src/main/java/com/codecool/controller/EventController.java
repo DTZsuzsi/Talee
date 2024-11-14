@@ -51,4 +51,8 @@ public class EventController {
        return eventService.addTagToEvent(eventId, tagDTO);
 }
 
+@DeleteMapping("/tag/{eventId}")
+    public boolean deleteTag(@PathVariable int eventId, @RequestParam int tagId) {
+       return eventService.deleteTagFromEvent(eventId,tagId);
+}
 }

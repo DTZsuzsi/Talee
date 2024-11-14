@@ -1,25 +1,15 @@
 
 
-const TagCard = ({ tag }) => {
+const TagCard = ({ tag, onClick }) => {
 	
 
-	const handleRemove =  async () => {
-		
-		const response= await fetch(`/api/tags/${tag.id}`, {
-			method: 'DELETE'
-		})
-		const data= await response.json();
-
-		console.log('remove'+data);
-		
-	};
 	return (
 		<div
 			style={{ background: `${tag.color}` }}
 			className='px-2 py-1 m-2 rounded-lg opacity-90 hover:opacity-80 hover:scale-105 relative ring-1 ring-slate-900 shadow-lg ease-in-out duration-200'
 		>
 			<button
-				onClick={handleRemove}
+				onClick={onClick}
 				className="opacity-100 absolute -top-1 -right-1 bg-red-600 rounded-full w-5 h-5 font-bold text-xs flex justify-center items-center text-white hover:bg-red-900">
 				X
 			</button>

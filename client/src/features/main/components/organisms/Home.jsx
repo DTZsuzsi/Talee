@@ -10,7 +10,7 @@ const Home = () => {
     const [events, setEvents] = useState();
     const [locations, setLocations] = useState();
     const [tags, setTags]=useState(null);
-    const [addNewTag, setAddNewTag]=useState(false);
+    const [tagChange, setTagChange]=useState(false);
 
     useEffect(() => {
         async function fetchEvents() {
@@ -34,7 +34,7 @@ const Home = () => {
         fetchEvents();
         fetchLocations();
         fetchTags();
-    }, [addNewTag]);
+    }, [tagChange]);
 
     
     
@@ -62,7 +62,7 @@ const Home = () => {
 
 
 async function handleNewTag(id, e) {
-    setAddNewTag(false);
+    setTagChange(false);
   
     const selectedTagName = e.target.value;
     const tagToSend = findTag(selectedTagName);
@@ -75,7 +75,7 @@ async function handleNewTag(id, e) {
   
     const data = await response.json();
     console.log(data);
-    setAddNewTag(true);
+    setTagChange(true);
   }
   
   function findTag(tagName) {
@@ -88,6 +88,13 @@ async function handleNewTag(id, e) {
     return tagFound;
   }
   
+async  function handleDeleteTag(event, tag){
+    setTagChange(false);
+const response= await fetch(`/api/events/tag/${event.id}?tagId=${tag.id}`, {method: "DELETE"});
+const data= await response.json();
+console.log(data);
+setTagChange(true);
+  }
   // Render event cards
   let eventCards = [];
   if (events) {
@@ -105,7 +112,7 @@ async function handleNewTag(id, e) {
        <ul className="flex flex-wrap justify-around">
         {event.tags?.map((tag) => (
           <li key={tag.id} className="mx-auto">
-            <TagCard tag={tag} />
+            <TagCard tag={tag} onClick={()=>handleDeleteTag(event, tag)}/>
           </li>
         ))}
         </ul>
