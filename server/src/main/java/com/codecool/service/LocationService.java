@@ -61,7 +61,7 @@ public class LocationService {
     );
   }
 
-  public long addLocation(NewLocationDTO location, List<NewOpeningHoursDTO> openingHours) {
+  public long addLocation(NewLocationDTO location) {
     //TODO check if there is already a location with that name and specific other details? (eg. address),
     // after saving the location call addOpeningHours method to add the openinghours
     Location newLocation = new Location();
@@ -73,7 +73,7 @@ public class LocationService {
     newLocation.setAdminUser(location.adminUser());
     long savedLocationId = locationRepository.save(newLocation).getId();
 
-    for (NewOpeningHoursDTO newOpeningHoursDTO : openingHours) {
+    for (NewOpeningHoursDTO newOpeningHoursDTO : location.openingHours()) {
       openingHoursService.addNewOpeningHours(newOpeningHoursDTO);
     }
 
