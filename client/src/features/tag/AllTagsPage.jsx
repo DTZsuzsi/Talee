@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import InputField from '../main/components/atoms/InputField';
 import SelectField from '../main/components/atoms/SelectField';
 import TagCard from './components/TagCard';
+import { Link } from 'react-router-dom';
 
 function AllTagsPage() {
   const [tags, setTags] = useState(null);
@@ -69,7 +70,11 @@ function AllTagsPage() {
     setTagChange(true);
   }
   return (
+    
     <div>
+          <Link to={"/tagcategories"}>
+           <button type='click' className='mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg mb-10'>Go to categories</button>
+           </Link>
     <div>
         <form onSubmit={handleNew}>
           <InputField label='Name' type='text' value={newTag.name} onChange={(e) => setNewTag({ ...newTag, name: e.target.value })} />
