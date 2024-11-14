@@ -9,6 +9,7 @@ import LocationsRoutes from './features/locations/LocationRoutes.jsx';
 import UserRoutes from './features/users/UserRoutes.jsx';
 import Home from "./features/main/components/organisms/Home.jsx";
 import Layout from "./features/main/components/organisms/Layout.jsx";
+import PageNotFound from './features/main/components/molecules/PageNotFound.jsx';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="users/*" element={<UserRoutes />} />
             <Route path="tags" element={<AllTagsPage />} />
             <Route path="tagcategories" element={<AllTagCategoriesPage />} />
+            <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>
       </BrowserRouter>
