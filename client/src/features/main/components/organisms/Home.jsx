@@ -112,7 +112,7 @@ setTagChange(true);
        <ul className="flex flex-wrap justify-around">
         {event.tags?.map((tag) => (
           <li key={tag.id} className="mx-auto">
-            <TagCard tag={tag} onClick={()=>handleDeleteTag(event, tag)}/>
+            <TagCard tag={tag} onClick={()=>handleDeleteTag(event, tag)} color={tag.color}/>
           </li>
         ))}
         </ul>

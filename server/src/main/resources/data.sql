@@ -22,74 +22,116 @@ VALUES ('2024-11-02', 'Állatkertek éjszakája', 'Éjjel is jöhettek', 1, 'Mar
 
 -- Insert Tag Categories
 INSERT INTO tag_category(name, color)
-VALUES
-    ('company type', 'green'),
-    ('sporty', 'blue'),
-    ('culture', 'black'),
-    ('romantic', 'red'),
-    ('family', 'yellow'),
-    ('prices', 'grey'),
-    ('gastronomy', 'brown'),
-    ('other', 'purple'),
-    ('adventure', 'orange'),
-    ('education', 'lightblue'),
-    ('music', 'pink'),
-    ('wellness', 'teal'),
-    ('technology', 'silver'),
-    ('nature', 'green'),
-    ('art', 'purple'),
-    ('events', 'gold');
+VALUES  ('company', '#ff7f50'),         -- Coral
+('sporty', '#b497d6'),        -- Lavender
+('culture', '#f9e550'),       -- Light Yellow
+('romantic', '#ff00ff'),         -- Magenta
+('family', '#ff6600'),         -- Bright Orange
+('prices', '#d3d3d3'),     -- Soft Gray
+('gastronomy', '#5e2d98'),          -- Dark Purple
+('other', '#30d5c8');      -- Turquoise
 
--- Insert Tags (50 tags)
-INSERT INTO tag(name, tag_category_id)
-VALUES
-    ('big', 1),
-    ('romantic', 4),
-    ('family friendly', 5),
-    ('hiking', 2),
-    ('outdoor', 2),
-    ('educational', 10),
-    ('concert', 3),
-    ('fitness', 6),
-    ('startup', 1),
-    ('vegan', 6),
-    ('technology expo', 13),
-    ('theater', 3),
-    ('children', 5),
-    ('workshop', 10),
-    ('holiday', 5),
-    ('romantic dinner', 4),
-    ('sports festival', 2),
-    ('culinary', 7),
-    ('networking', 13),
-    ('green space', 6),
-    ('comedy', 3),
-    ('business conference', 1),
-    ('craft beer', 7),
-    ('marathon', 2),
-    ('art exhibition', 14),
-    ('family event', 5),
-    ('volunteer', 1),
-    ('classical music', 12),
-    ('tech talk', 13),
-    ('camping', 2),
-    ('foodie', 7),
-    ('family picnic', 5),
-    ('startup pitch', 1),
-    ('fashion show', 14),
-    ('mental health', 12),
-    ('film screening', 14),
-    ('mystery event', 14),
-    ('museum tour', 14),
-    ('holiday market', 7),
-    ('pop-up shop', 1),
-    ('team building', 1),
-    ('charity event', 1),
-    ('outdoor movie night', 2),
-    ('summer festival', 2),
-    ('eco-friendly', 6),
-    ('local art', 14),
-    ('book reading', 14),
-    ('tasting event', 7),
-('leadership summit', 1),
-('concert in the park', 3);
+
+-- Tags for category id 1 ('company type')
+INSERT INTO tag(name, tag_category_id) VALUES
+                                           ('big', 1),
+                                           ('corporate', 1),
+                                           ('startup', 1),
+                                           ('enterprise', 1),
+                                           ('local business', 1),
+                                           ('eco-friendly', 1),
+                                           ('community', 1),
+                                           ('non-profit', 1),
+                                           ('technology', 1),
+                                           ('small business', 1);
+
+-- Tags for category id 2 ('sporty')
+INSERT INTO tag(name, tag_category_id) VALUES
+                                           ('outdoor', 2),
+                                           ('adventure', 2),
+                                           ('fitness', 2),
+                                           ('athletic', 2),
+                                           ('wellness', 2),
+                                           ('training', 2),
+                                           ('hiking', 2),
+                                           ('gym', 2),
+                                           ('cardio', 2),
+                                           ('yoga', 2);
+
+-- Tags for category id 3 ('culture')
+INSERT INTO tag(name, tag_category_id) VALUES
+                                           ('museum', 3),
+                                           ('art', 3),
+                                           ('exhibition', 3),
+                                           ('history', 3),
+                                           ('literature', 3),
+                                           ('festival', 3),
+                                           ('theatre', 3),
+                                           ('cinema', 3),
+                                           ('heritage', 3),
+                                           ('classical music', 3);
+
+-- Tags for category id 4 ('romantic')
+INSERT INTO tag(name, tag_category_id) VALUES
+                                           ('dinner date', 4),
+                                           ('sunset', 4),
+                                           ('picnic', 4),
+                                           ('candlelight', 4),
+                                           ('weekend getaway', 4),
+                                           ('honeymoon', 4),
+                                           ('date night', 4),
+                                           ('cozy', 4),
+                                           ('flowers', 4),
+                                           ('proposal', 4);
+
+-- Tags for category id 5 ('family')
+INSERT INTO tag(name, tag_category_id) VALUES
+                                           ('family friendly', 5),
+                                           ('kids', 5),
+                                           ('petting zoo', 5),
+                                           ('amusement park', 5),
+                                           ('picnic', 5),
+                                           ('crafts', 5),
+                                           ('board games', 5),
+                                           ('playground', 5),
+                                           ('camping', 5),
+                                           ('outdoor fun', 5);
+
+-- Tags for category id 6 ('prices')
+INSERT INTO tag(name, tag_category_id) VALUES
+                                           ('free entry', 6),
+                                           ('discount', 6),
+                                           ('promo', 6),
+                                           ('tickets', 6),
+                                           ('membership', 6),
+                                           ('subscription', 6),
+                                           ('bundle', 6),
+                                           ('sale', 6),
+                                           ('early bird', 6),
+                                           ('VIP access', 6);
+
+-- Tags for category id 7 ('gastronomy')
+INSERT INTO tag(name, tag_category_id) VALUES
+                                           ('fine dining', 7),
+                                           ('street food', 7),
+                                           ('organic', 7),
+                                           ('local cuisine', 7),
+                                           ('wine tasting', 7),
+                                           ('brunch', 7),
+                                           ('food festival', 7),
+                                           ('vegetarian', 7),
+                                           ('seafood', 7),
+                                           ('dessert', 7);
+
+-- Tags for category id 8 ('other')
+INSERT INTO tag(name, tag_category_id) VALUES
+                                           ('networking', 8),
+                                           ('online event', 8),
+                                           ('fundraiser', 8),
+                                           ('photography', 8),
+                                           ('volunteering', 8),
+                                           ('workshop', 8),
+                                           ('DIY', 8),
+                                           ('meetup', 8),
+                                           ('webinar', 8),
+                                           ('social gathering', 8);
