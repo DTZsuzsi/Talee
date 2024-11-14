@@ -1,23 +1,28 @@
 package com.codecool.model.location;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.EnumMap;
 import java.util.Map;
 
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class OpeningHours {
-  private final Map<DayOfWeek, TimeRange> openingHoursMap;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
+  private DayOfWeek dayOfWeek;
+  private LocalTime openingTime;
+  private LocalTime closingTime;
+  @ManyToOne
+  @JoinColumn(name = "location_id")
+  private Location location;
 
-  public OpeningHours() {
-    openingHoursMap = new EnumMap<>(DayOfWeek.class);
-  }
-
-  //TODO change access modifier to package-private?
-  public void setOpeningHoursForDay(DayOfWeek day, TimeRange businessHours) {
-    openingHoursMap.put(day, businessHours);
-  }
-
-  //TODO change access modifier to package-private?
-  public void deleteOpeningHoursForDay(DayOfWeek day) {
-    openingHoursMap.remove(day);
-  }
 }

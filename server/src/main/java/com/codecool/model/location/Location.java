@@ -32,7 +32,9 @@ public class Location {
   @JoinColumn(name = "user_id")
   private User adminUser;
 
-//  private OpeningHours openingHours;
+  @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private List<OpeningHours> openingHours;
+
   @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<Event> events;
   private String description;
@@ -41,16 +43,5 @@ public class Location {
   public boolean addEvent(Event event) {
     return events.add(event);
   }
-
-//  public boolean changeOpeningHoursForDay(DayOfWeek day, TimeRange newHours) {
-//    openingHours.setOpeningHoursForDay(day, newHours);
-//    return true;
-//  }
-//
-//  public boolean deleteOpeningHoursForDay(DayOfWeek day) {
-//    openingHours.deleteOpeningHoursForDay(day);
-//    return true;
-//  }
-
 
 }
