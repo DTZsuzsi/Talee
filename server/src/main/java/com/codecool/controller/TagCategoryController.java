@@ -25,4 +25,9 @@ public class TagCategoryController {
     public long addTagCategory(@RequestBody TagCategoryDTO tagCategoryDTO) {
         return tagCategoryService.createNewTagCategory(tagCategoryDTO);
     }
+
+    @DeleteMapping("/{categoryId}")
+    public boolean deleteTagCategory(@PathVariable long categoryId) {
+        return tagCategoryService.deleteCategoryById(categoryId);
+    }
 }
