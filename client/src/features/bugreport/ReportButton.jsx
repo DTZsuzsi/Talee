@@ -15,7 +15,6 @@ const ReportButton = () => {
 
 	const handleButtonClick = () => {
 		setIsClicked(!isClicked); // Toggle the button state
-		// setShowPopup(true); // Show the popup on button click
 	};
 
 	const handleClosePopup = () => {
@@ -71,7 +70,6 @@ const ReportButton = () => {
 						<h2 className='text-xl font-bold mb-4'>Report Issue</h2>
 						<p className='mb-4'>Describe your issue here...</p>
 						<ReportForm onClose={handleClosePopup} type={type} />
-						
 					</div>
 				</div>
 			)}
