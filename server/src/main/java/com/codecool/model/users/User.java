@@ -1,16 +1,13 @@
 package com.codecool.model.users;
 
 import com.codecool.model.events.Event;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.experimental.Accessors;
+import lombok.*;
 
 import java.util.Set;
 
 @Entity
 @Data
-@Accessors(fluent = true)
 @Table(name = "talee_user")
 public class User {
     @Id

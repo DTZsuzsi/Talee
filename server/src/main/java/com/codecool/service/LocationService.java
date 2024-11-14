@@ -3,60 +3,41 @@ package com.codecool.service;
 
 import com.codecool.DTO.location.LocationDTO;
 import com.codecool.DTO.location.NewLocationDTO;
+import com.codecool.mapper.LocationMapper;
 import com.codecool.model.locations.Location;
 import com.codecool.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @Service
 public class LocationService {
-//  private final LocationDAO locationDAO;
   private final LocationRepository locationRepository;
+  private final LocationMapper locationMapper = LocationMapper.INSTANCE;
+
 
   @Autowired
   public LocationService(LocationRepository locationRepository) {
     this.locationRepository = locationRepository;
   }
 
-  public Set<LocationDTO> getAllLocations() {
-    Set<Location> locations = new HashSet<>(locationRepository.findAll());
+  public List<LocationDTO> getAllLocations() {
+    List<Location> locations = locationRepository.findAll();
 
-    return locations.stream().map(location -> new LocationDTO(
-            location.getId(),
-            location.getName(),
-            location.getAddress(),
-            location.getPhone(),
-            location.getEmail(),
-            location.getDescription(),
-            location.getAdminUser()
-    )).collect(Collectors.toSet());
+    return locations.stream()
+            .map(locationMapper::locationToLocationDTO)
+            .toList();
   }
 
   public LocationDTO getLocationById(int id) {
     Location location = locationRepository.getLocationById(id);
-    return new LocationDTO(location.getId(),
-            location.getName(),
-            location.getAddress(),
-            location.getPhone(),
-            location.getEmail(),
-            location.getDescription(),
-            location.getAdminUser());
+    return locationMapper.locationToLocationDTO(location);
   }
 
   public int addLocation(NewLocationDTO location) {
-    Location newLocation = new Location();
-    newLocation.setName(location.name());
-    newLocation.setAddress(location.address());
-    newLocation.setPhone(location.phone());
-    newLocation.setEmail(location.email());
-    newLocation.setDescription(location.description());
-    newLocation.setAdminUser(location.adminUser());
-
+    Location newLocation = locationMapper.newLocationDTOToLocation(location);
     return locationRepository.save(newLocation).getId();
   }
 

@@ -3,6 +3,7 @@ package com.codecool.model.locations;
 import com.codecool.model.events.Event;
 import com.codecool.model.users.User;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,9 +11,7 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class Location {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +26,6 @@ public class Location {
   private String instagram;
 
   @ManyToOne
-  @JoinColumn(name = "user_id")
   private User adminUser;
 
 

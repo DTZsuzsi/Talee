@@ -27,13 +27,11 @@ public class Event {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "location_id")
     private Location location;
-//    private int location_id;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "event_user", // Join table name
+            name = "event_users", // Join table name
             joinColumns = @JoinColumn(name = "event_id"), // Foreign key in join table for Event
             inverseJoinColumns = @JoinColumn(name = "user_id") // Foreign key in join table for User
     )

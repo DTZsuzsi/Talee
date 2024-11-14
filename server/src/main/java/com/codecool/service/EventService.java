@@ -2,18 +2,19 @@ package com.codecool.service;
 
 import com.codecool.DTO.event.EventDTO;
 import com.codecool.DTO.event.NewEventDTO;
+import com.codecool.mapper.EventMapper;
+import com.codecool.mapper.UserMapper;
 import com.codecool.model.events.Event;
 import com.codecool.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class EventService {
-//    private final EventsDAO eventsDAO;
     private final EventRepository eventRepository;
+    private final EventMapper eventMapper = EventMapper.INSTANCE;
 
     @Autowired
     public EventService(EventRepository eventRepository) {
@@ -22,31 +23,24 @@ public class EventService {
 
     public EventDTO getEventById(int id) {
         Event event = eventRepository.findEventById(id);
-        return new EventDTO(event.getId(), event.getDate(), event.getName(), event.getDescription(), event.getLocation(),
-                event.getUsers(), event.getOwner(), event.getSize(), event.getTags(), event.getStatus(), event.getTimestamp());
-
+        return eventMapper.eventToEventDTO(event);
     }
 
     public int addEvent(NewEventDTO newEventDTO) {
-        Event newEvent = new Event(newEventDTO.date(), newEventDTO.name(), newEventDTO.description(), newEventDTO.location(),
-                newEventDTO.owner(), newEventDTO.size(), newEventDTO.tags(), newEventDTO.status());
+        Event newEvent = eventMapper.newEventToEvent(newEventDTO);
         return eventRepository.save(newEvent).getId();
     }
 
     public boolean modifyEvent(EventDTO eventDTO) {
-        Event updatedEvent=new Event(eventDTO.id(), eventDTO.date(), eventDTO.name(), eventDTO.description(),eventDTO.location(),
-             eventDTO.users(),   eventDTO.owner(), eventDTO.size(),eventDTO.tags(),eventDTO.status(),eventDTO.timestamp());
-    return eventRepository.save(updatedEvent).getId()>0;
+        Event updatedEvent = eventMapper.eventDTOToEvent(eventDTO);
+        return eventRepository.save(updatedEvent).getId() > 0;
     }
+
     public List<EventDTO> getAllEvents() {
         List<Event> events = eventRepository.findAll();
-        List<EventDTO> eventDTOs = new ArrayList<>();
-        for (Event event : events) {
-            EventDTO eventDTO=new EventDTO(event.getId(), event.getDate(),event.getName(), event.getDescription(),event.getLocation(),
-                    null,event.getOwner(),event.getSize(),null,event.getStatus(),event.getTimestamp());
-            eventDTOs.add(eventDTO);
-        }
-        return eventDTOs;
+        return events.stream()
+                .map(eventMapper::eventToEventDTO)
+                .toList();
     }
 
     public boolean deleteEventById(int id){

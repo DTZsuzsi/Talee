@@ -7,6 +7,7 @@ import com.codecool.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -23,7 +24,7 @@ public class LocationController {
   //TODO deleteapping, patchmapping
 
   @GetMapping
-  public Set<LocationDTO> getLocations() {
+  public List<LocationDTO> getLocations() {
     return locationService.getAllLocations();
   }
 
