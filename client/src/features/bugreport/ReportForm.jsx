@@ -50,13 +50,13 @@ const ReportForm = ({ onClose, type }) => {
 			<div className='flex justify-between mx-2'>
 				<button
 					type='submit'
-					className='px-4 py-2 bg-cyan-600 text-white rounded-md'
+					className='px-4 py-2 bg-[#3B82F6] hover:bg-[#2563EB] text-white rounded-md'
 				>
 					Submit
 				</button>
 				<button
 					onClick={onClose}
-					className='px-4 py-2 bg-red-500 text-white rounded-md'
+					className='px-4 py-2 bg-red-400 hover:bg-red-500 text-white rounded-md'
 				>
 					Close
 				</button>
