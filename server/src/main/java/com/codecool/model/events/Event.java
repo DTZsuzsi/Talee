@@ -29,7 +29,6 @@ public class Event {
     @ManyToOne
     @JoinColumn(name = "location_id")
     private Location location;
-//    private int location_id;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
@@ -82,6 +81,12 @@ public class Event {
         this.status = status;
     }
 
+
+    public void addTag(Tag tag) {
+        if (!tags.contains(tag)) {
+            tags.add(tag);
+        }
+    }
 
 }
 

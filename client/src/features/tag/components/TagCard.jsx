@@ -1,14 +1,21 @@
-// I added text shadows around text to make it more readable when bg color is bright.
-//I could not use 0.5px values so instead I have set the fonts to a bigger size and scaled it down with a transform
+
+
 const TagCard = ({ tag }) => {
-	const handleRemove = () => {
-		//TODO create the function that validates and removes a tag. If you want to refresh the tags too you probably want to 
-		//pass a function as a prop to handle that as well
-		console.log('remove');
+	
+
+	const handleRemove =  async () => {
+		
+		const response= await fetch(`/api/tags/${tag.id}`, {
+			method: 'DELETE'
+		})
+		const data= await response.json();
+
+		console.log('remove'+data);
+		
 	};
 	return (
 		<div
-			style={{ backgroundColor: `${tag.color}` }}
+			style={{ background: `${tag.color}` }}
 			className='px-2 py-1 m-2 rounded-lg opacity-90 hover:opacity-80 hover:scale-105 relative ring-1 ring-slate-900 shadow-lg ease-in-out duration-200'
 		>
 			<button

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import InputField from "../main/components/atoms/InputField";
 import SelectField from "../main/components/atoms/SelectField";
+import TagCard from "./components/TagCard";
 
 function AllTagsPage(){
    const [tags, setTags]=useState(null);
@@ -68,7 +69,7 @@ console.log(categorySearch);
     return(
    <div> {tags?.map((tag)=> 
 <div key={tag.id}> 
-<p> {tag.name}</p>
+<TagCard tag={tag}/>
 
 
 </div>

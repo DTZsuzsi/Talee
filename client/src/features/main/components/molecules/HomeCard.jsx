@@ -15,6 +15,7 @@ const HomeCard = ( { title, href, description, date } ) => {
                     <p>{date}</p>
                 </div>
                 <p className="w-full max-w-sm">{description}</p>
+              
             </div>
             
         </a>

@@ -8,7 +8,8 @@ import EventRoutes from './features/events/EventRoutes.jsx';
 import LocationsRoutes from './features/locations/LocationRoutes.jsx';
 import UserRoutes from './features/users/UserRoutes.jsx';
 import Home from "./features/main/components/organisms/Home.jsx";
-import Layout from "./features/main/components/templates/Layout.jsx";
+import Layout from './features/main/components/organisms/Layout.jsx';
+//import Layout from "./features/main/components/templates/Layout.jsx";
 
 function App() {
   return (
