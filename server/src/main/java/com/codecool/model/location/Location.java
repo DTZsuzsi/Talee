@@ -44,4 +44,8 @@ public class Location {
     return events.add(event);
   }
 
+  public boolean addOpeningHours(OpeningHours openingHours) {
+    return this.openingHours.add(openingHours);
+  }
+
 }

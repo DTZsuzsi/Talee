@@ -1,10 +1,7 @@
 package com.codecool.service;
 
 
-import com.codecool.DTO.locationDTO.LocationDTO;
-import com.codecool.DTO.locationDTO.NewLocationDTO;
-import com.codecool.DTO.locationDTO.NewOpeningHoursDTO;
-import com.codecool.DTO.locationDTO.OpeningHoursDTO;
+import com.codecool.DTO.locationDTO.*;
 import com.codecool.exceptions.LocationNotFoundException;
 import com.codecool.model.location.Location;
 import com.codecool.model.location.OpeningHours;
@@ -14,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -71,13 +67,34 @@ public class LocationService {
     newLocation.setEmail(location.email());
     newLocation.setDescription(location.description());
     newLocation.setAdminUser(location.adminUser());
-    long savedLocationId = locationRepository.save(newLocation).getId();
+    Location savedLocation = locationRepository.save(newLocation);
 
-    for (NewOpeningHoursDTO newOpeningHoursDTO : location.openingHours()) {
+    for (NewOpeningHoursWithoutLocationDTO newOpeningHours : location.openingHours()) {
+//      OpeningHours newOpeningHours = new OpeningHours();
+//      newOpeningHours.setDayOfWeek(newOpeningHours.getDayOfWeek());
+//      newOpeningHours.setOpeningTime(newOpeningHoursDTO.openingTime());
+//      newOpeningHours.setClosingTime(newOpeningHoursDTO.closingTime());
+//      newOpeningHours.setLocation(savedLocation);
+//      savedLocation.addOpeningHours(newOpeningHours);
+      LocationWithoutOpeningHoursDTO locationWithoutOpeningHoursDTO = new LocationWithoutOpeningHoursDTO(
+              savedLocation.getId(),
+              savedLocation.getName(),
+              savedLocation.getAddress(),
+              savedLocation.getPhone(),
+              savedLocation.getEmail(),
+              savedLocation.getDescription(),
+              savedLocation.getAdminUser()
+      );
+      NewOpeningHoursDTO newOpeningHoursDTO = new NewOpeningHoursDTO(
+              newOpeningHours.day(),
+              newOpeningHours.openingTime(),
+              newOpeningHours.closingTime(),
+              locationWithoutOpeningHoursDTO
+      );
       openingHoursService.addNewOpeningHours(newOpeningHoursDTO);
     }
 
-    return savedLocationId;
+    return savedLocation.getId();
   }
 
   @Transactional
