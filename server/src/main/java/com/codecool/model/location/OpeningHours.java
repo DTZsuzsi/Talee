@@ -23,7 +23,6 @@ public class OpeningHours {
   private LocalTime openingTime;
   private LocalTime closingTime;
   @ManyToOne
-  @JoinColumn(name = "location_id")
   private Location location;
 
 }

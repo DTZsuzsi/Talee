@@ -1,17 +1,57 @@
 package com.codecool.service;
 
+import com.codecool.DTO.locationDTO.NewOpeningHoursDTO;
+import com.codecool.DTO.locationDTO.OpeningHoursDTO;
+import com.codecool.exceptions.LocationNotFoundException;
+import com.codecool.model.location.Location;
+import com.codecool.model.location.OpeningHours;
+import com.codecool.repository.LocationRepository;
 import com.codecool.repository.OpeningHoursRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class OpeningHoursService {
   private final OpeningHoursRepository openingHoursRepository;
+  private final LocationService locationService;
+  private final LocationRepository locationRepository;
 
   @Autowired
-  public OpeningHoursService(OpeningHoursRepository openingHoursRepository) {
+  public OpeningHoursService(OpeningHoursRepository openingHoursRepository, LocationService locationService, LocationRepository locationRepository) {
     this.openingHoursRepository = openingHoursRepository;
+    this.locationService = locationService;
+    this.locationRepository = locationRepository;
   }
 
+  public List<OpeningHoursDTO> getAllOpeningHoursByLocationId(long locationId) {
+    List<OpeningHours> openingHours = openingHoursRepository.findByLocationId(locationId);
+    return openingHours.stream().map(OpeningHoursService::createOpeningHoursDTO).toList();
+  }
+
+  private static OpeningHoursDTO createOpeningHoursDTO(OpeningHours openingHoursPerDay) {
+    return new OpeningHoursDTO(
+            openingHoursPerDay.getId(),
+            openingHoursPerDay.getDayOfWeek(),
+            openingHoursPerDay.getOpeningTime(),
+            openingHoursPerDay.getClosingTime()
+    );
+  }
+
+  @Transactional
+  public long addNewOpeningHours(NewOpeningHoursDTO openingHoursPerDay) {
+    OpeningHours newOpeningHoursPerDay = new OpeningHours();
+    //TODO if existing location - source from DB -> throw exception if not found
+    Location existingLocation = locationRepository.findById(openingHoursPerDay.location().id())
+            .orElseThrow(() -> new LocationNotFoundException(openingHoursPerDay.location().id())
+    );
+    newOpeningHoursPerDay.setDayOfWeek(openingHoursPerDay.day());
+    newOpeningHoursPerDay.setOpeningTime(openingHoursPerDay.openingTime());
+    newOpeningHoursPerDay.setClosingTime(openingHoursPerDay.closingTime());
+    newOpeningHoursPerDay.setLocation(existingLocation);
+    return openingHoursRepository.save(newOpeningHoursPerDay).getId();
+  }
 
 }
