@@ -1,11 +1,11 @@
-import {useEffect, useState} from "react";
-import {Link, useNavigate, useParams} from "react-router-dom";
-import {HiMiniPencilSquare} from "react-icons/hi2";
-import {MdDeleteForever} from "react-icons/md";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { HiMiniPencilSquare } from "react-icons/hi2";
+import { MdDeleteForever } from "react-icons/md";
 
 function LocationDetailPage() {
-    const [location, setLocation]=useState(null);
-    const {locationId}=useParams();
+    const [location, setLocation] = useState(null);
+    const { locationId } = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -50,21 +50,27 @@ function LocationDetailPage() {
                 <p className='text-xl  px-2 mb-2'> {location.name}</p>
                 <p className='text-xl font-semibold px-2'> Address: </p>
                 <p className='text-xl  px-2 mb-2'> {location.address}</p>
+                <p className='text-xl font-semibold px-2'> Opening Hours: </p>
+                {location.openingHours && location.openingHours.map((openingHour) => (
+                    <div key={openingHour.day} className="mt-1">
+                        <p className='text-sm px-2 mb-2'> {openingHour.day}: {openingHour.openingTime} - {openingHour.closingTime}</p>
+                    </div>
+                ))}
                 <p className='text-l font-semibold px-2 mb-2'> {location.description}</p>
                 <p className='text-l font-semibold px-2 mb-2'> Phone: {location.phone}</p>
 
             </div>
             <div>
                 <Link to={`/locations/${locationId}/update`}>
-                    <  HiMiniPencilSquare className="h-10 w-10 text-blue-600 mr-2"/>
+                    <  HiMiniPencilSquare className="h-10 w-10 text-blue-600 mr-2" />
 
                 </Link>
-                <MdDeleteForever className="h-10 w-10 text-blue-600 mr-2" onClick={deleteLocation}/>
+                <MdDeleteForever className="h-10 w-10 text-blue-600 mr-2" onClick={deleteLocation} />
             </div>
 
         </div>
 
-)
+    )
 }
 
 export default LocationDetailPage;
