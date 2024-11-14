@@ -1,11 +1,12 @@
 
 
-const TagCard = ({ tag, onClick }) => {
+const TagCard = ({ tag, onClick, color }) => {
 	
+
 
 	return (
 		<div
-			style={{ background: `${tag.color}` }}
+			style={{ background: `${color}` }}
 			className='px-2 py-1 m-2 rounded-lg opacity-90 hover:opacity-80 hover:scale-105 relative ring-1 ring-slate-900 shadow-lg ease-in-out duration-200'
 		>
 			<button

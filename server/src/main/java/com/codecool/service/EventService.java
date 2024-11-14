@@ -65,7 +65,7 @@ public class EventService {
     private List<TagDTO> getTagDTOSet(Event event) {
         List<TagDTO> tagDTOSet=new ArrayList<>();
         for (Tag tag: event.getTags()){
-            TagDTO tagDTO=new TagDTO(tag.getId(), tag.getName(), tag.getTagCategory().getId(), tag.getCreatedAt());
+            TagDTO tagDTO=new TagDTO(tag.getId(), tag.getName(), tag.getTagCategory().getId(), tag.getTagCategory().getColor());
             tagDTOSet.add(tagDTO);
         }
         return tagDTOSet;
@@ -94,7 +94,7 @@ public class EventService {
     public boolean addTagToEvent(int eventId, TagDTO tagDTO) {
         Event event= eventRepository.findEventById(eventId);
         TagCategory tagCategory=tagCategoryRepository.findById(tagDTO.categoryId());
-        Tag tag= new Tag(tagDTO.id(), tagDTO.name(), tagCategory, tagDTO.createdAt());
+        Tag tag= new Tag(tagDTO.id(), tagDTO.name(), tagCategory, null);
         event.addTag(tag);
         return eventRepository.save(event).getId()>0;
     }
