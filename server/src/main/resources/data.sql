@@ -13,6 +13,15 @@ VALUES ('Fővárosi Állat- és Növénykert', '1146 Budapest, Állatkerti krt. 
         'https://hu.wikipedia.org/wiki/Margit-sziget', 'https://www.facebook.com/Margitsziget.oldal?fref=ts',
         '', 'A Margitsziget, mely a helyiek kedvenc városrésze és Budapest zöld szíve, a Duna közepén a Margit híd és az Árpád híd között terül el.');
 
+INSERT INTO opening_hours (day_of_week, opening_time, closing_time, location_id)
+VALUES ('MONDAY', '09:00', '16:00', 1),
+       ('TUESDAY', '09:00', '16:00', 1),
+       ('WEDNESDAY', '09:00', '16:00', 1),
+       ('THURSDAY', '09:00', '16:00', 1),
+       ('FRIDAY', '09:00', '16:00', 1),
+       ('SATURDAY', '09:00', '16:00', 1),
+       ('SUNDAY', '09:00', '16:00', 1);
+
 INSERT INTO event (date, name, description, location_id, owner, size, status)
 VALUES ('2024-11-02', 'Állatkertek éjszakája', 'Éjjel is jöhettek', 1, 'Marianna Molnár', 'BIG',
         'COMING'),

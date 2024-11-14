@@ -18,6 +18,7 @@ public class OpeningHours {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
+  @Enumerated(EnumType.STRING)
   private DayOfWeek dayOfWeek;
   private LocalTime openingTime;
   private LocalTime closingTime;
