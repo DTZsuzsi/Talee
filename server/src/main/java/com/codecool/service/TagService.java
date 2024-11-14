@@ -1,6 +1,6 @@
 package com.codecool.service;
 
-import com.codecool.DTO.tagDTO.TagDTO;
+import com.codecool.DTO.tag.TagDTO;
 import com.codecool.model.tags.Tag;
 import com.codecool.model.tags.TagCategory;
 import com.codecool.repository.TagCategoryRepository;

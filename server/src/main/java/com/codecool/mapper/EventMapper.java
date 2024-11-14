@@ -1,0 +1,16 @@
+package com.codecool.mapper;
+
+import com.codecool.DTO.event.EventDTO;
+import com.codecool.DTO.event.NewEventDTO;
+import com.codecool.model.events.Event;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
+
+@Mapper//(componentModel = "spring")
+public interface EventMapper {
+    EventMapper INSTANCE = Mappers.getMapper(EventMapper.class);
+
+    EventDTO eventToEventDTO(Event event);
+    Event eventDTOToEvent(EventDTO eventDTO);
+    Event newEventToEvent(NewEventDTO newEventDTO);
+}
