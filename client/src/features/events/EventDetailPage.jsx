@@ -18,16 +18,9 @@ useEffect(()=>{
           }
       
         const response=await fetch(`/api/events/${eventId}`);
-        
-
 
         if (response.ok) {
-            console.log("Hi");
-            console.log(response);
-            
             const data = await response.json();
-            
-            console.log(data);
             setEvent(data);
         }
        

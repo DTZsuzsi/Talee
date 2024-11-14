@@ -10,7 +10,9 @@ export default {
         background: '#00ffa2',
         text: '#004466',
         darkBackground: '#004466',
-        darkText: '#00ffa2'
+        darkText: '#00ffa2',
+				blueButton: '#3B82F6',
+				blueHover: '#2563EB',
       },
       fontFamily: {
         sans: ['Montserrat', 'sans-serif'],

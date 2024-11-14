@@ -14,6 +14,7 @@ import java.util.List;
 
 @Service
 public class LocationService {
+//  private final LocationDAO locationDAO;
   private final LocationRepository locationRepository;
   private final LocationMapper locationMapper = LocationMapper.INSTANCE;
 
@@ -42,11 +43,23 @@ public class LocationService {
   }
 
   @Transactional
-  public int deleteLocation(int id) {
+  public long deleteLocation(long id) {
     return locationRepository.deleteLocationById(id);
   }
 
-  //TODO implement rest of CRUD operations - delete, patch
+  public boolean updateLocation(LocationDTO location) {
+    Location existingLocation = locationRepository.findById(location.id())
+            .orElseThrow(() -> new LocationNotFoundException(location.id()));
+
+    existingLocation.setName(location.name());
+    existingLocation.setAddress(location.address());
+    existingLocation.setPhone(location.phone());
+    existingLocation.setEmail(location.email());
+    existingLocation.setDescription(location.description());
+    existingLocation.setAdminUser(location.adminUser());
+    return locationRepository.save(existingLocation).getId() != 0;
+  }
+
 
 
 }

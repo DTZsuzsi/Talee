@@ -15,7 +15,7 @@ import java.util.List;
 public class Location {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private long id;
   private String name;
 //  private ContactInfo contactInfo;
   private String address;
@@ -28,78 +28,11 @@ public class Location {
   @ManyToOne
   private User adminUser;
 
-
 //  private OpeningHours openingHours;
   @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<Event> events;
   private String description;
 
-//  public Location(int id, String name, String address, String phone, String email, String website, String facebook, String instagram, OpeningHours openingHours, List<Event> events, String description) {
-//    this.id = id;
-//    this.name = name;
-//    this.address = address;
-//    this.phone = phone;
-//    this.email = email;
-//    this.website = website;
-//    this.facebook = facebook;
-//    this.instagram = instagram;
-////    this.openingHours = openingHours;
-//    this.events = events;
-//    this.description = description;
-//  }
-//
-//  public Location(String name, String address, String phone, String email, String website, String facebook, String instagram, OpeningHours openingHours, String description) {
-//    this.name = name;
-//    this.address = address;
-//    this.phone = phone;
-//    this.email = email;
-//    this.website = website;
-//    this.facebook = facebook;
-//    this.instagram = instagram;
-////    this.openingHours = openingHours;
-//    this.events = new ArrayList<>();
-//    this.description = description;
-//  }
-
-  //unused
-  //  public Location(int id, String name, String address, String phone, String email, String description,
-//                  OpeningHours openingHours) {
-//    this.id = id;
-//    this.name = name;
-////    this.contactInfo = contactInfo;
-//    this.address = address;
-//    this.phone = phone;
-//    this.email = email;
-//
-//    this.description = description;
-//    this.openingHours = openingHours;
-//    events = new ArrayList<>();
-//  }
-
-
-//  public Location(String name, String address, String phone, String email, String website, String facebook,
-//                  String instagram, OpeningHours openingHours, List<Event> events, String description) {
-//    this.name = name;
-//    this.address = address;
-//    this.phone = phone;
-//    this.email = email;
-//    this.website = website;
-//    this.facebook = facebook;
-//    this.instagram = instagram;
-//    this.openingHours = openingHours;
-//    this.events = events;
-//    this.description = description;
-//  }
-
-//  public Location(int id, String name, String address, String phone, String email, String description) {
-//    this.id = id;
-//    this.name = name;
-//    this.address = address;
-//    this.phone = phone;
-//    this.email = email;
-//    this.description = description;
-//    events = new ArrayList<>();
-//  }
 
   public boolean addEvent(Event event) {
     return events.add(event);
@@ -114,18 +47,6 @@ public class Location {
 //    openingHours.deleteOpeningHoursForDay(day);
 //    return true;
 //  }
-
-  public void addWebsite(String website) {
-    this.website = website;
-  }
-
-  public void addFacebook(String facebook) {
-    this.facebook = facebook;
-  }
-
-  public void addInstagram(String instagram) {
-    this.instagram = instagram;
-  }
 
 
 }

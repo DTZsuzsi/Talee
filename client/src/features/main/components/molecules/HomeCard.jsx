@@ -10,7 +10,7 @@ const HomeCard = ( { title, href, description, date } ) => {
                     <img src="https://picsum.photos/200" alt="" />
                 </div>
                 <div className="w-full max-w-lg flex flex-col items-center gap-y-4">
-                    <h2 className="text-xl font-bold">{title}</h2>
+                    <h2 className="text-xl font-bold mx-8">{title}</h2>
                     <Reviews />
                     <p>{date}</p>
                 </div>
