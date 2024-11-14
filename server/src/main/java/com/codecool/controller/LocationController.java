@@ -11,7 +11,6 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/locations")
-//@CrossOrigin(origins = "http://localhost:5173")
 public class LocationController {
   private final LocationService locationService;
 
@@ -19,8 +18,6 @@ public class LocationController {
   public LocationController(LocationService locationService) {
     this.locationService = locationService;
   }
-
-  //TODO deleteapping, patchmapping
 
   @GetMapping
   public Set<LocationDTO> getLocations() {
@@ -33,18 +30,18 @@ public class LocationController {
   }
 
   @PostMapping
-  public int addLocation(@RequestBody NewLocationDTO location) {
+  public long addLocation(@RequestBody NewLocationDTO location) {
     return locationService.addLocation(location);
   }
 
   @DeleteMapping("/{id}")
-  public int deleteLocation(@PathVariable int id) {
+  public long deleteLocation(@PathVariable long id) {
     return locationService.deleteLocation(id);
   }
 
-//  @PatchMapping("/{id}")
-//  public boolean updateLocation(@PathVariable int id, @RequestBody LocationDTO location) {
-//    return locationService.updateLocation(location);
-//  }
+  @PatchMapping
+  public boolean updateLocation(@RequestBody LocationDTO location) {
+    return locationService.updateLocation(location);
+  }
 }
 

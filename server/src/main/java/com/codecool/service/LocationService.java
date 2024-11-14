@@ -3,6 +3,7 @@ package com.codecool.service;
 
 import com.codecool.DTO.locationDTO.LocationDTO;
 import com.codecool.DTO.locationDTO.NewLocationDTO;
+import com.codecool.exceptions.LocationNotFoundException;
 import com.codecool.model.location.Location;
 import com.codecool.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class LocationService {
-//  private final LocationDAO locationDAO;
   private final LocationRepository locationRepository;
 
   @Autowired
@@ -26,19 +26,16 @@ public class LocationService {
   public Set<LocationDTO> getAllLocations() {
     Set<Location> locations = new HashSet<>(locationRepository.findAll());
 
-    return locations.stream().map(location -> new LocationDTO(
-            location.getId(),
-            location.getName(),
-            location.getAddress(),
-            location.getPhone(),
-            location.getEmail(),
-            location.getDescription(),
-            location.getAdminUser()
-    )).collect(Collectors.toSet());
+    return locations.stream().map(LocationService::createLocationDTO).collect(Collectors.toSet());
   }
 
-  public LocationDTO getLocationById(int id) {
-    Location location = locationRepository.getLocationById(id);
+  public LocationDTO getLocationById(long id) {
+    return locationRepository.findById(id)
+            .map(LocationService::createLocationDTO)
+            .orElseThrow(() -> new LocationNotFoundException(id));
+  }
+
+  private static LocationDTO createLocationDTO(Location location) {
     return new LocationDTO(location.getId(),
             location.getName(),
             location.getAddress(),
@@ -48,7 +45,7 @@ public class LocationService {
             location.getAdminUser());
   }
 
-  public int addLocation(NewLocationDTO location) {
+  public long addLocation(NewLocationDTO location) {
     Location newLocation = new Location();
     newLocation.setName(location.name());
     newLocation.setAddress(location.address());
@@ -61,11 +58,23 @@ public class LocationService {
   }
 
   @Transactional
-  public int deleteLocation(int id) {
+  public long deleteLocation(long id) {
     return locationRepository.deleteLocationById(id);
   }
 
-  //TODO implement rest of CRUD operations - delete, patch
+  public boolean updateLocation(LocationDTO location) {
+    Location existingLocation = locationRepository.findById(location.id())
+            .orElseThrow(() -> new LocationNotFoundException(location.id()));
+
+    existingLocation.setName(location.name());
+    existingLocation.setAddress(location.address());
+    existingLocation.setPhone(location.phone());
+    existingLocation.setEmail(location.email());
+    existingLocation.setDescription(location.description());
+    existingLocation.setAdminUser(location.adminUser());
+    return locationRepository.save(existingLocation).getId() != 0;
+  }
+
 
 
 }
