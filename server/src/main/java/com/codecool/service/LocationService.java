@@ -3,6 +3,7 @@ package com.codecool.service;
 
 import com.codecool.DTO.locationDTO.LocationDTO;
 import com.codecool.DTO.locationDTO.NewLocationDTO;
+import com.codecool.DTO.locationDTO.NewOpeningHoursDTO;
 import com.codecool.DTO.locationDTO.OpeningHoursDTO;
 import com.codecool.exceptions.LocationNotFoundException;
 import com.codecool.model.location.Location;
@@ -20,10 +21,12 @@ import java.util.stream.Collectors;
 @Service
 public class LocationService {
   private final LocationRepository locationRepository;
+  private final OpeningHoursService openingHoursService;
 
   @Autowired
-  public LocationService(LocationRepository locationRepository) {
+  public LocationService(LocationRepository locationRepository, OpeningHoursService openingHoursService) {
     this.locationRepository = locationRepository;
+    this.openingHoursService = openingHoursService;
   }
 
   public Set<LocationDTO> getAllLocations() {
@@ -58,7 +61,9 @@ public class LocationService {
     );
   }
 
-  public long addLocation(NewLocationDTO location) {
+  public long addLocation(NewLocationDTO location, List<NewOpeningHoursDTO> openingHours) {
+    //TODO check if there is already a location with that name and specific other details? (eg. address),
+    // after saving the location call addOpeningHours method to add the openinghours
     Location newLocation = new Location();
     newLocation.setName(location.name());
     newLocation.setAddress(location.address());
@@ -66,8 +71,13 @@ public class LocationService {
     newLocation.setEmail(location.email());
     newLocation.setDescription(location.description());
     newLocation.setAdminUser(location.adminUser());
+    long savedLocationId = locationRepository.save(newLocation).getId();
 
-    return locationRepository.save(newLocation).getId();
+    for (NewOpeningHoursDTO newOpeningHoursDTO : openingHours) {
+      openingHoursService.addNewOpeningHours(newOpeningHoursDTO);
+    }
+
+    return savedLocationId;
   }
 
   @Transactional

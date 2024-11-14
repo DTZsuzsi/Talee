@@ -16,13 +16,11 @@ import java.util.List;
 @Service
 public class OpeningHoursService {
   private final OpeningHoursRepository openingHoursRepository;
-  private final LocationService locationService;
   private final LocationRepository locationRepository;
 
   @Autowired
-  public OpeningHoursService(OpeningHoursRepository openingHoursRepository, LocationService locationService, LocationRepository locationRepository) {
+  public OpeningHoursService(OpeningHoursRepository openingHoursRepository, LocationRepository locationRepository) {
     this.openingHoursRepository = openingHoursRepository;
-    this.locationService = locationService;
     this.locationRepository = locationRepository;
   }
 
