@@ -3,14 +3,17 @@ package com.codecool.service;
 
 import com.codecool.DTO.locationDTO.LocationDTO;
 import com.codecool.DTO.locationDTO.NewLocationDTO;
+import com.codecool.DTO.locationDTO.OpeningHoursDTO;
 import com.codecool.exceptions.LocationNotFoundException;
 import com.codecool.model.location.Location;
+import com.codecool.model.location.OpeningHours;
 import com.codecool.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -42,7 +45,17 @@ public class LocationService {
             location.getPhone(),
             location.getEmail(),
             location.getDescription(),
-            location.getAdminUser());
+            location.getAdminUser(),
+            location.getOpeningHours().stream().map(LocationService::createOpeningHoursDTO).collect(Collectors.toList()));
+  }
+
+  private static OpeningHoursDTO createOpeningHoursDTO(OpeningHours openingHoursPerDay) {
+    return new OpeningHoursDTO(
+            openingHoursPerDay.getId(),
+            openingHoursPerDay.getDayOfWeek(),
+            openingHoursPerDay.getOpeningTime(),
+            openingHoursPerDay.getClosingTime()
+    );
   }
 
   public long addLocation(NewLocationDTO location) {

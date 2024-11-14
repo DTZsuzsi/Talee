@@ -1,10 +1,9 @@
 package com.codecool.repository;
 
-import com.codecool.model.location.Location;
+import com.codecool.model.location.OpeningHours;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface LocationRepository extends JpaRepository<Location, Long> {
-    long deleteLocationById(long id);
+public interface OpeningHoursRepository extends JpaRepository<OpeningHours, Long> {
 }
