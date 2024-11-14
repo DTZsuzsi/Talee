@@ -25,7 +25,7 @@ INSERT INTO tag(name, tag_category_id) VALUES ('big',1), ('romantic',4),('family
 
 -- Reports for issues and content for testing purposes c:
 
-INSERT INTO reports (title, description, report_type, issued, solved, created_at, updated_at)
+INSERT INTO report (title, description, report_type, issued, solved, created_at, updated_at)
 VALUES
     ('Missing Event Details',
      'The event "Állatkertek éjszakája" does not have a full description or schedule. Please update with more information.',
