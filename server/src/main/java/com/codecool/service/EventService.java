@@ -1,11 +1,12 @@
 package com.codecool.service;
 
-import com.codecool.DTO.eventDTO.EventDTO;
-import com.codecool.DTO.eventDTO.NewEventDTO;
-import com.codecool.DTO.locationDTO.LocationInEvent;
-import com.codecool.DTO.tagDTO.TagDTO;
+import com.codecool.DTO.event.EventDTO;
+import com.codecool.DTO.location.LocationInEvent;
+import com.codecool.DTO.event.NewEventDTO;
+import com.codecool.DTO.tag.TagDTO;
+import com.codecool.mapper.EventMapper;
 import com.codecool.model.events.Event;
-import com.codecool.model.location.Location;
+import com.codecool.model.locations.Location;
 import com.codecool.model.tags.Tag;
 import com.codecool.model.tags.TagCategory;
 import com.codecool.repository.EventRepository;
@@ -23,6 +24,7 @@ public class EventService {
     private final EventRepository eventRepository;
     private final TagRepository tagRepository;
     private final TagCategoryRepository tagCategoryRepository;
+    private final EventMapper eventMapper = EventMapper.INSTANCE;
 
     @Autowired
     public EventService(EventRepository eventRepository, TagRepository tagRepository, TagCategoryRepository tagCategoryRepository) {
@@ -33,14 +35,14 @@ public class EventService {
 
     public EventDTO getEventById(int id) {
         Event event = eventRepository.findEventById(id);
+//        return eventMapper.eventToEventDTO(event);
         return new EventDTO(event.getId(), event.getDate(), event.getName(), event.getDescription(), getLocationDTOForEvent(event.getLocation()),
                 new ArrayList<>(), event.getOwner(), event.getSize(), getTagDTOSet(event), event.getStatus());
 
     }
 
     public int addEvent(NewEventDTO newEventDTO) {
-        Event newEvent = new Event(newEventDTO.date(), newEventDTO.name(), newEventDTO.description(), newEventDTO.location(),
-                newEventDTO.owner(), newEventDTO.size(), newEventDTO.tags(), newEventDTO.status());
+        Event newEvent = eventMapper.newEventToEvent(newEventDTO);
         return eventRepository.save(newEvent).getId();
     }
 
@@ -50,7 +52,10 @@ public class EventService {
         Event updatedEvent=new Event(eventDTO.id(), eventDTO.date(), eventDTO.name(), eventDTO.description(),null,
             new HashSet<>(),   eventDTO.owner(), eventDTO.size(),tags,eventDTO.status(),null);
     return eventRepository.save(updatedEvent).getId()>0;
+//        Event updatedEvent = eventMapper.eventDTOToEvent(eventDTO);
+//        return eventRepository.save(updatedEvent).getId() > 0;
     }
+
 
     private static Set<Tag> getTagSet(Collection<TagDTO> tagDTOs) {
         Set <Tag> tags=new HashSet<>();
@@ -72,7 +77,10 @@ public class EventService {
     }
 
     public List<EventDTO> getAllEvents() {
-        List<Event> events = eventRepository.findAll();
+  List<Event> events = eventRepository.findAll();
+//        return events.stream()
+//                .map(eventMapper::eventToEventDTO)
+//                .toList();
 
         List<EventDTO> eventDTOs = new ArrayList<>();
         for (Event event : events) {

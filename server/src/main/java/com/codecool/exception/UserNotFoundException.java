@@ -1,4 +1,4 @@
-package com.codecool.exceptions;
+package com.codecool.exception;
 
 public class UserNotFoundException extends RuntimeException{
     public UserNotFoundException(long userId){

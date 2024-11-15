@@ -1,13 +1,13 @@
 package com.codecool.model.events;
 
 import com.codecool.model.tags.Tag;
-import com.codecool.model.location.Location;
+import com.codecool.model.locations.Location;
 import com.codecool.model.users.User;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -27,12 +27,11 @@ public class Event {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "location_id")
     private Location location;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "event_user", // Join table name
+            name = "event_users", // Join table name
             joinColumns = @JoinColumn(name = "event_id"), // Foreign key in join table for Event
             inverseJoinColumns = @JoinColumn(name = "user_id") // Foreign key in join table for User
     )

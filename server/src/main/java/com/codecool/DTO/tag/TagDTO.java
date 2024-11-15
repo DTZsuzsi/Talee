@@ -1,6 +1,4 @@
-package com.codecool.DTO.tagDTO;
-
-import com.codecool.model.tags.TagCategory;
+package com.codecool.DTO.tag;
 
 import java.sql.Timestamp;
 

@@ -1,17 +1,17 @@
 
 package com.codecool.controller;
 
-import com.codecool.DTO.locationDTO.LocationDTO;
-import com.codecool.DTO.locationDTO.NewLocationDTO;
+import com.codecool.DTO.location.LocationDTO;
+import com.codecool.DTO.location.NewLocationDTO;
 import com.codecool.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
 @RequestMapping("/api/locations")
-//@CrossOrigin(origins = "http://localhost:5173")
 public class LocationController {
   private final LocationService locationService;
 
@@ -20,10 +20,8 @@ public class LocationController {
     this.locationService = locationService;
   }
 
-  //TODO deleteapping, patchmapping
-
   @GetMapping
-  public Set<LocationDTO> getLocations() {
+  public List<LocationDTO> getLocations() {
     return locationService.getAllLocations();
   }
 
@@ -33,18 +31,18 @@ public class LocationController {
   }
 
   @PostMapping
-  public int addLocation(@RequestBody NewLocationDTO location) {
+  public long addLocation(@RequestBody NewLocationDTO location) {
     return locationService.addLocation(location);
   }
 
   @DeleteMapping("/{id}")
-  public int deleteLocation(@PathVariable int id) {
+  public long deleteLocation(@PathVariable long id) {
     return locationService.deleteLocation(id);
   }
 
-//  @PatchMapping("/{id}")
-//  public boolean updateLocation(@PathVariable int id, @RequestBody LocationDTO location) {
-//    return locationService.updateLocation(location);
-//  }
+  @PatchMapping
+  public boolean updateLocation(@RequestBody LocationDTO location) {
+    return locationService.updateLocation(location);
+  }
 }
 
