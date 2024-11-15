@@ -5,13 +5,10 @@ import TagOptions from "../../../tag/components/TagOptions.jsx";
 import TagCard from "../../../tag/components/TagCard.jsx";
 /** @format */
 
-import { useEffect, useState } from 'react';
-import HomeCard from '../molecules/HomeCard.jsx';
-import StateChangeButton from '../molecules/StateChangeButton.jsx';
 import Loading from '../atoms/Loading.jsx';
 
 const Home = () => {
-    const [mode, setMode] = useState('locations');
+   
 
  
     const [locations, setLocations] = useState();
@@ -41,14 +38,7 @@ const Home = () => {
             setTags(data);
         }
 
-        fetchEvents();
-        fetchLocations();
-        fetchTags();
-    }, [tagChange]);
-
-    
-    
-		async function fetchLocations() {
+        async function fetchLocations() {
 			const response = await fetch('/api/locations');
 			const data = await response.json();
 			if (!response.ok) {
@@ -57,10 +47,13 @@ const Home = () => {
 			setLocations(data);
 			setLoading(false);
 		}
-		setLoading(true);
-		fetchEvents();
-		fetchLocations();
-	}, []);
+
+        fetchEvents();
+        fetchLocations();
+        fetchTags();
+    }, [tagChange]);
+
+    	
 
 	const [darkMode, setDarkMode] = useState(false);
 
@@ -143,17 +136,7 @@ setTagChange(true);
     ));
   }
   
-	let eventCards = [];
-	if (events)
-		eventCards = events.map(event => (
-			<HomeCard
-				key={event.id}
-				title={event.name}
-				href={`/events/${event.id}`}
-				description={event.description}
-				date={event.date}
-			></HomeCard>
-		));
+	
 
 	let locationCards = [];
 	if (locations)
