@@ -32,12 +32,12 @@ public class LocationService {
             .toList();
   }
 
-  public LocationDTO getLocationById(int id) {
-    Location location = locationRepository.getLocationById(id);
+  public LocationDTO getLocationById(long id) {
+    Location location = locationRepository.findById(id).get();
     return locationMapper.locationToLocationDTO(location);
   }
 
-  public int addLocation(NewLocationDTO location) {
+  public long addLocation(NewLocationDTO location) {
     Location newLocation = locationMapper.newLocationDTOToLocation(location);
     return locationRepository.save(newLocation).getId();
   }
@@ -48,15 +48,15 @@ public class LocationService {
   }
 
   public boolean updateLocation(LocationDTO location) {
-    Location existingLocation = locationRepository.findById(location.id())
-            .orElseThrow(() -> new LocationNotFoundException(location.id()));
+    Location existingLocation = locationRepository.findById(location.id()).get();
+       //     .orElseThrow(() -> new LocationNotFoundException(location.id()));
 
     existingLocation.setName(location.name());
     existingLocation.setAddress(location.address());
     existingLocation.setPhone(location.phone());
     existingLocation.setEmail(location.email());
     existingLocation.setDescription(location.description());
-    existingLocation.setAdminUser(location.adminUser());
+   // existingLocation.setAdminUser(location.adminUser());
     return locationRepository.save(existingLocation).getId() != 0;
   }
 

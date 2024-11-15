@@ -81,5 +81,11 @@ public class Event {
     }
 
 
+    public void addTag(Tag tag) {
+        if (!tags.contains(tag)) {
+            tags.add(tag);
+        }
+    }
+
 }
 

@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 const SelectField = ({ label, options, value, onChange, id }) => (
-    <div className="mb-4 flex flex-col max-w-lg">
+    <div className="mb-6 flex flex-col max-w-lg  text-gray dark: text-white">
         {label && (
-            <label htmlFor={id} className="block text-gray-700 font-medium mb-2 text-left">
+            <label htmlFor={id} className="block text-gray font-medium mb-2 text-left dark: text-white">
                 {label}
             </label>
         )}
@@ -10,7 +10,7 @@ const SelectField = ({ label, options, value, onChange, id }) => (
             id={id}
             value={value}
             onChange={onChange}
-            className="border border-gray-300 rounded-md px-4 py-2"
+            className="border border-gray-300 rounded-md px-4 py-2  dark:bg-gray-600" 
         >
             {options?.map((option, index) => (
                 <option key={index} value={option}>

@@ -2,6 +2,8 @@ package com.codecool.controller;
 
 import com.codecool.DTO.event.EventDTO;
 import com.codecool.DTO.event.NewEventDTO;
+
+import com.codecool.DTO.tag.TagDTO;
 import com.codecool.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,8 @@ public class EventController {
 
     @GetMapping
     public List<EventDTO> getAllEvents() {
+
+
        return eventService.getAllEvents();
     }
 
@@ -43,6 +47,13 @@ public class EventController {
        return eventService.deleteEventById(eventId);
     }
 
+@PostMapping("/{eventId}")
+    public boolean addEvent(@PathVariable int eventId, @RequestBody TagDTO tagDTO) {
+       return eventService.addTagToEvent(eventId, tagDTO);
+}
 
-
+@DeleteMapping("/tag/{eventId}")
+    public boolean deleteTag(@PathVariable int eventId, @RequestParam int tagId) {
+       return eventService.deleteTagFromEvent(eventId,tagId);
+}
 }
