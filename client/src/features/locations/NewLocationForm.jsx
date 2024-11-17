@@ -50,16 +50,26 @@ function NewLocationForm() {
     //}
 
 
-    function handleOpeningHoursChange(day, field, value) {
+    function handleOpeningHoursChange(dayOfWeek, field, value) {
         setNewLocation((prevLocation) => {
-            const updatedOpeningHours = prevLocation.openingHours.map(hour =>
-                hour.dayOfWeek === day ? { ...hour, [field]: value } : hour
-            );
-
-            if (!updatedOpeningHours.some(hour => hour.dayOfWeek === day)) {
-                updatedOpeningHours.push({ dayOfWeek: day, [field]: value });
+             // Check if the day already exists in openingHours
+            let updatedOpeningHours = prevLocation.openingHours || [];
+            // Find if there's already an entry for this day
+            const existingEntryIndex = updatedOpeningHours.findIndex(hour => hour.day === dayOfWeek);
+            if (existingEntryIndex !== -1) {
+                // If it exists, update the specified field
+                updatedOpeningHours[existingEntryIndex] = {
+                    ...updatedOpeningHours[existingEntryIndex],
+                    [field]: value
+                };
+            } else {
+                // If not, add a new entry with dayOfWeek and the specified field
+                updatedOpeningHours = [
+                    ...updatedOpeningHours,
+                    { day: dayOfWeek, [field]: value }
+                ];
             }
-
+    
             return { ...prevLocation, openingHours: updatedOpeningHours };
 
         })
