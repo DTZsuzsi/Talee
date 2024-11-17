@@ -1,6 +1,6 @@
 package com.codecool.service;
 
-import com.codecool.DTO.tagDTO.TagDTO;
+import com.codecool.DTO.tag.TagDTO;
 import com.codecool.model.tags.Tag;
 import com.codecool.model.tags.TagCategory;
 import com.codecool.repository.TagCategoryRepository;
@@ -25,7 +25,7 @@ public class TagService {
         return tagRepository.findAll().stream()
                 .map(tag -> {
                     Long categoryId = (tag.getTagCategory() != null) ? tag.getTagCategory().getId() : 1;
-                    return new TagDTO(tag.getId(), tag.getName(), categoryId, tag.getCreatedAt());
+                    return new TagDTO(tag.getId(), tag.getName(), categoryId, tag.getTagCategory().getColor());
                 })
                 .collect(Collectors.toList());
     }

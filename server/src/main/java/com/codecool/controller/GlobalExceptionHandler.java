@@ -1,8 +1,8 @@
 package com.codecool.controller;
 
-import com.codecool.exceptions.LocationNotFoundException;
-import com.codecool.exceptions.OpeningHoursNotFoundException;
-import com.codecool.exceptions.UserNotFoundException;
+import com.codecool.exception.LocationNotFoundException;
+import com.codecool.exception.OpeningHoursNotFoundException;
+import com.codecool.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;

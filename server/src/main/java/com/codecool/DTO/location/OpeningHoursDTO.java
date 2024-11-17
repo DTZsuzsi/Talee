@@ -1,4 +1,4 @@
-package com.codecool.DTO.locationDTO;
+package com.codecool.DTO.location;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;

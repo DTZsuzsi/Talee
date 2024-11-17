@@ -1,12 +1,13 @@
 
 package com.codecool.controller;
 
-import com.codecool.DTO.locationDTO.LocationDTO;
-import com.codecool.DTO.locationDTO.NewLocationDTO;
+import com.codecool.DTO.location.LocationDTO;
+import com.codecool.DTO.location.NewLocationDTO;
 import com.codecool.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -20,7 +21,7 @@ public class LocationController {
   }
 
   @GetMapping
-  public Set<LocationDTO> getLocations() {
+  public List<LocationDTO> getLocations() {
     return locationService.getAllLocations();
   }
 

@@ -1,4 +1,4 @@
-package com.codecool.exceptions;
+package com.codecool.exception;
 
 public class LocationNotFoundException extends RuntimeException {
   public LocationNotFoundException(long locationId) {

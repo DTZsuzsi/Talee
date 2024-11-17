@@ -1,4 +1,4 @@
-package com.codecool.exceptions;
+package com.codecool.exception;
 
 public class OpeningHoursNotFoundException extends RuntimeException {
   public OpeningHoursNotFoundException(long openingHoursId) {

@@ -30,4 +30,15 @@ private Set<Event> event;
         this.name = name;
         this.tagCategory = category;
     }
+
+    public Tag(long id, String name,  TagCategory tagCategory, Timestamp createdAt) {
+        this.id = id;
+        this.name = name;
+        this.tagCategory = tagCategory;
+        this.createdAt = createdAt;
+    }
+
+    public Tag(long id) {
+        this.id = id;
+    }
 }
