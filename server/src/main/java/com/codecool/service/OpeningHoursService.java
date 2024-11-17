@@ -3,6 +3,7 @@ package com.codecool.service;
 import com.codecool.DTO.locationDTO.NewOpeningHoursDTO;
 import com.codecool.DTO.locationDTO.OpeningHoursDTO;
 import com.codecool.exceptions.LocationNotFoundException;
+import com.codecool.exceptions.OpeningHoursNotFoundException;
 import com.codecool.model.location.Location;
 import com.codecool.model.location.OpeningHours;
 import com.codecool.repository.LocationRepository;
@@ -11,6 +12,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
 import java.util.List;
 
 @Service
@@ -54,5 +56,15 @@ public class OpeningHoursService {
 //    }
 
   }
+
+//  public OpeningHoursDTO getOpeningHoursByLocationIdAndDay(long openingHoursId) {
+//    OpeningHours existingOpeningHoursPerDay = openingHoursRepository.findById(openingHoursId)
+//            .orElseThrow(() -> new OpeningHoursNotFoundException(openingHoursId));
+//    return createOpeningHoursDTO(existingOpeningHoursPerDay);
+//  }
+
+//  public boolean updateOpeningHours(long locationId, OpeningHoursDTO openingHoursPerDay) {
+//
+//  }
 
 }
