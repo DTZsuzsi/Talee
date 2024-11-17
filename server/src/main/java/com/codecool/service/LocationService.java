@@ -72,12 +72,6 @@ public class LocationService {
     Location savedLocation = locationRepository.save(newLocation);
 
     for (NewOpeningHoursWithoutLocationDTO newOpeningHours : location.openingHours()) {
-//      OpeningHours newOpeningHours = new OpeningHours();
-//      newOpeningHours.setDayOfWeek(newOpeningHours.getDayOfWeek());
-//      newOpeningHours.setOpeningTime(newOpeningHoursDTO.openingTime());
-//      newOpeningHours.setClosingTime(newOpeningHoursDTO.closingTime());
-//      newOpeningHours.setLocation(savedLocation);
-//      savedLocation.addOpeningHours(newOpeningHours);
       LocationWithoutOpeningHoursDTO locationWithoutOpeningHoursDTO = createLocationWithoutOpeningHoursDTO(savedLocation);
       NewOpeningHoursDTO newOpeningHoursDTO = new NewOpeningHoursDTO(
               newOpeningHours.day(),
