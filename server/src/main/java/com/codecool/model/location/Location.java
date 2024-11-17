@@ -32,10 +32,10 @@ public class Location {
   @JoinColumn(name = "user_id")
   private User adminUser;
 
-  @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE)
   private List<OpeningHours> openingHours;
 
-  @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
   private List<Event> events;
   private String description;
 
