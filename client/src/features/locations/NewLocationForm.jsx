@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import InputField from "../main/components/atoms/InputField.jsx";
-//import SelectField from '../main/components/atoms/SelectField';
+
 
 function NewLocationForm() {
     const [newLocation, setNewLocation] = useState({
@@ -128,6 +128,7 @@ function NewLocationForm() {
                         value={newLocation.description}
                         onChange={(e) => setNewLocation({ ...newLocation, description: e.target.value })}
                     />
+                    
                     {daysOfWeek.map((day) => (
                         <div key={day} className="mt-4">
                             <h3 className="font-semibold">{day}</h3>
