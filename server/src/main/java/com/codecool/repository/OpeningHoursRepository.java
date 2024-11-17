@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface OpeningHoursRepository extends JpaRepository<OpeningHours, Long> {
   List<OpeningHours> findByLocationId(Long locationId);
+  long deleteByLocationId(Long locationId);
 }

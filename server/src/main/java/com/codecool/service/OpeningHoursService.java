@@ -57,6 +57,11 @@ public class OpeningHoursService {
 
   }
 
+  @Transactional
+  public boolean deleteOpeningHoursByLocationId(long locationId) {
+    return openingHoursRepository.deleteByLocationId(locationId) != -1;
+  }
+
 //  public OpeningHoursDTO getOpeningHoursByLocationIdAndDay(long openingHoursId) {
 //    OpeningHours existingOpeningHoursPerDay = openingHoursRepository.findById(openingHoursId)
 //            .orElseThrow(() -> new OpeningHoursNotFoundException(openingHoursId));

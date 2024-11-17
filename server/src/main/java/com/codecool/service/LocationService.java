@@ -109,22 +109,26 @@ public class LocationService {
     List<OpeningHoursDTO> updatedOpeningHours = location.openingHours();
     
     List<OpeningHours> existingOpeningHours = existingLocation.getOpeningHours();
-    
-    //TODO implement check and scenario if updated OH is null/empty list
-    for (OpeningHoursDTO updatedHours : updatedOpeningHours) {
-      Optional<OpeningHours> existingOpeningHoursOpt = existingOpeningHours.stream()
-              .filter(hour -> hour.getDayOfWeek().equals(updatedHours.day()))
-              .findFirst();
-      
-      if (existingOpeningHoursOpt.isPresent()) {
-        OpeningHours existingHours = existingOpeningHoursOpt.get();
-        existingHours.setOpeningTime(updatedHours.openingTime());
-        existingHours.setClosingTime(updatedHours.closingTime());
-      } else {
-        NewOpeningHoursDTO newOpeningHoursDTO = createNewOpeningHoursDTO(updatedHours, existingLocation);
-        openingHoursService.addNewOpeningHours(newOpeningHoursDTO);
+
+    if (updatedOpeningHours.isEmpty()) {
+      return openingHoursService.deleteOpeningHoursByLocationId(existingLocation.getId());
+    } else {
+      for (OpeningHoursDTO updatedHours : updatedOpeningHours) {
+        Optional<OpeningHours> existingOpeningHoursOpt = existingOpeningHours.stream()
+                .filter(hour -> hour.getDayOfWeek().equals(updatedHours.day()))
+                .findFirst();
+
+        if (existingOpeningHoursOpt.isPresent()) {
+          OpeningHours existingHours = existingOpeningHoursOpt.get();
+          existingHours.setOpeningTime(updatedHours.openingTime());
+          existingHours.setClosingTime(updatedHours.closingTime());
+        } else {
+          NewOpeningHoursDTO newOpeningHoursDTO = createNewOpeningHoursDTO(updatedHours, existingLocation);
+          openingHoursService.addNewOpeningHours(newOpeningHoursDTO);
+        }
       }
     }
+
     return locationRepository.save(existingLocation).getId() != 0;
   }
 
