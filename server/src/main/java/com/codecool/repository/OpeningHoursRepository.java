@@ -1,6 +1,6 @@
 package com.codecool.repository;
 
-import com.codecool.model.location.OpeningHours;
+import com.codecool.model.locations.OpeningHours;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

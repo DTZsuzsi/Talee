@@ -36,12 +36,4 @@ public class Location {
   private String description;
 
 
-  public boolean addEvent(Event event) {
-    return events.add(event);
-  }
-
-  public boolean addOpeningHours(OpeningHours openingHours) {
-    return this.openingHours.add(openingHours);
-  }
-
 }

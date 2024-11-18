@@ -1,10 +1,11 @@
 package com.codecool.service;
 
-import com.codecool.DTO.locationDTO.NewOpeningHoursDTO;
-import com.codecool.DTO.locationDTO.OpeningHoursDTO;
-import com.codecool.exceptions.LocationNotFoundException;
-import com.codecool.model.location.Location;
-import com.codecool.model.location.OpeningHours;
+import com.codecool.DTO.location.NewOpeningHoursDTO;
+import com.codecool.DTO.location.OpeningHoursDTO;
+import com.codecool.exception.LocationNotFoundException;
+import com.codecool.mapper.OpeningHoursMapper;
+import com.codecool.model.locations.Location;
+import com.codecool.model.locations.OpeningHours;
 import com.codecool.repository.LocationRepository;
 import com.codecool.repository.OpeningHoursRepository;
 import jakarta.transaction.Transactional;
@@ -18,6 +19,7 @@ import java.util.List;
 public class OpeningHoursService {
   private final OpeningHoursRepository openingHoursRepository;
   private final LocationRepository locationRepository;
+  private final OpeningHoursMapper openingHoursMapper = OpeningHoursMapper.INSTANCE;
 
   @Autowired
   public OpeningHoursService(OpeningHoursRepository openingHoursRepository, LocationRepository locationRepository) {
@@ -38,19 +40,16 @@ public class OpeningHoursService {
             openingHoursPerDay.getClosingTime()
     );
   }
-
   @Transactional
   public long addNewOpeningHours(NewOpeningHoursDTO openingHoursPerDay) {
-    OpeningHours newOpeningHoursPerDay = new OpeningHours();
+
     //TODO if existing location - source from DB -> throw exception if not found
 //    if (openingHoursPerDay.location() != null) {
       Location existingLocation = locationRepository.findById(openingHoursPerDay.location().id())
               .orElseThrow(() -> new LocationNotFoundException(openingHoursPerDay.location().id())
               );
-      newOpeningHoursPerDay.setDayOfWeek(openingHoursPerDay.day());
-      newOpeningHoursPerDay.setOpeningTime(openingHoursPerDay.openingTime());
-      newOpeningHoursPerDay.setClosingTime(openingHoursPerDay.closingTime());
-      newOpeningHoursPerDay.setLocation(existingLocation);
+    OpeningHours newOpeningHoursPerDay =
+            openingHoursMapper.newOpeningHoursDTOToOpeningHours(openingHoursPerDay, existingLocation);
       return openingHoursRepository.save(newOpeningHoursPerDay).getId();
 //    }
 

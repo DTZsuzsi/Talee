@@ -1,13 +1,11 @@
 package com.codecool.service;
 
 
-import com.codecool.DTO.location.LocationDTO;
-import com.codecool.DTO.location.NewLocationDTO;
+import com.codecool.DTO.location.*;
 import com.codecool.exception.LocationNotFoundException;
 import com.codecool.mapper.LocationMapper;
-//import com.codecool.model.location.Location;
+import com.codecool.mapper.OpeningHoursMapper;
 import com.codecool.model.locations.Location;
-import com.codecool.model.location.OpeningHours;
 import com.codecool.model.locations.OpeningHours;
 import com.codecool.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +23,7 @@ public class LocationService {
   private final LocationRepository locationRepository;
   private final OpeningHoursService openingHoursService;
   private final LocationMapper locationMapper = LocationMapper.INSTANCE;
+  private final OpeningHoursMapper openingHoursMapper = OpeningHoursMapper.INSTANCE;
 
 
   @Autowired
@@ -47,17 +46,14 @@ public class LocationService {
   }
 
   //TODO check if there is already a location with that name and specific other details? (eg. address),
-  // after saving the location call addOpeningHours method to add the openinghours
   public long addLocation(NewLocationDTO location) {
     Location newLocation = locationMapper.newLocationDTOToLocation(location);
     Location savedLocation = locationRepository.save(newLocation);
     for (NewOpeningHoursWithoutLocationDTO newOpeningHours : location.openingHours()) {
-      LocationWithoutOpeningHoursDTO locationWithoutOpeningHoursDTO = createLocationWithoutOpeningHoursDTO(savedLocation);
-      NewOpeningHoursDTO newOpeningHoursDTO = new NewOpeningHoursDTO(
-              newOpeningHours.day(),
-              newOpeningHours.openingTime(),
-              newOpeningHours.closingTime(),
-              locationWithoutOpeningHoursDTO
+      LocationWithoutOpeningHoursDTO locationWithoutOpeningHoursDTO =
+              locationMapper.locationToLocationWithoutOpeningHoursDTO(savedLocation);
+      NewOpeningHoursDTO newOpeningHoursDTO = openingHoursMapper.newOpeningHoursWithoutLocationToNewOpeningHoursDTO(
+              newOpeningHours, locationWithoutOpeningHoursDTO
       );
       openingHoursService.addNewOpeningHours(newOpeningHoursDTO);
     }
@@ -97,7 +93,8 @@ public class LocationService {
           existingHours.setOpeningTime(updatedHours.openingTime());
           existingHours.setClosingTime(updatedHours.closingTime());
         } else {
-          NewOpeningHoursDTO newOpeningHoursDTO = createNewOpeningHoursDTO(updatedHours, existingLocation);
+          NewOpeningHoursDTO newOpeningHoursDTO =
+                  openingHoursMapper.openingHoursDTOToNewOpeningHoursDTO(updatedHours, existingLocation);
           openingHoursService.addNewOpeningHours(newOpeningHoursDTO);
         }
       }
@@ -106,47 +103,47 @@ public class LocationService {
     return locationRepository.save(existingLocation).getId() != 0;
   }
 
-  private static NewOpeningHoursDTO createNewOpeningHoursDTO(OpeningHoursDTO newHours, Location existingLocation) {
-    LocationWithoutOpeningHoursDTO locationWithoutOpeningHoursDTO = createLocationWithoutOpeningHoursDTO(existingLocation);
+//  private static NewOpeningHoursDTO createNewOpeningHoursDTO(OpeningHoursDTO newHours, Location existingLocation) {
+//    LocationWithoutOpeningHoursDTO locationWithoutOpeningHoursDTO = createLocationWithoutOpeningHoursDTO(existingLocation);
+//
+//    return new NewOpeningHoursDTO(
+//            newHours.day(),
+//            newHours.openingTime(),
+//            newHours.closingTime(),
+//            locationWithoutOpeningHoursDTO
+//    );
+//  }
 
-    return new NewOpeningHoursDTO(
-            newHours.day(),
-            newHours.openingTime(),
-            newHours.closingTime(),
-            locationWithoutOpeningHoursDTO
-    );
-  }
+//  private static LocationWithoutOpeningHoursDTO createLocationWithoutOpeningHoursDTO(Location existingLocation) {
+//    return new LocationWithoutOpeningHoursDTO(
+//            existingLocation.getId(),
+//            existingLocation.getName(),
+//            existingLocation.getAddress(),
+//            existingLocation.getPhone(),
+//            existingLocation.getEmail(),
+//            existingLocation.getDescription(),
+//            existingLocation.getAdminUser()
+//    );
+//  }
 
-  private static LocationWithoutOpeningHoursDTO createLocationWithoutOpeningHoursDTO(Location existingLocation) {
-    return new LocationWithoutOpeningHoursDTO(
-            existingLocation.getId(),
-            existingLocation.getName(),
-            existingLocation.getAddress(),
-            existingLocation.getPhone(),
-            existingLocation.getEmail(),
-            existingLocation.getDescription(),
-            existingLocation.getAdminUser()
-    );
-  }
+//  private static LocationDTO createLocationDTO(Location location) {
+//    return new LocationDTO(location.getId(),
+//            location.getName(),
+//            location.getAddress(),
+//            location.getPhone(),
+//            location.getEmail(),
+//            location.getDescription(),
+//            location.getAdminUser(),
+//            location.getOpeningHours().stream().map(LocationService::createOpeningHoursDTO).collect(Collectors.toList()));
+//  }
 
-  private static LocationDTO createLocationDTO(Location location) {
-    return new LocationDTO(location.getId(),
-            location.getName(),
-            location.getAddress(),
-            location.getPhone(),
-            location.getEmail(),
-            location.getDescription(),
-            location.getAdminUser(),
-            location.getOpeningHours().stream().map(LocationService::createOpeningHoursDTO).collect(Collectors.toList()));
-  }
-
-  private static OpeningHoursDTO createOpeningHoursDTO(OpeningHours openingHoursPerDay) {
-    return new OpeningHoursDTO(
-            openingHoursPerDay.getId(),
-            openingHoursPerDay.getDayOfWeek(),
-            openingHoursPerDay.getOpeningTime(),
-            openingHoursPerDay.getClosingTime()
-    );
-  }
+//  private static OpeningHoursDTO createOpeningHoursDTO(OpeningHours openingHoursPerDay) {
+//    return new OpeningHoursDTO(
+//            openingHoursPerDay.getId(),
+//            openingHoursPerDay.getDayOfWeek(),
+//            openingHoursPerDay.getOpeningTime(),
+//            openingHoursPerDay.getClosingTime()
+//    );
+//  }
 
 }
