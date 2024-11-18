@@ -5,6 +5,7 @@ import com.codecool.DTO.location.*;
 import com.codecool.exception.LocationNotFoundException;
 import com.codecool.mapper.LocationMapper;
 import com.codecool.mapper.OpeningHoursMapper;
+import com.codecool.mapper.UserMapper;
 import com.codecool.model.locations.Location;
 import com.codecool.model.locations.OpeningHours;
 import com.codecool.repository.LocationRepository;
@@ -24,6 +25,7 @@ public class LocationService {
   private final OpeningHoursService openingHoursService;
   private final LocationMapper locationMapper = LocationMapper.INSTANCE;
   private final OpeningHoursMapper openingHoursMapper = OpeningHoursMapper.INSTANCE;
+  private final UserMapper userMapper = UserMapper.INSTANCE;
 
 
   @Autowired
@@ -41,9 +43,12 @@ public class LocationService {
   }
 
   public LocationDTO getLocationById(long id) {
-    Location location = locationRepository.findById(id).get();
-    return locationMapper.locationToLocationDTO(location);
+    return locationRepository.findById(id)
+            .map(this::createLocationDTO)
+            .orElseThrow(() -> new LocationNotFoundException(id));
   }
+
+
 
   //TODO check if there is already a location with that name and specific other details? (eg. address),
   public long addLocation(NewLocationDTO location) {
@@ -126,24 +131,25 @@ public class LocationService {
 //    );
 //  }
 
-//  private static LocationDTO createLocationDTO(Location location) {
-//    return new LocationDTO(location.getId(),
-//            location.getName(),
-//            location.getAddress(),
-//            location.getPhone(),
-//            location.getEmail(),
-//            location.getDescription(),
-//            location.getAdminUser(),
-//            location.getOpeningHours().stream().map(LocationService::createOpeningHoursDTO).collect(Collectors.toList()));
-//  }
+  private LocationDTO createLocationDTO(Location location) {
+    return new LocationDTO(location.getId(),
+            location.getName(),
+            location.getAddress(),
+            location.getPhone(),
+            location.getEmail(),
+            location.getWebsite(),
+            location.getDescription(),
+            userMapper.userToUserDTO(location.getAdminUser()),
+            location.getOpeningHours().stream().map(LocationService::createOpeningHoursDTO).collect(Collectors.toList()));
+  }
 
-//  private static OpeningHoursDTO createOpeningHoursDTO(OpeningHours openingHoursPerDay) {
-//    return new OpeningHoursDTO(
-//            openingHoursPerDay.getId(),
-//            openingHoursPerDay.getDayOfWeek(),
-//            openingHoursPerDay.getOpeningTime(),
-//            openingHoursPerDay.getClosingTime()
-//    );
-//  }
+  private static OpeningHoursDTO createOpeningHoursDTO(OpeningHours openingHoursPerDay) {
+    return new OpeningHoursDTO(
+            openingHoursPerDay.getId(),
+            openingHoursPerDay.getDayOfWeek(),
+            openingHoursPerDay.getOpeningTime(),
+            openingHoursPerDay.getClosingTime()
+    );
+  }
 
 }
