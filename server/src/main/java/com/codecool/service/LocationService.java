@@ -1,13 +1,11 @@
 package com.codecool.service;
 
 
-import com.codecool.DTO.location.LocationDTO;
-import com.codecool.DTO.location.NewLocationDTO;
+import com.codecool.DTO.location.*;
 import com.codecool.exception.LocationNotFoundException;
 import com.codecool.mapper.LocationMapper;
-//import com.codecool.model.location.Location;
+import com.codecool.mapper.UserMapper;
 import com.codecool.model.locations.Location;
-import com.codecool.model.location.OpeningHours;
 import com.codecool.model.locations.OpeningHours;
 import com.codecool.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +23,7 @@ public class LocationService {
   private final LocationRepository locationRepository;
   private final OpeningHoursService openingHoursService;
   private final LocationMapper locationMapper = LocationMapper.INSTANCE;
+  private final UserMapper userMapper = UserMapper.INSTANCE;
 
 
   @Autowired
@@ -37,13 +36,13 @@ public class LocationService {
     List<Location> locations = locationRepository.findAll();
 
     return locations.stream()
-            .map(locationMapper::locationToLocationDTO)
+            .map(this::createLocationDTO)
             .toList();
   }
 
   public LocationDTO getLocationById(long id) {
     Location location = locationRepository.findById(id).get();
-    return locationMapper.locationToLocationDTO(location);
+    return createLocationDTO(location);
   }
 
   //TODO check if there is already a location with that name and specific other details? (eg. address),
@@ -106,7 +105,7 @@ public class LocationService {
     return locationRepository.save(existingLocation).getId() != 0;
   }
 
-  private static NewOpeningHoursDTO createNewOpeningHoursDTO(OpeningHoursDTO newHours, Location existingLocation) {
+  private NewOpeningHoursDTO createNewOpeningHoursDTO(OpeningHoursDTO newHours, Location existingLocation) {
     LocationWithoutOpeningHoursDTO locationWithoutOpeningHoursDTO = createLocationWithoutOpeningHoursDTO(existingLocation);
 
     return new NewOpeningHoursDTO(
@@ -117,7 +116,7 @@ public class LocationService {
     );
   }
 
-  private static LocationWithoutOpeningHoursDTO createLocationWithoutOpeningHoursDTO(Location existingLocation) {
+  private LocationWithoutOpeningHoursDTO createLocationWithoutOpeningHoursDTO(Location existingLocation) {
     return new LocationWithoutOpeningHoursDTO(
             existingLocation.getId(),
             existingLocation.getName(),
@@ -125,22 +124,22 @@ public class LocationService {
             existingLocation.getPhone(),
             existingLocation.getEmail(),
             existingLocation.getDescription(),
-            existingLocation.getAdminUser()
+            userMapper.userToUserDTO(existingLocation.getAdminUser())
     );
   }
 
-  private static LocationDTO createLocationDTO(Location location) {
+  private LocationDTO createLocationDTO(Location location) {
     return new LocationDTO(location.getId(),
             location.getName(),
             location.getAddress(),
             location.getPhone(),
             location.getEmail(),
             location.getDescription(),
-            location.getAdminUser(),
-            location.getOpeningHours().stream().map(LocationService::createOpeningHoursDTO).collect(Collectors.toList()));
+            userMapper.userToUserDTO(location.getAdminUser()),
+            location.getOpeningHours().stream().map(this::createOpeningHoursDTO).collect(Collectors.toList()));
   }
 
-  private static OpeningHoursDTO createOpeningHoursDTO(OpeningHours openingHoursPerDay) {
+  private OpeningHoursDTO createOpeningHoursDTO(OpeningHours openingHoursPerDay) {
     return new OpeningHoursDTO(
             openingHoursPerDay.getId(),
             openingHoursPerDay.getDayOfWeek(),

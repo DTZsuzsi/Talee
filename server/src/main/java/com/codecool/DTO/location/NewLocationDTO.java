@@ -1,7 +1,7 @@
 package com.codecool.DTO.location;
 
 
-import com.codecool.DTO.locationDTO.NewOpeningHoursWithoutLocationDTO;
+import com.codecool.DTO.location.NewOpeningHoursWithoutLocationDTO;
 import com.codecool.DTO.user.UserDTO;
 import com.codecool.model.users.User;
 import com.fasterxml.jackson.annotation.JsonManagedReference;

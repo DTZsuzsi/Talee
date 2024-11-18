@@ -1,10 +1,10 @@
 package com.codecool.service;
 
-import com.codecool.DTO.locationDTO.NewOpeningHoursDTO;
-import com.codecool.DTO.locationDTO.OpeningHoursDTO;
-import com.codecool.exceptions.LocationNotFoundException;
-import com.codecool.model.location.Location;
-import com.codecool.model.location.OpeningHours;
+import com.codecool.DTO.location.NewOpeningHoursDTO;
+import com.codecool.DTO.location.OpeningHoursDTO;
+import com.codecool.exception.LocationNotFoundException;
+import com.codecool.model.locations.Location;
+import com.codecool.model.locations.OpeningHours;
 import com.codecool.repository.LocationRepository;
 import com.codecool.repository.OpeningHoursRepository;
 import jakarta.transaction.Transactional;
