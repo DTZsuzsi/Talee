@@ -5,6 +5,7 @@ import com.codecool.DTO.event.NewEventDTO;
 import com.codecool.DTO.location.LocationInEventDTO;
 import com.codecool.DTO.tag.TaginEventDTO;
 import com.codecool.mapper.EventMapper;
+import com.codecool.mapper.TagMapper;
 import com.codecool.model.events.Event;
 import com.codecool.model.locations.Location;
 import com.codecool.model.tags.Tag;
@@ -15,7 +16,9 @@ import com.codecool.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,29 +28,23 @@ public class EventService {
     private final TagRepository tagRepository;
     private final TagCategoryRepository tagCategoryRepository;
     private final EventMapper eventMapper = EventMapper.INSTANCE;
+    private final TagMapper tagMapper = TagMapper.INSTANCE;
 
     @Autowired
     public EventService(EventRepository eventRepository, TagRepository tagRepository, TagCategoryRepository tagCategoryRepository) {
         this.eventRepository = eventRepository;
         this.tagRepository = tagRepository;
         this.tagCategoryRepository = tagCategoryRepository;
+
     }
 
-    private static Set<Tag> getTagSet(Collection<TaginEventDTO> taginEventDTOS) {
-        Set<Tag> tags = new HashSet<>();
-
-        for (TaginEventDTO taginEventDTO : taginEventDTOS) {
-            Tag newTag = new Tag(taginEventDTO.id());
-            tags.add(newTag);
-        }
-        return tags;
+    private List<Tag> getTagSet(Collection<TaginEventDTO> taginEventDTOS) {
+        return taginEventDTOS.stream().map(tagMapper::tagInEventDTOsToTag).toList();
     }
 
     public EventDTO getEventById(long id) {
         Event event = eventRepository.findEventById(id);
-//        return eventMapper.eventToEventDTO(event);
-        return new EventDTO(event.getId(), event.getDate(), event.getName(), event.getDescription(), getLocationDTOForEvent(event.getLocation()),
-                new ArrayList<>(), event.getOwner(), event.getSize(), getTagDTOSet(event), event.getStatus());
+        return eventMapper.eventToEventDTO(event);
 
     }
 
@@ -57,40 +54,21 @@ public class EventService {
     }
 
     public boolean modifyEvent(EventDTO eventDTO) {
-        Set<Tag> tags = getTagSet(eventDTO.tags());
-
-        Event updatedEvent = new Event(eventDTO.id(), eventDTO.date(), eventDTO.name(), eventDTO.description(), null,
-                new HashSet<>(), eventDTO.owner(), eventDTO.size(), tags, eventDTO.status(), null);
+        Event updatedEvent = eventMapper.eventDTOToEvent(eventDTO);
         return eventRepository.save(updatedEvent).getId() > 0;
-//        Event updatedEvent = eventMapper.eventDTOToEvent(eventDTO);
-//        return eventRepository.save(updatedEvent).getId() > 0;
     }
 
     private List<TaginEventDTO> getTagDTOSet(Event event) {
-        List<TaginEventDTO> taginEventDTOSet = new ArrayList<>();
-        for (Tag tag : event.getTags()) {
-            TaginEventDTO taginEventDTO = new TaginEventDTO(tag.getId(), tag.getName(), tag.getTagCategory().getId(), tag.getTagCategory().getColor());
-            taginEventDTOSet.add(taginEventDTO);
-        }
-        return taginEventDTOSet;
+        return event.getTags().stream().map(tagMapper::tagToTaginEventDTO).collect(Collectors.toList());
     }
 
     public List<EventDTO> getAllEvents() {
         List<Event> events = eventRepository.findAll();
-//        return events.stream()
-//                .map(eventMapper::eventToEventDTO)
-//                .toList();
+        return events.stream()
+                .map(eventMapper::eventToEventDTO)
+                .toList();
 
-        List<EventDTO> eventDTOs = new ArrayList<>();
-        for (Event event : events) {
-            EventDTO eventDTO = new EventDTO(event.getId(), event.getDate(), event.getName(), event.getDescription(), getLocationDTOForEvent(event.getLocation()),
-                    null, event.getOwner(), event.getSize(), getTagDTOSet(event), event.getStatus());
-            eventDTOs.add(eventDTO);
-        }
-
-        return eventDTOs;
     }
-
 
     public boolean deleteEventById(long id) {
         return eventRepository.deleteEventById(id);
