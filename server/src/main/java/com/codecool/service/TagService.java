@@ -1,6 +1,6 @@
 package com.codecool.service;
 
-import com.codecool.DTO.tag.TagDTO;
+import com.codecool.DTO.tag.TaginEventDTO;
 import com.codecool.model.tags.Tag;
 import com.codecool.model.tags.TagCategory;
 import com.codecool.repository.TagCategoryRepository;
@@ -21,19 +21,19 @@ public class TagService {
         this.tagRepository = tagRepository;
         this.tagCategoryRepository = tagCategoryRepository;
     }
-    public List<TagDTO> getAllTags() {
+    public List<TaginEventDTO> getAllTags() {
         return tagRepository.findAll().stream()
                 .map(tag -> {
                     Long categoryId = (tag.getTagCategory() != null) ? tag.getTagCategory().getId() : 1;
-                    return new TagDTO(tag.getId(), tag.getName(), categoryId, tag.getTagCategory().getColor());
+                    return new TaginEventDTO(tag.getId(), tag.getName(), categoryId, tag.getTagCategory().getColor());
                 })
                 .collect(Collectors.toList());
     }
 
 
-    public long addTag(TagDTO tagDTO) {
-       TagCategory tagCategory=tagCategoryRepository.findById(tagDTO.categoryId());
-        Tag newTag=new Tag(tagDTO.name(), tagCategory);
+    public long addTag(TaginEventDTO taginEventDTO) {
+       TagCategory tagCategory=tagCategoryRepository.findById(taginEventDTO.categoryId());
+        Tag newTag=new Tag(taginEventDTO.name(), tagCategory);
         return tagRepository.save(newTag).getId();
     }
 

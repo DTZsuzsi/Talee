@@ -2,8 +2,8 @@ package com.codecool.service;
 
 import com.codecool.DTO.event.EventDTO;
 import com.codecool.DTO.event.NewEventDTO;
-import com.codecool.DTO.location.LocationInEvent;
-import com.codecool.DTO.tag.TagDTO;
+import com.codecool.DTO.location.LocationInEventDTO;
+import com.codecool.DTO.tag.TaginEventDTO;
 import com.codecool.mapper.EventMapper;
 import com.codecool.model.events.Event;
 import com.codecool.model.locations.Location;
@@ -33,11 +33,11 @@ public class EventService {
         this.tagCategoryRepository = tagCategoryRepository;
     }
 
-    private static Set<Tag> getTagSet(Collection<TagDTO> tagDTOs) {
+    private static Set<Tag> getTagSet(Collection<TaginEventDTO> taginEventDTOS) {
         Set<Tag> tags = new HashSet<>();
 
-        for (TagDTO tagDTO : tagDTOs) {
-            Tag newTag = new Tag(tagDTO.id());
+        for (TaginEventDTO taginEventDTO : taginEventDTOS) {
+            Tag newTag = new Tag(taginEventDTO.id());
             tags.add(newTag);
         }
         return tags;
@@ -52,7 +52,7 @@ public class EventService {
     }
 
     public long addEvent(NewEventDTO newEventDTO) {
-        Event newEvent = eventMapper.newEventToEvent(newEventDTO);
+        Event newEvent = eventMapper.newEventDTOToEvent(newEventDTO);
         return eventRepository.save(newEvent).getId();
     }
 
@@ -66,13 +66,13 @@ public class EventService {
 //        return eventRepository.save(updatedEvent).getId() > 0;
     }
 
-    private List<TagDTO> getTagDTOSet(Event event) {
-        List<TagDTO> tagDTOSet = new ArrayList<>();
+    private List<TaginEventDTO> getTagDTOSet(Event event) {
+        List<TaginEventDTO> taginEventDTOSet = new ArrayList<>();
         for (Tag tag : event.getTags()) {
-            TagDTO tagDTO = new TagDTO(tag.getId(), tag.getName(), tag.getTagCategory().getId(), tag.getTagCategory().getColor());
-            tagDTOSet.add(tagDTO);
+            TaginEventDTO taginEventDTO = new TaginEventDTO(tag.getId(), tag.getName(), tag.getTagCategory().getId(), tag.getTagCategory().getColor());
+            taginEventDTOSet.add(taginEventDTO);
         }
-        return tagDTOSet;
+        return taginEventDTOSet;
     }
 
     public List<EventDTO> getAllEvents() {
@@ -96,16 +96,16 @@ public class EventService {
         return eventRepository.deleteEventById(id);
     }
 
-    public boolean addTagToEvent(long eventId, TagDTO tagDTO) {
+    public boolean addTagToEvent(long eventId, TaginEventDTO taginEventDTO) {
         Event event = eventRepository.findEventById(eventId);
-        TagCategory tagCategory = tagCategoryRepository.findById(tagDTO.categoryId());
-        Tag tag = new Tag(tagDTO.id(), tagDTO.name(), tagCategory, null);
+        TagCategory tagCategory = tagCategoryRepository.findById(taginEventDTO.categoryId());
+        Tag tag = new Tag(taginEventDTO.id(), taginEventDTO.name(), tagCategory, null);
         event.addTag(tag);
         return eventRepository.save(event).getId() > 0;
     }
 
-    private LocationInEvent getLocationDTOForEvent(Location location) {
-        return new LocationInEvent(location.getId(), location.getName());
+    private LocationInEventDTO getLocationDTOForEvent(Location location) {
+        return new LocationInEventDTO(location.getId(), location.getName());
     }
 
     public boolean deleteTagFromEvent(long eventId, long tagId) {

@@ -29,16 +29,16 @@ public class Event {
     @ManyToOne
     private Location location;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
-            name = "event_users", // Join table name
-            joinColumns = @JoinColumn(name = "event_id"), // Foreign key in join table for Event
-            inverseJoinColumns = @JoinColumn(name = "user_id") // Foreign key in join table for User
+            name = "event_users",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private Set<User> users;
     private String owner;
     private String size;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "event_tag", // join table name
             joinColumns = @JoinColumn(name = "event_id"),
