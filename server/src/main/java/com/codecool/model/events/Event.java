@@ -21,7 +21,7 @@ import java.util.Set;
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     private LocalDate date;
     private String name;
     private String description;
@@ -50,7 +50,7 @@ public class Event {
 
 
 
-    public Event(int id, LocalDate date, String name, String description, Location location, Set<User> users, String owner, String size, Set<Tag> tags, String status, Timestamp timestamp) {
+    public Event(long id, LocalDate date, String name, String description, Location location, Set<User> users, String owner, String size, Set<Tag> tags, String status, Timestamp timestamp) {
         this.id = id;
         this.date = date;
         this.name = name;

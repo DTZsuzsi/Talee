@@ -12,24 +12,24 @@ import java.util.List;
 public class TagController {
     private final TagService tagService;
 
-   @Autowired
+    @Autowired
     public TagController(TagService tagService) {
         this.tagService = tagService;
     }
 
-@GetMapping
+    @GetMapping
     public List<TagDTO> getTags() {
-       return tagService.getAllTags();
-}
+        return tagService.getAllTags();
+    }
 
-@PostMapping
+    @PostMapping
     public long addTag(@RequestBody TagDTO tagDTO) {
-       return tagService.addTag(tagDTO);
-}
+        return tagService.addTag(tagDTO);
+    }
 
     @DeleteMapping("/{tagId}")
-    public boolean deleteById(@PathVariable long tagId){
-       return tagService.deleteById(tagId);
+    public boolean deleteById(@PathVariable long tagId) {
+        return tagService.deleteById(tagId);
     }
 
 }

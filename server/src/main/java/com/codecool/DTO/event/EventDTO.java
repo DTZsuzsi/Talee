@@ -7,7 +7,6 @@ import com.codecool.model.users.User;
 import java.time.LocalDate;
 import java.util.List;
 
-//public record EventDTO(int id, LocalDate date, String name, String description, @JsonIgnore LocationDTO location, @JsonIgnore Set<UserDTO> users, String owner, String size, @JsonIgnore Set<Tag> tags, String status, Timestamp timestamp) {
-//}
-public record EventDTO(int id, LocalDate date, String name, String description, LocationInEvent location, List<User> users, String owner, String size, List<TagDTO> tags, String status) {
+
+public record EventDTO(long id, LocalDate date, String name, String description, LocationInEvent location, List<User> users, String owner, String size, List<TagDTO> tags, String status) {
 }
