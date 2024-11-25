@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LocationRepository extends JpaRepository<Location, Long> {
-    int deleteLocationById(long id);
+    long deleteLocationById(long id);
 }

@@ -28,8 +28,10 @@ public class Location {
   @ManyToOne
   private User adminUser;
 
-//  private OpeningHours openingHours;
-  @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE)
+  private List<OpeningHours> openingHours;
+
+  @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
   private List<Event> events;
   private String description;
 
@@ -38,15 +40,8 @@ public class Location {
     return events.add(event);
   }
 
-//  public boolean changeOpeningHoursForDay(DayOfWeek day, TimeRange newHours) {
-//    openingHours.setOpeningHoursForDay(day, newHours);
-//    return true;
-//  }
-//
-//  public boolean deleteOpeningHoursForDay(DayOfWeek day) {
-//    openingHours.deleteOpeningHoursForDay(day);
-//    return true;
-//  }
-
+  public boolean addOpeningHours(OpeningHours openingHours) {
+    return this.openingHours.add(openingHours);
+  }
 
 }
