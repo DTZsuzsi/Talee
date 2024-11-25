@@ -28,7 +28,6 @@ useEffect(()=>{
         if (response.ok) {
             const data = await response.json();
             setEvent(data);
-            console.log(data);
         }
        
     }
@@ -37,7 +36,6 @@ useEffect(()=>{
         const response= await fetch("/api/tags");
         const data= await response.json();
         setTags(data);
-        console.log(data);
 
     }
     fetchEvent();
@@ -57,8 +55,9 @@ async function handleNewTag(id, e) {
       body: JSON.stringify(tagToSend),
     });
   
+    // eslint-disable-next-line no-unused-vars
     const data = await response.json();
-    console.log(data);
+    
     setTagChange(true);
   }
 

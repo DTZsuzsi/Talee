@@ -21,7 +21,6 @@ private Set<Event> event;
     @JoinColumn(name="tag_category_id")
     private TagCategory tagCategory;
 
-    private Timestamp createdAt=Timestamp.valueOf(LocalDateTime.now());
 
     public Tag() {
     }
@@ -31,11 +30,10 @@ private Set<Event> event;
         this.tagCategory = category;
     }
 
-    public Tag(long id, String name,  TagCategory tagCategory, Timestamp createdAt) {
+    public Tag(long id, String name,  TagCategory tagCategory) {
         this.id = id;
         this.name = name;
         this.tagCategory = tagCategory;
-        this.createdAt = createdAt;
     }
 
     public Tag(long id) {
