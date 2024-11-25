@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import HomeCard from "../molecules/HomeCard.jsx";
 import StateChangeButton from "../molecules/StateChangeButton.jsx";
@@ -76,13 +77,21 @@ async  function handleDeleteTag(event, tag){
     setTagChange(false);
 const response= await fetch(`/api/events/tag/${event.id}?tagId=${tag.id}`, {method: "DELETE"});
 const data= await response.json();
-console.log(data);
 setTagChange(true);
   }
+
+  async function handleDeleteTagFromLocation(location, tag){
+	setTagChange(false);
+	const response= await fetch(`/api/locations/tag/${location.id}?tagId=${tag.id}`, {method: "DELETE"});
+	const data= await response.json();
+	setTagChange(true);
+  }
+
+
   // Render event cards
   let eventCards = [];
   if (events) {
-    console.log(events);
+   
     eventCards = events?.map((event) => (
       <div key={event.id}>
         <HomeCard
@@ -108,13 +117,22 @@ setTagChange(true);
 	let locationCards = [];
 	if (locations)
 		locationCards = locations.map(location => (
+	<div key={location.id}> 
 			<HomeCard
-				key={location.id}
+				
 				title={location.name}
 				href={`/locations/${location.id}`}
 				description={location.description}
 				date={location.date}
 			></HomeCard>
+			<ul className="flex flex-wrap justify-around">
+			{location.locationTags?.map((tag) => (
+			  <li key={tag.id} className="mx-auto">
+				<TagCard tag={tag} onClick={()=>handleDeleteTagFromLocation(location, tag)} color={tag.color}/>
+			  </li>
+			))}
+			</ul>
+			</div>
 		));
 
 	return (

@@ -1,14 +1,19 @@
+/* eslint-disable no-unused-vars */
 import {useEffect, useState} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {HiMiniPencilSquare} from "react-icons/hi2";
 import {MdDeleteForever} from "react-icons/md";
 import ServerError from "../main/components/atoms/ServerError";
 import Loading from "../main/components/atoms/Loading";
+import TagCard from "../tag/components/TagCard";
+import TagOptions from "../tag/components/TagOptions";
 
 function LocationDetailPage() {
     const [error, setError]=useState(null);
     const [location, setLocation]=useState(null);
     const {locationId}=useParams();
+    const [tags, setTags]=useState(null);
+const [tagChange, setTagChange]=useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -22,15 +27,59 @@ function LocationDetailPage() {
 
             if (response.ok) {
                 const data = await response.json();
+                
 
                 setLocation(data);
             } else {
                 setError(`Failed to fetch location with id: ${locationId}, ${response.statusText}`);
             }
         }
+        async function fetchTags(){
+            const response= await fetch("/api/tags");
+            const data= await response.json();
+            setTags(data);
+    
+        }
 
         fetchLocation();
-    }, [locationId])
+        fetchTags();
+    }, [locationId, tagChange])
+
+    async function handleNewTag(id, e) {
+        setTagChange(false);
+      
+        const selectedTagName = e.target.value;
+        const tagToSend = findTag(selectedTagName);
+      
+        const response = await fetch(`/api/locations/${id}`, {
+          method: "POST",
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(tagToSend),
+        });
+      
+        const data = await response.json();
+      
+        
+        setTagChange(true);
+      }
+    
+       
+      function findTag(tagName) {
+        let tagFound = {};
+        for (const tag of tags) {
+          if (tag.name === tagName) {
+            tagFound = tag;
+          }
+        }
+        return tagFound;
+      }
+    
+      async  function handleDeleteTag(location, tag){
+        setTagChange(false);
+    const response= await fetch(`/api/locations/tag/${location.id}?tagId=${tag.id}`, {method: "DELETE"});
+    const data= await response.json();
+    setTagChange(true);
+      }
 
     async function deleteLocation() {
         const response = await fetch(`/api/locations/${locationId}`, {
@@ -38,7 +87,6 @@ function LocationDetailPage() {
         });
 
         const data = await response.json();
-        console.log(data);
         navigate("/");
     }
     if (error) {
@@ -68,7 +116,14 @@ function LocationDetailPage() {
                 ))}
                 <p className='text-l font-semibold px-2 mb-2'> {location.description}</p>
                 <p className='text-l font-semibold px-2 mb-2'> Phone: {location.phone}</p>
-
+                <ul className="flex flex-wrap justify-around">
+        {location?.locationTags?.map((tag) => (
+          <li key={tag?.id} className="mx-auto">
+            <TagCard tag={tag} onClick={()=>handleDeleteTag(location, tag)} color={tag?.color}/>
+          </li> 
+        ))}
+        </ul>
+        <TagOptions onChange={(e) => handleNewTag(location.id, e)} />
             </div>
             <div>
                 <Link to={`/locations/${locationId}/update`}>

@@ -2,7 +2,7 @@ package com.codecool.controller;
 
 import com.codecool.DTO.event.EventDTO;
 import com.codecool.DTO.event.NewEventDTO;
-import com.codecool.DTO.tag.TaginEventDTO;
+import com.codecool.DTO.tag.TaginFrontendDTO;
 import com.codecool.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -46,8 +46,8 @@ public class EventController {
     }
 
     @PostMapping("/{eventId}")
-    public boolean addEvent(@PathVariable long eventId, @RequestBody TaginEventDTO taginEventDTO) {
-        return eventService.addTagToEvent(eventId, taginEventDTO);
+    public boolean addTagToEvent(@PathVariable long eventId, @RequestBody TaginFrontendDTO taginFrontendDTO) {
+        return eventService.addTagToEvent(eventId, taginFrontendDTO);
     }
 
     @DeleteMapping("/tag/{eventId}")
