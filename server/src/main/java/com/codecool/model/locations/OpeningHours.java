@@ -1,6 +1,7 @@
 package com.codecool.model.locations;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,8 +12,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class OpeningHours {
   @Id
