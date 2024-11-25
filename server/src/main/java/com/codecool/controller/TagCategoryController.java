@@ -16,6 +16,7 @@ public class TagCategoryController {
     public TagCategoryController(TagCategoryService tagCategoryService) {
         this.tagCategoryService = tagCategoryService;
     }
+
     @GetMapping
     public List<TagCategoryDTO> getAllTagCategories() {
         return tagCategoryService.getAllTagCategories();

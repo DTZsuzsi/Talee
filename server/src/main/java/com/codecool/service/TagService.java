@@ -1,6 +1,7 @@
 package com.codecool.service;
 
-import com.codecool.DTO.tag.TagDTO;
+import com.codecool.DTO.tag.TaginEventDTO;
+import com.codecool.mapper.TagMapper;
 import com.codecool.model.tags.Tag;
 import com.codecool.model.tags.TagCategory;
 import com.codecool.repository.TagCategoryRepository;
@@ -16,24 +17,22 @@ import java.util.stream.Collectors;
 public class TagService {
     private final TagRepository tagRepository;
     private final TagCategoryRepository tagCategoryRepository;
+    private final TagMapper tagMapper=TagMapper.INSTANCE;
     @Autowired
     public TagService(TagRepository tagRepository, TagCategoryRepository tagCategoryRepository) {
         this.tagRepository = tagRepository;
         this.tagCategoryRepository = tagCategoryRepository;
     }
-    public List<TagDTO> getAllTags() {
+    public List<TaginEventDTO> getAllTags() {
         return tagRepository.findAll().stream()
-                .map(tag -> {
-                    Long categoryId = (tag.getTagCategory() != null) ? tag.getTagCategory().getId() : 1;
-                    return new TagDTO(tag.getId(), tag.getName(), categoryId, tag.getTagCategory().getColor());
-                })
+                .map(tagMapper::tagToTaginEventDTO)
                 .collect(Collectors.toList());
     }
 
 
-    public long addTag(TagDTO tagDTO) {
-       TagCategory tagCategory=tagCategoryRepository.findById(tagDTO.categoryId());
-        Tag newTag=new Tag(tagDTO.name(), tagCategory);
+    public long addTag(TaginEventDTO taginEventDTO) {
+       TagCategory tagCategory=tagCategoryRepository.findById(taginEventDTO.categoryId());
+        Tag newTag=new Tag(taginEventDTO.name(), tagCategory);
         return tagRepository.save(newTag).getId();
     }
 

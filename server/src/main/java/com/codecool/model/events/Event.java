@@ -21,7 +21,7 @@ import java.util.Set;
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     private LocalDate date;
     private String name;
     private String description;
@@ -29,16 +29,16 @@ public class Event {
     @ManyToOne
     private Location location;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
-            name = "event_users", // Join table name
-            joinColumns = @JoinColumn(name = "event_id"), // Foreign key in join table for Event
-            inverseJoinColumns = @JoinColumn(name = "user_id") // Foreign key in join table for User
+            name = "event_users",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private Set<User> users;
     private String owner;
     private String size;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "event_tag", // join table name
             joinColumns = @JoinColumn(name = "event_id"),
@@ -50,7 +50,7 @@ public class Event {
 
 
 
-    public Event(int id, LocalDate date, String name, String description, Location location, Set<User> users, String owner, String size, Set<Tag> tags, String status, Timestamp timestamp) {
+    public Event(long id, LocalDate date, String name, String description, Location location, Set<User> users, String owner, String size, Set<Tag> tags, String status, Timestamp timestamp) {
         this.id = id;
         this.date = date;
         this.name = name;

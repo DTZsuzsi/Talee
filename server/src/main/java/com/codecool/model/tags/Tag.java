@@ -15,7 +15,7 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 private String name;
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(mappedBy = "tags", cascade = CascadeType.PERSIST)
 private Set<Event> event;
     @ManyToOne
     @JoinColumn(name="tag_category_id")
