@@ -18,7 +18,6 @@ public class TagCategory {
     @OneToMany (mappedBy = "tagCategory")
     private Set<Tag> tags;
 
-    private Timestamp createdAt=Timestamp.valueOf(LocalDateTime.now());
 
     public TagCategory(String name, String color) {
         this.name = name;

@@ -6,7 +6,7 @@ const TagCard = ({ tag, onClick, color }) => {
 
 	return (
 		<div
-			style={{ background: `${color}` }}
+			style={{ background: `${color || "blue"}` }}
 			className='px-2 py-1 m-2 rounded-lg opacity-90 hover:opacity-80 hover:scale-105 relative ring-1 ring-slate-900 shadow-lg ease-in-out duration-200'
 		>
 			<button
@@ -22,7 +22,7 @@ const TagCard = ({ tag, onClick, color }) => {
 					transform: 'scale(0.60)',
 				}}
 			>
-				{tag.name}
+				{tag?.name || "hi"}
 			</h1>
 		</div>
 	);

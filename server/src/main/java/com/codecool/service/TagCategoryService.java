@@ -26,8 +26,7 @@ public class TagCategoryService {
         List<TagCategory> tagCategories = tagCategoryRepository.findAll();
         List<TagCategoryDTO> tagCategoriesDTO = new ArrayList<>();
         for (TagCategory tagCategory : tagCategories) {
-            TagCategoryDTO tagCategoryDTO= new TagCategoryDTO(tagCategory.getId(), tagCategory.getName(), tagCategory.getColor(),
-                    tagCategory.getCreatedAt());
+            TagCategoryDTO tagCategoryDTO= new TagCategoryDTO(tagCategory.getId(), tagCategory.getName(), tagCategory.getColor());
             tagCategoriesDTO.add(tagCategoryDTO);
         }
         return tagCategoriesDTO;
