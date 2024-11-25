@@ -2,10 +2,7 @@ package com.codecool.DTO.location;
 
 
 import com.codecool.DTO.user.UserDTO;
-import com.codecool.model.users.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.List;
 

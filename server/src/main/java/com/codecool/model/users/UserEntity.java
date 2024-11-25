@@ -9,11 +9,12 @@ import java.util.Set;
 @Entity
 @Data
 @Table(name = "talee_user")
-public class User {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String username;
+    private String password;
 
     @ManyToMany(mappedBy = "users")
     private Set<Event> events;
@@ -21,6 +22,6 @@ public class User {
 //    @ManyToMany(mappedBy = "creatorUser")
 //    private Set<Location> locations;
 
-    @ManyToOne
-    private Role role;
+    @ManyToMany
+    private Set<Role> roles;
 }

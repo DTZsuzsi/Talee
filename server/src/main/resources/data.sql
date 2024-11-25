@@ -1,5 +1,5 @@
 INSERT INTO role(name)
-VALUES ('user'), ('admin');
+VALUES ('userEntity'), ('admin');
 
 INSERT INTO talee_user(username, role_id)
 VALUES ('matet', 2), ('zsuzsi', 1), ('marian', 1);

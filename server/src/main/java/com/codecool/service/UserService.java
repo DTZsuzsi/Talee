@@ -4,7 +4,7 @@ import com.codecool.DTO.user.NewUserDTO;
 import com.codecool.DTO.user.UserDTO;
 import com.codecool.exception.UserNotFoundException;
 import com.codecool.mapper.UserMapper;
-import com.codecool.model.users.User;
+import com.codecool.model.users.UserEntity;
 import com.codecool.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,30 +28,30 @@ public class UserService {
     }
 
     public List<UserDTO> getAllUsers() {
-        List<User> users = userRepository.findAll();
+        List<UserEntity> userEntities = userRepository.findAll();
 
-        return users.stream().
+        return userEntities.stream().
                 map(userMapper::userToUserDTO)
                 .toList();
     }
 
     public UserDTO addUser(NewUserDTO newUserDTO) {
-        User newUser = new User();
-        newUser.setUsername(newUserDTO.username());
+        UserEntity newUserEntity = new UserEntity();
+        newUserEntity.setUsername(newUserDTO.username());
 
-        User savedUser = userRepository.save(newUser);
-        return userMapper.userToUserDTO(savedUser);
+        UserEntity savedUserEntity = userRepository.save(newUserEntity);
+        return userMapper.userToUserDTO(savedUserEntity);
     }
 
     public UserDTO modifyUser(UserDTO userDTO) {
-        User existingUser = userRepository.findById(userDTO.id())
+        UserEntity existingUserEntity = userRepository.findById(userDTO.id())
                 .orElseThrow(() -> new UserNotFoundException(userDTO.id()));
 
-        existingUser.setUsername(userDTO.username());
-        existingUser.setRole(userDTO.role());
+        existingUserEntity.setUsername(userDTO.username());
+        existingUserEntity.setRole(userDTO.role());
 
-        User savedUser = userRepository.save(existingUser);
-        return userMapper.userToUserDTO(savedUser);
+        UserEntity savedUserEntity = userRepository.save(existingUserEntity);
+        return userMapper.userToUserDTO(savedUserEntity);
     }
 
     public boolean deleteUser(long id) {
