@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import HomeCard from "../molecules/HomeCard.jsx";
 import StateChangeButton from "../molecules/StateChangeButton.jsx";
-import TagOptions from "../../../tag/components/TagOptions.jsx";
 import TagCard from "../../../tag/components/TagCard.jsx";
 /** @format */
 
@@ -12,7 +11,6 @@ const Home = () => {
 
  
     const [locations, setLocations] = useState();
-    const [tags, setTags]=useState(null);
     const [tagChange, setTagChange]=useState(false);
 	const [mode, setMode] = useState('locations');
 	const [loading, setLoading] = useState(false);
@@ -32,12 +30,7 @@ const Home = () => {
 
         
 
-        async function fetchTags(){
-            const response= await fetch("/api/tags");
-            const data= await response.json();
-            setTags(data);
-        }
-
+      
         async function fetchLocations() {
 			const response = await fetch('/api/locations');
 			const data = await response.json();
@@ -50,7 +43,6 @@ const Home = () => {
 
         fetchEvents();
         fetchLocations();
-        fetchTags();
     }, [tagChange]);
 
     	
@@ -77,32 +69,8 @@ const Home = () => {
 	}
 
 
-async function handleNewTag(id, e) {
-    setTagChange(false);
-  
-    const selectedTagName = e.target.value;
-    const tagToSend = findTag(selectedTagName);
-  
-    const response = await fetch(`/api/events/${id}`, {
-      method: "POST",
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(tagToSend),
-    });
-  
-    const data = await response.json();
-    console.log(data);
-    setTagChange(true);
-  }
-  
-  function findTag(tagName) {
-    let tagFound = {};
-    for (const tag of tags) {
-      if (tag.name === tagName) {
-        tagFound = tag;
-      }
-    }
-    return tagFound;
-  }
+
+ 
   
 async  function handleDeleteTag(event, tag){
     setTagChange(false);
@@ -124,7 +92,6 @@ setTagChange(true);
           description={event.description}
           date={event.date}
         />
-        <TagOptions onChange={(e) => handleNewTag(event.id, e)} />
        <ul className="flex flex-wrap justify-around">
         {event.tags?.map((tag) => (
           <li key={tag.id} className="mx-auto">

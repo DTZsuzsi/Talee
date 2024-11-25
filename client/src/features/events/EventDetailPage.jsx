@@ -3,11 +3,17 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { HiMiniPencilSquare } from "react-icons/hi2";
 import { MdDeleteForever } from "react-icons/md";
+import TagOptions from "../tag/components/TagOptions";
+import TagCard from "../tag/components/TagCard";
 
 
 function EventDetailPage(){
 const [event, setEvent]=useState(null);
 const {eventId}=useParams();
+const [tags, setTags]=useState(null);
+const [tagChange, setTagChange]=useState(false);
+
+
 const navigate=useNavigate();
 
 useEffect(()=>{
@@ -22,14 +28,58 @@ useEffect(()=>{
         if (response.ok) {
             const data = await response.json();
             setEvent(data);
+            console.log(data);
         }
        
     }
+
+    async function fetchTags(){
+        const response= await fetch("/api/tags");
+        const data= await response.json();
+        setTags(data);
+        console.log(data);
+
+    }
     fetchEvent();
+    fetchTags();
   
-},[eventId])
+},[eventId, tagChange])
 
+async function handleNewTag(id, e) {
+    setTagChange(false);
+  
+    const selectedTagName = e.target.value;
+    const tagToSend = findTag(selectedTagName);
+  
+    const response = await fetch(`/api/events/${id}`, {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(tagToSend),
+    });
+  
+    const data = await response.json();
+    console.log(data);
+    setTagChange(true);
+  }
 
+   
+  function findTag(tagName) {
+    let tagFound = {};
+    for (const tag of tags) {
+      if (tag.name === tagName) {
+        tagFound = tag;
+      }
+    }
+    return tagFound;
+  }
+
+  async  function handleDeleteTag(event, tag){
+    setTagChange(false);
+const response= await fetch(`/api/events/tag/${event.id}?tagId=${tag.id}`, {method: "DELETE"});
+const data= await response.json();
+console.log(data);
+setTagChange(true);
+  }
    
     async function deleteEvent(){
     const response=await fetch(`http://localhost:8080/events/${eventId}`, {
@@ -52,7 +102,14 @@ useEffect(()=>{
         <p className='text-xl  px-2 mb-2'> {event.name}</p>
         <p className='text-l font-semibold px-2 mb-2'> {event.description}</p>
         <p className='text-l font-semibold px-2 mb-2'> Event's owner: {event.owner}</p>
-        <p className='text-l font-semibold px-2'>Event's tags: {event.tags}</p>
+        <ul className="flex flex-wrap justify-around">
+        {event?.tags?.map((tag) => (
+          <li key={tag?.id} className="mx-auto">
+            <TagCard tag={tag} onClick={()=>handleDeleteTag(event, tag)} color={tag?.color}/>
+          </li> 
+        ))}
+        </ul>
+        <TagOptions onChange={(e) => handleNewTag(event.id, e)} />
         </div>
         <div> 
             <Link to={`/events/${eventId}/modify`}>
@@ -64,3 +121,6 @@ useEffect(()=>{
     )
 }
 export default EventDetailPage;
+
+
+  
