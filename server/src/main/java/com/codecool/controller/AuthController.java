@@ -16,7 +16,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -94,6 +93,7 @@ public class AuthController {
 
     User userDetails = (User) authentication.getPrincipal();
     List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
+
     return new ResponseEntity<>(new AuthResponseDTO(token, userDetails.getUsername(), roles), HttpStatus.OK);
   }
 }
