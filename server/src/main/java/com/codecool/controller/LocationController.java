@@ -46,8 +46,9 @@ public class LocationController {
     return locationService.updateLocation(location);
   }
 
+
   @PostMapping("/{locationId}")
-  public boolean addTagToEvent(@PathVariable long locationId, @RequestBody TaginFrontendDTO taginFrontendDTO) {
+  public boolean addTagToLocation(@PathVariable long locationId, @RequestBody TaginFrontendDTO taginFrontendDTO) {
     return locationService.addTagToLocation(locationId, taginFrontendDTO);
   }
 
