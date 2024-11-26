@@ -47,7 +47,6 @@ public class Event {
     )
     private List<Tag> tags;
     private String status;
-    private Timestamp timestamp;
 
 
 
