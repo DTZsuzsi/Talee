@@ -2,15 +2,59 @@ INSERT INTO role(name)
 VALUES ('user'), ('admin');
 
 INSERT INTO talee_user(username, role_id)
-VALUES ('matet', 2), ('zsuzsi', 1), ('marian', 1);
+VALUES ('matet', 2), ('zsuzsi', 1), ('marian', 1), ('mmarci', 2);
 
 INSERT INTO location (name, admin_user_id, address, phone, email, website, facebook, instagram, description)
-VALUES ('Fővárosi Állat- és Növénykert',1, '1146 Budapest, Állatkerti krt. 6-12.',
-        '06 1 273 4901', 'allatkert@email.hu', 'https://zoobudapest.com/',
-        'https://www.facebook.com/allatkert', 'https://www.instagram.com/zoobudapest',
-        'Budapest legnagyobb állatkertje');
+VALUES
+    ('Margitszigeti Szabadtéri Színpad', 2, '1138 Budapest, Margitsziget',
+     '06 1 555 1234', 'szinpad@margitsziget.hu', 'https://margitszigetiszinhaz.hu/',
+     'https://www.facebook.com/margitszigetiszinhaz', 'https://www.instagram.com/margitszigetiszinhaz',
+     'Színházi és kulturális rendezvények egyedülálló szabadtéri helyszíne'),
 
+    ('Budai Vár', 3, '1014 Budapest, Szent György tér',
+     '06 1 555 5678', 'info@budaivar.hu', 'https://www.budaivar.hu/',
+     'https://www.facebook.com/budaivar', 'https://www.instagram.com/budaivar',
+     'Történelmi látványosságok és rendezvények helyszíne'),
 
+    ('Városliget', 4, '1146 Budapest, Városliget',
+     '06 1 444 9876', 'info@varosliget.hu', 'https://www.varosliget.hu/',
+     'https://www.facebook.com/varosliget', 'https://www.instagram.com/varosliget',
+     'Budapest zöld szíve, amely számos szabadtéri programnak ad otthont'),
+
+    ('Duna Korzó', 3, '1056 Budapest, Belgrád rakpart',
+     '06 1 777 1111', 'dunakorzofesztival@gmail.com', NULL,
+     'https://www.facebook.com/dunakorzofesztival', NULL,
+     'Budapest egyik legismertebb promenádja a Duna partján'),
+
+    ('Gellért-hegy', 1, '1118 Budapest, Gellérthegy',
+     '06 1 888 6543', 'info@gellerthegy.hu', NULL,
+     'https://www.facebook.com/gellerthegy', NULL,
+     'Kirándulási és kulturális rendezvények népszerű helyszíne'),
+
+    ('Budapest Park', 2, '1095 Budapest, Soroksári út 60.',
+     '06 1 999 0000', 'park@budapest.hu', 'https://www.budapestpark.hu/',
+     'https://www.facebook.com/budapestpark', 'https://www.instagram.com/budapestpark',
+     'Európa legnagyobb szabadtéri szórakozóhelye'),
+
+    ('Hősök tere', 1, '1146 Budapest, Hősök tere',
+     '06 1 345 4321', 'info@hosoktere.hu', NULL,
+     'https://www.facebook.com/hosoktere', NULL,
+     'Történelmi és turisztikai jelentőségű tér Budapest szívében'),
+
+    ('Bazilika', 3, '1051 Budapest, Szent István tér 1.',
+     '06 1 543 2100', 'info@bazilika.hu', 'https://www.bazilika.hu/',
+     'https://www.facebook.com/bazilika', 'https://www.instagram.com/bazilika',
+     'A Szent István Bazilika és a körülötte rendezett események'),
+
+    ('Andrássy út', 4, '1061 Budapest, Andrássy út',
+     '06 1 678 5432', 'info@andrassyut.hu', NULL,
+     'https://www.facebook.com/andrassyut', NULL,
+     'Budapest elegáns sugárútja, fesztiválok és rendezvények helyszíne'),
+
+    ('Puskás Aréna', 2, '1146 Budapest, Ifjúság útja 5.',
+     '06 1 123 4567', 'arena@puskasarena.hu', 'https://www.puskasarena.hu/',
+     'https://www.facebook.com/puskasarena', 'https://www.instagram.com/puskasarena',
+     'Magyarország legnagyobb sport- és rendezvénycsarnoka');
 
 
 INSERT INTO opening_hours (day_of_week, opening_time, closing_time, location_id)
@@ -23,11 +67,34 @@ VALUES ('MONDAY', '09:00', '16:00', 1),
        ('SUNDAY', '09:00', '16:00', 1);
 
 INSERT INTO event (date, name, description, location_id, owner, size, status)
-VALUES ('2024-11-02', 'Állatkertek éjszakája', 'Éjjel is jöhettek', 1, 'Marianna Molnár', 'BIG',
-        'COMING'),
-       ('2025-01-01', 'Örökbefogadási nap', 'fogadjatok örökbe állatot', 1, 'Marianna Molnár', 'BIG',
-        'ENDED'),
-       ('2024-12-10', 'Margitszigeti bingóhintó verseny', 'nagy verseny lesz', 1, 'Johanna Ditrói', 'BIG',  'IN_PROGRESS');
+VALUES
+    ('2024-11-20', 'Margitszigeti Jégpálya Megnyitó', 'Téli szezonnyitó a Margitszigeten', 7, 'Gábor Varga', 'MEDIUM', 'COMING'),
+    ('2025-02-14', 'Romantikus séta a Budai Várban', 'Valentin-napi program pároknak', 2, 'Anita Kovács', 'SMALL', 'PLANNED'),
+    ('2024-12-24', 'Karácsonyi Vásár', 'Hangulatos vásár a Városligetben', 3, 'Dóra Tóth', 'BIG', 'COMING'),
+    ('2024-12-31', 'Szilveszteri Tűzijáték a Dunán', 'Fergeteges tűzijáték Budapest felett', 4, 'Máté Kiss', 'HUGE', 'COMING'),
+    ('2025-01-10', 'Hófesztivál a Gellért-hegyen', 'Szánkózás, hóemberépítés és forró italok', 5, 'János Szabó', 'MEDIUM', 'PLANNED'),
+    ('2024-11-30', 'Téli Koncertsorozat', 'Különleges fellépők a Budapest Parkban', 6, 'Krisztina Lakatos', 'BIG', 'COMING'),
+    ('2025-03-15', 'Március 15-i Ünnepség', 'Nemzeti megemlékezés a Hősök terén', 7, 'Katalin Kovács', 'HUGE', 'PLANNED'),
+    ('2024-12-06', 'Mikulásvárás a Bazilikánál', 'Gyerekprogram Mikulással és karácsonyi hangulattal', 8, 'Júlia Farkas', 'SMALL', 'COMING'),
+    ('2024-12-17', 'Andrássy Úti Karácsonyi Fények', 'Ünnepi fények és vásár az Andrássy úton', 9, 'Péter Nagy', 'BIG', 'COMING'),
+    ('2025-05-01', 'Munka Ünnepe a Margitszigeten', 'Május 1-jei piknik és koncertek', 1, 'Andrea Kiss', 'BIG', 'PLANNED'),
+    ('2024-12-22', 'Budai Adventi Körút', 'Különleges vezetett séta a Budai Várban', 2, 'Nóra Széles', 'SMALL', 'COMING'),
+    ('2025-06-01', 'Nyári Piknik a Városligetben', 'Kültéri program családoknak és barátoknak', 3, 'Gergely Fekete', 'BIG', 'PLANNED'),
+    ('2025-07-04', 'Duna-parti Jazz Est', 'Különleges jazz koncert a Duna Korzón', 4, 'Tamás Varga', 'MEDIUM', 'PLANNED'),
+    ('2024-11-18', 'Őszi Éjszakai Túra a Gellért-hegyen', 'Vezetett túra éjszakai kilátással', 5, 'Zsófia Molnár', 'SMALL', 'ENDED'),
+    ('2025-08-15', 'Budapest Park Nyárzáró', 'Élő zene és táncest', 6, 'Bence Fodor', 'BIG', 'PLANNED'),
+    ('2025-10-23', 'Nemzeti Ünnepi Felvonulás', 'Ünnepség a Hősök terén', 7, 'Levente Nagy', 'HUGE', 'PLANNED'),
+    ('2024-12-20', 'Bazilika Adventi Koncert', 'Klasszikus zenei est a Bazilikában', 8, 'Miklós Horváth', 'MEDIUM', 'COMING'),
+    ('2025-09-10', 'Andrássy Divatbemutató', 'Elegáns divatbemutató az Andrássy úton', 9, 'Emma Nagy', 'MEDIUM', 'PLANNED'),
+    ('2025-03-21', 'Tavaszi Jótékonysági Koncert', 'Jótékonysági esemény a Margitszigeten', 1, 'Dorina Balázs', 'MEDIUM', 'PLANNED'),
+    ('2025-06-15', 'Művészeti Est a Budai Várban', 'Kortárs művészeti kiállítás és koncert', 2, 'István Fekete', 'MEDIUM', 'PLANNED'),
+    ('2025-07-20', 'Városligeti Grillfesztivál', 'Finom ételek és zenei programok', 3, 'Orsolya Takács', 'BIG', 'PLANNED'),
+    ('2025-08-08', 'Nyári Esték a Dunán', 'Hajós borkóstoló és zene', 4, 'Zoltán Veres', 'SMALL', 'PLANNED'),
+    ('2024-11-12', 'Őszi Filmfesztivál', 'Szabadtéri filmvetítések a Gellért-hegyen', 5, 'Katalin Varga', 'MEDIUM', 'COMING'),
+    ('2025-10-30', 'Halloween Party a Budapest Parkban', 'Rémisztő hangulat és koncertek', 6, 'Edina Nagy', 'BIG', 'PLANNED'),
+    ('2025-12-01', 'Adventi Kórusfesztivál', 'Kórusok fellépése a Hősök terén', 7, 'Mária Horváth', 'MEDIUM', 'PLANNED'),
+    ('2025-12-24', 'Karácsony a Bazilikánál', 'Ünnepi hangulatú vásár és koncert', 8, 'József Kiss', 'BIG', 'PLANNED'),
+    ('2024-11-25', 'Andrássy Úti Gasztrofesztivál', 'Különleges ételek és italok kóstolója', 9, 'Boglárka Tóth', 'MEDIUM', 'COMING');
 
 -- Insert Tag Categories
 INSERT INTO tag_category(name, color)

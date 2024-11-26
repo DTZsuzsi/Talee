@@ -28,6 +28,7 @@ useEffect(()=>{
         if (response.ok) {
             const data = await response.json();
             setEvent(data);
+            console.log(data);
         }
        
     }
@@ -101,6 +102,9 @@ setTagChange(true);
         <p className='text-xl  px-2 mb-2'> {event.name}</p>
         <p className='text-l font-semibold px-2 mb-2'> {event.description}</p>
         <p className='text-l font-semibold px-2 mb-2'> Event's owner: {event.owner}</p>
+        <Link to={`/locations/${event.location.locationId}`}>
+        <p className='text-l font-semibold px-2 mb-2'> Event's location: {event.location.name}</p>
+        </Link>
         <ul className="flex flex-wrap justify-around">
         {event?.tags?.map((tag) => (
           <li key={tag?.id} className="mx-auto">
