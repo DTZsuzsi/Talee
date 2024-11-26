@@ -1,6 +1,6 @@
 package com.codecool.controller;
 
-import com.codecool.DTO.tag.TaginEventDTO;
+import com.codecool.DTO.tag.TaginFrontendDTO;
 import com.codecool.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +18,13 @@ public class TagController {
     }
 
     @GetMapping
-    public List<TaginEventDTO> getTags() {
+    public List<TaginFrontendDTO> getTags() {
         return tagService.getAllTags();
     }
 
     @PostMapping
-    public long addTag(@RequestBody TaginEventDTO taginEventDTO) {
-        return tagService.addTag(taginEventDTO);
+    public long addTag(@RequestBody TaginFrontendDTO taginFrontendDTO) {
+        return tagService.addTag(taginFrontendDTO);
     }
 
     @DeleteMapping("/{tagId}")

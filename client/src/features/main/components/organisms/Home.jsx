@@ -1,7 +1,7 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import HomeCard from "../molecules/HomeCard.jsx";
 import StateChangeButton from "../molecules/StateChangeButton.jsx";
-import TagOptions from "../../../tag/components/TagOptions.jsx";
 import TagCard from "../../../tag/components/TagCard.jsx";
 /** @format */
 
@@ -12,7 +12,6 @@ const Home = () => {
 
  
     const [locations, setLocations] = useState();
-    const [tags, setTags]=useState(null);
     const [tagChange, setTagChange]=useState(false);
 	const [mode, setMode] = useState('locations');
 	const [loading, setLoading] = useState(false);
@@ -32,12 +31,7 @@ const Home = () => {
 
         
 
-        async function fetchTags(){
-            const response= await fetch("/api/tags");
-            const data= await response.json();
-            setTags(data);
-        }
-
+      
         async function fetchLocations() {
 			const response = await fetch('/api/locations');
 			const data = await response.json();
@@ -50,7 +44,6 @@ const Home = () => {
 
         fetchEvents();
         fetchLocations();
-        fetchTags();
     }, [tagChange]);
 
     	
@@ -77,44 +70,28 @@ const Home = () => {
 	}
 
 
-async function handleNewTag(id, e) {
-    setTagChange(false);
-  
-    const selectedTagName = e.target.value;
-    const tagToSend = findTag(selectedTagName);
-  
-    const response = await fetch(`/api/events/${id}`, {
-      method: "POST",
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(tagToSend),
-    });
-  
-    const data = await response.json();
-    console.log(data);
-    setTagChange(true);
-  }
-  
-  function findTag(tagName) {
-    let tagFound = {};
-    for (const tag of tags) {
-      if (tag.name === tagName) {
-        tagFound = tag;
-      }
-    }
-    return tagFound;
-  }
+
+ 
   
 async  function handleDeleteTag(event, tag){
     setTagChange(false);
 const response= await fetch(`/api/events/tag/${event.id}?tagId=${tag.id}`, {method: "DELETE"});
 const data= await response.json();
-console.log(data);
 setTagChange(true);
   }
+
+  async function handleDeleteTagFromLocation(location, tag){
+	setTagChange(false);
+	const response= await fetch(`/api/locations/tag/${location.id}?tagId=${tag.id}`, {method: "DELETE"});
+	const data= await response.json();
+	setTagChange(true);
+  }
+
+
   // Render event cards
   let eventCards = [];
   if (events) {
-    console.log(events);
+   
     eventCards = events?.map((event) => (
       <div key={event.id}>
         <HomeCard
@@ -124,7 +101,6 @@ setTagChange(true);
           description={event.description}
           date={event.date}
         />
-        <TagOptions onChange={(e) => handleNewTag(event.id, e)} />
        <ul className="flex flex-wrap justify-around">
         {event.tags?.map((tag) => (
           <li key={tag.id} className="mx-auto">
@@ -141,13 +117,22 @@ setTagChange(true);
 	let locationCards = [];
 	if (locations)
 		locationCards = locations.map(location => (
+	<div key={location.id}> 
 			<HomeCard
-				key={location.id}
+				
 				title={location.name}
 				href={`/locations/${location.id}`}
 				description={location.description}
 				date={location.date}
 			></HomeCard>
+			<ul className="flex flex-wrap justify-around">
+			{location.locationTags?.map((tag) => (
+			  <li key={tag.id} className="mx-auto">
+				<TagCard tag={tag} onClick={()=>handleDeleteTagFromLocation(location, tag)} color={tag.color}/>
+			  </li>
+			))}
+			</ul>
+			</div>
 		));
 
 	return (
