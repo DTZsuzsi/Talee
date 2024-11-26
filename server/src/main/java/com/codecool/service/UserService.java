@@ -28,9 +28,9 @@ public class UserService {
     }
 
     public List<UserDTO> getAllUsers() {
-        List<UserEntity> userEntities = userRepository.findAll();
+        List<UserEntity> users = userRepository.findAll();
 
-        return userEntities.stream().
+        return users.stream().
                 map(userMapper::userToUserDTO)
                 .toList();
     }
@@ -48,7 +48,7 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException(userDTO.id()));
 
         existingUserEntity.setUsername(userDTO.username());
-        existingUserEntity.setRole(userDTO.role());
+        existingUserEntity.setRoles(userDTO.roles());
 
         UserEntity savedUserEntity = userRepository.save(existingUserEntity);
         return userMapper.userToUserDTO(savedUserEntity);

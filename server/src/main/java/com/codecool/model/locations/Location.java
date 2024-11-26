@@ -23,7 +23,7 @@ public class Location {
   private String instagram;
 
   @ManyToOne
-  private UserEntity adminUserEntity;
+  private UserEntity adminUser;
 
   @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE)
   private List<OpeningHours> openingHours;

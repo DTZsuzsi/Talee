@@ -4,6 +4,7 @@ import com.codecool.DTO.AuthResponseDTO;
 import com.codecool.DTO.CredentialsDTO;
 import com.codecool.model.users.Role;
 import com.codecool.model.users.UserEntity;
+import com.codecool.repository.RoleRepository;
 import com.codecool.repository.UserRepository;
 import com.codecool.security.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ import java.util.Set;
 public class AuthController {
   private final AuthenticationManager authenticationManager;
   private final UserRepository userRepository;
-//  private final RoleRepository roleRepository;
+  private final RoleRepository roleRepository;
   private final PasswordEncoder passwordEncoder;
   private final JWTUtils jwtUtils;
 
@@ -39,17 +40,17 @@ public class AuthController {
   @Autowired
   public AuthController(AuthenticationManager authenticationManager,
                         UserRepository userRepository,
-//                        RoleRepository roleRepository,
+                        RoleRepository roleRepository,
                         PasswordEncoder passwordEncoder, JWTUtils jwtUtils) {
 
     this.authenticationManager = authenticationManager;
     this.userRepository = userRepository;
-//    this.roleRepository = roleRepository;
+    this.roleRepository = roleRepository;
     this.passwordEncoder = passwordEncoder;
     this.jwtUtils = jwtUtils;
   }
 
-  @PostMapping("register")
+  @PostMapping("/register")
   public ResponseEntity<?> register(@RequestBody CredentialsDTO credentials) {
 //    logger.info(String.valueOf(credentials));
     if (userRepository.existsByUsername(credentials.username())) {
@@ -60,10 +61,12 @@ public class AuthController {
     user.setUsername(credentials.username());
     user.setPassword(passwordEncoder.encode(credentials.password()));
 
-    Role role = new Role();
-    role.setName("ROLE_USER");
-    user.setRoles(Set.of(role));
+//    Role role = new Role();
+//    role.setName("ROLE_USER");
+//    user.setRoles(Set.of(role));
 
+    Role role = roleRepository.findByName("ROLE_USER").get();
+    user.setRoles(Set.of(role));
     userRepository.save(user);
 
 //    Authentication authentication =
@@ -77,7 +80,7 @@ public class AuthController {
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
-  @PostMapping("login")
+  @PostMapping("/login")
   public ResponseEntity<AuthResponseDTO> login(@RequestBody CredentialsDTO credentials) {
 //    logger.info(String.valueOf(credentials));
     Authentication authentication =

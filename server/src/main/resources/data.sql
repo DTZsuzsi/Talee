@@ -1,8 +1,8 @@
 INSERT INTO role(name)
 VALUES ('ROLE_USER'), ('ROLE_ADMIN');
 
-INSERT INTO talee_user(username, role_id)
-VALUES ('matet', 2), ('zsuzsi', 1), ('marian', 1);
+INSERT INTO talee_user(username, password)
+VALUES ('matet', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6'), ('zsuzsi', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6'), ('marian', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6');
 
 INSERT INTO location (name, admin_user_id, address, phone, email, website, facebook, instagram, description)
 VALUES ('Fővárosi Állat- és Növénykert',1, '1146 Budapest, Állatkerti krt. 6-12.',
