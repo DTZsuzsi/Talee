@@ -1,4 +1,4 @@
-package com.codecool.DTO;
+package com.codecool.DTO.auth;
 
 import java.util.List;
 

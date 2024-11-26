@@ -1,12 +1,15 @@
 package com.codecool.controller;
 
-import com.codecool.DTO.AuthResponseDTO;
-import com.codecool.DTO.CredentialsDTO;
+import com.codecool.DTO.auth.AuthResponseDTO;
+import com.codecool.DTO.auth.CredentialsDTO;
+import com.codecool.DTO.auth.RegistrationDTO;
 import com.codecool.model.users.Role;
 import com.codecool.model.users.UserEntity;
 import com.codecool.repository.RoleRepository;
 import com.codecool.repository.UserRepository;
 import com.codecool.security.JWTUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +37,7 @@ public class AuthController {
   private final PasswordEncoder passwordEncoder;
   private final JWTUtils jwtUtils;
 
-//  private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
+  private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
   @Autowired
   public AuthController(AuthenticationManager authenticationManager,
@@ -50,10 +53,10 @@ public class AuthController {
   }
 
   @PostMapping("/register")
-  public ResponseEntity<?> register(@RequestBody CredentialsDTO credentials) {
-//    logger.info(String.valueOf(credentials));
-    if (userRepository.existsByEmail(credentials.email())) {
-      return new ResponseEntity<>("There is already an account with this email!", HttpStatus.BAD_REQUEST);
+  public ResponseEntity<RegistrationDTO> register(@RequestBody CredentialsDTO credentials) {
+    logger.info(String.valueOf(credentials));
+      if (userRepository.existsByEmail(credentials.email())) {
+      return new ResponseEntity<>(new RegistrationDTO("There is already an account with this email!"), HttpStatus.BAD_REQUEST);
     }
 
     UserEntity user = new UserEntity();
@@ -64,7 +67,7 @@ public class AuthController {
     user.setRoles(Set.of(role));
     userRepository.save(user);
 
-    return ResponseEntity.status(HttpStatus.CREATED).build();
+    return new ResponseEntity<>(new RegistrationDTO("Registration was successful"), HttpStatus.CREATED);
   }
 
   @PostMapping("/login")
@@ -81,6 +84,7 @@ public class AuthController {
 
     User userDetails = (User) authentication.getPrincipal();
     List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
+
     return new ResponseEntity<>(new AuthResponseDTO(token, userDetails.getUsername(), roles), HttpStatus.OK);
   }
 }
