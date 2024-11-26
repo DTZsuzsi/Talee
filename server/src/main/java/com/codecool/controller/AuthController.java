@@ -1,12 +1,15 @@
 package com.codecool.controller;
 
-import com.codecool.DTO.AuthResponseDTO;
-import com.codecool.DTO.CredentialsDTO;
+import com.codecool.DTO.auth.AuthResponseDTO;
+import com.codecool.DTO.auth.CredentialsDTO;
+import com.codecool.DTO.auth.RegistrationDTO;
 import com.codecool.model.users.Role;
 import com.codecool.model.users.UserEntity;
 import com.codecool.repository.RoleRepository;
 import com.codecool.repository.UserRepository;
 import com.codecool.security.JWTUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +37,7 @@ public class AuthController {
   private final PasswordEncoder passwordEncoder;
   private final JWTUtils jwtUtils;
 
-//  private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
+  private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
   @Autowired
   public AuthController(AuthenticationManager authenticationManager,
@@ -50,33 +53,21 @@ public class AuthController {
   }
 
   @PostMapping("/register")
-  public ResponseEntity<?> register(@RequestBody CredentialsDTO credentials) {
-//    logger.info(String.valueOf(credentials));
+  public ResponseEntity<RegistrationDTO> register(@RequestBody CredentialsDTO credentials) {
+    logger.info(String.valueOf(credentials));
     if (userRepository.existsByUsername(credentials.username())) {
-      return new ResponseEntity<>("Username is taken!", HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(new RegistrationDTO("Username is taken!"), HttpStatus.BAD_REQUEST);
     }
 
     UserEntity user = new UserEntity();
     user.setUsername(credentials.username());
     user.setPassword(passwordEncoder.encode(credentials.password()));
 
-//    Role role = new Role();
-//    role.setName("ROLE_USER");
-//    user.setRoles(Set.of(role));
-
     Role role = roleRepository.findByName("ROLE_USER").get();
     user.setRoles(Set.of(role));
     userRepository.save(user);
 
-//    Authentication authentication =
-//            authenticationManager.authenticate(
-//                    new UsernamePasswordAuthenticationToken(
-//                            credentials.username(),
-//                            credentials.password()));
-//
-//    SecurityContextHolder.getContext().setAuthentication(authentication);
-//    String token = jwtUtils.generateJwtToken(authentication);
-    return ResponseEntity.status(HttpStatus.CREATED).build();
+    return new ResponseEntity<>(new RegistrationDTO("Registration was successful"), HttpStatus.CREATED);
   }
 
   @PostMapping("/login")

@@ -1,8 +1,8 @@
 package com.codecool.service;// ReportService.java
 
-import com.codecool.DTO.reportDTO.ReportDTO;
-import com.codecool.DTO.reportDTO.ReportReqDTO;
-import com.codecool.DTO.reportDTO.ReportResDTO;
+import com.codecool.DTO.report.ReportDTO;
+import com.codecool.DTO.report.ReportReqDTO;
+import com.codecool.DTO.report.ReportResDTO;
 import com.codecool.model.reports.Report;
 import com.codecool.model.reports.ReportType;
 import com.codecool.repository.ReportRepository;

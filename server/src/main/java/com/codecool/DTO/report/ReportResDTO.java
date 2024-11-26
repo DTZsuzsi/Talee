@@ -1,4 +1,4 @@
-package com.codecool.DTO.reportDTO;
+package com.codecool.DTO.report;
 
 import java.time.LocalDateTime;
 
