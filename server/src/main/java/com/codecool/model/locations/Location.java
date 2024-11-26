@@ -1,6 +1,7 @@
 package com.codecool.model.locations;
 
 import com.codecool.model.events.Event;
+import com.codecool.model.tags.Tag;
 import com.codecool.model.users.User;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -33,7 +34,17 @@ public class Location {
 
   @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
   private List<Event> events;
+
+
   private String description;
+
+  @ManyToMany( fetch = FetchType.EAGER)
+  @JoinTable(
+          name = "location_tag",
+          joinColumns = @JoinColumn(name = "location_id"),
+          inverseJoinColumns = @JoinColumn(name = "tag_id")
+  )
+  private List<Tag> locationTags;
 
 
   public boolean addEvent(Event event) {
@@ -42,6 +53,10 @@ public class Location {
 
   public boolean addOpeningHours(OpeningHours openingHours) {
     return this.openingHours.add(openingHours);
+  }
+
+  public void addTag(Tag tag) {
+    locationTags.add(tag);
   }
 
 }

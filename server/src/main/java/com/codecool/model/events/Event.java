@@ -41,7 +41,7 @@ public class Event {
     private String size;
     @ManyToMany( fetch = FetchType.EAGER)
     @JoinTable(
-            name = "event_tag", // join table name
+            name = "event_tag",
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )

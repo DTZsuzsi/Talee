@@ -12,6 +12,7 @@ public interface EventMapper {
     EventMapper INSTANCE = Mappers.getMapper(EventMapper.class);
     @Mapping(target = "tags", source = "tags")
     EventDTO eventToEventDTO(Event event);
+    @Mapping(target = "tags", source = "tags")
     Event eventDTOToEvent(EventDTO eventDTO);
     Event newEventDTOToEvent(NewEventDTO newEventDTO);
 }

@@ -3,7 +3,7 @@ package com.codecool.service;
 import com.codecool.DTO.event.EventDTO;
 import com.codecool.DTO.event.NewEventDTO;
 import com.codecool.DTO.location.LocationInEventDTO;
-import com.codecool.DTO.tag.TaginEventDTO;
+import com.codecool.DTO.tag.TaginFrontendDTO;
 import com.codecool.mapper.EventMapper;
 import com.codecool.mapper.TagMapper;
 import com.codecool.model.events.Event;
@@ -40,7 +40,7 @@ public class EventService {
 
     public EventDTO getEventById(long id) {
         Event event = eventRepository.findEventById(id);
-        List<TaginEventDTO> tags = event.getTags().stream().map(tagMapper::tagToTaginEventDTO).collect(Collectors.toList());
+        List<TaginFrontendDTO> tags = event.getTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toList());
         EventDTO eventDTO = new EventDTO(event.getId(), event.getDate(), event.getName(), event.getDescription(), new LocationInEventDTO(event.getLocation().getId(), event.getLocation().getName()),
                 null, event.getOwner(), event.getSize(), tags, event.getStatus());
 
@@ -58,8 +58,8 @@ public class EventService {
         return eventRepository.save(updatedEvent).getId() > 0;
     }
 
-    private List<TaginEventDTO> getTagDTOSet(Event event) {
-        return event.getTags().stream().map(tagMapper::tagToTaginEventDTO).collect(Collectors.toList());
+    private List<TaginFrontendDTO> getTagDTOSet(Event event) {
+        return event.getTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toList());
     }
 
     public List<EventDTO> getAllEvents() {
@@ -75,10 +75,10 @@ public class EventService {
 
 
     @Transactional
-    public boolean addTagToEvent(long eventId, TaginEventDTO taginEventDTO) {
+    public boolean addTagToEvent(long eventId, TaginFrontendDTO taginFrontendDTO) {
         Event event = eventRepository.findEventById(eventId);
-        TagCategory tagCategory = tagCategoryRepository.findById(taginEventDTO.categoryId());
-        Tag tag = new Tag(taginEventDTO.id(), taginEventDTO.name(), tagCategory);
+        TagCategory tagCategory = tagCategoryRepository.findById(taginFrontendDTO.categoryId());
+        Tag tag = new Tag(taginFrontendDTO.id(), taginFrontendDTO.name(), tagCategory);
         event.addTag(tag);
         return eventRepository.save(event).getId() > 0;
     }

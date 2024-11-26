@@ -2,34 +2,40 @@ package com.codecool.service;
 
 
 import com.codecool.DTO.location.*;
-import com.codecool.exception.LocationNotFoundException;
+import com.codecool.DTO.tag.TaginFrontendDTO;
 import com.codecool.mapper.LocationMapper;
+import com.codecool.mapper.TagMapper;
 import com.codecool.mapper.UserMapper;
+import com.codecool.model.events.Event;
 import com.codecool.model.locations.Location;
 import com.codecool.model.locations.OpeningHours;
+import com.codecool.model.tags.Tag;
+import com.codecool.model.tags.TagCategory;
 import com.codecool.repository.LocationRepository;
+import com.codecool.repository.TagCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class LocationService {
   private final LocationRepository locationRepository;
   private final OpeningHoursService openingHoursService;
+  private final TagCategoryRepository tagCategoryRepository;
   private final LocationMapper locationMapper = LocationMapper.INSTANCE;
   private final UserMapper userMapper = UserMapper.INSTANCE;
+  private final TagMapper tagMapper = TagMapper.INSTANCE;
 
 
   @Autowired
-  public LocationService(LocationRepository locationRepository, OpeningHoursService openingHoursService) {
+  public LocationService(LocationRepository locationRepository, OpeningHoursService openingHoursService, TagCategoryRepository tagCategoryRepository) {
     this.locationRepository = locationRepository;
     this.openingHoursService = openingHoursService;
+    this.tagCategoryRepository = tagCategoryRepository;
   }
 
   public List<LocationDTO> getAllLocations() {
@@ -44,6 +50,9 @@ public class LocationService {
     Location location = locationRepository.findById(id).get();
     return createLocationDTO(location);
   }
+
+
+
 
   //TODO check if there is already a location with that name and specific other details? (eg. address),
   // after saving the location call addOpeningHours method to add the openinghours
@@ -67,6 +76,24 @@ public class LocationService {
   @Transactional
   public long deleteLocation(long id) {
     return locationRepository.deleteLocationById(id);
+  }
+
+
+  public boolean addTagToLocation(long locationId, TaginFrontendDTO taginFrontendDTO) {
+    Location location = locationRepository.findById(locationId).get();
+    TagCategory tagCategory = tagCategoryRepository.findById(taginFrontendDTO.categoryId());
+    Tag tag = new Tag(taginFrontendDTO.id(), taginFrontendDTO.name(), tagCategory);
+    location.addTag(tag);
+    return locationRepository.save(location).getId() > 0;
+  }
+
+  public boolean deleteTagFromLocation(long locationId, long tagId) {
+    Location location = locationRepository.findById(locationId).get();
+    List<Tag> tags = location.getLocationTags();
+    List<Tag> updatedTags = tags.stream().filter(tag -> tag.getId() != tagId).collect(Collectors.toList());
+
+    location.setLocationTags(updatedTags);
+    return locationRepository.save(location).getId() > 0;
   }
 
   public boolean updateLocation(LocationDTO location) {
@@ -136,8 +163,11 @@ public class LocationService {
             location.getEmail(),
             location.getDescription(),
             userMapper.userToUserDTO(location.getAdminUser()),
-            location.getOpeningHours().stream().map(this::createOpeningHoursDTO).collect(Collectors.toList()));
+            location.getOpeningHours().stream().map(this::createOpeningHoursDTO).collect(Collectors.toList()),
+            location.getLocationTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toList()));
   }
+
+
 
   private OpeningHoursDTO createOpeningHoursDTO(OpeningHours openingHoursPerDay) {
     return new OpeningHoursDTO(
