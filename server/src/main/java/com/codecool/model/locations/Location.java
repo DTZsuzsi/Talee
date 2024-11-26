@@ -1,13 +1,10 @@
 package com.codecool.model.locations;
 
 import com.codecool.model.events.Event;
-import com.codecool.model.tags.Tag;
-import com.codecool.model.users.User;
+import com.codecool.model.users.UserEntity;
+
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.List;
 
@@ -27,7 +24,7 @@ public class Location {
   private String instagram;
 
   @ManyToOne
-  private User adminUser;
+  private UserEntity adminUser;
 
   @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE)
   private List<OpeningHours> openingHours;
