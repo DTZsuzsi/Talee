@@ -61,22 +61,10 @@ public class AuthController {
     user.setUsername(credentials.username());
     user.setPassword(passwordEncoder.encode(credentials.password()));
 
-//    Role role = new Role();
-//    role.setName("ROLE_USER");
-//    user.setRoles(Set.of(role));
-
     Role role = roleRepository.findByName("ROLE_USER").get();
     user.setRoles(Set.of(role));
     userRepository.save(user);
 
-//    Authentication authentication =
-//            authenticationManager.authenticate(
-//                    new UsernamePasswordAuthenticationToken(
-//                            credentials.username(),
-//                            credentials.password()));
-//
-//    SecurityContextHolder.getContext().setAuthentication(authentication);
-//    String token = jwtUtils.generateJwtToken(authentication);
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 

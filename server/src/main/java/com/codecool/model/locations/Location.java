@@ -1,6 +1,7 @@
 package com.codecool.model.locations;
 
 import com.codecool.model.events.Event;
+import com.codecool.model.tags.Tag;
 import com.codecool.model.users.UserEntity;
 
 import jakarta.persistence.*;
