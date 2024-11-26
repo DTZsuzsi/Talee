@@ -16,7 +16,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,12 +52,12 @@ public class AuthController {
   @PostMapping("/register")
   public ResponseEntity<?> register(@RequestBody CredentialsDTO credentials) {
 //    logger.info(String.valueOf(credentials));
-    if (userRepository.existsByUsername(credentials.username())) {
-      return new ResponseEntity<>("Username is taken!", HttpStatus.BAD_REQUEST);
+    if (userRepository.existsByEmail(credentials.email())) {
+      return new ResponseEntity<>("There is already an account with this email!", HttpStatus.BAD_REQUEST);
     }
 
     UserEntity user = new UserEntity();
-    user.setUsername(credentials.username());
+    user.setUsername(credentials.email());
     user.setPassword(passwordEncoder.encode(credentials.password()));
 
     Role role = roleRepository.findByName("ROLE_USER").get();
@@ -74,7 +73,7 @@ public class AuthController {
     Authentication authentication =
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            credentials.username(),
+                            credentials.email(),
                             credentials.password()));
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
