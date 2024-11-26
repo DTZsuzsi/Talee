@@ -97,4 +97,9 @@ public class EventService {
         return eventRepository.save(event).getId() > 0;
     }
 
+    public List<EventDTO> findAllByLocationId(long locationId) {
+        List <Event> events = eventRepository.findAllByLocationId(locationId);
+        return events.stream().map(eventMapper::eventToEventDTO).collect(Collectors.toList());
+    }
+
 }
