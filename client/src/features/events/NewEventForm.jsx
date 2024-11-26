@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import InputField from '../main/components/atoms/InputField';
 import SelectField from '../main/components/atoms/SelectField';
 import ServerError from '../main/components/atoms/ServerError';
@@ -8,17 +8,33 @@ import Loading from '../main/components/atoms/Loading';
 function NewEventForm() {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
+	const [location, setLocation]=useState(null);
+	const {locationId}=useParams();
 	const [newEvent, setNewEvent] = useState({
 		date: '',
 		name: '',
 		description: '',
-		location_id: 0,
+		locationInEventDTO: {locationId:locationId, name: location?.name},
 		owner: '',
 		size: 'SMALL',
 		tags: [],
 		status: 'COMING',
 	});
 	const navigate = useNavigate();
+
+	useEffect(()=>{
+async function fetchLocation(){
+	const response= await fetch(`/api/locations/${locationId}`);
+	const data= await response.json();
+	setLocation(data);
+	setNewEvent(prevEvent => ({
+        ...prevEvent,
+        locationInEventDTO: {locationId: parseInt(locationId,10), name: data.name },
+      }));
+}
+
+fetchLocation();
+	}, [locationId])
 
 	const sizes = ['SMALL', 'MEDIUM', 'BIG', 'VERY_BIG'];
 	const statuses = ['COMING', 'IN_PROGRESS'];
@@ -31,6 +47,7 @@ function NewEventForm() {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(newEvent),
 		});
+		console.log(newEvent);
 		if (!response.ok) {
 			console.error('Error:', response.status, await response.text());
 			setLoading(false);
@@ -76,12 +93,12 @@ function NewEventForm() {
 						}
 					/>
 					<InputField
-						label='Location ID'
-						type='number'
-						value={newEvent.location_id}
-						onChange={e =>
-							setNewEvent({ ...newEvent, location_id: +e.target.value })
-						}
+						label='Location'
+						type='text'
+						value={location?.name}
+						
+						
+		
 					/>
 					<InputField
 						label='Owner'
@@ -95,18 +112,7 @@ function NewEventForm() {
 						value={newEvent.size || 'SMALL'}
 						onChange={e => setNewEvent({ ...newEvent, size: e.target.value })}
 					/>
-					<InputField
-						label='Tags'
-						type='text'
-						placeholder='Enter tags separated by commas'
-						value={newEvent.tags.join(', ')}
-						onChange={e =>
-							setNewEvent({
-								...newEvent,
-								tags: e.target.value.split(',').map(tag => tag.trim()),
-							})
-						}
-					/>
+					
 					<SelectField
 						label='Status'
 						options={statuses}

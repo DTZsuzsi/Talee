@@ -8,6 +8,8 @@ import Loading from '../main/components/atoms/Loading';
 import TagCard from '../tag/components/TagCard';
 import TagOptions from '../tag/components/TagOptions';
 import HomeCard from '../main/components/molecules/HomeCard';
+import BiggerOnHover from '../main/components/atoms/BiggerOnHover';
+
 
 function LocationDetailPage() {
   const [error, setError] = useState(null);
@@ -112,6 +114,7 @@ const [events, setEvents]=useState(null);
 
   return location ? (
     <div className='flex flex-col items-center justify-center h-screen'>
+    
       <div className='p-1 border-slate-300 shadow-md shadow-slate-800 border-2 rounded-md m-2 w-[50%] min-w-[540px] bg-slate-300 '>
         <img
           src='https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
@@ -133,6 +136,7 @@ const [events, setEvents]=useState(null);
           ))}
         <p className='text-l font-semibold px-2 mb-2'> {location.description}</p>
         <p className='text-l font-semibold px-2 mb-2'> Phone: {location.phone}</p>
+
         <ul className='flex flex-wrap justify-around'>
           {location?.locationTags?.map((tag) => (
             <li key={tag?.id} className='mx-auto'>
@@ -147,6 +151,14 @@ const [events, setEvents]=useState(null);
           <HiMiniPencilSquare className='h-10 w-10 text-blue-600 mr-2' />
         </Link>
         <MdDeleteForever className='h-10 w-10 text-blue-600 mr-2' onClick={deleteLocation} />
+        <BiggerOnHover>
+					<a
+						href={`/events/new/${location.id}`}
+						className='flex items-center'
+					>
+						<h1 className='text-3xl text-bold mx-5'>Add Event</h1>
+					</a>
+				</BiggerOnHover>
       </div>
 {events?.map((event)=> <div key={event.id}>     
 <div key={event.id}>

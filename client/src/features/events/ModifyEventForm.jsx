@@ -96,18 +96,7 @@ function ModifyEventForm() {
               value={event.size || 'SMALL'}
               onChange={(e) => setEvent({ ...event, size: e.target.value })}
             />
-            <InputField
-              label='Tags'
-              type='text'
-              placeholder='Enter tags separated by commas'
-              value={event.tags ? event.tags.join(', ') : ''}
-              onChange={(e) =>
-                setEvent({
-                  ...event,
-                  tags: e.target.value.split(',').map((tag) => tag.trim()),
-                })
-              }
-            />
+            
             <SelectField
               label='Status'
               options={statuses}

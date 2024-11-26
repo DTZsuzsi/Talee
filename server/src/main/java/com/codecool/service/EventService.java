@@ -5,12 +5,14 @@ import com.codecool.DTO.event.NewEventDTO;
 import com.codecool.DTO.location.LocationInEventDTO;
 import com.codecool.DTO.tag.TaginFrontendDTO;
 import com.codecool.mapper.EventMapper;
+import com.codecool.mapper.LocationMapper;
 import com.codecool.mapper.TagMapper;
 import com.codecool.model.events.Event;
 import com.codecool.model.locations.Location;
 import com.codecool.model.tags.Tag;
 import com.codecool.model.tags.TagCategory;
 import com.codecool.repository.EventRepository;
+import com.codecool.repository.LocationRepository;
 import com.codecool.repository.TagCategoryRepository;
 import com.codecool.repository.TagRepository;
 import jakarta.transaction.Transactional;
@@ -28,13 +30,15 @@ public class EventService {
     private final TagCategoryRepository tagCategoryRepository;
     private final EventMapper eventMapper = EventMapper.INSTANCE;
     private final TagMapper tagMapper = TagMapper.INSTANCE;
+    private final LocationMapper locationMapper = LocationMapper.INSTANCE;
+    private final LocationRepository locationRepository;
 
     @Autowired
-    public EventService(EventRepository eventRepository, TagRepository tagRepository, TagCategoryRepository tagCategoryRepository) {
+    public EventService(EventRepository eventRepository, TagRepository tagRepository, TagCategoryRepository tagCategoryRepository, LocationRepository locationRepository) {
         this.eventRepository = eventRepository;
         this.tagRepository = tagRepository;
         this.tagCategoryRepository = tagCategoryRepository;
-
+        this.locationRepository = locationRepository;
     }
 
 
@@ -49,7 +53,9 @@ public class EventService {
     }
 
     public long addEvent(NewEventDTO newEventDTO) {
-        Event newEvent = eventMapper.newEventDTOToEvent(newEventDTO);
+        Location location = locationRepository.findById(newEventDTO.locationInEventDTO().locationId()).get();
+        Event newEvent = new Event(newEventDTO.date(), newEventDTO.name(), newEventDTO.description(), location,
+                newEventDTO.owner(), newEventDTO.size(), null, newEventDTO.status());
         return eventRepository.save(newEvent).getId();
     }
 
@@ -71,7 +77,6 @@ public class EventService {
     public boolean deleteEventById(long id) {
         return eventRepository.deleteEventById(id);
     }
-
 
 
     @Transactional
@@ -98,7 +103,7 @@ public class EventService {
     }
 
     public List<EventDTO> findAllByLocationId(long locationId) {
-        List <Event> events = eventRepository.findAllByLocationId(locationId);
+        List<Event> events = eventRepository.findAllByLocationId(locationId);
         return events.stream().map(eventMapper::eventToEventDTO).collect(Collectors.toList());
     }
 

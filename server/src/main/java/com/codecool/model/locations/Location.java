@@ -59,4 +59,27 @@ public class Location {
     locationTags.add(tag);
   }
 
+  public Location() {
+  }
+
+  public Location(long id, String name, String address, String phone, String email, String website, String facebook, String instagram, User adminUser, List<OpeningHours> openingHours, List<Event> events, String description, List<Tag> locationTags) {
+    this.id = id;
+    this.name = name;
+    this.address = address;
+    this.phone = phone;
+    this.email = email;
+    this.website = website;
+    this.facebook = facebook;
+    this.instagram = instagram;
+    this.adminUser = adminUser;
+    this.openingHours = openingHours;
+    this.events = events;
+    this.description = description;
+    this.locationTags = locationTags;
+  }
+
+  public Location(long id, String name){
+    this.id = id;
+    this.name = name;
+  }
 }

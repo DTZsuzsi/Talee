@@ -6,7 +6,7 @@ import { Route, Routes } from "react-router-dom";
 function EventsRoutes() {
   return (
     <Routes>
-      <Route path="new" element={<NewEventForm />} />
+      <Route path="new/:locationId" element={<NewEventForm />} />
       <Route path=":eventId" element={<EventDetailPage />} />
       <Route path=":eventId/modify" element={<ModifyEventForm />} />
     </Routes>
