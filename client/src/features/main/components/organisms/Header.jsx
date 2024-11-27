@@ -6,6 +6,7 @@ import Button from '../atoms/Button';
 import {useEffect, useState} from "react";
 // import jwtDecode from "jwt-decode";
 import {Link} from "react-router-dom";
+import ProfileDropdown from "../molecules/ProfileDropdown.jsx";
 
 
 const Header = () => {
@@ -93,25 +94,15 @@ const Header = () => {
 					{/* Profile */}
 					<div className='mx-4'>
 						<BiggerOnHover>
-							<a
-								href='/profile'
-								className='shadow-md p2'
-							>
-								{isLoggedIn ?
-									<button onClick={handleLogout}>
-										<CgProfile
-											size={36}
-											className='hover:bg-gray-200 rounded-xl'
-										/>
-									</button>
-									:
-									<Button>
-										<Link to="/login">
-											Sign Up
-										</Link>
-									</Button>
-								}
-							</a>
+							{isLoggedIn ?
+								<ProfileDropdown handleLogout={handleLogout} />
+								:
+								<Button>
+									<Link to="/login">
+										Sign Up
+									</Link>
+								</Button>
+							}
 						</BiggerOnHover>
 					</div>
 				</div>

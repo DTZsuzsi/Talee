@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
     boolean deleteUserById(Long id);
     Optional<UserEntity> findByUsername(String username);
-    boolean existsByEmail(String email);
+    boolean existsByUsername(String username);
 }

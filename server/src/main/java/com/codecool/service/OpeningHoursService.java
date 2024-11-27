@@ -50,7 +50,7 @@ public class OpeningHoursService {
       newOpeningHoursPerDay.setDayOfWeek(openingHoursPerDay.day());
       newOpeningHoursPerDay.setOpeningTime(openingHoursPerDay.openingTime());
       newOpeningHoursPerDay.setClosingTime(openingHoursPerDay.closingTime());
-      newOpeningHoursPerDay.setLocation(existingLocation);
+//      newOpeningHoursPerDay.setLocation(existingLocation);
       return openingHoursRepository.save(newOpeningHoursPerDay).getId();
 //    }
 
