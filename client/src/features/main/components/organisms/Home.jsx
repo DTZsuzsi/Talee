@@ -8,15 +8,11 @@ import TagCard from "../../../tag/components/TagCard.jsx";
 import Loading from '../atoms/Loading.jsx';
 
 const Home = () => {
-   
-
- 
     const [locations, setLocations] = useState();
     const [tagChange, setTagChange]=useState(false);
 	const [mode, setMode] = useState('locations');
 	const [loading, setLoading] = useState(false);
 	const [events, setEvents] = useState();
-
 
 	useEffect(() => {
 		async function fetchEvents() {
@@ -29,9 +25,6 @@ const Home = () => {
 			setLoading(false);
 		}
 
-        
-
-      
         async function fetchLocations() {
 			const response = await fetch('/api/locations');
 			const data = await response.json();
@@ -69,22 +62,18 @@ const Home = () => {
 		setDarkMode(false);
 	}
 
-
-
- 
-  
-async  function handleDeleteTag(event, tag){
-    setTagChange(false);
-const response= await fetch(`/api/events/tag/${event.id}?tagId=${tag.id}`, {method: "DELETE"});
-const data= await response.json();
-setTagChange(true);
-  }
+	async function handleDeleteTag(event, tag){
+		setTagChange(false);
+		const response= await fetch(`/api/events/tag/${event.id}?tagId=${tag.id}`, {method: "DELETE"});
+		const data= await response.json();
+		setTagChange(true);
+	  }
 
   async function handleDeleteTagFromLocation(location, tag){
-	setTagChange(false);
-	const response= await fetch(`/api/locations/tag/${location.id}?tagId=${tag.id}`, {method: "DELETE"});
-	const data= await response.json();
-	setTagChange(true);
+		setTagChange(false);
+		const response= await fetch(`/api/locations/tag/${location.id}?tagId=${tag.id}`, {method: "DELETE"});
+		const data = await response.json();
+		setTagChange(true);
   }
 
 
@@ -137,18 +126,18 @@ setTagChange(true);
 
 	return (
 		<div className='w-full mx-auto p-4'>
-			<div className='flex flex-col'>
+			<div className='flex flex-col items-center'>
 				<div className='w-full max-w-sm'>
-					<div className='h-20 flex justify-between items-center'>
+					<div className='h-20 flex items-center'>
 						<StateChangeButton
 							onClick={setEventState}
-							active={mode == 'events'}
+							active={mode === 'events'}
 						>
 							Events
 						</StateChangeButton>
 						<StateChangeButton
 							onClick={setLocationState}
-							active={mode == 'locations'}
+							active={mode === 'locations'}
 						>
 							Locations
 						</StateChangeButton>
@@ -156,13 +145,13 @@ setTagChange(true);
 				</div>
 				<div className='grow'>
 					<h1 className='text-3xl font-bold my-5 text-center'>
-						{mode == 'events' ? 'Events' : 'Locations'}
+						{mode === 'events' ? 'Events' : 'Locations'}
 					</h1>
 					{loading ? (
 						<Loading />
 					) : (
 						<div className='flex w-full flex-col'>
-							{mode == 'events' ? eventCards : locationCards}
+							{mode === 'events' ? eventCards : locationCards}
 						</div>
 					)}
 				</div>
