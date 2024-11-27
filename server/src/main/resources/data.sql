@@ -6,12 +6,12 @@ VALUES ('matet', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6')
 
 INSERT INTO location (name, admin_user_id, address, phone, email, website, facebook, instagram, description)
 VALUES
-    ('Margitszigeti Szabadtéri Színpad', 2, '1138 Budapest, Margitsziget',
+    ('Margitszigeti Szabadtéri Színpad', 1, '1138 Budapest, Margitsziget',
      '06 1 555 1234', 'szinpad@margitsziget.hu', 'https://margitszigetiszinhaz.hu/',
      'https://www.facebook.com/margitszigetiszinhaz', 'https://www.instagram.com/margitszigetiszinhaz',
      'Színházi és kulturális rendezvények egyedülálló szabadtéri helyszíne'),
 
-    ('Budai Vár', 3, '1014 Budapest, Szent György tér',
+    ('Budai Vár', 1, '1014 Budapest, Szent György tér',
      '06 1 555 5678', 'info@budaivar.hu', 'https://www.budaivar.hu/',
      'https://www.facebook.com/budaivar', 'https://www.instagram.com/budaivar',
      'Történelmi látványosságok és rendezvények helyszíne'),
@@ -21,7 +21,7 @@ VALUES
      'https://www.facebook.com/varosliget', 'https://www.instagram.com/varosliget',
      'Budapest zöld szíve, amely számos szabadtéri programnak ad otthont'),
 
-    ('Duna Korzó', 3, '1056 Budapest, Belgrád rakpart',
+    ('Duna Korzó', 1, '1056 Budapest, Belgrád rakpart',
      '06 1 777 1111', 'dunakorzofesztival@gmail.com', NULL,
      'https://www.facebook.com/dunakorzofesztival', NULL,
      'Budapest egyik legismertebb promenádja a Duna partján'),
@@ -31,7 +31,7 @@ VALUES
      'https://www.facebook.com/gellerthegy', NULL,
      'Kirándulási és kulturális rendezvények népszerű helyszíne'),
 
-    ('Budapest Park', 2, '1095 Budapest, Soroksári út 60.',
+    ('Budapest Park', 1, '1095 Budapest, Soroksári út 60.',
      '06 1 999 0000', 'park@budapest.hu', 'https://www.budapestpark.hu/',
      'https://www.facebook.com/budapestpark', 'https://www.instagram.com/budapestpark',
      'Európa legnagyobb szabadtéri szórakozóhelye'),
@@ -41,7 +41,7 @@ VALUES
      'https://www.facebook.com/hosoktere', NULL,
      'Történelmi és turisztikai jelentőségű tér Budapest szívében'),
 
-    ('Bazilika', 3, '1051 Budapest, Szent István tér 1.',
+    ('Bazilika', 1, '1051 Budapest, Szent István tér 1.',
      '06 1 543 2100', 'info@bazilika.hu', 'https://www.bazilika.hu/',
      'https://www.facebook.com/bazilika', 'https://www.instagram.com/bazilika',
      'A Szent István Bazilika és a körülötte rendezett események'),
@@ -51,7 +51,7 @@ VALUES
      'https://www.facebook.com/andrassyut', NULL,
      'Budapest elegáns sugárútja, fesztiválok és rendezvények helyszíne'),
 
-    ('Puskás Aréna', 2, '1146 Budapest, Ifjúság útja 5.',
+    ('Puskás Aréna', 1, '1146 Budapest, Ifjúság útja 5.',
      '06 1 123 4567', 'arena@puskasarena.hu', 'https://www.puskasarena.hu/',
      'https://www.facebook.com/puskasarena', 'https://www.instagram.com/puskasarena',
      'Magyarország legnagyobb sport- és rendezvénycsarnoka');
