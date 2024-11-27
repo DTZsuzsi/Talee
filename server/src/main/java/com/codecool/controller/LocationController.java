@@ -39,22 +39,26 @@ public class LocationController {
   }
 
   @DeleteMapping("/{id}")
+  @PreAuthorize("hasRole('LOCATION_OWNER')")
   public long deleteLocation(@PathVariable long id) {
     return locationService.deleteLocation(id);
   }
 
   @PatchMapping
+  @PreAuthorize("hasRole('LOCATION_OWNER')")
   public boolean updateLocation(@RequestBody LocationDTO location) {
     return locationService.updateLocation(location);
   }
 
 
   @PostMapping("/{locationId}")
+  @PreAuthorize("hasRole('LOCATION_OWNER')")
   public boolean addTagToLocation(@PathVariable long locationId, @RequestBody TaginFrontendDTO taginFrontendDTO) {
     return locationService.addTagToLocation(locationId, taginFrontendDTO);
   }
 
   @DeleteMapping("/tag/{locationId}")
+  @PreAuthorize("hasRole('LOCATION_OWNER')")
   public boolean deleteTag(@PathVariable long locationId, @RequestParam int tagId) {
     return locationService.deleteTagFromLocation(locationId, tagId);
   }
