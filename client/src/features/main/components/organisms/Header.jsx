@@ -3,8 +3,41 @@ import { FaSearch } from 'react-icons/fa';
 import { ImAccessibility } from 'react-icons/im';
 import BiggerOnHover from '../atoms/BiggerOnHover';
 import Button from '../atoms/Button';
+import {useEffect, useState} from "react";
+// import jwtDecode from "jwt-decode";
+import {Link} from "react-router-dom";
+
 
 const Header = () => {
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+	const checkLogin = () => {
+		const token = localStorage.getItem('jwtToken'); // Or retrieve from cookies
+		if (!token) return false;
+		return true;
+		// try {
+		// 	const decoded = jwtDecode(token);
+		// 	const isExpired = decoded.exp * 1000 < Date.now();
+		// 	return !isExpired;
+		// 	// eslint-disable-next-line no-unused-vars
+		// } catch (error) {
+		// 	return false;
+		// }
+	};
+
+	const handleLogout = () => {
+		localStorage.removeItem('jwtToken');
+		setIsLoggedIn(false);
+	};
+
+	useEffect(() => {
+		// Check login status on component mount
+		const loginStatus = checkLogin();
+		setIsLoggedIn(loginStatus);
+	}, []);
+
+
+
 	return (
 		<nav className='mx-auto'>
 			<div className='flex justify-center items-center flex-wrap w-screen'>
@@ -64,10 +97,20 @@ const Header = () => {
 								href='/profile'
 								className='shadow-md p2'
 							>
-								<CgProfile
-									size={36}
-									className='hover:bg-gray-200 rounded-xl'
-								/>
+								{isLoggedIn ?
+									<button onClick={handleLogout}>
+										<CgProfile
+											size={36}
+											className='hover:bg-gray-200 rounded-xl'
+										/>
+									</button>
+									:
+									<Button>
+										<Link to="/login">
+											Sign Up
+										</Link>
+									</Button>
+								}
 							</a>
 						</BiggerOnHover>
 					</div>

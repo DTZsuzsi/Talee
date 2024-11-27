@@ -2,8 +2,7 @@ package com.codecool.model.events;
 
 import com.codecool.model.tags.Tag;
 import com.codecool.model.locations.Location;
-import com.codecool.model.users.User;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.codecool.model.users.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,7 +35,7 @@ public class Event {
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    private Set<User> users;
+    private Set<UserEntity> users;
     private String owner;
     private String size;
     @ManyToMany( fetch = FetchType.EAGER)
@@ -49,8 +48,8 @@ public class Event {
     private String status;
 
 
+    public Event(long id, LocalDate date, String name, String description, Location location, Set<UserEntity> users, String owner, String size, List<Tag> tags, String status) {
 
-    public Event(long id, LocalDate date, String name, String description, Location location, Set<User> users, String owner, String size, List<Tag> tags, String status) {
         this.id = id;
         this.date = date;
         this.name = name;

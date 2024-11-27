@@ -1,8 +1,11 @@
 INSERT INTO role(name)
-VALUES ('user'), ('admin');
+VALUES ('ROLE_USER'), ('ROLE_ADMIN');
 
-INSERT INTO talee_user(username, role_id)
-VALUES ('matet', 2), ('zsuzsi', 1), ('marian', 1), ('mmarci', 2);
+
+
+INSERT INTO talee_user(username, password, email)
+VALUES ('matet', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6', 'initialEmail@email.com'), ('zsuzsi', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6', 'initialEmail2@email.com'), ('mariann', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6', 'initialEmail3@email.com');
+
 
 INSERT INTO location (name, admin_user_id, address, phone, email, website, facebook, instagram, description)
 VALUES
@@ -16,7 +19,7 @@ VALUES
      'https://www.facebook.com/budaivar', 'https://www.instagram.com/budaivar',
      'Történelmi látványosságok és rendezvények helyszíne'),
 
-    ('Városliget', 4, '1146 Budapest, Városliget',
+    ('Városliget', 1, '1146 Budapest, Városliget',
      '06 1 444 9876', 'info@varosliget.hu', 'https://www.varosliget.hu/',
      'https://www.facebook.com/varosliget', 'https://www.instagram.com/varosliget',
      'Budapest zöld szíve, amely számos szabadtéri programnak ad otthont'),
@@ -46,7 +49,7 @@ VALUES
      'https://www.facebook.com/bazilika', 'https://www.instagram.com/bazilika',
      'A Szent István Bazilika és a körülötte rendezett események'),
 
-    ('Andrássy út', 4, '1061 Budapest, Andrássy út',
+    ('Andrássy út', 1, '1061 Budapest, Andrássy út',
      '06 1 678 5432', 'info@andrassyut.hu', NULL,
      'https://www.facebook.com/andrassyut', NULL,
      'Budapest elegáns sugárútja, fesztiválok és rendezvények helyszíne'),

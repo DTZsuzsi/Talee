@@ -7,5 +7,5 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Set;
 
-public record UserDTO(long id, String username, @JsonIgnore Set<EventDTO> events, Role role) {
+public record UserDTO(long id, String username, @JsonIgnore Set<EventDTO> events, Set<Role> roles, String email) {
 }
