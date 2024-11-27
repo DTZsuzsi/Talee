@@ -1,5 +1,5 @@
 INSERT INTO role(name)
-VALUES ('ROLE_USER'), ('ROLE_ADMIN');
+VALUES ('ROLE_USER'), ('ROLE_ADMIN'), ('ROLE_LOCATION_OWNER'), ('ROLE_EVENT_OWNER');
 
 INSERT INTO talee_user(username, password)
 VALUES ('matet', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6'); --, ('zsuzsi', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6', 'initialEmail2@email.com'), ('mariann', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6', 'initialEmail3@email.com');
