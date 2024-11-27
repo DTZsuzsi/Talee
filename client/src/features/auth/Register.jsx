@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {Link} from "react-router-dom";
+import TaleeLogo from "../main/components/atoms/TaleeLogo.jsx";
 
 function Register() {
     const [email, setEmail] = useState('');
@@ -45,10 +46,8 @@ function Register() {
         <div>
             <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                    <img className="mx-auto h-20 w-auto"
-                         src="/logo.svg"
-                         alt="Your Company"/>
-                        <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Register an
+                    <TaleeLogo />
+                    <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Register an
                             account</h2>
 
                 </div>

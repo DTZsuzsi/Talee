@@ -10,10 +10,15 @@ export default {
       colors: {
         background: '#00ffa2',
         text: '#004466',
+        headerBackground:  '#003927',
+
         darkBackground: '#004466',
         darkText: '#00ffa2',
-				blueButton: '#3B82F6',
-				blueHover: '#2563EB',
+        darkHeaderBackground:'#001532',
+
+
+        blueButton: '#3B82F6',
+        blueHover: '#2563EB',
       },
       fontFamily: {
         sans: ['Montserrat', 'sans-serif'],
