@@ -46,7 +46,6 @@ public class Event {
     )
     private List<Tag> tags;
     private String status;
-    private Timestamp timestamp;
 
 
     public Event(long id, LocalDate date, String name, String description, Location location, Set<UserEntity> users, String owner, String size, List<Tag> tags, String status) {

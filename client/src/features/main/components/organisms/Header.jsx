@@ -62,14 +62,7 @@ const Header = () => {
 					</a>
 				</BiggerOnHover>
 
-				<BiggerOnHover>
-					<a
-						href='/events/new'
-						className='flex items-center'
-					>
-						<h1 className='text-3xl text-bold mx-5'>Add Event</h1>
-					</a>
-				</BiggerOnHover>
+				
 
 				{/* Search bar */}
 				<div className='flex items-center justify-between mx-4 mt-2'>

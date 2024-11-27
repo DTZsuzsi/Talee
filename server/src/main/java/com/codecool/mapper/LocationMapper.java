@@ -1,6 +1,7 @@
 package com.codecool.mapper;
 
 import com.codecool.DTO.location.LocationDTO;
+import com.codecool.DTO.location.LocationInEventDTO;
 import com.codecool.DTO.location.NewLocationDTO;
 import com.codecool.model.locations.Location;
 import org.mapstruct.Mapper;
@@ -14,4 +15,6 @@ public interface LocationMapper {
     @Mapping(target = "adminUser", source = "adminUser")
     LocationDTO locationToLocationDTO(Location location);
     Location newLocationDTOToLocation(NewLocationDTO newLocationDTO);
+    LocationInEventDTO locationToLocationInEventDTO(Location location);
+    Location locationInEventDTOToLocation(LocationInEventDTO locationInEventDTO);
 }
