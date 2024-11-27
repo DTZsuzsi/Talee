@@ -6,13 +6,10 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper//(uses = {EventMapper.class}, componentModel = "spring")
+@Mapper//(uses = {EventMapper.class})
 public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
     @Mapping(target = "events", source = "events")
     UserDTO userToUserDTO(UserEntity userEntity);
-
-//    @Mapping(target = "events", ignore = true)
-//    User userDTOToUser(UserDTO userDTO);
 }

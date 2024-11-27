@@ -1,8 +1,8 @@
 INSERT INTO role(name)
 VALUES ('ROLE_USER'), ('ROLE_ADMIN');
 
-INSERT INTO talee_user(username, password, email)
-VALUES ('matet', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6', 'initialEmail@email.com'), ('zsuzsi', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6', 'initialEmail2@email.com'), ('mariann', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6', 'initialEmail3@email.com');
+INSERT INTO talee_user(username, password)
+VALUES ('matet', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6'); --, ('zsuzsi', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6', 'initialEmail2@email.com'), ('mariann', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6', 'initialEmail3@email.com');
 
 INSERT INTO location (name, admin_user_id, address, phone, email, website, facebook, instagram, description)
 VALUES ('Fővárosi Állat- és Növénykert',1, '1146 Budapest, Állatkerti krt. 6-12.',
