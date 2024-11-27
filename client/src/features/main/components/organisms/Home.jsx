@@ -126,9 +126,9 @@ const Home = () => {
 
 	return (
 		<div className='w-full mx-auto p-4'>
-			<div className='flex flex-col'>
+			<div className='flex flex-col items-center'>
 				<div className='w-full max-w-sm'>
-					<div className='h-20 flex justify-between items-center'>
+					<div className='h-20 flex items-center'>
 						<StateChangeButton
 							onClick={setEventState}
 							active={mode === 'events'}
