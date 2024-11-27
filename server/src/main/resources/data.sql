@@ -4,6 +4,9 @@ VALUES ('ROLE_USER'), ('ROLE_ADMIN'), ('ROLE_LOCATION_OWNER'), ('ROLE_EVENT_OWNE
 INSERT INTO talee_user(username, password)
 VALUES ('matet', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6'); --, ('zsuzsi', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6', 'initialEmail2@email.com'), ('mariann', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6', 'initialEmail3@email.com');
 
+INSERT INTO talee_user_roles(roles_id, user_entity_id)
+VALUES (1, 1);
+
 INSERT INTO location (name, admin_user_id, address, phone, email, website, facebook, instagram, description)
 VALUES
     ('Margitszigeti Szabadtéri Színpad', 1, '1138 Budapest, Margitsziget',

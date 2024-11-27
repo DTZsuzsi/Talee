@@ -19,6 +19,6 @@ public class UserEntity {
     @ManyToMany(mappedBy = "users")
     private Set<Event> events;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 }
