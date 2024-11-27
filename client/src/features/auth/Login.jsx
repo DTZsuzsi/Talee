@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {Link} from "react-router-dom";
 import TaleeLogo from "../main/components/atoms/TaleeLogo.jsx";
+import Button from "../main/components/atoms/Button.jsx";
 
 function Login() {
     const [username, setUsername] = useState('');
@@ -29,7 +30,7 @@ function Login() {
             setSuccess(data.message)
             localStorage.setItem('jwtToken', data.jwtToken);
             setTimeout(() => {
-                window.location.href = '/home';
+                window.location.href = '/';
             }, 1000);
 
             console.log('Login successful', data);
@@ -44,8 +45,8 @@ function Login() {
         <div>
             <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                    <TaleeLogo />
-                    <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Sign in to
+                    <TaleeLogo h={20}/>
+                    <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight">Sign in to
                         your
                         account</h2>
                 </div>
@@ -54,7 +55,7 @@ function Login() {
                     <form className="space-y-6" action="#" method="POST" onSubmit={handleSubmit}>
                         <div>
                             <div className="flex items-start">
-                                <label htmlFor="username" className="block text-sm/6 font-medium text-gray-900">
+                                <label htmlFor="username" className="block text-sm/6 font-medium">
                                     Name</label>
                             </div>
                             <div className="mt-2">
@@ -66,7 +67,7 @@ function Login() {
                         <div>
                             <div className="flex items-start">
                                 <label htmlFor="password"
-                                       className="block text-sm/6 font-medium text-gray-900">Password</label>
+                                       className="block text-sm/6 font-medium">Password</label>
                             </div>
                             <div className="mt-2">
                                 <input id="password" name="password" type="password" autoComplete="current-password"
@@ -76,19 +77,19 @@ function Login() {
                         </div>
 
                         <div>
-                            <button type="submit"
-                                    className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign
-                                in
-                            </button>
+                            <Button type="submit"
+                                    className="flex w-full justify-center rounded-md px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                                Sign in
+                            </Button>
                         </div>
                     </form>
 
                     {error && <p className="text-red-500">{error}</p>}
                     {success && <p className="text-green-500">{success}</p>}
 
-                    <p className="mt-10 text-center text-sm/6 text-gray-500">
+                    <p className="mt-10 text-center text-sm/6 text-light-mutedText dark:text-dark-mutedText">
                         Don&#39;t have an account yet?
-                        <Link className="font-semibold text-indigo-600 hover:text-indigo-500" to="/register"> Register</Link>
+                        <Link className="font-semibold text-accent hover:text-indigo-500" to="/register"> Register</Link>
 
                     </p>
                 </div>

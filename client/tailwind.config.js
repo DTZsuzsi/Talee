@@ -8,18 +8,26 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: '#00ffa2',
-        text: '#004466',
-        headerBackground:  '#003927',
+        light: {
+          bg: '#00ffa2', // Primary Background
+          secondaryBg: '#F3F4F6', // Secondary Background
+          text: '#000000', // Default Text
+          mutedText: '#6B7280', // Muted Text
+          border: '#E5E7EB', // Borders/Dividers
+        },
+        dark: {
+          bg: '#004466', // Primary Background
+          secondaryBg: '#1F2937', // Secondary Background
+          text: '#00ffa2', // Default Text
+          mutedText: '#94D1C2', // Muted Text
+          border: '#374151', // Borders/Dividers
+        },
 
-        darkBackground: '#004466',
-        darkText: '#00ffa2',
-        darkHeaderBackground:'#001532',
-
-
-        blueButton: '#3B82F6',
-        blueHover: '#2563EB',
+        accent: '#FFD700', // Accent Color
+        button: '#3B82F6', // Primary Button
+        buttonHover: '#2563EB', // Button Hover
       },
+
       fontFamily: {
         sans: ['Montserrat', 'sans-serif'],
       }
