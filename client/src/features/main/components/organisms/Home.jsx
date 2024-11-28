@@ -6,7 +6,6 @@ import TagCard from "../../../tag/components/TagCard.jsx";
 /** @format */
 
 import Loading from '../atoms/Loading.jsx';
-import {APIProvider, Map} from '@vis.gl/react-google-maps';
 
 const Home = () => {
    
@@ -121,17 +120,9 @@ setTagChange(true);
 	if (locations)
 		locationCards = locations.map(location => (
 	<div key={location.id}> 
-			<APIProvider 
-      apiKey="AIzaSyCpdQIVDmlFx3hXi3tz6DN59hXWMJEqLOU"  // Replace with your actual API key
-      onLoad={() => console.log('Maps API has loaded.')}
-    >
-      <div style={{ height: '500px', width: '100%' }}> {/* Map container size */}
-        <Map
-          defaultZoom={13}
-          defaultCenter={{ lat: 37.7749, lng: -122.4194 }}  // Set the initial map center (San Francisco)
-        />
-      </div>
-    </APIProvider>
+			
+
+	
 			<HomeCard
 				
 				title={location.name}
