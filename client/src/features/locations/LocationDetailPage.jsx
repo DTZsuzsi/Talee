@@ -10,6 +10,7 @@ import TagOptions from '../tag/components/TagOptions';
 import HomeCard from '../main/components/molecules/HomeCard';
 import BiggerOnHover from '../main/components/atoms/BiggerOnHover';
 import {APIProvider, Map, Marker} from '@vis.gl/react-google-maps';
+import GoogleMapComponent from './GoogleMapComponent';
 
 
 
@@ -161,6 +162,7 @@ const [events, setEvents]=useState(null);
       </div>
     </APIProvider>
 
+<GoogleMapComponent/>
       </div>
       <div>
         <Link to={`/locations/${locationId}/update`}>

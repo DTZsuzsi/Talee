@@ -6,6 +6,7 @@ import TagCard from "../../../tag/components/TagCard.jsx";
 /** @format */
 
 import Loading from '../atoms/Loading.jsx';
+import GoogleMapComponent from "../../../locations/GoogleMapComponent.jsx";
 
 const Home = () => {
     const [locations, setLocations] = useState();
@@ -133,6 +134,7 @@ const Home = () => {
 
 	return (
 		<div className='w-full mx-auto p-4'>
+		
 			<div className='flex flex-col items-center'>
 				<div className='w-full max-w-sm'>
 					<div className='h-20 flex items-center'>
@@ -162,6 +164,9 @@ const Home = () => {
 						</div>
 					)}
 				</div>
+			</div>
+			<div> 
+			<GoogleMapComponent/>
 			</div>
 		</div>
 	);
