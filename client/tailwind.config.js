@@ -13,14 +13,14 @@ export default {
           secondaryBg: '#F3F4F6', // Secondary Background
           text: '#000000', // Default Text
           mutedText: '#6B7280', // Muted Text
-          border: '#E5E7EB', // Borders/Dividers
+          border: '#374151', // Borders/Dividers
         },
         dark: {
           bg: '#004466', // Primary Background
           secondaryBg: '#1F2937', // Secondary Background
           text: '#00ffa2', // Default Text
           mutedText: '#94D1C2', // Muted Text
-          border: '#374151', // Borders/Dividers
+          border: '#E5E7EB', // Borders/Dividers
         },
 
         accent: '#FFD700', // Accent Color
