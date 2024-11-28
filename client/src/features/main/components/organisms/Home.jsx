@@ -13,6 +13,8 @@ const Home = () => {
 	const [mode, setMode] = useState('locations');
 	const [loading, setLoading] = useState(false);
 	const [events, setEvents] = useState();
+	const position = {lat: 53.54992, lng: 10.00678};
+	const googleAPIKEY="AIzaSyCpdQIVDmlFx3hXi3tz6DN59hXWMJEqLOU"
 
 	useEffect(() => {
 		async function fetchEvents() {
@@ -107,6 +109,9 @@ const Home = () => {
 	if (locations)
 		locationCards = locations.map(location => (
 	<div key={location.id}> 
+			
+
+	
 			<HomeCard
 				
 				title={location.name}
@@ -119,8 +124,10 @@ const Home = () => {
 			  <li key={tag.id} className="mx-auto">
 				<TagCard tag={tag} onClick={()=>handleDeleteTagFromLocation(location, tag)} color={tag.color}/>
 			  </li>
+			  
 			))}
 			</ul>
+			
 			</div>
 		));
 
