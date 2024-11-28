@@ -36,6 +36,9 @@ public class LocationController {
   @PostMapping
   @PreAuthorize("hasRole('USER')")
   public long addLocation(@RequestBody NewLocationDTO location, @RequestHeader (name = "Authorization") String token) {
+    if (token.startsWith("Bearer ")) {
+      token = token.substring(7);
+    }
     return locationService.addLocation(location, token);
   }
 
