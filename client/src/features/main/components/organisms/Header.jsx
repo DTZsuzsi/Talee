@@ -1,11 +1,10 @@
+/* eslint-disable no-unused-vars */
 import {FaSearch} from 'react-icons/fa';
 import {ImAccessibility} from 'react-icons/im';
 import BiggerOnHover from '../atoms/BiggerOnHover';
 import Button from '../atoms/Button';
 import {useEffect, useState} from "react";
 // import jwtDecode from "jwt-decode";
-import {Link} from "react-router-dom";
-import ProfileDropdown from "../molecules/ProfileDropdown.jsx";
 
 
 

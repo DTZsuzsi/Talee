@@ -45,7 +45,7 @@ public class EventService {
     public EventDTO getEventById(long id) {
         Event event = eventRepository.findEventById(id);
         List<TaginFrontendDTO> tags = event.getTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toList());
-        EventDTO eventDTO = new EventDTO(event.getId(), event.getDate(), event.getName(), event.getDescription(), new LocationInEventDTO(event.getLocation().getId(), event.getLocation().getName()),
+        EventDTO eventDTO = new EventDTO(event.getId(), event.getDate(), event.getName(), event.getDescription(), new LocationInEventDTO(event.getLocation().getId(), event.getLocation().getName(), event.getLocation().getLatitude(), event.getLocation().getLongitude()),
                 null, event.getOwner(), event.getSize(), tags, event.getStatus());
 
         return eventDTO;
@@ -90,7 +90,7 @@ public class EventService {
 
 
     private LocationInEventDTO getLocationDTOForEvent(Location location) {
-        return new LocationInEventDTO(location.getId(), location.getName());
+        return new LocationInEventDTO(location.getId(), location.getName(), location.getLatitude(), location.getLongitude());
     }
 
     public boolean deleteTagFromEvent(long eventId, long tagId) {

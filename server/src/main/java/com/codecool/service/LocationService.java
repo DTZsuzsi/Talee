@@ -151,7 +151,8 @@ public class LocationService {
             existingLocation.getPhone(),
             existingLocation.getEmail(),
             existingLocation.getDescription(),
-            userMapper.userToUserDTO(existingLocation.getAdminUser())
+            userMapper.userToUserDTO(existingLocation.getAdminUser()
+                    ),existingLocation.getLatitude(), existingLocation.getLongitude()
     );
   }
 
@@ -164,7 +165,7 @@ public class LocationService {
             location.getDescription(),
             userMapper.userToUserDTO(location.getAdminUser()),
             location.getOpeningHours().stream().map(this::createOpeningHoursDTO).collect(Collectors.toList()),
-            location.getLocationTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toList()));
+            location.getLocationTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toList()), location.getLatitude(), location.getLongitude());
   }
 
 

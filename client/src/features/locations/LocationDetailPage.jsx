@@ -154,9 +154,9 @@ const [events, setEvents]=useState(null);
       <div style={{ height: '500px', width: '100%' }}> {/* Map container size */}
         <Map
           defaultZoom={13}
-          defaultCenter={{lat: 53.54992, lng: 10.00678}}   // Set the initial map center (San Francisco)
+          defaultCenter={{lat: location.latitude, lng: location.longitude}}   // Set the initial map center (San Francisco)
         >
-			<Marker position={{lat: 53.54992, lng: 10.00678}} />
+			<Marker position={{lat: location.latitude, lng: location.longitude}} />
 			</Map>
       </div>
     </APIProvider>
