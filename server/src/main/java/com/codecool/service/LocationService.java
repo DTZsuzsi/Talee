@@ -7,7 +7,6 @@ import com.codecool.DTO.user.UserDTO;
 import com.codecool.mapper.LocationMapper;
 import com.codecool.mapper.TagMapper;
 import com.codecool.mapper.UserMapper;
-import com.codecool.model.events.Event;
 import com.codecool.model.locations.Location;
 import com.codecool.model.locations.OpeningHours;
 import com.codecool.model.tags.Tag;
@@ -120,10 +119,10 @@ public class LocationService {
 
   public boolean deleteTagFromLocation(long locationId, long tagId) {
     Location location = locationRepository.findById(locationId).get();
-    Set<Tag> tags = location.getLocationTags();
+    Set<Tag> tags = location.getTags();
     Set<Tag> updatedTags = tags.stream().filter(tag -> tag.getId() != tagId).collect(Collectors.toSet());
 
-    location.setLocationTags(updatedTags);
+    location.setTags(updatedTags);
     return locationRepository.save(location).getId() > 0;
   }
 
@@ -196,7 +195,7 @@ public class LocationService {
             location.getDescription(),
             userMapper.userToUserDTO(location.getAdminUser()),
             location.getOpeningHours().stream().map(this::createOpeningHoursDTO).collect(Collectors.toList()),
-            location.getLocationTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toList()), location.getLatitude(), location.getLongitude());
+            location.getTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toSet()), location.getLatitude(), location.getLongitude());
   }
 
 
