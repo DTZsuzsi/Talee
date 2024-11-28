@@ -125,11 +125,11 @@ function UpdateLocationForm() {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await fetch(`/api/locations/${locationId}`, {
+      const response = await fetch(`/api/locations`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify(location),
       });
