@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -41,18 +42,8 @@ function NewLocationForm() {
     const daysOfWeek = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"];
 
     async function handleNewLocation(e) {
-        console.log("hi");
         e.preventDefault();
         setLoading(true);
-
-        const newLoc={...newLocation, lat: position.lat, lng: position.lng, address:address};
-        console.log(newLoc);
-        const response = await fetch('/api/locations', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(newLocation);
-        }
-
         const token = localStorage.getItem("jwtToken");
 
         const response = await fetch('/api/locations', {
@@ -61,7 +52,6 @@ function NewLocationForm() {
                 'Authorization': `Bearer ${token}`
              },
             body: JSON.stringify(newLocation)
-
         });
         if (!response.ok) {
             console.error('Error: ', response.status, await response.text());
@@ -73,10 +63,17 @@ function NewLocationForm() {
         const createdLocationId = await response.json();
         setLoading(false);
         navigate(`/locations/${createdLocationId}`);
+    
 
-  
+        if (!response.ok) {
+            console.error('Error: ', response.status, await response.text());
+            setLoading(false);
+            setError('Failed to create location');
+            return;
+        }
+
     }
-  }
+  
 
   function handleOpeningHoursChange(day, field, value) {
     setNewLocation((prevLocation) => {
@@ -110,46 +107,47 @@ function NewLocationForm() {
     fetchTags();
   }, []);
 
-  function handleNewTag(e) {
-    const selectedTagName = e.target.value;
-    const tagToAdd = findTag(selectedTagName);
+//   function handleNewTag(e) {
+//     const selectedTagName = e.target.value;
+//     const tagToAdd = findTag(selectedTagName);
 
-    if (!tagToAdd) {
-      console.warn(`Tag with name ${selectedTagName} not found.`);
-      return;
-    }
+//     if (!tagToAdd) {
+//       console.warn(`Tag with name ${selectedTagName} not found.`);
+//       return;
+//     }
 
-    // Add the tag to the `newEvent.tags` if it's not already present
-    setNewLocation((prevLocation) => {
-      const isTagAlreadyAdded = prevLocation.tags.includes(tagToAdd);
+//     // Add the tag to the `newEvent.tags` if it's not already present
+//     setNewLocation((prevLocation) => {
+//       const isTagAlreadyAdded = prevLocation.tags.includes(tagToAdd);
 
-      if (isTagAlreadyAdded) {
-        console.warn(`Tag with ID ${tagToAdd.id} is already added.`);
-        return prevLocation; // No changes if the tag is already in the array
-      }
+//       if (isTagAlreadyAdded) {
+//         console.warn(`Tag with ID ${tagToAdd.id} is already added.`);
+//         return prevLocation; // No changes if the tag is already in the array
+//       }
 
-      return {
-        ...prevLocation,
-        tags: [...prevLocation.tags, tagToAdd],
-      };
-    });
-  }
+//       return {
+//         ...prevLocation,
+//         tags: [...prevLocation.tags, tagToAdd],
+//       };
+//     });
+//   }
 
-  function handleDeleteTag(tag) {
-    // Remove the tag from `newEvent.tags`
-    setNewLocation((prevLocation) => ({
-      ...prevLocation,
-      tags: prevLocation.tags.filter(
-        (existingTag) => existingTag.id !== tag.id,
-      ),
-    }));
-  }
+//   function handleDeleteTag(tag) {
+//     // Remove the tag from `newEvent.tags`
+//     setNewLocation((prevLocation) => ({
+//       ...prevLocation,
+//       tags: prevLocation.tags.filter(
+//         (existingTag) => existingTag.id !== tag.id,
+//       ),
+//     }));
+//   }
 
-  function findTag(tagName) {
-    if (!tags) {
-      console.warn("Tags not loaded yet.");
-      return null;
-    }
+//   function findTag(tagName) {
+//     if (!tags) {
+//       console.warn("Tags not loaded yet.");
+//       return null;
+//     }
+// }
 
 
     return (
@@ -238,19 +236,12 @@ function NewLocationForm() {
             </form>
             <GoogleMapComponent position={position} setPosition={setPosition} address={address} setAddress={setAddress}/>
 
+            </div>
+
     // Find the tag by name from the `tags` state
-    return tags.find((tag) => tag.name === tagName) || null;
-  }
-
-  if (error) {
-    return <ServerError error={error} />;
-  }
-
-  
-        </div>
-      </form>
-    </div>
-  );
+    // return tags.find((tag) => tag.name === tagName) || null;
+   
+);
 }
 
 export default NewLocationForm;
