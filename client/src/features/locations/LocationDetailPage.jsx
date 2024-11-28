@@ -28,34 +28,36 @@ function LocationDetailPage() {
   const [tagChange,setTagChange]=useState(false);
   const [tags, setTags]=useState(null);
 
-  useEffect(() => {
+//   useEffect(() => {
 
     
 
-  async function handleNewTag(id, e) {
-    setTagChange(false);
+// //   async function handleNewTag(id, e) {
+// //     setTagChange(false);
 
-    const selectedTagName = e.target.value;
-    const tagToSend = findTag(selectedTagName);
+// //     const selectedTagName = e.target.value;
+// //     const tagToSend = findTag(selectedTagName);
 
-    const response = await fetch(`/api/locations/${id}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(tagToSend),
-    });
+// //     const response = await fetch(`/api/locations/${id}`, {
+// //       method: "POST",
+// //       headers: { "Content-Type": "application/json" },
+// //       body: JSON.stringify(tagToSend),
+// //     });
 
-    const data = await response.json();
+// //     const data = await response.json();
 
-    setTagChange(true);
-  }},[tagChange])
+// //     setTagChange(true);
+//   }},[tagChange])
 
-  function findTag(tagName) {
-    let tagFound = {};
-    for (const tag of tags) {
-      if (tag.name === tagName) {
-        tagFound = tag;
-    }
-return tagFound;}
+//   function findTag(tagName) {
+//     let tagFound = {};
+//     for (const tag of tags) {
+//       if (tag.name === tagName) {
+//         tagFound = tag;
+//     }
+// return tagFound;}
+
+useEffect(()=>{
 
     async function fetchLocationData() {
       try {
@@ -86,7 +88,8 @@ return tagFound;}
     }
 
     if (locationId) fetchLocationData();
-  }
+  
+},[])
 
   async function deleteLocation() {
     const response = await fetch(`/api/locations/${locationId}`, {
