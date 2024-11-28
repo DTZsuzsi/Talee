@@ -5,6 +5,7 @@ import com.codecool.DTO.location.LocationDTO;
 import com.codecool.DTO.location.NewLocationDTO;
 import com.codecool.DTO.tag.TaginFrontendDTO;
 import com.codecool.service.LocationService;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +35,8 @@ public class LocationController {
 
   @PostMapping
   @PreAuthorize("hasRole('USER')")
-  public long addLocation(@RequestBody NewLocationDTO location) {
-    return locationService.addLocation(location);
+  public long addLocation(@RequestBody NewLocationDTO location, @RequestHeader (name = "Authorization") String token) {
+    return locationService.addLocation(location, token);
   }
 
   @DeleteMapping("/{id}")
