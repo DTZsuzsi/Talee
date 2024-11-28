@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -89,8 +90,8 @@ public class LocationService {
 
   public boolean deleteTagFromLocation(long locationId, long tagId) {
     Location location = locationRepository.findById(locationId).get();
-    List<Tag> tags = location.getLocationTags();
-    List<Tag> updatedTags = tags.stream().filter(tag -> tag.getId() != tagId).collect(Collectors.toList());
+    Set<Tag> tags = location.getLocationTags();
+    Set<Tag> updatedTags = tags.stream().filter(tag -> tag.getId() != tagId).collect(Collectors.toSet());
 
     location.setLocationTags(updatedTags);
     return locationRepository.save(location).getId() > 0;

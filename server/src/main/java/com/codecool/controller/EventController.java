@@ -45,7 +45,7 @@ public class EventController {
         return eventService.deleteEventById(eventId);
     }
 
-    @PostMapping("/{eventId}")
+    @PostMapping("/tag/{eventId}")
     public boolean addTagToEvent(@PathVariable long eventId, @RequestBody TaginFrontendDTO taginFrontendDTO) {
         return eventService.addTagToEvent(eventId, taginFrontendDTO);
     }

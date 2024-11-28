@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import InputField from "../main/components/atoms/InputField";
 import SelectField from "../main/components/atoms/SelectField";
 import Button from "../main/components/atoms/Button.jsx";
+import TagCard from "../tag/components/TagCard.jsx";
+import TagOptions from "../tag/components/TagOptions.jsx";
 
 function ModifyEventForm() {
   const { eventId } = useParams();
@@ -11,6 +13,67 @@ function ModifyEventForm() {
   const statuses = ["COMING", "IN_PROGRESS"];
 
   const navigate = useNavigate();
+
+  const [tags, setTags] = useState(null);
+  const [tagChange, setTagChange] = useState(false);
+
+  const token = localStorage.getItem("jwtToken");
+
+  useEffect(() => {
+    async function fetchTags() {
+      const response = await fetch("/api/tags");
+      const data = await response.json();
+      setTags(data);
+    }
+
+    fetchTags();
+  }, [tagChange]);
+
+  async function handleNewTag(id, e) {
+    setTagChange(false);
+
+    const selectedTagName = e.target.value;
+    const tagToSend = findTag(selectedTagName);
+
+    const response = await fetch(`/api/events/tag/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(tagToSend),
+    });
+
+    const data = await response.json();
+
+    setTagChange(true);
+  }
+
+  function findTag(tagName) {
+    let tagFound = {};
+    for (const tag of tags) {
+      if (tag.name === tagName) {
+        tagFound = tag;
+      }
+    }
+    return tagFound;
+  }
+
+  async function handleDeleteTag(location, tag) {
+    setTagChange(false);
+    const response = await fetch(
+      `/api/events/tag/${location.id}?tagId=${tag.id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    const data = await response.json();
+    setTagChange(true);
+  }
 
   useEffect(() => {
     async function fetchEvent() {
@@ -27,21 +90,21 @@ function ModifyEventForm() {
       }
     }
     fetchEvent();
-  }, [eventId]);
+  }, [eventId, tagChange]);
 
   async function handleModifyingEvent(e) {
     e.preventDefault();
     console.log("Submitting event:", event);
 
     try {
-      const response = await fetch(
-        `http://localhost:8080/events/${eventId}/modify`,
-        {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(event),
+      const response = await fetch(`/api/events/${eventId}/modify`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-      );
+        body: JSON.stringify(event),
+      });
 
       if (!response.ok)
         throw new Error(`Failed to modify event: ${response.statusText}`);
@@ -120,7 +183,23 @@ function ModifyEventForm() {
             />
           </div>
 
-          <div className="w-full flex justify-center py-4">
+          <div className="w-full my-5">
+            <TagOptions onChange={(e) => handleNewTag(eventId, e)} />
+            <ul className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {event.tags?.map((tag) => (
+                <li key={tag.id}>
+                  <TagCard
+                    tag={tag}
+                    onClick={() => handleDeleteTag(event, tag)}
+                    color={tag.color}
+                    className="w-full"
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="w-full flex justify-center">
             <Button type="submit" className="mt-5">
               Modify Event
             </Button>

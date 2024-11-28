@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,7 +45,7 @@ public class EventService {
 
     public EventDTO getEventById(long id) {
         Event event = eventRepository.findEventById(id);
-        List<TaginFrontendDTO> tags = event.getTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toList());
+        Set<TaginFrontendDTO> tags = event.getTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toSet());
         EventDTO eventDTO = new EventDTO(event.getId(), event.getDate(), event.getName(), event.getDescription(), new LocationInEventDTO(event.getLocation().getId(), event.getLocation().getName()),
                 null, event.getOwner(), event.getSize(), tags, event.getStatus());
 
@@ -64,8 +65,8 @@ public class EventService {
         return eventRepository.save(updatedEvent).getId() > 0;
     }
 
-    private List<TaginFrontendDTO> getTagDTOSet(Event event) {
-        return event.getTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toList());
+    private Set<TaginFrontendDTO> getTagDTOSet(Event event) {
+        return event.getTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toSet());
     }
 
     public List<EventDTO> getAllEvents() {
@@ -95,8 +96,8 @@ public class EventService {
 
     public boolean deleteTagFromEvent(long eventId, long tagId) {
         Event event = eventRepository.findEventById(eventId);
-        List<Tag> tags = event.getTags();
-        List<Tag> updatedTags = tags.stream().filter(tag -> tag.getId() != tagId).collect(Collectors.toList());
+        Set<Tag> tags = event.getTags();
+        Set<Tag> updatedTags = tags.stream().filter(tag -> tag.getId() != tagId).collect(Collectors.toSet());
 
         event.setTags(updatedTags);
         return eventRepository.save(event).getId() > 0;

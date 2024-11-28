@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -42,7 +43,7 @@ public class Location {
           joinColumns = @JoinColumn(name = "location_id"),
           inverseJoinColumns = @JoinColumn(name = "tag_id")
   )
-  private List<Tag> locationTags;
+  private Set<Tag> locationTags;
 
 
   public boolean addEvent(Event event) {
@@ -60,7 +61,7 @@ public class Location {
   public Location() {
   }
 
-  public Location(long id, String name, String address, String phone, String email, String website, String facebook, String instagram, UserEntity adminUser, List<OpeningHours> openingHours, List<Event> events, String description, List<Tag> locationTags) {
+  public Location(long id, String name, String address, String phone, String email, String website, String facebook, String instagram, UserEntity adminUser, List<OpeningHours> openingHours, List<Event> events, String description, Set<Tag> locationTags) {
     this.id = id;
     this.name = name;
     this.address = address;
