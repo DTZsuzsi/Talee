@@ -10,6 +10,8 @@ import TagOptions from '../tag/components/TagOptions';
 import HomeCard from '../main/components/molecules/HomeCard';
 import BiggerOnHover from '../main/components/atoms/BiggerOnHover';
 import GlobalContext from '../auth/GlobalContext';
+import {APIProvider, Map, Marker} from '@vis.gl/react-google-maps';
+
 
 
 function LocationDetailPage() {
@@ -151,6 +153,20 @@ function LocationDetailPage() {
           ))}
         </ul>
         <TagOptions onChange={(e) => handleNewTag(location.id, e)} />
+        <APIProvider 
+      apiKey="AIzaSyCpdQIVDmlFx3hXi3tz6DN59hXWMJEqLOU"  // Replace with your actual API key
+      onLoad={() => console.log('Maps API has loaded.')}
+    >
+      <div style={{ height: '500px', width: '100%' }}> {/* Map container size */}
+        <Map
+          defaultZoom={13}
+          defaultCenter={{lat: location.latitude, lng: location.longitude}}   // Set the initial map center (San Francisco)
+        >
+			<Marker position={{lat: location.latitude, lng: location.longitude}} />
+			</Map>
+      </div>
+    </APIProvider>
+
       </div>
       {owner === user &&
         <div>

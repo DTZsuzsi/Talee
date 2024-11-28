@@ -15,4 +15,7 @@ public interface EventMapper {
     @Mapping(target = "tags", source = "tags")
     Event eventDTOToEvent(EventDTO eventDTO);
     Event newEventDTOToEvent(NewEventDTO newEventDTO);
+
+
+
 }

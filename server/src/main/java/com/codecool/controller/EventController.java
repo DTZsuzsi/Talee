@@ -55,6 +55,11 @@ public class EventController {
         return eventService.deleteTagFromEvent(eventId, tagId);
     }
 
+    @DeleteMapping("/user/{eventId}")
+    public boolean deleteUser(@PathVariable long eventId, @RequestParam int userId) {
+        return eventService.deleteUserFromEvent(eventId, userId);
+    }
+
     @GetMapping("/locations/{locationId}")
     public List<EventDTO> getEventsByLocation(@PathVariable long locationId) {
         return eventService.findAllByLocationId(locationId);
