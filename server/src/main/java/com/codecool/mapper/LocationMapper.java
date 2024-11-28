@@ -17,4 +17,6 @@ public interface LocationMapper {
     Location newLocationDTOToLocation(NewLocationDTO newLocationDTO);
     LocationInEventDTO locationToLocationInEventDTO(Location location);
     Location locationInEventDTOToLocation(LocationInEventDTO locationInEventDTO);
+
+
 }

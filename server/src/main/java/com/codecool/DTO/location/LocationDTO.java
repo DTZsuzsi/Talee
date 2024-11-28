@@ -8,5 +8,5 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 
 //TODO introduce ContactInfoDTO, use EventDTO (+incl) instead
-public record LocationDTO(long id, String name, String address, String phone, String email, String description, @JsonIgnore UserDTO adminUser, List<OpeningHoursDTO> openingHours, List<TaginFrontendDTO> locationTags) {
+public record LocationDTO(long id, String name, String address, String phone, String email, String description, @JsonIgnore UserDTO adminUser, List<OpeningHoursDTO> openingHours, List<TaginFrontendDTO> locationTags, double latitude, double longitude) {
 }
