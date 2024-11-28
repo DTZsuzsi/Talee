@@ -27,6 +27,7 @@ export default function Navbar() {
 
     const handleLogout = () => {
         localStorage.removeItem('jwtToken');
+        localStorage.removeItem('userName');
         setIsLoggedIn(false);
     };
 
