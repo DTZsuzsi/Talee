@@ -4,9 +4,11 @@ import com.codecool.DTO.event.EventDTO;
 import com.codecool.DTO.event.NewEventDTO;
 import com.codecool.DTO.location.LocationInEventDTO;
 import com.codecool.DTO.tag.TaginFrontendDTO;
+import com.codecool.DTO.user.UserInEventDTO;
 import com.codecool.mapper.EventMapper;
 import com.codecool.mapper.LocationMapper;
 import com.codecool.mapper.TagMapper;
+import com.codecool.mapper.UserMapper;
 import com.codecool.model.events.Event;
 import com.codecool.model.locations.Location;
 import com.codecool.model.tags.Tag;
@@ -30,8 +32,8 @@ public class EventService {
     private final TagCategoryRepository tagCategoryRepository;
     private final EventMapper eventMapper = EventMapper.INSTANCE;
     private final TagMapper tagMapper = TagMapper.INSTANCE;
-    private final LocationMapper locationMapper = LocationMapper.INSTANCE;
     private final LocationRepository locationRepository;
+    private final UserMapper userMapper= UserMapper.INSTANCE;
 
     @Autowired
     public EventService(EventRepository eventRepository, TagRepository tagRepository, TagCategoryRepository tagCategoryRepository, LocationRepository locationRepository) {
@@ -45,8 +47,9 @@ public class EventService {
     public EventDTO getEventById(long id) {
         Event event = eventRepository.findEventById(id);
         List<TaginFrontendDTO> tags = event.getTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toList());
+        List < UserInEventDTO> users = event.getUsers().stream().map(userEntity -> new UserInEventDTO(userEntity.getId(), userEntity.getUsername())).collect(Collectors.toList());
         EventDTO eventDTO = new EventDTO(event.getId(), event.getDate(), event.getName(), event.getDescription(), new LocationInEventDTO(event.getLocation().getId(), event.getLocation().getName(), event.getLocation().getLatitude(), event.getLocation().getLongitude()),
-                null, event.getOwner(), event.getSize(), tags, event.getStatus());
+                users, event.getOwner(), event.getSize(), tags, event.getStatus());
 
         return eventDTO;
 

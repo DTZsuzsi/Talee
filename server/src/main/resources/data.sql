@@ -207,7 +207,7 @@ INSERT INTO tag(name, tag_category_id) VALUES
                                            ('webinar', 8),
                                            ('social gathering', 8);
 
--- INSERT INTO event_users (event_id, user_id) VALUES (1, 1), (1, 2);
+INSERT INTO event_users (event_id, user_id) VALUES (1, 1), (1, 2);
 
 INSERT INTO tag_category(name, color) VALUES('company reportType', 'green'), ('sporty', 'blue'), ('culture', 'black'),('romantic', 'red'), ('family', 'yellow'),('prices', 'grey'),('gastronomy', 'brown'), ('other', 'purple');
 INSERT INTO tag(name, tag_category_id) VALUES ('big',1), ('romantic',4),('family friendly',5), ('hiking',2);

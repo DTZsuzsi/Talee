@@ -1,6 +1,7 @@
 package com.codecool.mapper;
 
 import com.codecool.DTO.user.UserDTO;
+import com.codecool.DTO.user.UserInEventDTO;
 import com.codecool.model.users.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -12,4 +13,5 @@ public interface UserMapper {
 
     @Mapping(target = "events", source = "events")
     UserDTO userToUserDTO(UserEntity userEntity);
-}
+    UserInEventDTO userToUserInEventDTO(UserEntity userEntity);}
+
