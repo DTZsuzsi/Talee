@@ -1,31 +1,31 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { HiMiniPencilSquare } from 'react-icons/hi2';
-import { MdDeleteForever } from 'react-icons/md';
-import ServerError from '../main/components/atoms/ServerError';
-import Loading from '../main/components/atoms/Loading';
-import TagCard from '../tag/components/TagCard';
-import TagOptions from '../tag/components/TagOptions';
-import HomeCard from '../main/components/molecules/HomeCard';
-import BiggerOnHover from '../main/components/atoms/BiggerOnHover';
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { HiMiniPencilSquare } from "react-icons/hi2";
+import { MdDeleteForever } from "react-icons/md";
+import ServerError from "../main/components/atoms/ServerError";
+import Loading from "../main/components/atoms/Loading";
+import TagCard from "../tag/components/TagCard";
+import TagOptions from "../tag/components/TagOptions";
+import HomeCard from "../main/components/molecules/HomeCard";
+import BiggerOnHover from "../main/components/atoms/BiggerOnHover";
 import {APIProvider, Map, Marker} from '@vis.gl/react-google-maps';
-
 
 
 function LocationDetailPage() {
   const [error, setError] = useState(null);
   const [location, setLocation] = useState(null);
   const { locationId } = useParams();
+  const [events, setEvents] = useState(null);
+  const navigate = useNavigate();
+
   const [tags, setTags] = useState(null);
   const [tagChange, setTagChange] = useState(false);
-const [events, setEvents]=useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchLocation() {
       if (!locationId) {
-        console.error('Location ID is undefined');
+        console.error("Location ID is undefined");
         return;
       }
 
@@ -36,29 +36,33 @@ const [events, setEvents]=useState(null);
 
         setLocation(data);
       } else {
-        setError(`Failed to fetch location with id: ${locationId}, ${response.statusText}`);
+        setError(
+          `Failed to fetch location with id: ${locationId}, ${response.statusText}`,
+        );
       }
     }
 
     async function fetchEvents() {
-        if (!locationId) {
-          console.error('Location ID is undefined');
-          return;
-        }
-  
-        const response = await fetch(`/api/events/locations/${locationId}`);
-  
-        if (response.ok) {
-          const data = await response.json();
-  
-          setEvents(data);
-        } else {
-          setError(`Failed to fetch location with id: ${locationId}, ${response.statusText}`);
-        }
+      if (!locationId) {
+        console.error("Location ID is undefined");
+        return;
       }
 
+      const response = await fetch(`/api/events/locations/${locationId}`);
+
+      if (response.ok) {
+        const data = await response.json();
+
+        setEvents(data);
+      } else {
+        setError(
+          `Failed to fetch location with id: ${locationId}, ${response.statusText}`,
+        );
+      }
+    }
+
     async function fetchTags() {
-      const response = await fetch('/api/tags');
+      const response = await fetch("/api/tags");
       const data = await response.json();
       setTags(data);
     }
@@ -75,8 +79,8 @@ const [events, setEvents]=useState(null);
     const tagToSend = findTag(selectedTagName);
 
     const response = await fetch(`/api/locations/${id}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(tagToSend),
     });
 
@@ -97,57 +101,70 @@ const [events, setEvents]=useState(null);
 
   async function handleDeleteTag(location, tag) {
     setTagChange(false);
-    const response = await fetch(`/api/locations/tag/${location.id}?tagId=${tag.id}`, { method: 'DELETE' });
+    const response = await fetch(
+      `/api/locations/tag/${location.id}?tagId=${tag.id}`,
+      { method: "DELETE" },
+    );
     const data = await response.json();
     setTagChange(true);
   }
 
   async function deleteLocation() {
     const response = await fetch(`/api/locations/${locationId}`, {
-      method: 'DELETE',
+      method: "DELETE",
     });
 
     const data = await response.json();
-    navigate('/');
+    navigate("/");
   }
   if (error) {
     return <ServerError error={error} />;
   }
 
   return location ? (
-    <div className='flex flex-col items-center justify-center h-screen'>
-    
-      <div className='p-1 border-slate-300 shadow-md shadow-slate-800 border-2 rounded-md m-2 w-[50%] min-w-[540px] bg-slate-300 '>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <div className="p-1 border-slate-300 shadow-md shadow-slate-800 border-2 rounded-md m-2 w-[50%] min-w-[540px] bg-slate-300 ">
         <img
-          src='https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-          className='self-center m-auto rounded-t-md'
+          src="https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          className="self-center m-auto rounded-t-md"
         ></img>
-        <p className='text-xl font-semibold px-2'>Name: </p>
-        <p className='text-xl  px-2 mb-2'> {location.name}</p>
-        <p className='text-xl font-semibold px-2'> Address: </p>
-        <p className='text-xl  px-2 mb-2'> {location.address}</p>
-        <p className='text-xl font-semibold px-2'> Opening Hours: </p>
+        <p className="text-xl font-semibold px-2">Name: </p>
+        <p className="text-xl  px-2 mb-2"> {location.name}</p>
+        <p className="text-xl font-semibold px-2"> Address: </p>
+        <p className="text-xl  px-2 mb-2"> {location.address}</p>
+        <p className="text-xl font-semibold px-2"> Opening Hours: </p>
         {location.openingHours &&
           location.openingHours.map((openingHour) => (
-            <div key={openingHour.day} className='mt-1'>
-              <p className='text-sm px-2 mb-2'>
-                {' '}
-                {openingHour.day}: {openingHour.openingTime} - {openingHour.closingTime}
+            <div key={openingHour.day} className="mt-1">
+              <p className="text-sm px-2 mb-2">
+                {" "}
+                {openingHour.day}: {openingHour.openingTime} -{" "}
+                {openingHour.closingTime}
               </p>
             </div>
           ))}
-        <p className='text-l font-semibold px-2 mb-2'> {location.description}</p>
-        <p className='text-l font-semibold px-2 mb-2'> Phone: {location.phone}</p>
+        <p className="text-l font-semibold px-2 mb-2">
+          {" "}
+          {location.description}
+        </p>
+        <p className="text-l font-semibold px-2 mb-2">
+          {" "}
+          Phone: {location.phone}
+        </p>
 
-        <ul className='flex flex-wrap justify-around'>
+        <ul className="flex flex-wrap justify-around">
           {location?.locationTags?.map((tag) => (
-            <li key={tag?.id} className='mx-auto'>
-              <TagCard tag={tag} onClick={() => handleDeleteTag(location, tag)} color={tag?.color} />
+            <li key={tag?.id} className="mx-auto">
+              <TagCard
+                tag={tag}
+                onClick={() => handleDeleteTag(location, tag)}
+                color={tag?.color}
+              />
             </li>
           ))}
         </ul>
         <TagOptions onChange={(e) => handleNewTag(location.id, e)} />
-        <APIProvider 
+        <APIProvider
       apiKey="AIzaSyCpdQIVDmlFx3hXi3tz6DN59hXWMJEqLOU"  // Replace with your actual API key
       onLoad={() => console.log('Maps API has loaded.')}
     >
@@ -164,40 +181,42 @@ const [events, setEvents]=useState(null);
       </div>
       <div>
         <Link to={`/locations/${locationId}/update`}>
-          <HiMiniPencilSquare className='h-10 w-10 text-blue-600 mr-2' />
+          <HiMiniPencilSquare className="h-10 w-10 text-blue-600 mr-2" />
         </Link>
-        <MdDeleteForever className='h-10 w-10 text-blue-600 mr-2' onClick={deleteLocation} />
-        <BiggerOnHover>
-					<a
-						href={`/events/new/${location.id}`}
-						className='flex items-center'
-					>
-						<h1 className='text-3xl text-bold mx-5'>Add Event</h1>
-					</a>
-				</BiggerOnHover>
-      </div>
-{events?.map((event)=> <div key={event.id}>     
-<div key={event.id}>
-        <HomeCard
-          key={event.id}
-          title={event.name}
-          href={`/events/${event.id}`}
-          description={event.description}
-          date={event.date}
+        <MdDeleteForever
+          className="h-10 w-10 text-blue-600 mr-2"
+          onClick={deleteLocation}
         />
-       <ul className="flex flex-wrap justify-around">
-        {event.tags?.map((tag) => (
-          <li key={tag.id} className="mx-auto">
-            <TagCard tag={tag} onClick={()=>handleDeleteTag(event, tag)} color={tag.color}/>
-          </li>
-        ))}
-        </ul>
+        <BiggerOnHover>
+          <a href={`/events/new/${location.id}`} className="flex items-center">
+            <h1 className="text-3xl text-bold mx-5">Add Event</h1>
+          </a>
+        </BiggerOnHover>
       </div>
-
-
-
-</div>)}
-
+      {events?.map((event) => (
+        <div key={event.id}>
+          <div key={event.id}>
+            <HomeCard
+              key={event.id}
+              title={event.name}
+              href={`/events/${event.id}`}
+              description={event.description}
+              date={event.date}
+            />
+            <ul className="flex flex-wrap justify-around">
+              {event.tags?.map((tag) => (
+                <li key={tag.id} className="mx-auto">
+                  <TagCard
+                    tag={tag}
+                    onClick={() => handleDeleteTag(event, tag)}
+                    color={tag.color}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ))}
     </div>
   ) : (
     <Loading />

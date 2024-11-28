@@ -9,6 +9,8 @@ VALUES ('matet', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6')
        ('nana', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6'),
        ('marci', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6');
 
+INSERT INTO talee_user_roles(roles_id, user_entity_id) VALUES (2, 1), (1, 1);
+
 INSERT INTO location (name, admin_user_id, address, phone, email, website, facebook, instagram, description, latitude, longitude)
 VALUES
     ('Margitszigeti Szabadtéri Színpad', 1, '1138 Budapest, Margitsziget',
@@ -229,6 +231,83 @@ INSERT INTO event_users (event_id, user_id) VALUES
 
 INSERT INTO tag_category(name, color) VALUES('company reportType', 'green'), ('sporty', 'blue'), ('culture', 'black'),('romantic', 'red'), ('family', 'yellow'),('prices', 'grey'),('gastronomy', 'brown'), ('other', 'purple');
 INSERT INTO tag(name, tag_category_id) VALUES ('big',1), ('romantic',4),('family friendly',5), ('hiking',2);
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 1, id FROM tag ORDER BY RANDOM() LIMIT 3;
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 2, id FROM tag ORDER BY RANDOM() LIMIT 2;
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 3, id FROM tag ORDER BY RANDOM() LIMIT 4;
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 4, id FROM tag ORDER BY RANDOM() LIMIT 3;
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 5, id FROM tag ORDER BY RANDOM() LIMIT 2;
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 6, id FROM tag ORDER BY RANDOM() LIMIT 4;
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 7, id FROM tag ORDER BY RANDOM() LIMIT 2;
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 8, id FROM tag ORDER BY RANDOM() LIMIT 3;
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 9, id FROM tag ORDER BY RANDOM() LIMIT 4;
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 10, id FROM tag ORDER BY RANDOM() LIMIT 2;
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 11, id FROM tag ORDER BY RANDOM() LIMIT 3;
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 12, id FROM tag ORDER BY RANDOM() LIMIT 4;
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 13, id FROM tag ORDER BY RANDOM() LIMIT 3;
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 14, id FROM tag ORDER BY RANDOM() LIMIT 2;
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 15, id FROM tag ORDER BY RANDOM() LIMIT 4;
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 16, id FROM tag ORDER BY RANDOM() LIMIT 3;
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 17, id FROM tag ORDER BY RANDOM() LIMIT 2;
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 18, id FROM tag ORDER BY RANDOM() LIMIT 4;
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 19, id FROM tag ORDER BY RANDOM() LIMIT 3;
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 20, id FROM tag ORDER BY RANDOM() LIMIT 2;
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 21, id FROM tag ORDER BY RANDOM() LIMIT 3;
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 22, id FROM tag ORDER BY RANDOM() LIMIT 4;
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 23, id FROM tag ORDER BY RANDOM() LIMIT 2;
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 24, id FROM tag ORDER BY RANDOM() LIMIT 3;
+
+INSERT INTO event_tag (event_id, tag_id)
+SELECT 25, id FROM tag ORDER BY RANDOM() LIMIT 4;
+
+
 
 -- Reports for issues and content for testing purposes c:
 

@@ -48,7 +48,7 @@ public class EventService {
 
     public EventDTO getEventById(long id) {
         Event event = eventRepository.findEventById(id);
-        List<TaginFrontendDTO> tags = event.getTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toList());
+        Set<TaginFrontendDTO> tags = event.getTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toSet());
         List < UserInEventDTO> users = event.getUsers().stream().map(userEntity -> new UserInEventDTO(userEntity.getId(), userEntity.getUsername())).collect(Collectors.toList());
         EventDTO eventDTO = new EventDTO(event.getId(), event.getDate(), event.getName(), event.getDescription(), new LocationInEventDTO(event.getLocation().getId(), event.getLocation().getName(), event.getLocation().getLatitude(), event.getLocation().getLongitude()),
                 users, event.getOwner(), event.getSize(), tags, event.getStatus());
@@ -69,8 +69,8 @@ public class EventService {
         return eventRepository.save(updatedEvent).getId() > 0;
     }
 
-    private List<TaginFrontendDTO> getTagDTOSet(Event event) {
-        return event.getTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toList());
+    private Set<TaginFrontendDTO> getTagDTOSet(Event event) {
+        return event.getTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toSet());
     }
 
     public List<EventDTO> getAllEvents() {
@@ -79,8 +79,9 @@ public class EventService {
         return eventDTOS;
     }
 
-    public boolean deleteEventById(long id) {
-        return eventRepository.deleteEventById(id);
+    @Transactional
+    public void deleteEventById(long id) {
+        eventRepository.deleteEventById(id);
     }
 
 
@@ -102,8 +103,8 @@ public class EventService {
 
     public boolean deleteTagFromEvent(long eventId, long tagId) {
         Event event = eventRepository.findEventById(eventId);
-        List<Tag> tags = event.getTags();
-        List<Tag> updatedTags = tags.stream().filter(tag -> tag.getId() != tagId).collect(Collectors.toList());
+        Set<Tag> tags = event.getTags();
+        Set<Tag> updatedTags = tags.stream().filter(tag -> tag.getId() != tagId).collect(Collectors.toSet());
 
         event.setTags(updatedTags);
         return eventRepository.save(event).getId() > 0;
