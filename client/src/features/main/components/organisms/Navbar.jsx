@@ -27,6 +27,7 @@ export default function Navbar() {
 
     const handleLogout = () => {
         localStorage.removeItem('jwtToken');
+        localStorage.removeItem('userName');
         setIsLoggedIn(false);
     };
 
@@ -124,7 +125,7 @@ export default function Navbar() {
                                         className="block px-4 py-2 text-base text-black hover:bg-gray-500"
                                         role="menuitem"
                                     >
-                                        Kijelentkezés
+                                        Logout
                                     </button>
                                 </MenuItem>
                             </MenuItems>

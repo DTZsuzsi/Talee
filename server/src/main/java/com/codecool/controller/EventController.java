@@ -41,11 +41,11 @@ public class EventController {
     }
 
     @DeleteMapping("/{eventId}")
-    public boolean deleteEvent(@PathVariable long eventId) {
-        return eventService.deleteEventById(eventId);
+    public void deleteEvent(@PathVariable long eventId) {
+        eventService.deleteEventById(eventId);
     }
 
-    @PostMapping("/{eventId}")
+    @PostMapping("/tag/{eventId}")
     public boolean addTagToEvent(@PathVariable long eventId, @RequestBody TaginFrontendDTO taginFrontendDTO) {
         return eventService.addTagToEvent(eventId, taginFrontendDTO);
     }
@@ -53,6 +53,11 @@ public class EventController {
     @DeleteMapping("/tag/{eventId}")
     public boolean deleteTag(@PathVariable long eventId, @RequestParam int tagId) {
         return eventService.deleteTagFromEvent(eventId, tagId);
+    }
+
+    @DeleteMapping("/user/{eventId}")
+    public boolean deleteUser(@PathVariable long eventId, @RequestParam int userId) {
+        return eventService.deleteUserFromEvent(eventId, userId);
     }
 
     @GetMapping("/locations/{locationId}")

@@ -26,6 +26,7 @@ function NewLocationForm() {
         openingHours: []
 	});
 
+
 	const navigate = useNavigate();
 
     useEffect(() => {
@@ -42,12 +43,23 @@ function NewLocationForm() {
         console.log("hi");
         e.preventDefault();
         setLoading(true);
+
         const newLoc={...newLocation, lat: position.lat, lng: position.lng, address:address};
         console.log(newLoc);
         const response = await fetch('/api/locations', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newLoc)
+
+        const token = localStorage.getItem("jwtToken");
+
+        const response = await fetch('/api/locations', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+             },
+            body: JSON.stringify(newLocation)
+
         });
         if (!response.ok) {
             console.error('Error: ', response.status, await response.text());
