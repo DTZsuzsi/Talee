@@ -1,5 +1,5 @@
 INSERT INTO role(name)
-VALUES ('ROLE_USER'), ('ROLE_ADMIN');
+VALUES ('ROLE_USER'), ('ROLE_ADMIN'), ('ROLE_LOCATION_OWNER'), ('ROLE_EVENT_OWNER');
 
 INSERT INTO talee_user(username, password)
 VALUES ('matet', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6'),
@@ -9,7 +9,8 @@ VALUES ('matet', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6')
        ('nana', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6'),
        ('marci', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6');
 
-INSERT INTO talee_user_roles(roles_id, user_entity_id) VALUES (2, 1), (1, 1);
+INSERT INTO talee_user_roles(roles_id, user_entity_id)
+VALUES (1, 1), (2, 1),(3, 1);
 
 INSERT INTO location (name, admin_user_id, address, phone, email, website, facebook, instagram, description, latitude, longitude)
 VALUES

@@ -30,10 +30,13 @@ function UpdateLocationForm() {
     async function handleLocationUpdate(e) {
         e.preventDefault();
 
+        const token = localStorage.getItem('jwtToken');
         try {
             const response = await fetch(`/api/locations`, {
                 method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                 },
                 body: JSON.stringify(location),
             });
 

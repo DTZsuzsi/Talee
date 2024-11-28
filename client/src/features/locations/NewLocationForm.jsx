@@ -19,6 +19,7 @@ function NewLocationForm() {
         openingHours: []
 	});
 
+
 	const navigate = useNavigate();
 
     const daysOfWeek = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"];
@@ -26,9 +27,13 @@ function NewLocationForm() {
     async function handleNewLocation(e) {
         e.preventDefault();
         setLoading(true);
+        const token = localStorage.getItem("jwtToken");
+
         const response = await fetch('/api/locations', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+             },
             body: JSON.stringify(newLocation)
         });
         if (!response.ok) {

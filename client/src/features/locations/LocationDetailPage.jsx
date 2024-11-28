@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { HiMiniPencilSquare } from "react-icons/hi2";
 import { MdDeleteForever } from "react-icons/md";
@@ -9,10 +9,12 @@ import TagCard from "../tag/components/TagCard";
 import TagOptions from "../tag/components/TagOptions";
 import HomeCard from "../main/components/molecules/HomeCard";
 import BiggerOnHover from "../main/components/atoms/BiggerOnHover";
+import GlobalContext from '../auth/GlobalContext';
 import {APIProvider, Map, Marker} from '@vis.gl/react-google-maps';
 
 
 function LocationDetailPage() {
+  const userContext = useContext(GlobalContext);
   const [error, setError] = useState(null);
   const [location, setLocation] = useState(null);
   const { locationId } = useParams();
@@ -21,6 +23,8 @@ function LocationDetailPage() {
 
   const [tags, setTags] = useState(null);
   const [tagChange, setTagChange] = useState(false);
+  const [owner, setOwner] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     async function fetchLocation() {
@@ -35,6 +39,8 @@ function LocationDetailPage() {
         const data = await response.json();
 
         setLocation(data);
+        setUser(data.adminUser.username);
+        setOwner(localStorage.getItem('userName'))
       } else {
         setError(
           `Failed to fetch location with id: ${locationId}, ${response.statusText}`,
@@ -44,9 +50,20 @@ function LocationDetailPage() {
 
     async function fetchEvents() {
       if (!locationId) {
-        console.error("Location ID is undefined");
+        console.error('Location ID is undefined');
         return;
       }
+
+      const response = await fetch(`/api/events/locations/${locationId}`);
+
+      if (response.ok) {
+        const data = await response.json();
+
+        setEvents(data);
+      } else {
+        setError(`Failed to fetch location with id: ${locationId}, ${response.statusText}`);
+      }
+    }
 
       const response = await fetch(`/api/events/locations/${locationId}`);
 
@@ -179,20 +196,22 @@ function LocationDetailPage() {
     </APIProvider>
 
       </div>
-      <div>
-        <Link to={`/locations/${locationId}/update`}>
-          <HiMiniPencilSquare className="h-10 w-10 text-blue-600 mr-2" />
-        </Link>
-        <MdDeleteForever
-          className="h-10 w-10 text-blue-600 mr-2"
-          onClick={deleteLocation}
-        />
-        <BiggerOnHover>
-          <a href={`/events/new/${location.id}`} className="flex items-center">
-            <h1 className="text-3xl text-bold mx-5">Add Event</h1>
-          </a>
-        </BiggerOnHover>
-      </div>
+      {owner === user &&
+        <div>
+          <Link to={`/locations/${locationId}/update`}>
+            <HiMiniPencilSquare className='h-10 w-10 text-blue-600 mr-2' />
+          </Link>
+          <MdDeleteForever className='h-10 w-10 text-blue-600 mr-2' onClick={deleteLocation} />
+          <BiggerOnHover>
+            <a
+              href={`/events/new/${location.id}`}
+              className='flex items-center'
+            >
+              <h1 className='text-3xl text-bold mx-5'>Add Event</h1>
+            </a>
+          </BiggerOnHover>
+        </div>
+      }
       {events?.map((event) => (
         <div key={event.id}>
           <div key={event.id}>
@@ -217,6 +236,7 @@ function LocationDetailPage() {
           </div>
         </div>
       ))}
+
     </div>
   ) : (
     <Loading />

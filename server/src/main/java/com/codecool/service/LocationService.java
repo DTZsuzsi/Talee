@@ -3,6 +3,7 @@ package com.codecool.service;
 
 import com.codecool.DTO.location.*;
 import com.codecool.DTO.tag.TaginFrontendDTO;
+import com.codecool.DTO.user.UserDTO;
 import com.codecool.mapper.LocationMapper;
 import com.codecool.mapper.TagMapper;
 import com.codecool.mapper.UserMapper;
@@ -11,8 +12,13 @@ import com.codecool.model.locations.Location;
 import com.codecool.model.locations.OpeningHours;
 import com.codecool.model.tags.Tag;
 import com.codecool.model.tags.TagCategory;
+import com.codecool.model.users.Role;
+import com.codecool.model.users.UserEntity;
 import com.codecool.repository.LocationRepository;
+import com.codecool.repository.RoleRepository;
 import com.codecool.repository.TagCategoryRepository;
+import com.codecool.repository.UserRepository;
+import com.codecool.security.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,16 +33,26 @@ public class LocationService {
   private final LocationRepository locationRepository;
   private final OpeningHoursService openingHoursService;
   private final TagCategoryRepository tagCategoryRepository;
+  private final UserService userService;
+  private final RoleRepository roleRepository;
   private final LocationMapper locationMapper = LocationMapper.INSTANCE;
   private final UserMapper userMapper = UserMapper.INSTANCE;
   private final TagMapper tagMapper = TagMapper.INSTANCE;
+  private final JWTUtils jwtUtils;
+  private final UserRepository userRepository;
 
 
   @Autowired
-  public LocationService(LocationRepository locationRepository, OpeningHoursService openingHoursService, TagCategoryRepository tagCategoryRepository) {
+  public LocationService(LocationRepository locationRepository, OpeningHoursService openingHoursService,
+                         TagCategoryRepository tagCategoryRepository, UserService userService, RoleRepository roleRepository,
+                         JWTUtils jwtUtils, UserRepository userRepository) {
     this.locationRepository = locationRepository;
     this.openingHoursService = openingHoursService;
     this.tagCategoryRepository = tagCategoryRepository;
+    this.userService = userService;
+    this.roleRepository = roleRepository;
+    this.jwtUtils = jwtUtils;
+    this.userRepository = userRepository;
   }
 
   public List<LocationDTO> getAllLocations() {
@@ -57,9 +73,23 @@ public class LocationService {
 
   //TODO check if there is already a location with that name and specific other details? (eg. address),
   // after saving the location call addOpeningHours method to add the openinghours
-  public long addLocation(NewLocationDTO location) {
+  public long addLocation(NewLocationDTO location, String token) {
+
     Location newLocation = locationMapper.newLocationDTOToLocation(location);
+
+    String currentUserName = jwtUtils.getUsernameFromJwtToken(token);
+    UserEntity currentUser = userRepository.findByUsername(currentUserName).get();
+    Set<Role> currentUserRoles = currentUser.getRoles();
+    Role locationOwnerRole = roleRepository.findByName("ROLE_LOCATION_OWNER").get();
+    currentUserRoles.add(locationOwnerRole);
+    currentUser.setRoles(currentUserRoles);
+    newLocation.setAdminUser(currentUser);
+
+    UserDTO updatedUserDTO = userMapper.userToUserDTO(currentUser);
+    userService.modifyUser(updatedUserDTO);
+
     Location savedLocation = locationRepository.save(newLocation);
+
     for (NewOpeningHoursWithoutLocationDTO newOpeningHours : location.openingHours()) {
       LocationWithoutOpeningHoursDTO locationWithoutOpeningHoursDTO = createLocationWithoutOpeningHoursDTO(savedLocation);
       NewOpeningHoursDTO newOpeningHoursDTO = new NewOpeningHoursDTO(
