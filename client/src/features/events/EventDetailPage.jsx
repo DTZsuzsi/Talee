@@ -3,7 +3,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { HiMiniPencilSquare } from "react-icons/hi2";
 import { MdDeleteForever } from "react-icons/md";
 import TagCard from "../tag/components/TagCard";
-import Button from "../main/components/atoms/Button.jsx";
 import BiggerOnHover from "../main/components/atoms/BiggerOnHover.jsx";
 
 function EventDetailPage() {
@@ -30,9 +29,15 @@ function EventDetailPage() {
   }, [eventId]);
 
   async function deleteEvent() {
-    const response = await fetch(`http://localhost:8080/events/${eventId}`, {
+    const token = localStorage.getItem("jwtToken");
+    const response = await fetch(`/api/events/${eventId}`, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     });
+
     if (response.ok) {
       console.log("Event deleted");
       navigate("/");
