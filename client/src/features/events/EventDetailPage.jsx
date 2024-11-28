@@ -5,6 +5,7 @@ import { HiMiniPencilSquare } from "react-icons/hi2";
 import { MdDeleteForever } from "react-icons/md";
 import TagOptions from "../tag/components/TagOptions";
 import TagCard from "../tag/components/TagCard";
+import UserCard from "../users/components/UserCard";
 
 
 function EventDetailPage(){
@@ -81,6 +82,15 @@ console.log(data);
 setTagChange(true);
   }
    
+  async  function handleDeleteUser(event, user){
+    setTagChange(false);
+const response= await fetch(`/api/events/user/${event.id}?userId=${user.id}`, {method: "DELETE"});
+const data= await response.json();
+console.log(data);
+setTagChange(true);
+  }
+   
+
     async function deleteEvent(){
     const response=await fetch(`http://localhost:8080/events/${eventId}`, {
         method: 'DELETE'
@@ -111,7 +121,18 @@ setTagChange(true);
             <TagCard tag={tag} onClick={()=>handleDeleteTag(event, tag)} color={tag?.color}/>
           </li> 
         ))}
+        <p> Your friends who are coming: </p>
         </ul>
+        <ul className="flex flex-wrap justify-around">
+        {event?.users?.map((user) => (
+          <li key={user?.id} className="mx-auto">
+            <UserCard user={user} onClick={()=>handleDeleteUser(event, user)} />
+          </li> 
+        ))}
+        </ul>
+
+        
+
         <TagOptions onChange={(e) => handleNewTag(event.id, e)} />
         </div>
         <div> 
