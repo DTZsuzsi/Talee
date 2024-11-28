@@ -79,7 +79,7 @@ function EventDetailPage() {
                 </p>
               </div>
               <div>
-                Event's Location:{"   "}
+                Events Location:{"   "}
                 <Link
                   to={`/locations/${event.location.locationId}`}
                   className="text-lg font-semibold text-accent"
