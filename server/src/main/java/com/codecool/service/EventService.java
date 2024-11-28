@@ -4,13 +4,16 @@ import com.codecool.DTO.event.EventDTO;
 import com.codecool.DTO.event.NewEventDTO;
 import com.codecool.DTO.location.LocationInEventDTO;
 import com.codecool.DTO.tag.TaginFrontendDTO;
+import com.codecool.DTO.user.UserInEventDTO;
 import com.codecool.mapper.EventMapper;
 import com.codecool.mapper.LocationMapper;
 import com.codecool.mapper.TagMapper;
+import com.codecool.mapper.UserMapper;
 import com.codecool.model.events.Event;
 import com.codecool.model.locations.Location;
 import com.codecool.model.tags.Tag;
 import com.codecool.model.tags.TagCategory;
+import com.codecool.model.users.UserEntity;
 import com.codecool.repository.EventRepository;
 import com.codecool.repository.LocationRepository;
 import com.codecool.repository.TagCategoryRepository;
@@ -31,8 +34,8 @@ public class EventService {
     private final TagCategoryRepository tagCategoryRepository;
     private final EventMapper eventMapper = EventMapper.INSTANCE;
     private final TagMapper tagMapper = TagMapper.INSTANCE;
-    private final LocationMapper locationMapper = LocationMapper.INSTANCE;
     private final LocationRepository locationRepository;
+    private final UserMapper userMapper= UserMapper.INSTANCE;
 
     @Autowired
     public EventService(EventRepository eventRepository, TagRepository tagRepository, TagCategoryRepository tagCategoryRepository, LocationRepository locationRepository) {
@@ -46,8 +49,9 @@ public class EventService {
     public EventDTO getEventById(long id) {
         Event event = eventRepository.findEventById(id);
         Set<TaginFrontendDTO> tags = event.getTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toSet());
-        EventDTO eventDTO = new EventDTO(event.getId(), event.getDate(), event.getName(), event.getDescription(), new LocationInEventDTO(event.getLocation().getId(), event.getLocation().getName()),
-                null, event.getOwner(), event.getSize(), tags, event.getStatus());
+        List < UserInEventDTO> users = event.getUsers().stream().map(userEntity -> new UserInEventDTO(userEntity.getId(), userEntity.getUsername())).collect(Collectors.toList());
+        EventDTO eventDTO = new EventDTO(event.getId(), event.getDate(), event.getName(), event.getDescription(), new LocationInEventDTO(event.getLocation().getId(), event.getLocation().getName(), event.getLocation().getLatitude(), event.getLocation().getLongitude()),
+                users, event.getOwner(), event.getSize(), tags, event.getStatus());
 
         return eventDTO;
 
@@ -91,8 +95,10 @@ public class EventService {
     }
 
 
+
+
     private LocationInEventDTO getLocationDTOForEvent(Location location) {
-        return new LocationInEventDTO(location.getId(), location.getName());
+        return new LocationInEventDTO(location.getId(), location.getName(), location.getLatitude(), location.getLongitude());
     }
 
     public boolean deleteTagFromEvent(long eventId, long tagId) {
@@ -101,6 +107,15 @@ public class EventService {
         Set<Tag> updatedTags = tags.stream().filter(tag -> tag.getId() != tagId).collect(Collectors.toSet());
 
         event.setTags(updatedTags);
+        return eventRepository.save(event).getId() > 0;
+    }
+
+    public boolean deleteUserFromEvent(long eventId, long userId) {
+        Event event = eventRepository.findEventById(eventId);
+        Set<UserEntity> users = event.getUsers();
+        Set<UserEntity> updatedUsers = users.stream().filter(user -> user.getId() != userId).collect(Collectors.toSet());
+
+        event.setUsers(updatedUsers);
         return eventRepository.save(event).getId() > 0;
     }
 

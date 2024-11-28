@@ -2,61 +2,61 @@ INSERT INTO role(name)
 VALUES ('ROLE_USER'), ('ROLE_ADMIN');
 
 INSERT INTO talee_user(username, password)
-VALUES ('matet', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6'), ('zsuzsi', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6'), ('mariann', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6');
+VALUES ('matet', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6'),
+       ('zsuzsi', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6'),
+       ('mariann', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6'),
+       ('samu', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6'),
+       ('nana', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6'),
+       ('marci', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6');
 
 INSERT INTO talee_user_roles(roles_id, user_entity_id) VALUES (2, 1), (1, 1);
 
-INSERT INTO location (name, admin_user_id, address, phone, email, website, facebook, instagram, description)
+INSERT INTO location (name, admin_user_id, address, phone, email, website, facebook, instagram, description, latitude, longitude)
 VALUES
     ('Margitszigeti Szabadtéri Színpad', 1, '1138 Budapest, Margitsziget',
      '06 1 555 1234', 'szinpad@margitsziget.hu', 'https://margitszigetiszinhaz.hu/',
      'https://www.facebook.com/margitszigetiszinhaz', 'https://www.instagram.com/margitszigetiszinhaz',
-     'Színházi és kulturális rendezvények egyedülálló szabadtéri helyszíne'),
+     'Színházi és kulturális rendezvények egyedülálló szabadtéri helyszíne', 47.530599829051624, 19.05010103951099),
 
     ('Budai Vár', 1, '1014 Budapest, Szent György tér',
      '06 1 555 5678', 'info@budaivar.hu', 'https://www.budaivar.hu/',
      'https://www.facebook.com/budaivar', 'https://www.instagram.com/budaivar',
-     'Történelmi látványosságok és rendezvények helyszíne'),
+     'Történelmi látványosságok és rendezvények helyszíne', 47.50244652414777, 19.032275938478584),
 
     ('Városliget', 1, '1146 Budapest, Városliget',
      '06 1 444 9876', 'info@varosliget.hu', 'https://www.varosliget.hu/',
      'https://www.facebook.com/varosliget', 'https://www.instagram.com/varosliget',
-     'Budapest zöld szíve, amely számos szabadtéri programnak ad otthont'),
+     'Budapest zöld szíve, amely számos szabadtéri programnak ad otthont', 47.51474528819882, 19.084974374668178),
 
     ('Duna Korzó', 1, '1056 Budapest, Belgrád rakpart',
      '06 1 777 1111', 'dunakorzofesztival@gmail.com', NULL,
      'https://www.facebook.com/dunakorzofesztival', NULL,
-     'Budapest egyik legismertebb promenádja a Duna partján'),
+     'Budapest egyik legismertebb promenádja a Duna partján', 47.49425156200991, 19.0493177376619),
 
     ('Gellért-hegy', 1, '1118 Budapest, Gellérthegy',
      '06 1 888 6543', 'info@gellerthegy.hu', NULL,
      'https://www.facebook.com/gellerthegy', NULL,
-     'Kirándulási és kulturális rendezvények népszerű helyszíne'),
+     'Kirándulási és kulturális rendezvények népszerű helyszíne', 47.48682933635801, 19.04165063315987),
 
     ('Budapest Park', 1, '1095 Budapest, Soroksári út 60.',
      '06 1 999 0000', 'park@budapest.hu', 'https://www.budapestpark.hu/',
      'https://www.facebook.com/budapestpark', 'https://www.instagram.com/budapestpark',
-     'Európa legnagyobb szabadtéri szórakozóhelye'),
+     'Európa legnagyobb szabadtéri szórakozóhelye', 47.46775092620791, 19.077039854849055),
 
     ('Hősök tere', 1, '1146 Budapest, Hősök tere',
      '06 1 345 4321', 'info@hosoktere.hu', NULL,
      'https://www.facebook.com/hosoktere', NULL,
-     'Történelmi és turisztikai jelentőségű tér Budapest szívében'),
+     'Történelmi és turisztikai jelentőségű tér Budapest szívében', 47.51500939574195, 19.077881966216577),
 
     ('Bazilika', 1, '1051 Budapest, Szent István tér 1.',
      '06 1 543 2100', 'info@bazilika.hu', 'https://www.bazilika.hu/',
      'https://www.facebook.com/bazilika', 'https://www.instagram.com/bazilika',
-     'A Szent István Bazilika és a körülötte rendezett események'),
+     'A Szent István Bazilika és a körülötte rendezett események', 47.50210787903316, 19.053516628635037),
 
     ('Andrássy út', 1, '1061 Budapest, Andrássy út',
      '06 1 678 5432', 'info@andrassyut.hu', NULL,
      'https://www.facebook.com/andrassyut', NULL,
-     'Budapest elegáns sugárútja, fesztiválok és rendezvények helyszíne'),
-
-    ('Puskás Aréna', 1, '1146 Budapest, Ifjúság útja 5.',
-     '06 1 123 4567', 'arena@puskasarena.hu', 'https://www.puskasarena.hu/',
-     'https://www.facebook.com/puskasarena', 'https://www.instagram.com/puskasarena',
-     'Magyarország legnagyobb sport- és rendezvénycsarnoka');
+     'Budapest elegáns sugárútja, fesztiválok és rendezvények helyszíne', 47.502623486086904, 19.059271268344872);
 
 
 INSERT INTO opening_hours (day_of_week, opening_time, closing_time, location_id)
@@ -214,7 +214,20 @@ INSERT INTO tag(name, tag_category_id) VALUES
                                            ('webinar', 8),
                                            ('social gathering', 8);
 
--- INSERT INTO event_users (event_id, user_id) VALUES (1, 1), (1, 2);
+INSERT INTO event_users (event_id, user_id) VALUES
+                                                (1, 1),
+                                                (1, 2),
+                                                (1,3),
+                                                (1,4),
+                                                (1,5),
+                                                (2,1),
+                                                (2,3),
+                                                (2,6),
+                                                (3,2),
+                                                (3,4),
+                                                (3,5),
+(4,1),
+                                            (4,2);
 
 INSERT INTO tag_category(name, color) VALUES('company reportType', 'green'), ('sporty', 'blue'), ('culture', 'black'),('romantic', 'red'), ('family', 'yellow'),('prices', 'grey'),('gastronomy', 'brown'), ('other', 'purple');
 INSERT INTO tag(name, tag_category_id) VALUES ('big',1), ('romantic',4),('family friendly',5), ('hiking',2);

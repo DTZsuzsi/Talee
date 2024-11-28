@@ -19,6 +19,8 @@ public class Location {
   private String name;
 //  private ContactInfo contactInfo;
   private String address;
+  private double latitude;
+  private double longitude;
   private String phone;
   private String email;
   private String website;
@@ -27,6 +29,7 @@ public class Location {
 
   @ManyToOne
   private UserEntity adminUser;
+
 
   @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE)
   private List<OpeningHours> openingHours;
@@ -61,7 +64,7 @@ public class Location {
   public Location() {
   }
 
-  public Location(long id, String name, String address, String phone, String email, String website, String facebook, String instagram, UserEntity adminUser, List<OpeningHours> openingHours, List<Event> events, String description, Set<Tag> locationTags) {
+  public Location(long id, String name, String address, String phone, String email, String website, String facebook, String instagram, UserEntity adminUser, List<OpeningHours> openingHours, List<Event> events, String description, Set<Tag> locationTags, double latitude, double longitude) {
     this.id = id;
     this.name = name;
     this.address = address;
@@ -75,6 +78,8 @@ public class Location {
     this.events = events;
     this.description = description;
     this.locationTags = locationTags;
+    this.latitude = latitude;
+    this.longitude = longitude;
   }
 
   public Location(long id, String name){
