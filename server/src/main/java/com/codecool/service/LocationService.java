@@ -74,7 +74,7 @@ public class LocationService {
   //TODO check if there is already a location with that name and specific other details? (eg. address),
   // after saving the location call addOpeningHours method to add the openinghours
   public long addLocation(NewLocationDTO location, String token) {
-//    location.adminUser().roles().add(roleRepository.findByName("ROLE_LOCATION_OWNER").get());
+
     Location newLocation = locationMapper.newLocationDTOToLocation(location);
 
     String currentUserName = jwtUtils.getUsernameFromJwtToken(token);
