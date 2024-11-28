@@ -83,6 +83,7 @@ public class LocationService {
     Role locationOwnerRole = roleRepository.findByName("ROLE_LOCATION_OWNER").get();
     currentUserRoles.add(locationOwnerRole);
     currentUser.setRoles(currentUserRoles);
+    newLocation.setAdminUser(currentUser);
 
     UserDTO updatedUserDTO = userMapper.userToUserDTO(currentUser);
     userService.modifyUser(updatedUserDTO);
