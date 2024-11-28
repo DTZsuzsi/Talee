@@ -1,12 +1,19 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { HiMiniPencilSquare } from "react-icons/hi2";
-import { MdDeleteForever } from "react-icons/md";
-import TagCard from "../tag/components/TagCard";
-import BiggerOnHover from "../main/components/atoms/BiggerOnHover";
-import Loading from "../main/components/atoms/Loading";
-import ServerError from "../main/components/atoms/ServerError";
-import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
+
+/* eslint-disable no-unused-vars */
+
+import { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { HiMiniPencilSquare } from 'react-icons/hi2';
+import { MdDeleteForever } from 'react-icons/md';
+import ServerError from '../main/components/atoms/ServerError';
+import Loading from '../main/components/atoms/Loading';
+import TagCard from '../tag/components/TagCard';
+import TagOptions from '../tag/components/TagOptions';
+import HomeCard from '../main/components/molecules/HomeCard';
+import BiggerOnHover from '../main/components/atoms/BiggerOnHover';
+import {APIProvider, Map, Marker} from '@vis.gl/react-google-maps';
+import GoogleMapComponent from './GoogleMapComponent';
+
 
 function LocationDetailPage() {
   const { locationId } = useParams();
@@ -19,6 +26,32 @@ function LocationDetailPage() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
+
+    
+
+  async function handleNewTag(id, e) {
+    setTagChange(false);
+
+    const selectedTagName = e.target.value;
+    const tagToSend = findTag(selectedTagName);
+
+    const response = await fetch(`/api/locations/${id}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(tagToSend),
+    });
+
+    const data = await response.json();
+
+    setTagChange(true);
+  }
+
+  function findTag(tagName) {
+    let tagFound = {};
+    for (const tag of tags) {
+      if (tag.name === tagName) {
+        tagFound = tag;
+
     async function fetchLocationData() {
       try {
         const [locationResponse, eventsResponse] = await Promise.all([
@@ -43,11 +76,12 @@ function LocationDetailPage() {
       } catch (err) {
         setError("An error occurred while fetching data.");
         console.error(err);
+
       }
     }
 
     if (locationId) fetchLocationData();
-  }, [locationId]);
+  }
 
   async function deleteLocation() {
     const response = await fetch(`/api/locations/${locationId}`, {
@@ -135,6 +169,12 @@ function LocationDetailPage() {
             </Map>
           </APIProvider>
         </div>
+
+
+
+      </div>
+      {owner === user &&
+
 
         <div>
           <h2 className="text-2xl font-semibold">Events at this location:</h2>

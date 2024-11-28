@@ -5,7 +5,11 @@ import StateChangeButton from "../molecules/StateChangeButton.jsx";
 import TagCard from "../../../tag/components/TagCard.jsx";
 /** @format */
 
-import Loading from "../atoms/Loading.jsx";
+
+import Loading from '../atoms/Loading.jsx';
+import GoogleMapComponent from "../../../locations/GoogleMapComponent.jsx";
+
+
 
 const Home = () => {
   const [locations, setLocations] = useState();
@@ -101,40 +105,46 @@ const Home = () => {
       </div>
     ));
 
-  return (
-    <div className="w-full mx-auto p-4">
-      <div className="flex flex-col items-center">
-        <div className="w-full max-w-sm">
-          <div className="h-20 flex items-center">
-            <StateChangeButton
-              onClick={setEventState}
-              active={mode === "events"}
-            >
-              Events
-            </StateChangeButton>
-            <StateChangeButton
-              onClick={setLocationState}
-              active={mode === "locations"}
-            >
-              Locations
-            </StateChangeButton>
-          </div>
-        </div>
-        <div className="grow">
-          <h1 className="text-3xl font-bold my-5 text-center">
-            {mode === "events" ? "Events" : "Locations"}
-          </h1>
-          {loading ? (
-            <Loading />
-          ) : (
-            <div className="flex w-full flex-col">
-              {mode === "events" ? eventCards : locationCards}
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
+
+	return (
+		<div className='w-full mx-auto p-4'>
+		
+			<div className='flex flex-col items-center'>
+				<div className='w-full max-w-sm'>
+					<div className='h-20 flex items-center'>
+						<StateChangeButton
+							onClick={setEventState}
+							active={mode === 'events'}
+						>
+							Events
+						</StateChangeButton>
+						<StateChangeButton
+							onClick={setLocationState}
+							active={mode === 'locations'}
+						>
+							Locations
+						</StateChangeButton>
+					</div>
+				</div>
+				<div className='grow'>
+					<h1 className='text-3xl font-bold my-5 text-center'>
+						{mode === 'events' ? 'Events' : 'Locations'}
+					</h1>
+					{loading ? (
+						<Loading />
+					) : (
+						<div className='flex w-full flex-col'>
+							{mode === 'events' ? eventCards : locationCards}
+						</div>
+					)}
+				</div>
+			</div>
+			<div> 
+			<GoogleMapComponent/>
+			</div>
+		</div>
+	);
+
 };
 
 export default Home;

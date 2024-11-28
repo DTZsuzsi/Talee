@@ -73,76 +73,24 @@ export default function Navbar() {
                 </a>
               </BiggerOnHover>
             </div>
-                        <div className="hidden sm:ml-6 sm:block">
-                            <div className="flex space-x-4">
-                                {navigation.map((item) => (
-                                    <a
-                                        key={item.name}
-                                        href={item.href}
-                                        aria-current={item.current ? 'page' : undefined}
-                                        className={classNames(
-                                            item.current ? 'bg-gray-900 text-white' : 'hover:text-white',
-                                            'rounded-md px-3 py-2 text-sm font-medium',
-                                        )}
-                                    >
-                                        {item.name}
-                                    </a>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                         {/* Profile dropdown */}
-                        <Menu as="div" className="relative ml-3">
-                            <div>
-                                <MenuButton className="relative flex rounded-full text-sm focus:outline-none">
-                                    <BiggerOnHover>
-                                        {isLoggedIn ?
-                                            // <ProfileDropdown handleLogout={handleLogout} />
-                                            <CgProfile size={36} />
-                                            :
-                                            <Button>
-                                                <Link to="/register">
-                                                    Sign Up
-                                                </Link>
-                                            </Button>
-                                        }
-                                    </BiggerOnHover>
-                                </MenuButton>
-                            </div>
-                            <MenuItems
-                                transition
-                                className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-                            >
-                                <MenuItem>
-                                    <a
-                                        href="/users/profile"
-                                        className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
-                                    >
-                                        Your Profile
-                                    </a>
-                                </MenuItem>
-                                <MenuItem>
-                                    <a
-                                        href="#"
-                                        className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
-                                    >
-                                        Settings
-                                    </a>
-                                </MenuItem>
-                                <MenuItem>
-                                    <button
-                                        onClick={handleLogout}
-                                        className="block px-4 py-2 text-base text-black hover:bg-gray-500"
-                                        role="menuitem"
-                                    >
-                                        Logout
-                                    </button>
-                                </MenuItem>
-                            </MenuItems>
-                        </Menu>
-                    </div>
-                </div>
+            <div className="hidden sm:ml-6 sm:block">
+              <div className="flex space-x-4">
+                {navigation.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    aria-current={item.current ? "page" : undefined}
+                    className={classNames(
+                      item.current
+                        ? "bg-gray-900 text-white"
+                        : "hover:text-white",
+                      "rounded-md px-3 py-2 text-sm font-medium",
+                    )}
+                  >
+                    {item.name}
+                  </a>
+                ))}
+              </div>
             </div>
                 
      
