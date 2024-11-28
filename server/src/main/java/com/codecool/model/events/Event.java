@@ -26,7 +26,8 @@ public class Event {
     private String name;
     private String description;
 
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Location location;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
@@ -38,17 +39,17 @@ public class Event {
     private Set<UserEntity> users;
     private String owner;
     private String size;
-    @ManyToMany( fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "event_tag",
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    private List<Tag> tags;
+    private Set<Tag> tags;
     private String status;
 
 
-    public Event(long id, LocalDate date, String name, String description, Location location, Set<UserEntity> users, String owner, String size, List<Tag> tags, String status) {
+    public Event(long id, LocalDate date, String name, String description, Location location, Set<UserEntity> users, String owner, String size, Set<Tag> tags, String status) {
 
         this.id = id;
         this.date = date;
@@ -62,7 +63,7 @@ public class Event {
         this.status = status;
     }
 
-    public Event(LocalDate date, String name, String description, Location location, String owner, String size, List<Tag> tags, String status) {
+    public Event(LocalDate date, String name, String description, Location location, String owner, String size, Set<Tag> tags, String status) {
         this.date = date;
         this.name = name;
         this.description = description;
@@ -75,9 +76,7 @@ public class Event {
 
 
     public void addTag(Tag tag) {
-        if (!tags.contains(tag)) {
-            tags.add(tag);
-        }
+        tags.add(tag);
     }
 
 }
