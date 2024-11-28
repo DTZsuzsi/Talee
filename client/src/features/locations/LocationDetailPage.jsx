@@ -15,6 +15,8 @@ function LocationDetailPage() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const apiKey = "AIzaSyCpdQIVDmlFx3hXi3tz6DN59hXWMJEqLOU";
+  const [owner, setOwner] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     async function fetchLocationData() {
@@ -27,6 +29,8 @@ function LocationDetailPage() {
         if (locationResponse.ok) {
           const data = await locationResponse.json();
           setLocation(data);
+          setUser(data.adminUser.username);
+          setOwner(localStorage.getItem('userName'))
         } else {
           setError(`Failed to fetch location: ${locationResponse.statusText}`);
         }
@@ -161,7 +165,7 @@ function LocationDetailPage() {
             </ul>
           </div>
         )}
-
+      {owner === user &&
         <div className="flex justify-end gap-4 mt-6">
           <BiggerOnHover>
             <Link
@@ -181,6 +185,7 @@ function LocationDetailPage() {
             </button>
           </BiggerOnHover>
         </div>
+        }
       </div>
     </div>
   );
