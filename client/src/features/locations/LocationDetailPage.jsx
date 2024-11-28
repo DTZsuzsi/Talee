@@ -19,7 +19,7 @@ function LocationDetailPage() {
   const { locationId } = useParams();
   const [tags, setTags] = useState(null);
   const [tagChange, setTagChange] = useState(false);
-const [events, setEvents]=useState(null);
+  const [events, setEvents] = useState(null);
   const navigate = useNavigate();
   const [owner, setOwner] = useState(null);
   const [user, setUser] = useState(null);
@@ -37,11 +37,6 @@ const [events, setEvents]=useState(null);
         const data = await response.json();
 
         setLocation(data);
-        //console.log(data.adminUser.username)
-        //console.log(data.adminUser)
-        console.log(data)
-        //console.log(userContext?.userName)
-        //console.log(localStorage.getItem('userName'))
         setUser(data.adminUser.username);
         setOwner(localStorage.getItem('userName'))
       } else {
@@ -50,21 +45,21 @@ const [events, setEvents]=useState(null);
     }
 
     async function fetchEvents() {
-        if (!locationId) {
-          console.error('Location ID is undefined');
-          return;
-        }
-  
-        const response = await fetch(`/api/events/locations/${locationId}`);
-  
-        if (response.ok) {
-          const data = await response.json();
-  
-          setEvents(data);
-        } else {
-          setError(`Failed to fetch location with id: ${locationId}, ${response.statusText}`);
-        }
+      if (!locationId) {
+        console.error('Location ID is undefined');
+        return;
       }
+
+      const response = await fetch(`/api/events/locations/${locationId}`);
+
+      if (response.ok) {
+        const data = await response.json();
+
+        setEvents(data);
+      } else {
+        setError(`Failed to fetch location with id: ${locationId}, ${response.statusText}`);
+      }
+    }
 
     async function fetchTags() {
       const response = await fetch('/api/tags');
@@ -125,7 +120,7 @@ const [events, setEvents]=useState(null);
 
   return location ? (
     <div className='flex flex-col items-center justify-center h-screen'>
-    
+
       <div className='p-1 border-slate-300 shadow-md shadow-slate-800 border-2 rounded-md m-2 w-[50%] min-w-[540px] bg-slate-300 '>
         <img
           src='https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
@@ -157,43 +152,43 @@ const [events, setEvents]=useState(null);
         </ul>
         <TagOptions onChange={(e) => handleNewTag(location.id, e)} />
       </div>
-      {owner === user && 
-      <div>
-        <Link to={`/locations/${locationId}/update`}>
-          <HiMiniPencilSquare className='h-10 w-10 text-blue-600 mr-2' />
-        </Link>
-        <MdDeleteForever className='h-10 w-10 text-blue-600 mr-2' onClick={deleteLocation} />
-        <BiggerOnHover>
-					<a
-						href={`/events/new/${location.id}`}
-						className='flex items-center'
-					>
-						<h1 className='text-3xl text-bold mx-5'>Add Event</h1>
-					</a>
-				</BiggerOnHover>
-      </div>
-    }
-{events?.map((event)=> <div key={event.id}>     
-<div key={event.id}>
-        <HomeCard
-          key={event.id}
-          title={event.name}
-          href={`/events/${event.id}`}
-          description={event.description}
-          date={event.date}
-        />
-       <ul className="flex flex-wrap justify-around">
-        {event.tags?.map((tag) => (
-          <li key={tag.id} className="mx-auto">
-            <TagCard tag={tag} onClick={()=>handleDeleteTag(event, tag)} color={tag.color}/>
-          </li>
-        ))}
-        </ul>
-      </div>
+      {owner === user &&
+        <div>
+          <Link to={`/locations/${locationId}/update`}>
+            <HiMiniPencilSquare className='h-10 w-10 text-blue-600 mr-2' />
+          </Link>
+          <MdDeleteForever className='h-10 w-10 text-blue-600 mr-2' onClick={deleteLocation} />
+          <BiggerOnHover>
+            <a
+              href={`/events/new/${location.id}`}
+              className='flex items-center'
+            >
+              <h1 className='text-3xl text-bold mx-5'>Add Event</h1>
+            </a>
+          </BiggerOnHover>
+        </div>
+      }
+      {events?.map((event) => <div key={event.id}>
+        <div key={event.id}>
+          <HomeCard
+            key={event.id}
+            title={event.name}
+            href={`/events/${event.id}`}
+            description={event.description}
+            date={event.date}
+          />
+          <ul className="flex flex-wrap justify-around">
+            {event.tags?.map((tag) => (
+              <li key={tag.id} className="mx-auto">
+                <TagCard tag={tag} onClick={() => handleDeleteTag(event, tag)} color={tag.color} />
+              </li>
+            ))}
+          </ul>
+        </div>
 
 
 
-</div>)}
+      </div>)}
 
     </div>
   ) : (
