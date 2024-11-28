@@ -5,6 +5,7 @@ import Loading from '../main/components/atoms/Loading.jsx';
 import ServerError from '../main/components/atoms/ServerError.jsx';
 
 function NewLocationForm() {
+    const [user, setUser] = useState(null);
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [newLocation, setNewLocation] = useState({
@@ -16,8 +17,11 @@ function NewLocationForm() {
 		facebook: '',
 		instagram: '',
 		description: '',
+        adminUser: '',
         openingHours: []
 	});
+
+    setUser(localStorage.getItem('userName'));
 
 	const navigate = useNavigate();
 
@@ -27,6 +31,8 @@ function NewLocationForm() {
         e.preventDefault();
         setLoading(true);
         const token = localStorage.getItem('jwtToken');
+
+        //setNewLocation({...newLocation, adminUser: user})
         const response = await fetch('/api/locations', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json',
