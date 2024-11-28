@@ -1,4 +1,5 @@
 
+
 /* eslint-disable no-unused-vars */
 
 import { useEffect, useState } from 'react';
@@ -24,6 +25,8 @@ function LocationDetailPage() {
   const apiKey = "AIzaSyCpdQIVDmlFx3hXi3tz6DN59hXWMJEqLOU";
   const [owner, setOwner] = useState(null);
   const [user, setUser] = useState(null);
+  const [tagChange,setTagChange]=useState(false);
+  const [tags, setTags]=useState(null);
 
   useEffect(() => {
 
@@ -44,13 +47,15 @@ function LocationDetailPage() {
     const data = await response.json();
 
     setTagChange(true);
-  }
+  }},[tagChange])
 
   function findTag(tagName) {
     let tagFound = {};
     for (const tag of tags) {
       if (tag.name === tagName) {
         tagFound = tag;
+    }
+return tagFound;}
 
     async function fetchLocationData() {
       try {
@@ -191,7 +196,7 @@ function LocationDetailPage() {
               </Link>
             </div>
           ))}
-        </div>
+        </div>}
 
         {location?.tags?.length > 0 && (
           <div className="mt-5">
@@ -227,7 +232,7 @@ function LocationDetailPage() {
         </div>
         }
       </div>
-    </div>
+   
   );
 }
 
