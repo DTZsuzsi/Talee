@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {Link} from "react-router-dom";
+import GlobalContext from "./GlobalContext";
 
 function Login() {
     const [username, setUsername] = useState('');
@@ -7,6 +8,7 @@ function Login() {
 
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const userContext = {};
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -27,6 +29,14 @@ function Login() {
             const data = await response.json();
             setSuccess(data.message)
             localStorage.setItem('jwtToken', data.jwtToken);
+            localStorage.setItem('userName', data.userName);
+            localStorage.setItem('roles', data.roles);
+
+            userContext.user = {
+                jwtToken: data.jwtToken,
+                userName: data.userName,
+                roles: data.roles
+            }
             setTimeout(() => {
                 window.location.href = '/home';
             }, 1000);
@@ -40,6 +50,7 @@ function Login() {
     }
 
     return (
+        <GlobalContext.Provider value={userContext}>
         <div>
             <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -96,6 +107,7 @@ function Login() {
                 </div>
             </div>
         </div>
+        </GlobalContext.Provider>
     )
 }
 
