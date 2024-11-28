@@ -13,6 +13,7 @@ import com.codecool.model.events.Event;
 import com.codecool.model.locations.Location;
 import com.codecool.model.tags.Tag;
 import com.codecool.model.tags.TagCategory;
+import com.codecool.model.users.UserEntity;
 import com.codecool.repository.EventRepository;
 import com.codecool.repository.LocationRepository;
 import com.codecool.repository.TagCategoryRepository;
@@ -22,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -92,6 +94,8 @@ public class EventService {
     }
 
 
+
+
     private LocationInEventDTO getLocationDTOForEvent(Location location) {
         return new LocationInEventDTO(location.getId(), location.getName(), location.getLatitude(), location.getLongitude());
     }
@@ -102,6 +106,15 @@ public class EventService {
         List<Tag> updatedTags = tags.stream().filter(tag -> tag.getId() != tagId).collect(Collectors.toList());
 
         event.setTags(updatedTags);
+        return eventRepository.save(event).getId() > 0;
+    }
+
+    public boolean deleteUserFromEvent(long eventId, long userId) {
+        Event event = eventRepository.findEventById(eventId);
+        Set<UserEntity> users = event.getUsers();
+        Set<UserEntity> updatedUsers = users.stream().filter(user -> user.getId() != userId).collect(Collectors.toSet());
+
+        event.setUsers(updatedUsers);
         return eventRepository.save(event).getId() > 0;
     }
 

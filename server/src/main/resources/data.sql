@@ -2,7 +2,12 @@ INSERT INTO role(name)
 VALUES ('ROLE_USER'), ('ROLE_ADMIN');
 
 INSERT INTO talee_user(username, password)
-VALUES ('matet', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6'), ('zsuzsi', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6'), ('mariann', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6');
+VALUES ('matet', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6'),
+       ('zsuzsi', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6'),
+       ('mariann', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6'),
+       ('samu', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6'),
+       ('nana', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6'),
+       ('marci', '$2a$10$0F2KZTUFjkzR9.BOrEWZQ.V30PbhYHi1BhktPgDZJh0n9YJorH/A6');
 
 INSERT INTO location (name, admin_user_id, address, phone, email, website, facebook, instagram, description, latitude, longitude)
 VALUES
@@ -207,7 +212,20 @@ INSERT INTO tag(name, tag_category_id) VALUES
                                            ('webinar', 8),
                                            ('social gathering', 8);
 
-INSERT INTO event_users (event_id, user_id) VALUES (1, 1), (1, 2);
+INSERT INTO event_users (event_id, user_id) VALUES
+                                                (1, 1),
+                                                (1, 2),
+                                                (1,3),
+                                                (1,4),
+                                                (1,5),
+                                                (2,1),
+                                                (2,3),
+                                                (2,6),
+                                                (3,2),
+                                                (3,4),
+                                                (3,5),
+(4,1),
+                                            (4,2);
 
 INSERT INTO tag_category(name, color) VALUES('company reportType', 'green'), ('sporty', 'blue'), ('culture', 'black'),('romantic', 'red'), ('family', 'yellow'),('prices', 'grey'),('gastronomy', 'brown'), ('other', 'purple');
 INSERT INTO tag(name, tag_category_id) VALUES ('big',1), ('romantic',4),('family friendly',5), ('hiking',2);
