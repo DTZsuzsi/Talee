@@ -4,10 +4,12 @@ import { HiMiniPencilSquare } from "react-icons/hi2";
 import { MdDeleteForever } from "react-icons/md";
 import TagCard from "../tag/components/TagCard";
 import BiggerOnHover from "../main/components/atoms/BiggerOnHover.jsx";
+import UserCard from "../users/components/UserCard.jsx";
 
 function EventDetailPage() {
   const { eventId } = useParams();
   const [event, setEvent] = useState(null);
+  const [userChange, setUserChange]=useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,7 +28,16 @@ function EventDetailPage() {
     }
 
     fetchEvent();
-  }, [eventId]);
+  }, [eventId, userChange]);
+
+  async  function handleDeleteUser(event, user){
+    setUserChange(false);
+const response= await fetch(`/api/events/user/${event.id}?userId=${user.id}`, {method: "DELETE"});
+const data= await response.json();
+console.log(data);
+setUserChange(true);
+  }
+
 
   async function deleteEvent() {
     const token = localStorage.getItem("jwtToken");
@@ -89,6 +100,16 @@ function EventDetailPage() {
               </div>
             </div>
           </div>
+          <h2 className="text-2xl font-semibold mt-10"> Your friends who are coming: </h2>
+       
+        <ul className="flex flex-wrap justify-around">
+        {event?.users?.map((user) => (
+          <li key={user?.id} className="mx-auto">
+            <UserCard user={user} onClick={()=>handleDeleteUser(event, user)} />
+          </li> 
+        ))}
+        </ul>
+
           {event?.tags?.length > 0 && (
             <div className="mt-5">
               <h2 className="text-2xl font-semibold">Tags:</h2>
