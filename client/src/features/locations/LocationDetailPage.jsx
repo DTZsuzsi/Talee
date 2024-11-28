@@ -38,6 +38,8 @@ const [events, setEvents]=useState(null);
 
         setLocation(data);
         //console.log(data.adminUser.username)
+        //console.log(data.adminUser)
+        console.log(data)
         //console.log(userContext?.userName)
         //console.log(localStorage.getItem('userName'))
         setUser(data.adminUser.username);
