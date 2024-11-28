@@ -36,6 +36,7 @@ const [events, setEvents]=useState(null);
         const data = await response.json();
 
         setLocation(data);
+        console.log(data);
       } else {
         setError(`Failed to fetch location with id: ${locationId}, ${response.statusText}`);
       }
@@ -162,7 +163,7 @@ const [events, setEvents]=useState(null);
       </div>
     </APIProvider>
 
-<GoogleMapComponent/>
+
       </div>
       <div>
         <Link to={`/locations/${locationId}/update`}>

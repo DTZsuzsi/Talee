@@ -1,15 +1,13 @@
-import { useState } from "react";
 import InputField from "../main/components/atoms/InputField";
-import { Button } from "@headlessui/react";
+//import { Button } from "@headlessui/react";
 import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
 
-function GoogleMapComponent(){
-    const [address, setAdress]=useState(null);
-    const [position, setPosition]=useState({lat:0, lng:0});
+function GoogleMapComponent({position, setPosition, address, setAddress}){
 
 async function handleSearch(e){
 e.preventDefault();
 const adressString=address.split(' ').join('+');
+console.log(adressString);
 const response= await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${adressString}&key=AIzaSyCpdQIVDmlFx3hXi3tz6DN59hXWMJEqLOU`);
 const data=await response.json();
 console.log(data);
@@ -19,15 +17,25 @@ console.log(data);
 }
 return (
     <div> 
-        <form onSubmit={handleSearch}> 
-    <InputField
-    label='address'
-    type='text'
-    value={address || ''}
-    onChange={(e)=> setAdress(e.target.value)}
-   />
-    <Button type="submit"> Search</Button>
+        <div>
+        <form
+  onSubmit={(e) => {
+   
+    handleSearch(e);
+  }}
+>
+        <InputField
+  label="address"
+  type="text"
+  value={address || ""}
+  onChange={(e) => {
+   
+    setAddress(e.target.value);
+  }}
+/>
+    <button type="submit"> Search</button>
     </form>
+    </div>
 
     <APIProvider 
       apiKey="AIzaSyCpdQIVDmlFx3hXi3tz6DN59hXWMJEqLOU"  

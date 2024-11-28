@@ -1,35 +1,53 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import InputField from '../main/components/atoms/InputField.jsx';
 import Loading from '../main/components/atoms/Loading.jsx';
 import ServerError from '../main/components/atoms/ServerError.jsx';
+import GoogleMapComponent from './GoogleMapComponent.jsx';
 
 function NewLocationForm() {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
+    const [position, setPosition]=useState({lat:0, lng:0});
+    const [address, setAddress]=useState('');
+
+
 	const [newLocation, setNewLocation] = useState({
 		name: '',
-		address: '',
+		address: address,
 		phone: '',
 		email: '',
 		website: '',
 		facebook: '',
 		instagram: '',
 		description: '',
+        latitude:position.lat,
+        longitude:position.lng,
         openingHours: []
 	});
 
 	const navigate = useNavigate();
 
+    useEffect(() => {
+        setNewLocation(prev => ({
+          ...prev,
+          latitude: position.lat,
+          longitude: position.lng
+        }));
+      }, [position]);
+
     const daysOfWeek = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"];
 
     async function handleNewLocation(e) {
+        console.log("hi");
         e.preventDefault();
         setLoading(true);
+        const newLoc={...newLocation, lat: position.lat, lng: position.lng, address:address};
+        console.log(newLoc);
         const response = await fetch('/api/locations', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(newLocation)
+            body: JSON.stringify(newLoc)
         });
         if (!response.ok) {
             console.error('Error: ', response.status, await response.text());
@@ -82,12 +100,13 @@ function NewLocationForm() {
                         value={newLocation.name}
                         onChange={(e) => setNewLocation({...newLocation, name: e.target.value})}
                     />
-                    <InputField
+                    {/* <InputField
                         label="Address"
                         type="text"
                         value={newLocation.address}
-                        onChange={(e) => setNewLocation({...newLocation, address: e.target.value})}
-                    />
+                        onChange={(e) => {setNewLocation({...newLocation, address: e.target.value}); (e)=> setAddress(e.target.value)}
+                    }
+                    /> */}
                     <InputField
                         label="Phone"
                         type="text"
@@ -124,6 +143,7 @@ function NewLocationForm() {
                         value={newLocation.description}
                         onChange={(e) => setNewLocation({...newLocation, description: e.target.value})}
                     />
+                    
 
                     {daysOfWeek.map((day) => (
                         <div key={day} className="mt-4">
@@ -138,6 +158,7 @@ function NewLocationForm() {
                                 type="time"
                                 onChange={(e) => handleOpeningHoursChange(day, "closingTime", e.target.value)}
                             />
+                            
                         </div>
                     ))}
                     {loading ? (
@@ -152,6 +173,7 @@ function NewLocationForm() {
                     )}
                 </div>
             </form>
+            <GoogleMapComponent position={position} setPosition={setPosition} address={address} setAddress={setAddress}/>
         </div>
     );
 }
