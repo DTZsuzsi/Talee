@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { HiMiniPencilSquare } from 'react-icons/hi2';
 import { MdDeleteForever } from 'react-icons/md';
@@ -9,9 +9,11 @@ import TagCard from '../tag/components/TagCard';
 import TagOptions from '../tag/components/TagOptions';
 import HomeCard from '../main/components/molecules/HomeCard';
 import BiggerOnHover from '../main/components/atoms/BiggerOnHover';
+import GlobalContext from '../auth/GlobalContext';
 
 
 function LocationDetailPage() {
+  const userContext = useContext(GlobalContext);
   const [error, setError] = useState(null);
   const [location, setLocation] = useState(null);
   const { locationId } = useParams();
@@ -19,6 +21,8 @@ function LocationDetailPage() {
   const [tagChange, setTagChange] = useState(false);
 const [events, setEvents]=useState(null);
   const navigate = useNavigate();
+  const [owner, setOwner] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     async function fetchLocation() {
@@ -33,6 +37,11 @@ const [events, setEvents]=useState(null);
         const data = await response.json();
 
         setLocation(data);
+        //console.log(data.adminUser.username)
+        //console.log(userContext?.userName)
+        //console.log(localStorage.getItem('userName'))
+        setUser(data.adminUser.username);
+        setOwner(localStorage.getItem('userName'))
       } else {
         setError(`Failed to fetch location with id: ${locationId}, ${response.statusText}`);
       }
@@ -146,6 +155,7 @@ const [events, setEvents]=useState(null);
         </ul>
         <TagOptions onChange={(e) => handleNewTag(location.id, e)} />
       </div>
+      {owner === user && 
       <div>
         <Link to={`/locations/${locationId}/update`}>
           <HiMiniPencilSquare className='h-10 w-10 text-blue-600 mr-2' />
@@ -160,6 +170,7 @@ const [events, setEvents]=useState(null);
 					</a>
 				</BiggerOnHover>
       </div>
+    }
 {events?.map((event)=> <div key={event.id}>     
 <div key={event.id}>
         <HomeCard

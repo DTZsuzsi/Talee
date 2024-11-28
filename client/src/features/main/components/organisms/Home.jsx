@@ -33,7 +33,7 @@ const Home = () => {
 
       
         async function fetchLocations() {
-			const response = await fetch('/api/locations/all');
+			const response = await fetch('/api/locations');
 			const data = await response.json();
 			if (!response.ok) {
 				return;
