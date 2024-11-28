@@ -310,6 +310,27 @@ SELECT 25, id FROM tag ORDER BY RANDOM() LIMIT 4;
 
 
 
+INSERT INTO location_tag (location_id, tag_id)
+SELECT 1, id FROM tag ORDER BY RANDOM() LIMIT 3;
+
+INSERT INTO location_tag (location_id, tag_id)
+SELECT 2, id FROM tag ORDER BY RANDOM() LIMIT 2;
+
+INSERT INTO location_tag (location_id, tag_id)
+SELECT 3, id FROM tag ORDER BY RANDOM() LIMIT 4;
+
+INSERT INTO location_tag (location_id, tag_id)
+SELECT 4, id FROM tag ORDER BY RANDOM() LIMIT 3;
+
+INSERT INTO location_tag (location_id, tag_id)
+SELECT 5, id FROM tag ORDER BY RANDOM() LIMIT 2;
+
+INSERT INTO location_tag (location_id, tag_id)
+SELECT 6, id FROM tag ORDER BY RANDOM() LIMIT 4;
+
+
+
+
 -- Reports for issues and content for testing purposes c:
 
 INSERT INTO report (title, description, report_type, issued, solved, created_at, updated_at)

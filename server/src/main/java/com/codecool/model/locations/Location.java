@@ -46,7 +46,7 @@ public class Location {
           joinColumns = @JoinColumn(name = "location_id"),
           inverseJoinColumns = @JoinColumn(name = "tag_id")
   )
-  private Set<Tag> locationTags;
+  private Set<Tag> tags;
 
 
   public boolean addEvent(Event event) {
@@ -58,13 +58,13 @@ public class Location {
   }
 
   public void addTag(Tag tag) {
-    locationTags.add(tag);
+    tags.add(tag);
   }
 
   public Location() {
   }
 
-  public Location(long id, String name, String address, String phone, String email, String website, String facebook, String instagram, UserEntity adminUser, List<OpeningHours> openingHours, List<Event> events, String description, Set<Tag> locationTags, double latitude, double longitude) {
+  public Location(long id, String name, String address, String phone, String email, String website, String facebook, String instagram, UserEntity adminUser, List<OpeningHours> openingHours, List<Event> events, String description, Set<Tag> tags, double latitude, double longitude) {
     this.id = id;
     this.name = name;
     this.address = address;
@@ -77,7 +77,7 @@ public class Location {
     this.openingHours = openingHours;
     this.events = events;
     this.description = description;
-    this.locationTags = locationTags;
+    this.tags = tags;
     this.latitude = latitude;
     this.longitude = longitude;
   }
