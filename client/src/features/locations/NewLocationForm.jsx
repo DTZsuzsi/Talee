@@ -49,8 +49,9 @@ function NewLocationForm() {
         console.log(newLoc);
         const response = await fetch('/api/locations', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(newLoc)
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(newLocation);
+        }
 
         const token = localStorage.getItem("jwtToken");
 

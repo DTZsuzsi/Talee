@@ -77,7 +77,7 @@ function LocationDetailPage() {
     }
 
     if (locationId) fetchLocationData();
-  }, [locationId]);
+  }
 
   async function deleteLocation() {
     const response = await fetch(`/api/locations/${locationId}`, {
