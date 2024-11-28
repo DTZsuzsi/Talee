@@ -8,7 +8,10 @@ import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 
 
+
 const Header = () => {
+
+	
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 	const checkLogin = () => {
@@ -41,7 +44,9 @@ const Header = () => {
 	return (
 		<nav className='mx-auto'>
 			<div className='flex justify-center items-center flex-wrap w-screen'>
-				{/* Logo */}
+			
+			  
+			
 				<BiggerOnHover>
 					<a
 						href='/'

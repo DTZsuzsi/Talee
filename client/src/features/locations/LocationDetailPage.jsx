@@ -145,6 +145,7 @@ const [events, setEvents]=useState(null);
           ))}
         </ul>
         <TagOptions onChange={(e) => handleNewTag(location.id, e)} />
+            
       </div>
       <div>
         <Link to={`/locations/${locationId}/update`}>
