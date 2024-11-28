@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import NewLocationForm from "./NewLocationForm";
-import LocationDetailPage from "./LocationDetailPage";
 import UpdateLocationForm from "./UpdateLocationForm.jsx";
+import LocationDetailPage from "./LocationDetailPage.jsx";
 
 function LocationRoutes() {
   return (

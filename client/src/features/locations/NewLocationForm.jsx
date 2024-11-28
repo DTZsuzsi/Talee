@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import InputField from '../main/components/atoms/InputField.jsx';
@@ -71,35 +72,84 @@ function NewLocationForm() {
         const createdLocationId = await response.json();
         setLoading(false);
         navigate(`/locations/${createdLocationId}`);
+
+  
+    }
+  }
+
+  function handleOpeningHoursChange(day, field, value) {
+    setNewLocation((prevLocation) => {
+      const updatedHours = prevLocation.openingHours || [];
+      const existingDayIndex = updatedHours.findIndex(
+        (hour) => hour.day === day,
+      );
+
+      if (existingDayIndex !== -1) {
+        updatedHours[existingDayIndex] = {
+          ...updatedHours[existingDayIndex],
+          [field]: value,
+        };
+      } else {
+        updatedHours.push({ day, [field]: value });
+      }
+
+      return { ...prevLocation, openingHours: updatedHours };
+    });
+  }
+
+  const [tags, setTags] = useState(null);
+
+  useEffect(() => {
+    async function fetchTags() {
+      const response = await fetch("/api/tags");
+      const data = await response.json();
+      setTags(data);
     }
 
-    function handleOpeningHoursChange(dayOfWeek, field, value) {
-        setNewLocation((prevLocation) => {
-            // Check if the day already exists in openingHours
-            let updatedOpeningHours = prevLocation.openingHours || [];
-            // Find if there's already an entry for this day
-            const existingEntryIndex = updatedOpeningHours.findIndex(hour => hour.day === dayOfWeek);
-            if (existingEntryIndex !== -1) {
-                // If it exists, update the specified field
-                updatedOpeningHours[existingEntryIndex] = {
-                    ...updatedOpeningHours[existingEntryIndex],
-                    [field]: value
-                };
-            } else {
-                // If not, add a new entry with dayOfWeek and the specified field
-                updatedOpeningHours = [
-                    ...updatedOpeningHours,
-                    { day: dayOfWeek, [field]: value }
-                ];
-            }
+    fetchTags();
+  }, []);
 
-            return { ...prevLocation, openingHours: updatedOpeningHours };
+  function handleNewTag(e) {
+    const selectedTagName = e.target.value;
+    const tagToAdd = findTag(selectedTagName);
 
-        })
+    if (!tagToAdd) {
+      console.warn(`Tag with name ${selectedTagName} not found.`);
+      return;
     }
-    if (error) {
-        return <ServerError error={error} />;
+
+    // Add the tag to the `newEvent.tags` if it's not already present
+    setNewLocation((prevLocation) => {
+      const isTagAlreadyAdded = prevLocation.tags.includes(tagToAdd);
+
+      if (isTagAlreadyAdded) {
+        console.warn(`Tag with ID ${tagToAdd.id} is already added.`);
+        return prevLocation; // No changes if the tag is already in the array
+      }
+
+      return {
+        ...prevLocation,
+        tags: [...prevLocation.tags, tagToAdd],
+      };
+    });
+  }
+
+  function handleDeleteTag(tag) {
+    // Remove the tag from `newEvent.tags`
+    setNewLocation((prevLocation) => ({
+      ...prevLocation,
+      tags: prevLocation.tags.filter(
+        (existingTag) => existingTag.id !== tag.id,
+      ),
+    }));
+  }
+
+  function findTag(tagName) {
+    if (!tags) {
+      console.warn("Tags not loaded yet.");
+      return null;
     }
+
 
     return (
         <div>
@@ -186,8 +236,20 @@ function NewLocationForm() {
                 </div>
             </form>
             <GoogleMapComponent position={position} setPosition={setPosition} address={address} setAddress={setAddress}/>
+
+    // Find the tag by name from the `tags` state
+    return tags.find((tag) => tag.name === tagName) || null;
+  }
+
+  if (error) {
+    return <ServerError error={error} />;
+  }
+
+  
         </div>
-    );
+      </form>
+    </div>
+  );
 }
 
 export default NewLocationForm;

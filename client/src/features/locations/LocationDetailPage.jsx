@@ -1,3 +1,4 @@
+
 /* eslint-disable no-unused-vars */
 
 import { useEffect, useState } from 'react';
@@ -14,73 +15,17 @@ import {APIProvider, Map, Marker} from '@vis.gl/react-google-maps';
 import GoogleMapComponent from './GoogleMapComponent';
 
 
-
-
-
 function LocationDetailPage() {
-  const userContext = useContext(GlobalContext);
-  const [error, setError] = useState(null);
-  const [location, setLocation] = useState(null);
   const { locationId } = useParams();
-  const [events, setEvents] = useState(null);
+  const [location, setLocation] = useState(null);
+  const [events, setEvents] = useState([]);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
-
-  const [tags, setTags] = useState(null);
-  const [tagChange, setTagChange] = useState(false);
-  const [owner, setOwner] = useState(null);
-  const [user, setUser] = useState(null);
+  const apiKey = "AIzaSyCpdQIVDmlFx3hXi3tz6DN59hXWMJEqLOU";
 
   useEffect(() => {
-    async function fetchLocation() {
-      if (!locationId) {
-        console.error("Location ID is undefined");
-        return;
-      }
 
-      const response = await fetch(`/api/locations/${locationId}`);
-
-      if (response.ok) {
-        const data = await response.json();
-
-        setLocation(data);
-
-        setUser(data.adminUser.username);
-        setOwner(localStorage.getItem('userName'))
-
-      } else {
-        setError(
-          `Failed to fetch location with id: ${locationId}, ${response.statusText}`,
-        );
-      }
-    }
-
-    async function fetchEvents() {
-      if (!locationId) {
-        console.error('Location ID is undefined');
-        return;
-      }
-
-      const response = await fetch(`/api/events/locations/${locationId}`);
-
-      if (response.ok) {
-        const data = await response.json();
-
-        setEvents(data);
-      } else {
-        setError(`Failed to fetch location with id: ${locationId}, ${response.statusText}`);
-      }
-    }
-
-    async function fetchTags() {
-      const response = await fetch("/api/tags");
-      const data = await response.json();
-      setTags(data);
-    }
-
-    fetchLocation();
-    fetchTags();
-    fetchEvents();
-  }, [locationId, tagChange]);
+    
 
   async function handleNewTag(id, e) {
     setTagChange(false);
@@ -104,136 +49,180 @@ function LocationDetailPage() {
     for (const tag of tags) {
       if (tag.name === tagName) {
         tagFound = tag;
+
+    async function fetchLocationData() {
+      try {
+        const [locationResponse, eventsResponse] = await Promise.all([
+          fetch(`/api/locations/${locationId}`),
+          fetch(`/api/events/locations/${locationId}`),
+        ]);
+
+        if (locationResponse.ok) {
+          const data = await locationResponse.json();
+          setLocation(data);
+        } else {
+          setError(`Failed to fetch location: ${locationResponse.statusText}`);
+        }
+
+        if (eventsResponse.ok) {
+          setEvents(await eventsResponse.json());
+        } else {
+          setError(`Failed to fetch events: ${eventsResponse.statusText}`);
+        }
+      } catch (err) {
+        setError("An error occurred while fetching data.");
+        console.error(err);
+
       }
     }
-    return tagFound;
-  }
 
-  async function handleDeleteTag(location, tag) {
-    setTagChange(false);
-    const response = await fetch(
-      `/api/locations/tag/${location.id}?tagId=${tag.id}`,
-      { method: "DELETE" },
-    );
-    const data = await response.json();
-    setTagChange(true);
-  }
+    if (locationId) fetchLocationData();
+  }, [locationId]);
 
   async function deleteLocation() {
     const response = await fetch(`/api/locations/${locationId}`, {
       method: "DELETE",
     });
 
-    const data = await response.json();
-    navigate("/");
+    if (response.ok) {
+      navigate("/");
+    } else {
+      console.error("Failed to delete location");
+    }
   }
+
   if (error) {
     return <ServerError error={error} />;
   }
 
-  return location ? (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <div className="p-1 border-slate-300 shadow-md shadow-slate-800 border-2 rounded-md m-2 w-[50%] min-w-[540px] bg-slate-300 ">
-        <img
-          src="https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          className="self-center m-auto rounded-t-md"
-        ></img>
-        <p className="text-xl font-semibold px-2">Name: </p>
-        <p className="text-xl  px-2 mb-2"> {location.name}</p>
-        <p className="text-xl font-semibold px-2"> Address: </p>
-        <p className="text-xl  px-2 mb-2"> {location.address}</p>
-        <p className="text-xl font-semibold px-2"> Opening Hours: </p>
-        {location.openingHours &&
-          location.openingHours.map((openingHour) => (
-            <div key={openingHour.day} className="mt-1">
-              <p className="text-sm px-2 mb-2">
-                {" "}
-                {openingHour.day}: {openingHour.openingTime} -{" "}
-                {openingHour.closingTime}
+  if (!location) {
+    return <Loading />;
+  }
+
+  return (
+    <div className="flex flex-col items-center justify-center">
+      <div className="p-6 my-10 border rounded-lg shadow-md bg-light-secondaryBg dark:bg-dark-secondaryBg border-light-border dark:border-dark-border w-full max-w-4xl">
+        <div className="flex flex-col lg:flex-row gap-6">
+          <img
+            src="https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="Location"
+            className="rounded-md w-full lg:w-1/3 object-cover"
+          />
+          <div className="flex flex-col gap-4 w-full">
+            <div>
+              <p className="text-2xl font-bold text-center">{location.name}</p>
+            </div>
+            <div>
+              <p className="text-lg font-semibold">Address:</p>
+              <p className="text-mutedText dark:text-dark-mutedText">
+                {location.address}
               </p>
             </div>
-          ))}
-        <p className="text-l font-semibold px-2 mb-2">
-          {" "}
-          {location.description}
-        </p>
-        <p className="text-l font-semibold px-2 mb-2">
-          {" "}
-          Phone: {location.phone}
-        </p>
+            <div>
+              <p className="text-lg font-semibold">Description:</p>
+              <p className="text-mutedText dark:text-dark-mutedText">
+                {location.description}
+              </p>
+            </div>
+            <div>
+              <p className="text-lg font-semibold">Phone:</p>
+              <p className="text-mutedText dark:text-dark-mutedText">
+                {location.phone}
+              </p>
+            </div>
+            {location?.openingHours?.length > 0 && (
+              <div>
+                <p className="text-lg font-semibold">Opening Hours:</p>
+                {location.openingHours.map((hour) => (
+                  <p
+                    key={hour.day}
+                    className="text-mutedText dark:text-dark-mutedText"
+                  >
+                    {hour.day}: {hour.openingTime} - {hour.closingTime}
+                  </p>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
 
-        <ul className="flex flex-wrap justify-around">
-          {location?.locationTags?.map((tag) => (
-            <li key={tag?.id} className="mx-auto">
-              <TagCard
-                tag={tag}
-                onClick={() => handleDeleteTag(location, tag)}
-                color={tag?.color}
-              />
-            </li>
-          ))}
-        </ul>
-        <TagOptions onChange={(e) => handleNewTag(location.id, e)} />
-        <APIProvider
-          apiKey="AIzaSyCpdQIVDmlFx3hXi3tz6DN59hXWMJEqLOU"  // Replace with your actual API key
-          onLoad={() => console.log('Maps API has loaded.')}
-        >
-          <div style={{ height: '500px', width: '100%' }}> {/* Map container size */}
+        <div className="my-6">
+          <APIProvider apiKey={apiKey}>
             <Map
               defaultZoom={13}
-              defaultCenter={{ lat: location.latitude, lng: location.longitude }}   // Set the initial map center (San Francisco)
+              defaultCenter={{
+                lat: location.latitude,
+                lng: location.longitude,
+              }}
+              style={{ height: "300px", width: "100%" }}
             >
-              <Marker position={{ lat: location.latitude, lng: location.longitude }} />
+              <Marker
+                position={{
+                  lat: location.latitude,
+                  lng: location.longitude,
+                }}
+              />
             </Map>
-          </div>
-        </APIProvider>
+          </APIProvider>
+        </div>
+
 
 
       </div>
       {owner === user &&
+
+
         <div>
-          <Link to={`/locations/${locationId}/update`}>
-            <HiMiniPencilSquare className='h-10 w-10 text-blue-600 mr-2' />
-          </Link>
-          <MdDeleteForever className='h-10 w-10 text-blue-600 mr-2' onClick={deleteLocation} />
-          <BiggerOnHover>
-            <a
-              href={`/events/new/${location.id}`}
-              className='flex items-center'
-            >
-              <h1 className='text-3xl text-bold mx-5'>Add Event</h1>
-            </a>
-          </BiggerOnHover>
+          <h2 className="text-2xl font-semibold">Events at this location:</h2>
+          {events.map((event) => (
+            <div key={event.id} className="mt-4">
+              <Link
+                to={`/events/${event.id}`}
+                className="block p-4 border rounded-lg shadow-md bg-light-bg dark:bg-dark-bg"
+              >
+                <h3 className="text-xl font-bold">{event.name}</h3>
+                <p className="text-mutedText dark:text-dark-mutedText">
+                  {event.description}
+                </p>
+              </Link>
+            </div>
+          ))}
         </div>
-      }
-      {events?.map((event) => (
-        <div key={event.id}>
-          <div key={event.id}>
-            <HomeCard
-              key={event.id}
-              title={event.name}
-              href={`/events/${event.id}`}
-              description={event.description}
-              date={event.date}
-            />
-            <ul className="flex flex-wrap justify-around">
-              {event.tags?.map((tag) => (
-                <li key={tag.id} className="mx-auto">
-                  <TagCard
-                    tag={tag}
-                    onClick={() => handleDeleteTag(event, tag)}
-                    color={tag.color}
-                  />
+
+        {location?.tags?.length > 0 && (
+          <div className="mt-5">
+            <h2 className="text-2xl font-semibold">Tags:</h2>
+            <ul className="flex flex-wrap gap-2">
+              {location.tags.map((tag) => (
+                <li key={tag.id}>
+                  <TagCard tag={tag} color={tag.color} />
                 </li>
               ))}
             </ul>
           </div>
-        </div>
-      ))}
+        )}
 
+        <div className="flex justify-end gap-4 mt-6">
+          <BiggerOnHover>
+            <Link
+              to={`/locations/${locationId}/update`}
+              className="flex items-center justify-center w-12 h-12 rounded-full bg-button text-white hover:bg-buttonHover"
+            >
+              <HiMiniPencilSquare className="w-6 h-6" />
+            </Link>
+          </BiggerOnHover>
+
+          <BiggerOnHover>
+            <button
+              onClick={deleteLocation}
+              className="flex items-center justify-center w-12 h-12 rounded-full bg-button text-white hover:bg-red-600"
+            >
+              <MdDeleteForever className="w-6 h-6" />
+            </button>
+          </BiggerOnHover>
+        </div>
+      </div>
     </div>
-  ) : (
-    <Loading />
   );
 }
 
