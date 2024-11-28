@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-
 import Welcome from './features/welcome/Welcome.jsx';
 import AllTagsPage from './features/tag/AllTagsPage.jsx';
 import AllTagCategoriesPage from './features/tag/AllTagCategoriesPage.jsx';
@@ -9,9 +8,7 @@ import LocationsRoutes from './features/locations/LocationRoutes.jsx';
 import UserRoutes from './features/users/UserRoutes.jsx';
 import Home from "./features/main/components/organisms/Home.jsx";
 import Layout from './features/main/components/organisms/Layout.jsx';
-//import Layout from "./features/main/components/templates/Layout.jsx";
 import PageNotFound from './features/main/components/molecules/PageNotFound.jsx';
-import AuthRoutes from "./features/auth/AuthRoutes.jsx";
 import Login from "./features/auth/Login.jsx";
 import Register from "./features/auth/Register.jsx";
 

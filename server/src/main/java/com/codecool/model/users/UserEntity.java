@@ -15,13 +15,9 @@ public class UserEntity {
     private long id;
     private String username;
     private String password;
-    private String email;
 
     @ManyToMany(mappedBy = "users")
     private Set<Event> events;
-
-//    @ManyToMany(mappedBy = "creatorUser")
-//    private Set<Location> locations;
 
     @ManyToMany
     private Set<Role> roles;

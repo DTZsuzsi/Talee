@@ -1,11 +1,11 @@
-import { CgProfile } from 'react-icons/cg';
-import { FaSearch } from 'react-icons/fa';
-import { ImAccessibility } from 'react-icons/im';
+import {FaSearch} from 'react-icons/fa';
+import {ImAccessibility} from 'react-icons/im';
 import BiggerOnHover from '../atoms/BiggerOnHover';
 import Button from '../atoms/Button';
 import {useEffect, useState} from "react";
 // import jwtDecode from "jwt-decode";
 import {Link} from "react-router-dom";
+import ProfileDropdown from "../molecules/ProfileDropdown.jsx";
 
 
 
@@ -15,17 +15,7 @@ const Header = () => {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 	const checkLogin = () => {
-		const token = localStorage.getItem('jwtToken'); // Or retrieve from cookies
-		if (!token) return false;
-		return true;
-		// try {
-		// 	const decoded = jwtDecode(token);
-		// 	const isExpired = decoded.exp * 1000 < Date.now();
-		// 	return !isExpired;
-		// 	// eslint-disable-next-line no-unused-vars
-		// } catch (error) {
-		// 	return false;
-		// }
+		return localStorage.getItem('jwtToken');
 	};
 
 	const handleLogout = () => {
@@ -34,9 +24,7 @@ const Header = () => {
 	};
 
 	useEffect(() => {
-		// Check login status on component mount
-		const loginStatus = checkLogin();
-		setIsLoggedIn(loginStatus);
+		setIsLoggedIn(checkLogin());
 	}, []);
 
 
@@ -97,27 +85,7 @@ const Header = () => {
 
 					{/* Profile */}
 					<div className='mx-4'>
-						<BiggerOnHover>
-							<a
-								href='/profile'
-								className='shadow-md p2'
-							>
-								{isLoggedIn ?
-									<button onClick={handleLogout}>
-										<CgProfile
-											size={36}
-											className='hover:bg-gray-200 rounded-xl'
-										/>
-									</button>
-									:
-									<Button>
-										<Link to="/login">
-											Sign Up
-										</Link>
-									</Button>
-								}
-							</a>
-						</BiggerOnHover>
+
 					</div>
 				</div>
 			</div>
