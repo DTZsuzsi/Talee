@@ -96,7 +96,7 @@ const Home = () => {
             <li key={tag.id} className="mx-auto">
               <TagCard
                 tag={tag}
-                onClick={() => handleDeleteTagFromLocation(location, tag)}
+                onClick={() => {console.log('hi')}}
                 color={tag.color}
               />
             </li>
