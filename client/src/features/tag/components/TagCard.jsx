@@ -15,6 +15,7 @@ const TagCard = ({ tag, onClick, color }) => {
       {/* Conditionally Render Delete Button */}
       {onClick && (
         <button
+          type={"button"}
           onClick={onClick}
           className="opacity-100 absolute -top-1 -right-1 bg-red-600 rounded-full w-5 h-5 font-bold text-xs flex justify-center items-center text-white hover:bg-red-900"
         >

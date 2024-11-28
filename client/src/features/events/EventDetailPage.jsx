@@ -78,24 +78,30 @@ function EventDetailPage() {
                   {event.owner}
                 </p>
               </div>
-              <Link
-                to={`/locations/${event.location.locationId}`}
-                className="text-lg font-semibold text-accent"
-              >
-                Event's Location: {event.location.name}
-              </Link>
+              <div>
+                Event's Location:{"   "}
+                <Link
+                  to={`/locations/${event.location.locationId}`}
+                  className="text-lg font-semibold text-accent"
+                >
+                  {event.location.name}
+                </Link>
+              </div>
             </div>
           </div>
-          <div className="mt-5">
-            <h2 className="text-2xl font-semibold">Tags: </h2>
-            <ul className="flex flex-wrap gap-2">
-              {event?.tags?.map((tag) => (
-                <li key={tag?.id}>
-                  <TagCard tag={tag} color={tag?.color} />
-                </li>
-              ))}
-            </ul>
-          </div>
+          {event?.tags?.length > 0 && (
+            <div className="mt-5">
+              <h2 className="text-2xl font-semibold">Tags:</h2>
+              <ul className="flex flex-wrap gap-2">
+                {event.tags.map((tag) => (
+                  <li key={tag.id}>
+                    <TagCard tag={tag} color={tag.color} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           <div className="flex justify-end gap-4 mt-6">
             <BiggerOnHover>
               <Link

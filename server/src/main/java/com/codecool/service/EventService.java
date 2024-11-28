@@ -75,8 +75,9 @@ public class EventService {
         return eventDTOS;
     }
 
-    public boolean deleteEventById(long id) {
-        return eventRepository.deleteEventById(id);
+    @Transactional
+    public void deleteEventById(long id) {
+        eventRepository.deleteEventById(id);
     }
 
 

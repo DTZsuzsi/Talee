@@ -5,6 +5,8 @@ import SelectField from "../main/components/atoms/SelectField";
 import Button from "../main/components/atoms/Button";
 import ServerError from "../main/components/atoms/ServerError";
 import Loading from "../main/components/atoms/Loading";
+import TagOptions from "../tag/components/TagOptions.jsx";
+import TagCard from "../tag/components/TagCard.jsx";
 
 function NewEventForm() {
   const { locationId } = useParams();
@@ -17,6 +19,7 @@ function NewEventForm() {
     owner: "",
     size: "SMALL",
     status: "COMING",
+    tags: [],
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -25,6 +28,62 @@ function NewEventForm() {
 
   const sizes = ["SMALL", "MEDIUM", "BIG", "VERY_BIG"];
   const statuses = ["COMING", "IN_PROGRESS"];
+
+  const [tags, setTags] = useState(null);
+  const token = localStorage.getItem("jwtToken");
+
+  useEffect(() => {
+    async function fetchTags() {
+      const response = await fetch("/api/tags");
+      const data = await response.json();
+      setTags(data);
+    }
+
+    fetchTags();
+  }, []);
+
+  function handleNewTag(e) {
+    const selectedTagName = e.target.value;
+    const tagToAdd = findTag(selectedTagName);
+
+    if (!tagToAdd) {
+      console.warn(`Tag with name ${selectedTagName} not found.`);
+      return;
+    }
+
+    // Add the tag to the `newEvent.tags` if it's not already present
+    setNewEvent((prevEvent) => {
+      const isTagAlreadyAdded = prevEvent.tags.includes(tagToAdd);
+
+      if (isTagAlreadyAdded) {
+        console.warn(`Tag with ID ${tagToAdd.id} is already added.`);
+        return prevEvent; // No changes if the tag is already in the array
+      }
+
+      return {
+        ...prevEvent,
+        tags: [...prevEvent.tags, tagToAdd],
+      };
+    });
+  }
+
+  function handleDeleteTag(tag) {
+    // Remove the tag from `newEvent.tags`
+    setNewEvent((prevEvent) => ({
+      ...prevEvent,
+      tags: prevEvent.tags.filter((existingTag) => existingTag.id !== tag.id),
+    }));
+  }
+
+  function findTag(tagName) {
+    if (!tags) {
+      console.warn("Tags not loaded yet.");
+      return null;
+    }
+
+    // Find the tag by name from the `tags` state
+    return tags.find((tag) => tag.name === tagName) || null;
+  }
 
   useEffect(() => {
     async function fetchLocation() {
@@ -54,7 +113,10 @@ function NewEventForm() {
     try {
       const response = await fetch("/api/events", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(newEvent),
       });
 
@@ -149,6 +211,21 @@ function NewEventForm() {
               setNewEvent({ ...newEvent, status: e.target.value })
             }
           />
+        </div>
+        <div className="w-full my-5">
+          <TagOptions onChange={(e) => handleNewTag(e)} />
+          <ul className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {newEvent.tags?.map((tag) => (
+              <li key={tag.id}>
+                <TagCard
+                  tag={tag}
+                  onClick={() => handleDeleteTag(tag)}
+                  color={tag.color}
+                  className="w-full"
+                />
+              </li>
+            ))}
+          </ul>
         </div>
 
         <div className="w-full flex justify-center">

@@ -39,7 +39,7 @@ public class Event {
     private Set<UserEntity> users;
     private String owner;
     private String size;
-    @ManyToMany( fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "event_tag",
             joinColumns = @JoinColumn(name = "event_id"),

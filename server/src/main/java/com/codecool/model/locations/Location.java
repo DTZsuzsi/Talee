@@ -31,7 +31,7 @@ public class Location {
   @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE)
   private List<OpeningHours> openingHours;
 
-  @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
   private List<Event> events;
 
 

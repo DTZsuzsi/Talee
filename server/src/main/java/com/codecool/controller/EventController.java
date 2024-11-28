@@ -41,8 +41,8 @@ public class EventController {
     }
 
     @DeleteMapping("/{eventId}")
-    public boolean deleteEvent(@PathVariable long eventId) {
-        return eventService.deleteEventById(eventId);
+    public void deleteEvent(@PathVariable long eventId) {
+        eventService.deleteEventById(eventId);
     }
 
     @PostMapping("/tag/{eventId}")
