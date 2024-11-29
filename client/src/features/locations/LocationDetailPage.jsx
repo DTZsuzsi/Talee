@@ -14,6 +14,7 @@ import HomeCard from '../main/components/molecules/HomeCard';
 import BiggerOnHover from '../main/components/atoms/BiggerOnHover';
 import {APIProvider, Map, Marker} from '@vis.gl/react-google-maps';
 import GoogleMapComponent from './GoogleMapComponent';
+import { Button } from '@headlessui/react';
 
 
 function LocationDetailPage() {
@@ -232,6 +233,10 @@ useEffect(()=>{
               <MdDeleteForever className="w-6 h-6" />
             </button>
           </BiggerOnHover>
+          <Link to={`/events/new/${locationId}`}>
+          <Button               className="flex items-center justify-center w-15 h-12  bg-button text-white bold hover:bg-red-600"
+          > Create event</Button>
+          </Link>
         </div>
         }
       </div>
