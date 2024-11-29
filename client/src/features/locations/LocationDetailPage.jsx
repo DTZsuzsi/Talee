@@ -1,21 +1,18 @@
-
-
 /* eslint-disable no-unused-vars */
 
-import { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { HiMiniPencilSquare } from 'react-icons/hi2';
-import { MdDeleteForever } from 'react-icons/md';
-import ServerError from '../main/components/atoms/ServerError';
-import Loading from '../main/components/atoms/Loading';
-import TagCard from '../tag/components/TagCard';
-import TagOptions from '../tag/components/TagOptions';
-import HomeCard from '../main/components/molecules/HomeCard';
-import BiggerOnHover from '../main/components/atoms/BiggerOnHover';
-import {APIProvider, Map, Marker} from '@vis.gl/react-google-maps';
-import GoogleMapComponent from './GoogleMapComponent';
-import { Button } from '@headlessui/react';
-
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { HiMiniPencilSquare } from "react-icons/hi2";
+import { MdDeleteForever } from "react-icons/md";
+import ServerError from "../main/components/atoms/ServerError";
+import Loading from "../main/components/atoms/Loading";
+import TagCard from "../tag/components/TagCard";
+import TagOptions from "../tag/components/TagOptions";
+import HomeCard from "../main/components/molecules/HomeCard";
+import BiggerOnHover from "../main/components/atoms/BiggerOnHover";
+import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
+import GoogleMapComponent from "./GoogleMapComponent";
+import { Button } from "@headlessui/react";
 
 function LocationDetailPage() {
   const { locationId } = useParams();
@@ -26,40 +23,37 @@ function LocationDetailPage() {
   const apiKey = "AIzaSyCpdQIVDmlFx3hXi3tz6DN59hXWMJEqLOU";
   const [owner, setOwner] = useState(null);
   const [user, setUser] = useState(null);
-  const [tagChange,setTagChange]=useState(false);
-  const [tags, setTags]=useState(null);
+  const [tagChange, setTagChange] = useState(false);
+  const [tags, setTags] = useState(null);
 
-//   useEffect(() => {
+  //   useEffect(() => {
 
-    
+  // //   async function handleNewTag(id, e) {
+  // //     setTagChange(false);
 
-// //   async function handleNewTag(id, e) {
-// //     setTagChange(false);
+  // //     const selectedTagName = e.target.value;
+  // //     const tagToSend = findTag(selectedTagName);
 
-// //     const selectedTagName = e.target.value;
-// //     const tagToSend = findTag(selectedTagName);
+  // //     const response = await fetch(`/api/locations/${id}`, {
+  // //       method: "POST",
+  // //       headers: { "Content-Type": "application/json" },
+  // //       body: JSON.stringify(tagToSend),
+  // //     });
 
-// //     const response = await fetch(`/api/locations/${id}`, {
-// //       method: "POST",
-// //       headers: { "Content-Type": "application/json" },
-// //       body: JSON.stringify(tagToSend),
-// //     });
+  // //     const data = await response.json();
 
-// //     const data = await response.json();
+  // //     setTagChange(true);
+  //   }},[tagChange])
 
-// //     setTagChange(true);
-//   }},[tagChange])
+  //   function findTag(tagName) {
+  //     let tagFound = {};
+  //     for (const tag of tags) {
+  //       if (tag.name === tagName) {
+  //         tagFound = tag;
+  //     }
+  // return tagFound;}
 
-//   function findTag(tagName) {
-//     let tagFound = {};
-//     for (const tag of tags) {
-//       if (tag.name === tagName) {
-//         tagFound = tag;
-//     }
-// return tagFound;}
-
-useEffect(()=>{
-
+  useEffect(() => {
     async function fetchLocationData() {
       try {
         const [locationResponse, eventsResponse] = await Promise.all([
@@ -71,7 +65,7 @@ useEffect(()=>{
           const data = await locationResponse.json();
           setLocation(data);
           setUser(data.adminUser.username);
-          setOwner(localStorage.getItem('userName'))
+          setOwner(localStorage.getItem("userName"));
         } else {
           setError(`Failed to fetch location: ${locationResponse.statusText}`);
         }
@@ -84,13 +78,11 @@ useEffect(()=>{
       } catch (err) {
         setError("An error occurred while fetching data.");
         console.error(err);
-
       }
     }
 
     if (locationId) fetchLocationData();
-  
-},[])
+  }, []);
 
   async function deleteLocation() {
     const response = await fetch(`/api/locations/${locationId}`, {
@@ -178,29 +170,24 @@ useEffect(()=>{
             </Map>
           </APIProvider>
         </div>
-
-
-
-      </div>
-      {owner === user &&
-
-
-        <div>
-          <h2 className="text-2xl font-semibold">Events at this location:</h2>
-          {events.map((event) => (
-            <div key={event.id} className="mt-4">
-              <Link
-                to={`/events/${event.id}`}
-                className="block p-4 border rounded-lg shadow-md bg-light-bg dark:bg-dark-bg"
-              >
-                <h3 className="text-xl font-bold">{event.name}</h3>
-                <p className="text-mutedText dark:text-dark-mutedText">
-                  {event.description}
-                </p>
-              </Link>
-            </div>
-          ))}
-        </div>}
+        {owner === user && (
+          <div>
+            <h2 className="text-2xl font-semibold">Events at this location:</h2>
+            {events.map((event) => (
+              <div key={event.id} className="mt-4">
+                <Link
+                  to={`/events/${event.id}`}
+                  className="block p-4 border rounded-lg shadow-md bg-light-bg dark:bg-dark-bg"
+                >
+                  <h3 className="text-xl font-bold">{event.name}</h3>
+                  <p className="text-mutedText dark:text-dark-mutedText">
+                    {event.description}
+                  </p>
+                </Link>
+              </div>
+            ))}
+          </div>
+        )}
 
         {location?.tags?.length > 0 && (
           <div className="mt-5">
@@ -214,33 +201,35 @@ useEffect(()=>{
             </ul>
           </div>
         )}
-      {owner === user &&
-        <div className="flex justify-end gap-4 mt-6">
-          <BiggerOnHover>
-            <Link
-              to={`/locations/${locationId}/update`}
-              className="flex items-center justify-center w-12 h-12 rounded-full bg-button text-white hover:bg-buttonHover"
-            >
-              <HiMiniPencilSquare className="w-6 h-6" />
-            </Link>
-          </BiggerOnHover>
+        {owner === user && (
+          <div className="flex justify-end gap-4 mt-6">
+            <BiggerOnHover>
+              <Link
+                to={`/locations/${locationId}/update`}
+                className="flex items-center justify-center w-12 h-12 rounded-full bg-button text-white hover:bg-buttonHover"
+              >
+                <HiMiniPencilSquare className="w-6 h-6" />
+              </Link>
+            </BiggerOnHover>
 
-          <BiggerOnHover>
-            <button
-              onClick={deleteLocation}
-              className="flex items-center justify-center w-12 h-12 rounded-full bg-button text-white hover:bg-red-600"
-            >
-              <MdDeleteForever className="w-6 h-6" />
-            </button>
-          </BiggerOnHover>
-          <Link to={`/events/new/${locationId}`}>
-          <Button               className="flex items-center justify-center w-15 h-12  bg-button text-white bold hover:bg-red-600"
-          > Create event</Button>
-          </Link>
-        </div>
-        }
+            <BiggerOnHover>
+              <button
+                onClick={deleteLocation}
+                className="flex items-center justify-center w-12 h-12 rounded-full bg-button text-white hover:bg-red-600"
+              >
+                <MdDeleteForever className="w-6 h-6" />
+              </button>
+            </BiggerOnHover>
+            <Link to={`/events/new/${locationId}`}>
+              <Button className="flex items-center justify-center w-15 h-12  bg-button text-white bold hover:bg-red-600">
+                {" "}
+                Create event
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
-   
+    </div>
   );
 }
 
