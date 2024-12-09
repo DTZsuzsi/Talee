@@ -93,7 +93,7 @@ function EventDetailPage() {
               </div>
 
               <div className="mt-4">
-                <p className="text-lg font-semibold">Events Location:{"   "}</p>
+                <p className="text-lg font-semibold">Events Location:</p>
                 <Link
                   to={`/locations/${event.location.locationId}`}
                   className="block p-4 border rounded-lg shadow-md bg-light-bg dark:bg-dark-bg"

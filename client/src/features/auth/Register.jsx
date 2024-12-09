@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import TaleeLogo from "../main/components/atoms/TaleeLogo.jsx";
 import TaleeButton from "../main/components/atoms/TaleeButton.jsx";
+import BiggerOnHover from "../main/components/atoms/BiggerOnHover.jsx";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -135,15 +136,14 @@ function Register() {
           {error && <p className="text-red-500">{error}</p>}
           {success && <p className="text-green-500">{success}</p>}
 
-          <p className="mt-10 text-center text-sm/6 text-light-mutedText dark:text-dark-mutedText">
+          <p className="mt-10 text-center text-lg text-light-mutedText dark:text-dark-mutedText">
             Already have an account?
-            <Link
-              className="font-semibold text-accent hover:text-light-text dark:hover:text-dark-text"
-              to="/login"
-            >
-              {" "}
-              Login
-            </Link>
+            <BiggerOnHover>
+              <Link className="font-semibold text-indigo-500" to="/login">
+                {" "}
+                Login
+              </Link>
+            </BiggerOnHover>
           </p>
         </div>
       </div>

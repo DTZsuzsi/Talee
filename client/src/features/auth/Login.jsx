@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import GlobalContext from "./GlobalContext";
 import TaleeLogo from "../main/components/atoms/TaleeLogo.jsx";
 import TaleeButton from "../main/components/atoms/TaleeButton.jsx";
+import BiggerOnHover from "../main/components/atoms/BiggerOnHover.jsx";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -126,15 +127,14 @@ function Login() {
             {error && <p className="text-red-500">{error}</p>}
             {success && <p className="text-green-500">{success}</p>}
 
-            <p className="mt-10 text-center text-sm/6 text-light-mutedText dark:text-dark-mutedText">
+            <p className="mt-10 text-center text-lg text-black dark:text-dark-mutedText">
               Don&#39;t have an account yet?
-              <Link
-                className="font-semibold text-accent hover:text-indigo-500"
-                to="/register"
-              >
-                {" "}
-                Register
-              </Link>
+              <BiggerOnHover>
+                <Link className="font-semibold text-indigo-500" to="/register">
+                  {" "}
+                  Register
+                </Link>
+              </BiggerOnHover>
             </p>
           </div>
         </div>
