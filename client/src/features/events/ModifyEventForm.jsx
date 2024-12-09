@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import InputField from "../main/components/atoms/InputField";
 import SelectField from "../main/components/atoms/SelectField";
-import Button from "../main/components/atoms/Button.jsx";
+import TaleeButton from "../main/components/atoms/TaleeButton.jsx";
 import TagCard from "../tag/components/TagCard.jsx";
 import TagOptions from "../tag/components/TagOptions.jsx";
 
@@ -200,9 +200,9 @@ function ModifyEventForm() {
           </div>
 
           <div className="w-full flex justify-center">
-            <Button type="submit" className="mt-5">
+            <TaleeButton type="submit" className="mt-5">
               Modify Event
-            </Button>
+            </TaleeButton>
           </div>
         </form>
       </div>

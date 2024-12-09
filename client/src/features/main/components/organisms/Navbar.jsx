@@ -11,7 +11,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import TaleeLogo from "../atoms/TaleeLogo.jsx";
 import BiggerOnHover from "../atoms/BiggerOnHover.jsx";
 import React, { useEffect, useState } from "react";
-import Button from "../atoms/Button.jsx";
+import TaleeButton from "../atoms/TaleeButton.jsx";
 import { Link } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 
@@ -103,9 +103,9 @@ export default function Navbar() {
                       // <ProfileDropdown handleLogout={handleLogout} />
                       <CgProfile size={36} />
                     ) : (
-                      <Button>
+                      <TaleeButton>
                         <Link to="/register">Sign Up</Link>
-                      </Button>
+                      </TaleeButton>
                     )}
                   </BiggerOnHover>
                 </MenuButton>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import InputField from "../main/components/atoms/InputField.jsx";
-import Button from "../main/components/atoms/Button.jsx";
+import TaleeButton from "../main/components/atoms/TaleeButton.jsx";
 import Loading from "../main/components/atoms/Loading.jsx";
 import ServerError from "../main/components/atoms/ServerError.jsx";
 import GoogleMapComponent from "./GoogleMapComponent.jsx";
@@ -286,9 +286,9 @@ function NewLocationForm() {
           {loading ? (
             <Loading />
           ) : (
-            <Button type="submit" className="mt-5">
+            <TaleeButton type="submit" className="mt-5">
               Create Location
-            </Button>
+            </TaleeButton>
           )}
         </div>
       </form>

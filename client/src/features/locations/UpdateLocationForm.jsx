@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import InputField from "../main/components/atoms/InputField";
-import Button from "../main/components/atoms/Button";
+import TaleeButton from "../main/components/atoms/TaleeButton.jsx";
 import Loading from "../main/components/atoms/Loading";
 import ServerError from "../main/components/atoms/ServerError";
 import TagOptions from "../tag/components/TagOptions.jsx";
@@ -129,7 +129,7 @@ function UpdateLocationForm() {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(location),
       });
@@ -281,9 +281,9 @@ function UpdateLocationForm() {
             {loading ? (
               <Loading />
             ) : (
-              <Button type="submit" className="mt-5">
+              <TaleeButton type="submit" className="mt-5">
                 Update Location
-              </Button>
+              </TaleeButton>
             )}
           </div>
         </form>
