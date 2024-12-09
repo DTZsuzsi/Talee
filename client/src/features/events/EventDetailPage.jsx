@@ -9,7 +9,7 @@ import UserCard from "../users/components/UserCard.jsx";
 function EventDetailPage() {
   const { eventId } = useParams();
   const [event, setEvent] = useState(null);
-  const [userChange, setUserChange]=useState(false);
+  const [userChange, setUserChange] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,14 +30,16 @@ function EventDetailPage() {
     fetchEvent();
   }, [eventId, userChange]);
 
-  async  function handleDeleteUser(event, user){
+  async function handleDeleteUser(event, user) {
     setUserChange(false);
-const response= await fetch(`/api/events/user/${event.id}?userId=${user.id}`, {method: "DELETE"});
-const data= await response.json();
-console.log(data);
-setUserChange(true);
+    const response = await fetch(
+      `/api/events/user/${event.id}?userId=${user.id}`,
+      { method: "DELETE" },
+    );
+    const data = await response.json();
+    console.log(data);
+    setUserChange(true);
   }
-
 
   async function deleteEvent() {
     const token = localStorage.getItem("jwtToken");
@@ -89,26 +91,36 @@ setUserChange(true);
                   {event.owner}
                 </p>
               </div>
-              <div>
-                Events Location:{"   "}
+
+              <div className="mt-4">
+                <p className="text-lg font-semibold">Events Location:</p>
                 <Link
                   to={`/locations/${event.location.locationId}`}
-                  className="text-lg font-semibold text-accent"
+                  className="block p-4 border rounded-lg shadow-md bg-light-bg dark:bg-dark-bg"
                 >
-                  {event.location.name}
+                  <h3 className="text-xl font-bold">{event.location.name}</h3>
+                  <p className="text-mutedText dark:text-dark-mutedText">
+                    {event.location.description}
+                  </p>
                 </Link>
               </div>
             </div>
           </div>
-          <h2 className="text-2xl font-semibold mt-10"> Your friends who are coming: </h2>
-       
-        <ul className="flex flex-wrap justify-around">
-        {event?.users?.map((user) => (
-          <li key={user?.id} className="mx-auto">
-            <UserCard user={user} onClick={()=>handleDeleteUser(event, user)} />
-          </li> 
-        ))}
-        </ul>
+          <h2 className="text-2xl font-semibold mt-10">
+            {" "}
+            Your friends who are coming:{" "}
+          </h2>
+
+          <ul className="flex flex-wrap justify-around">
+            {event?.users?.map((user) => (
+              <li key={user?.id} className="mx-auto">
+                <UserCard
+                  user={user}
+                  onClick={() => handleDeleteUser(event, user)}
+                />
+              </li>
+            ))}
+          </ul>
 
           {event?.tags?.length > 0 && (
             <div className="mt-5">

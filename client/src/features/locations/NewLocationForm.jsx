@@ -1,79 +1,71 @@
-/* eslint-disable no-unused-vars */
-
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import InputField from '../main/components/atoms/InputField.jsx';
-import Loading from '../main/components/atoms/Loading.jsx';
-import ServerError from '../main/components/atoms/ServerError.jsx';
-import GoogleMapComponent from './GoogleMapComponent.jsx';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import InputField from "../main/components/atoms/InputField.jsx";
+import TaleeButton from "../main/components/atoms/TaleeButton.jsx";
+import Loading from "../main/components/atoms/Loading.jsx";
+import ServerError from "../main/components/atoms/ServerError.jsx";
+import GoogleMapComponent from "./GoogleMapComponent.jsx";
+import TagOptions from "../tag/components/TagOptions.jsx";
+import TagCard from "../tag/components/TagCard.jsx";
 
 function NewLocationForm() {
-	const [error, setError] = useState(null);
-	const [loading, setLoading] = useState(false);
-    const [position, setPosition]=useState({lat:0, lng:0});
-    const [address, setAddress]=useState('');
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [position, setPosition] = useState({ lat: 0, lng: 0 });
+  const [address, setAddress] = useState("");
 
+  const [newLocation, setNewLocation] = useState({
+    name: "",
+    address: address,
+    phone: "",
+    email: "",
+    website: "",
+    facebook: "",
+    instagram: "",
+    description: "",
+    latitude: position.lat,
+    longitude: position.lng,
+    openingHours: [],
+    tags: [],
+  });
 
-	const [newLocation, setNewLocation] = useState({
-		name: '',
-		address: address,
-		phone: '',
-		email: '',
-		website: '',
-		facebook: '',
-		instagram: '',
-		description: '',
-        latitude:position.lat,
-        longitude:position.lng,
-        openingHours: []
-	});
+  const [tags, setTags] = useState(null);
+  const navigate = useNavigate();
 
+  const daysOfWeek = [
+    "MONDAY",
+    "TUESDAY",
+    "WEDNESDAY",
+    "THURSDAY",
+    "FRIDAY",
+    "SATURDAY",
+    "SUNDAY",
+  ];
 
-	const navigate = useNavigate();
-
-    useEffect(() => {
-        setNewLocation(prev => ({
-          ...prev,
-          latitude: position.lat,
-          longitude: position.lng
-        }));
-      }, [position]);
-
-    const daysOfWeek = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"];
-
-    async function handleNewLocation(e) {
-        e.preventDefault();
-        setLoading(true);
-        const token = localStorage.getItem("jwtToken");
-
-        const response = await fetch('/api/locations', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-             },
-            body: JSON.stringify(newLocation)
-        });
-        if (!response.ok) {
-            console.error('Error: ', response.status, await response.text());
-            setLoading(false);
-            setError('Failed to create location');
-            return;
-        }
-
-        const createdLocationId = await response.json();
-        setLoading(false);
-        navigate(`/locations/${createdLocationId}`);
-    
-
-        if (!response.ok) {
-            console.error('Error: ', response.status, await response.text());
-            setLoading(false);
-            setError('Failed to create location');
-            return;
-        }
-
+  // Fetch tags
+  useEffect(() => {
+    async function fetchTags() {
+      try {
+        const response = await fetch("/api/tags");
+        if (!response.ok) throw new Error("Failed to fetch tags");
+        const data = await response.json();
+        setTags(data);
+      } catch (error) {
+        console.error("Error fetching tags:", error);
+        setError("Failed to fetch tags");
+      }
     }
-  
+    fetchTags();
+  }, []);
+
+  // Update coordinates when position changes
+  useEffect(() => {
+    setNewLocation((prev) => ({
+      ...prev,
+      latitude: position.lat,
+      longitude: position.lng,
+    }));
+  }, [position]);
 
   function handleOpeningHoursChange(day, field, value) {
     setNewLocation((prevLocation) => {
@@ -95,153 +87,213 @@ function NewLocationForm() {
     });
   }
 
-  const [tags, setTags] = useState(null);
+  function handleNewTag(e) {
+    const selectedTagName = e.target.value;
+    const tagToAdd = tags?.find((tag) => tag.name === selectedTagName);
 
-  useEffect(() => {
-    async function fetchTags() {
-      const response = await fetch("/api/tags");
-      const data = await response.json();
-      setTags(data);
+    if (!tagToAdd) {
+      console.warn(`Tag with name ${selectedTagName} not found.`);
+      return;
     }
 
-    fetchTags();
-  }, []);
+    if (newLocation.tags.some((tag) => tag.id === tagToAdd.id)) {
+      console.warn(`Tag with ID ${tagToAdd.id} is already added.`);
+      return;
+    }
 
-//   function handleNewTag(e) {
-//     const selectedTagName = e.target.value;
-//     const tagToAdd = findTag(selectedTagName);
+    setNewLocation((prevLocation) => ({
+      ...prevLocation,
+      tags: [...prevLocation.tags, tagToAdd],
+    }));
+  }
 
-//     if (!tagToAdd) {
-//       console.warn(`Tag with name ${selectedTagName} not found.`);
-//       return;
-//     }
+  function handleDeleteTag(tag) {
+    setNewLocation((prevLocation) => ({
+      ...prevLocation,
+      tags: prevLocation.tags.filter((t) => t.id !== tag.id),
+    }));
+  }
 
-//     // Add the tag to the `newEvent.tags` if it's not already present
-//     setNewLocation((prevLocation) => {
-//       const isTagAlreadyAdded = prevLocation.tags.includes(tagToAdd);
+  async function handleNewLocation(e) {
+    e.preventDefault();
+    setLoading(true);
+    const token = localStorage.getItem("jwtToken");
 
-//       if (isTagAlreadyAdded) {
-//         console.warn(`Tag with ID ${tagToAdd.id} is already added.`);
-//         return prevLocation; // No changes if the tag is already in the array
-//       }
+    try {
+      const response = await fetch("/api/locations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(newLocation),
+      });
 
-//       return {
-//         ...prevLocation,
-//         tags: [...prevLocation.tags, tagToAdd],
-//       };
-//     });
-//   }
+      if (!response.ok) throw new Error("Failed to create location");
 
-//   function handleDeleteTag(tag) {
-//     // Remove the tag from `newEvent.tags`
-//     setNewLocation((prevLocation) => ({
-//       ...prevLocation,
-//       tags: prevLocation.tags.filter(
-//         (existingTag) => existingTag.id !== tag.id,
-//       ),
-//     }));
-//   }
+      const createdLocationId = await response.json();
+      navigate(`/locations/${createdLocationId}`);
+    } catch (error) {
+      console.error("Error creating location:", error);
+      setError("Failed to create location");
+    } finally {
+      setLoading(false);
+    }
+  }
 
-//   function findTag(tagName) {
-//     if (!tags) {
-//       console.warn("Tags not loaded yet.");
-//       return null;
-//     }
-// }
+  if (error) {
+    return <ServerError error={error} />;
+  }
 
+  return (
+    <div className="flex justify-center py-10">
+      <form
+        onSubmit={handleNewLocation}
+        className="bg-light-secondaryBg dark:bg-dark-secondaryBg text-light-text dark:text-dark-text shadow-md rounded-lg p-8 w-full max-w-4xl"
+      >
+        <h1 className="font-bold text-3xl text-center mb-8">
+          Create New Location
+        </h1>
 
-    return (
-        <div>
-            <h1 className='font-bold text-3xl mb-5'>New Location</h1>
-            <form onSubmit={handleNewLocation} className='flex flex-col items-center'>
-                <div>
-                    <InputField
-                        label="Name"
-                        type="text"
-                        value={newLocation.name}
-                        onChange={(e) => setNewLocation({...newLocation, name: e.target.value})}
-                    />
-                    {/* <InputField
-                        label="Address"
-                        type="text"
-                        value={newLocation.address}
-                        onChange={(e) => {setNewLocation({...newLocation, address: e.target.value}); (e)=> setAddress(e.target.value)}
-                    }
-                    /> */}
-                    <InputField
-                        label="Phone"
-                        type="text"
-                        value={newLocation.phone}
-                        onChange={(e) => setNewLocation({...newLocation, phone: e.target.value})}
-                    />
-                    <InputField
-                        label="Email"
-                        type="text"
-                        value={newLocation.email}
-                        onChange={(e) => setNewLocation({...newLocation, email: e.target.value})}
-                    />
-                    <InputField
-                        label="Website"
-                        type="text"
-                        value={newLocation.website}
-                        onChange={(e) => setNewLocation({...newLocation, website: e.target.value})}
-                    />
-                    <InputField
-                        label="Facebook"
-                        type="text"
-                        value={newLocation.facebook}
-                        onChange={(e) => setNewLocation({...newLocation, facebook: e.target.value})}
-                    />
-                    <InputField
-                        label="Instagram"
-                        type="text"
-                        value={newLocation.instagram}
-                        onChange={(e) => setNewLocation({...newLocation, instagram: e.target.value})}
-                    />
-                    <InputField
-                        label="Description"
-                        type="text"
-                        value={newLocation.description}
-                        onChange={(e) => setNewLocation({...newLocation, description: e.target.value})}
-                    />
-                    
+        {/* Basic Information */}
+        <div className="grid grid-cols-2 gap-4">
+          <InputField
+            label="Name"
+            type="text"
+            value={newLocation.name}
+            onChange={(e) =>
+              setNewLocation({ ...newLocation, name: e.target.value })
+            }
+            required
+          />
+          <InputField
+            label="Address"
+            type="text"
+            value={newLocation.address}
+            onChange={(e) =>
+              setNewLocation({ ...newLocation, address: e.target.value })
+            }
+          />
+          <InputField
+            label="Phone"
+            type="text"
+            value={newLocation.phone}
+            onChange={(e) =>
+              setNewLocation({ ...newLocation, phone: e.target.value })
+            }
+          />
+          <InputField
+            label="Email"
+            type="email"
+            value={newLocation.email}
+            onChange={(e) =>
+              setNewLocation({ ...newLocation, email: e.target.value })
+            }
+          />
+          <InputField
+            label="Website"
+            type="url"
+            value={newLocation.website}
+            onChange={(e) =>
+              setNewLocation({ ...newLocation, website: e.target.value })
+            }
+          />
+          <InputField
+            label="Facebook"
+            type="text"
+            value={newLocation.facebook}
+            onChange={(e) =>
+              setNewLocation({ ...newLocation, facebook: e.target.value })
+            }
+          />
+          <InputField
+            label="Instagram"
+            type="text"
+            value={newLocation.instagram}
+            onChange={(e) =>
+              setNewLocation({ ...newLocation, instagram: e.target.value })
+            }
+          />
+        </div>
 
-                    {daysOfWeek.map((day) => (
-                        <div key={day} className="mt-4">
-                            <h3 className="font-semibold">{day}</h3>
-                            <InputField
-                                label="Opening Time"
-                                type="time"
-                                onChange={(e) => handleOpeningHoursChange(day, "openingTime", e.target.value)}
-                            />
-                            <InputField
-                                label="Closing Time"
-                                type="time"
-                                onChange={(e) => handleOpeningHoursChange(day, "closingTime", e.target.value)}
-                            />
-                            
-                        </div>
-                    ))}
-                    {loading ? (
-                        <Loading />
-                    ) : (
-                        <button
-                            type='submit'
-                            className='mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg'
-                        >
-                            Create New Location
-                        </button>
-                    )}
-                </div>
-            </form>
-            <GoogleMapComponent position={position} setPosition={setPosition} address={address} setAddress={setAddress}/>
+        {/* Description */}
+        <div className="mt-6">
+          <label className="block font-medium mb-2">Description</label>
+          <textarea
+            rows="4"
+            value={newLocation.description}
+            onChange={(e) =>
+              setNewLocation({ ...newLocation, description: e.target.value })
+            }
+            className="block w-full rounded-md border"
+            placeholder="Enter a description"
+          ></textarea>
+        </div>
 
+        {/* Opening Hours */}
+        <div className="mt-6">
+          <h2 className="font-bold text-xl mb-4">Opening Hours</h2>
+          {daysOfWeek.map((day) => (
+            <div key={day} className="grid grid-cols-3 gap-4 mb-2">
+              <span className="font-semibold">{day}</span>
+              <InputField
+                label="Opening Time"
+                type="time"
+                onChange={(e) =>
+                  handleOpeningHoursChange(day, "openingTime", e.target.value)
+                }
+              />
+              <InputField
+                label="Closing Time"
+                type="time"
+                onChange={(e) =>
+                  handleOpeningHoursChange(day, "closingTime", e.target.value)
+                }
+              />
             </div>
+          ))}
+        </div>
 
-    // Find the tag by name from the `tags` state
-    // return tags.find((tag) => tag.name === tagName) || null;
-   
-);
+        {/* Tags */}
+        <div className="mt-6">
+          <TagOptions onChange={handleNewTag} />
+          <ul className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {newLocation.tags.map((tag) => (
+              <li key={tag.id}>
+                <TagCard
+                  tag={tag}
+                  onClick={() => handleDeleteTag(tag)}
+                  color={tag.color}
+                  className="w-full"
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Map */}
+        <div className="mt-6">
+          <GoogleMapComponent
+            position={position}
+            setPosition={setPosition}
+            address={address}
+            setAddress={setAddress}
+          />
+        </div>
+
+        {/* Submit Button */}
+        <div className="w-full flex justify-center mt-6">
+          {loading ? (
+            <Loading />
+          ) : (
+            <TaleeButton type="submit" className="mt-5">
+              Create Location
+            </TaleeButton>
+          )}
+        </div>
+      </form>
+    </div>
+  );
 }
 
 export default NewLocationForm;

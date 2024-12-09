@@ -13,6 +13,7 @@ import BiggerOnHover from "../main/components/atoms/BiggerOnHover";
 import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
 import GoogleMapComponent from "./GoogleMapComponent";
 import { Button } from "@headlessui/react";
+import TaleeButton from "../main/components/atoms/TaleeButton.jsx";
 
 function LocationDetailPage() {
   const { locationId } = useParams();
@@ -23,35 +24,6 @@ function LocationDetailPage() {
   const apiKey = "AIzaSyCpdQIVDmlFx3hXi3tz6DN59hXWMJEqLOU";
   const [owner, setOwner] = useState(null);
   const [user, setUser] = useState(null);
-  const [tagChange, setTagChange] = useState(false);
-  const [tags, setTags] = useState(null);
-
-  //   useEffect(() => {
-
-  // //   async function handleNewTag(id, e) {
-  // //     setTagChange(false);
-
-  // //     const selectedTagName = e.target.value;
-  // //     const tagToSend = findTag(selectedTagName);
-
-  // //     const response = await fetch(`/api/locations/${id}`, {
-  // //       method: "POST",
-  // //       headers: { "Content-Type": "application/json" },
-  // //       body: JSON.stringify(tagToSend),
-  // //     });
-
-  // //     const data = await response.json();
-
-  // //     setTagChange(true);
-  //   }},[tagChange])
-
-  //   function findTag(tagName) {
-  //     let tagFound = {};
-  //     for (const tag of tags) {
-  //       if (tag.name === tagName) {
-  //         tagFound = tag;
-  //     }
-  // return tagFound;}
 
   useEffect(() => {
     async function fetchLocationData() {
@@ -117,24 +89,30 @@ function LocationDetailPage() {
             <div>
               <p className="text-2xl font-bold text-center">{location.name}</p>
             </div>
-            <div>
-              <p className="text-lg font-semibold">Address:</p>
-              <p className="text-mutedText dark:text-dark-mutedText">
-                {location.address}
-              </p>
-            </div>
-            <div>
-              <p className="text-lg font-semibold">Description:</p>
-              <p className="text-mutedText dark:text-dark-mutedText">
-                {location.description}
-              </p>
-            </div>
-            <div>
-              <p className="text-lg font-semibold">Phone:</p>
-              <p className="text-mutedText dark:text-dark-mutedText">
-                {location.phone}
-              </p>
-            </div>
+            {location.address && (
+              <div>
+                <p className="text-lg font-semibold">Address:</p>
+                <p className="text-mutedText dark:text-dark-mutedText">
+                  {location.address}
+                </p>
+              </div>
+            )}
+            {location.description && (
+              <div>
+                <p className="text-lg font-semibold">Description:</p>
+                <p className="text-mutedText dark:text-dark-mutedText">
+                  {location.description}
+                </p>
+              </div>
+            )}
+            {location.phone && (
+              <div>
+                <p className="text-lg font-semibold">Phone:</p>
+                <p className="text-mutedText dark:text-dark-mutedText">
+                  {location.phone}
+                </p>
+              </div>
+            )}
             {location?.openingHours?.length > 0 && (
               <div>
                 <p className="text-lg font-semibold">Opening Hours:</p>
@@ -151,26 +129,28 @@ function LocationDetailPage() {
           </div>
         </div>
 
-        <div className="my-6">
-          <APIProvider apiKey={apiKey}>
-            <Map
-              defaultZoom={13}
-              defaultCenter={{
-                lat: location.latitude,
-                lng: location.longitude,
-              }}
-              style={{ height: "300px", width: "100%" }}
-            >
-              <Marker
-                position={{
+        {location.latitude && (
+          <div className="my-6">
+            <APIProvider apiKey={apiKey}>
+              <Map
+                defaultZoom={13}
+                defaultCenter={{
                   lat: location.latitude,
                   lng: location.longitude,
                 }}
-              />
-            </Map>
-          </APIProvider>
-        </div>
-        {owner === user && (
+                style={{ height: "300px", width: "100%" }}
+              >
+                <Marker
+                  position={{
+                    lat: location.latitude,
+                    lng: location.longitude,
+                  }}
+                />
+              </Map>
+            </APIProvider>
+          </div>
+        )}
+        {events.length > 0 && (
           <div>
             <h2 className="text-2xl font-semibold">Events at this location:</h2>
             {events.map((event) => (
@@ -220,11 +200,9 @@ function LocationDetailPage() {
                 <MdDeleteForever className="w-6 h-6" />
               </button>
             </BiggerOnHover>
+
             <Link to={`/events/new/${locationId}`}>
-              <Button className="flex items-center justify-center w-15 h-12  bg-button text-white bold hover:bg-red-600">
-                {" "}
-                Create event
-              </Button>
+              <TaleeButton> Create event</TaleeButton>
             </Link>
           </div>
         )}
