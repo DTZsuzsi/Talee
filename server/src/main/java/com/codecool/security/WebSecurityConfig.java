@@ -40,8 +40,9 @@ public class WebSecurityConfig {
             .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthEntryPoint))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests((requests) -> requests
-                    .requestMatchers("/api/auth/**", "/api/locations/all", "/api/locations/{id}", "/api/events/**").permitAll()
-                    .requestMatchers("/api/locations/**").authenticated()
+                    .requestMatchers("/api/auth/**", "/api/locations/all", "/api/locations/{id}",
+                            "/api/events/{eventId}", "/api/events/locations/{locationId}", "/api/events/all").permitAll()
+                    .requestMatchers("/api/locations/**", "/api/events/**").authenticated()
                     .requestMatchers(HttpMethod.GET).permitAll()
                     .anyRequest().authenticated()
             );

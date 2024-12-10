@@ -16,7 +16,7 @@ public record EventDTO(
         String description,
         LocationInEventDTO location,
         List<UserInEventDTO> users,
-        String owner,
+        UserInEventDTO owner,
         String size,
         Set<TaginFrontendDTO> tags,
         String status) {

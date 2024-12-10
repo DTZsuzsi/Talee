@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import HomeCard from "../molecules/HomeCard.jsx";
 import StateChangeButton from "../molecules/StateChangeButton.jsx";
@@ -15,7 +14,7 @@ const Home = () => {
 
   useEffect(() => {
     async function fetchEvents() {
-      const response = await fetch("/api/events");
+      const response = await fetch("/api/events/all");
       const data = await response.json();
       if (!response.ok) {
         return;

@@ -14,10 +14,7 @@ import com.codecool.model.locations.Location;
 import com.codecool.model.tags.Tag;
 import com.codecool.model.tags.TagCategory;
 import com.codecool.model.users.UserEntity;
-import com.codecool.repository.EventRepository;
-import com.codecool.repository.LocationRepository;
-import com.codecool.repository.TagCategoryRepository;
-import com.codecool.repository.TagRepository;
+import com.codecool.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,13 +33,15 @@ public class EventService {
     private final TagMapper tagMapper = TagMapper.INSTANCE;
     private final LocationRepository locationRepository;
     private final UserMapper userMapper= UserMapper.INSTANCE;
+    private final UserRepository userRepository;
 
     @Autowired
-    public EventService(EventRepository eventRepository, TagRepository tagRepository, TagCategoryRepository tagCategoryRepository, LocationRepository locationRepository) {
+    public EventService(EventRepository eventRepository, TagRepository tagRepository, TagCategoryRepository tagCategoryRepository, LocationRepository locationRepository, UserRepository userRepository) {
         this.eventRepository = eventRepository;
         this.tagRepository = tagRepository;
         this.tagCategoryRepository = tagCategoryRepository;
         this.locationRepository = locationRepository;
+        this.userRepository = userRepository;
     }
 
 
@@ -51,7 +50,7 @@ public class EventService {
         Set<TaginFrontendDTO> tags = event.getTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toSet());
         List < UserInEventDTO> users = event.getUsers().stream().map(userEntity -> new UserInEventDTO(userEntity.getId(), userEntity.getUsername())).collect(Collectors.toList());
         EventDTO eventDTO = new EventDTO(event.getId(), event.getDate(), event.getName(), event.getDescription(), new LocationInEventDTO(event.getLocation().getId(), event.getLocation().getName(), event.getLocation().getLatitude(), event.getLocation().getLongitude()),
-                users, event.getOwner(), event.getSize(), tags, event.getStatus());
+                users, userMapper.userToUserInEventDTO(event.getOwner()), event.getSize(), tags, event.getStatus());
 
         return eventDTO;
 
@@ -59,8 +58,9 @@ public class EventService {
 
     public long addEvent(NewEventDTO newEventDTO) {
         Location location = locationRepository.findById(newEventDTO.locationInEventDTO().locationId()).get();
+        UserEntity eventOwner = userRepository.findById(newEventDTO.owner().id()).get();
         Event newEvent = new Event(newEventDTO.date(), newEventDTO.name(), newEventDTO.description(), location,
-                newEventDTO.owner(), newEventDTO.size(), null, newEventDTO.status());
+                eventOwner, newEventDTO.size(), null, newEventDTO.status());
         return eventRepository.save(newEvent).getId();
     }
 
