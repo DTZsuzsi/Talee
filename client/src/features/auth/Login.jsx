@@ -105,7 +105,10 @@ function Login() {
           <p className="mt-10 text-center text-lg text-black dark:text-dark-mutedText">
             Don&#39;t have an account yet?
             <BiggerOnHover>
-              <Link className="font-semibold text-indigo-500" to="/register">
+              <Link
+                className="font-semibold text-button hover:text-button-hover"
+                to="/register"
+              >
                 {" "}
                 Register
               </Link>

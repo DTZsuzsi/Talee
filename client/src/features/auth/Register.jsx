@@ -119,7 +119,10 @@ function Register() {
           <p className="mt-10 text-center text-lg text-light-mutedText dark:text-dark-mutedText">
             Already have an account?
             <BiggerOnHover>
-              <Link className="font-semibold text-indigo-500" to="/login">
+              <Link
+                className="font-semibold text-button hover:text-button-hover"
+                to="/login"
+              >
                 {" "}
                 Login
               </Link>

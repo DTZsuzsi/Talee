@@ -2,18 +2,12 @@ import {
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
 } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import TaleeLogo from "../atoms/TaleeLogo.jsx";
 import BiggerOnHover from "../atoms/BiggerOnHover.jsx";
-import React, { useEffect, useState } from "react";
 import TaleeButton from "../atoms/TaleeButton.jsx";
 import { Link } from "react-router-dom";
-import { CgProfile } from "react-icons/cg";
 import { useAuth } from "../../../auth/AuthContext.jsx";
 import ProfileMenu from "../molecules/ProfileMenu.jsx";
 
