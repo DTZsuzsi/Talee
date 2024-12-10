@@ -5,6 +5,7 @@ import com.codecool.DTO.event.NewEventDTO;
 import com.codecool.DTO.tag.TaginFrontendDTO;
 import com.codecool.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class EventController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('USER')")
     public long createEvent(@RequestBody NewEventDTO newEventDTO) {
         return eventService.addEvent(newEventDTO);
     }
@@ -36,26 +38,31 @@ public class EventController {
     }
 
     @PatchMapping("/{eventId}/modify")
+    @PreAuthorize("hasRole('EVENT_OWNER')")
     public boolean modifyEvent(@PathVariable int eventId, @RequestBody EventDTO eventDTO) {
         return eventService.modifyEvent(eventDTO);
     }
 
     @DeleteMapping("/{eventId}")
+    @PreAuthorize("hasRole('EVENT_OWNER')")
     public void deleteEvent(@PathVariable long eventId) {
         eventService.deleteEventById(eventId);
     }
 
     @PostMapping("/tag/{eventId}")
+    @PreAuthorize("hasRole('EVENT_OWNER')")
     public boolean addTagToEvent(@PathVariable long eventId, @RequestBody TaginFrontendDTO taginFrontendDTO) {
         return eventService.addTagToEvent(eventId, taginFrontendDTO);
     }
 
     @DeleteMapping("/tag/{eventId}")
+    @PreAuthorize("hasRole('EVENT_OWNER')")
     public boolean deleteTag(@PathVariable long eventId, @RequestParam int tagId) {
         return eventService.deleteTagFromEvent(eventId, tagId);
     }
 
     @DeleteMapping("/user/{eventId}")
+    @PreAuthorize("hasRole('EVENT_OWNER')")
     public boolean deleteUser(@PathVariable long eventId, @RequestParam int userId) {
         return eventService.deleteUserFromEvent(eventId, userId);
     }
