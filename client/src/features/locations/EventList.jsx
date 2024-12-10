@@ -5,10 +5,17 @@ function EventList({ events }) {
     <div>
       <h2 className="text-2xl font-semibold">Events at this location:</h2>
       {events.map((event) => (
-        <Link key={event.id} to={`/events/${event.id}`} className="block p-4 border rounded-lg shadow-md">
+        <div key={event.id} className="mt-4">
+        <Link
+          to={`/events/${event.id}`}
+          className="block p-4 border rounded-lg shadow-md bg-light-bg dark:bg-dark-bg"
+        >
           <h3 className="text-xl font-bold">{event.name}</h3>
-          <p>{event.description}</p>
+          <p className="text-mutedText dark:text-dark-mutedText">
+            {event.description}
+          </p>
         </Link>
+      </div>
       ))}
     </div>
   );

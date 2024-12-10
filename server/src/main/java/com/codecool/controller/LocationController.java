@@ -45,7 +45,7 @@ public class LocationController {
   @DeleteMapping("/{id}")
   @PreAuthorize("hasRole('LOCATION_OWNER')")
   public long deleteLocation(@PathVariable long id) {
-    return locationService.deleteLocation(id);
+    System.out.println("deleting");return locationService.deleteLocation(id);
   }
 
   @PatchMapping
