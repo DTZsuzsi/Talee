@@ -9,7 +9,7 @@ export default {
           bg: "#00ffa2", // Primary Background
           secondaryBg: "#008343", // Secondary Background
           text: "#000000", // Default Text
-          mutedText: "#6B7280", // Muted Text
+          mutedText: "#2a3032", // Muted Text
           border: "#374151", // Borders/Dividers
         },
         dark: {
@@ -20,6 +20,7 @@ export default {
           border: "#E5E7EB", // Borders/Dividers
         },
 
+        link: "#FFD700", // Accent Color
         accent: "#FFD700", // Accent Color
         button: "#3B82F6", // Primary Button
         buttonHover: "#2563EB", // Button Hover

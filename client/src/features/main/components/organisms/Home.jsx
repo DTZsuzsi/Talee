@@ -6,8 +6,7 @@ import TagCard from "../../../tag/components/TagCard.jsx";
 /** @format */
 
 import Loading from "../atoms/Loading.jsx";
-import GoogleMapComponent from "../../../locations/GoogleMapComponent.jsx";
-
+import GoogleMapComponent from "../../../maps/GoogleMapComponent.jsx";
 const Home = () => {
   const [locations, setLocations] = useState();
   const [mode, setMode] = useState("locations");
