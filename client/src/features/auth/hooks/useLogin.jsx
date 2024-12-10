@@ -15,15 +15,14 @@ export const useLogin = () => {
       });
 
       const { jwtToken, userName, roles, message } = response.data;
-
-      // Store user details in localStorage
-      localStorage.setItem("jwtToken", jwtToken);
-      localStorage.setItem("userName", userName);
-      localStorage.setItem("roles", roles);
-
+      const userData = {
+        jwtToken,
+        userName,
+        roles,
+      };
       setSuccess(message);
 
-      return { jwtToken, userName, roles };
+      return { userData };
     } catch (err) {
       setError(
         err.response?.data?.message ||
