@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { HiMiniPencilSquare } from "react-icons/hi2";
@@ -7,12 +5,8 @@ import { MdDeleteForever } from "react-icons/md";
 import ServerError from "../main/components/atoms/ServerError";
 import Loading from "../main/components/atoms/Loading";
 import TagCard from "../tag/components/TagCard";
-import TagOptions from "../tag/components/TagOptions";
-import HomeCard from "../main/components/molecules/HomeCard";
 import BiggerOnHover from "../main/components/atoms/BiggerOnHover";
 import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
-import GoogleMapComponent from "./GoogleMapComponent";
-import { Button } from "@headlessui/react";
 import TaleeButton from "../main/components/atoms/TaleeButton.jsx";
 
 function LocationDetailPage() {
