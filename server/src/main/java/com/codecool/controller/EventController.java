@@ -32,7 +32,7 @@ public class EventController {
         return eventService.addEvent(newEventDTO);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<EventDTO> getAllEvents() {
         return eventService.getAllEvents();
     }
