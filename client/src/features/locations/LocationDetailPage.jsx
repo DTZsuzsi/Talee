@@ -7,13 +7,10 @@ import { MdDeleteForever } from "react-icons/md";
 import ServerError from "../main/components/atoms/ServerError";
 import Loading from "../main/components/atoms/Loading";
 import TagCard from "../tag/components/TagCard";
-import TagOptions from "../tag/components/TagOptions";
-import HomeCard from "../main/components/molecules/HomeCard";
 import BiggerOnHover from "../main/components/atoms/BiggerOnHover";
 import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
-import GoogleMapComponent from "./GoogleMapComponent";
-import { Button } from "@headlessui/react";
 import TaleeButton from "../main/components/atoms/TaleeButton.jsx";
+import MapDisplay from "../maps/MapDisplay.jsx";
 
 function LocationDetailPage() {
   const { locationId } = useParams();
@@ -130,25 +127,7 @@ function LocationDetailPage() {
         </div>
 
         {location.latitude && (
-          <div className="my-6">
-            <APIProvider apiKey={apiKey}>
-              <Map
-                defaultZoom={13}
-                defaultCenter={{
-                  lat: location.latitude,
-                  lng: location.longitude,
-                }}
-                style={{ height: "300px", width: "100%" }}
-              >
-                <Marker
-                  position={{
-                    lat: location.latitude,
-                    lng: location.longitude,
-                  }}
-                />
-              </Map>
-            </APIProvider>
-          </div>
+          <MapDisplay lat={location.latitude} lng={location.longitude}/>
         )}
         {events.length > 0 && (
           <div>
