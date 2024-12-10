@@ -68,7 +68,7 @@ export default function Navbar() {
                       "rounded-md px-3 py-2 text-sm font-medium",
                     )}
                   >
-                    {item.name}
+                    <BiggerOnHover>{item.name}</BiggerOnHover>
                   </a>
                 ))}
               </div>
