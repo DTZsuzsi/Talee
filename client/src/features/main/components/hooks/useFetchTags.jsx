@@ -13,7 +13,7 @@ export function useFetchTags() {
       setLoading(true);
       try {
         const [tagResponse] = await Promise.all([
-          axios.get(`/api/tags/`)
+          axios.get(`/api/tags`)
         ]);
 
         setTags(tagResponse.data);
