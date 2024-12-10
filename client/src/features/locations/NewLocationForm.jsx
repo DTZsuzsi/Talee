@@ -8,7 +8,8 @@ import TagOptions from '../tag/components/TagOptions.jsx';
 import TagCard from '../tag/components/TagCard.jsx';
 import { useFetchTags } from '../main/components/hooks/useFetchTags.jsx';
 import LocationForm from './LocationForm.jsx';
-import { deleteAndAddTag } from '../main/tagHandling/deleteAndAddTag.jsx';
+import { useTagHandlers } from '../main/tagHandling/useTagHandlers.jsx';
+import useOpeningHours from './hooks/useOpeningHours.jsx';
 
 function NewLocationForm() {
   const [error, setError] = useState(null);
@@ -34,7 +35,9 @@ function NewLocationForm() {
   const navigate = useNavigate();
 
   const { tags } = useFetchTags();
-  const {handleNewTag, handleDeleteTag}=deleteAndAddTag(newLocation,setNewLocation,tags)
+
+  const { handleNewTag, handleDeleteTag } = useTagHandlers(newLocation, setNewLocation, tags);
+  const { handleOpeningHoursChange } = useOpeningHours(setNewLocation);
 
   useEffect(() => {
     setNewLocation((prev) => ({
@@ -44,55 +47,11 @@ function NewLocationForm() {
     }));
   }, [position]);
 
-  function handleOpeningHoursChange(day, field, value) {
-    setNewLocation((prevLocation) => {
-      const updatedHours = prevLocation.openingHours || [];
-      const existingDayIndex = updatedHours.findIndex((hour) => hour.day === day);
-
-      if (existingDayIndex !== -1) {
-        updatedHours[existingDayIndex] = {
-          ...updatedHours[existingDayIndex],
-          [field]: value,
-        };
-      } else {
-        updatedHours.push({ day, [field]: value });
-      }
-
-      return { ...prevLocation, openingHours: updatedHours };
-    });
-  }
-
-  // function handleNewTag(e) {
-  //   const selectedTagName = e.target.value;
-  //   const tagToAdd = tags?.find((tag) => tag.name === selectedTagName);
-
-  //   if (!tagToAdd) {
-  //     console.warn(`Tag with name ${selectedTagName} not found.`);
-  //     return;
-  //   }
-
-  //   if (newLocation.tags.some((tag) => tag.id === tagToAdd.id)) {
-  //     console.warn(`Tag with ID ${tagToAdd.id} is already added.`);
-  //     return;
-  //   }
-
-  //   setNewLocation((prevLocation) => ({
-  //     ...prevLocation,
-  //     tags: [...prevLocation.tags, tagToAdd],
-  //   }));
-  // }
-
-  // function handleDeleteTag(tag) {
-  //   setNewLocation((prevLocation) => ({
-  //     ...prevLocation,
-  //     tags: prevLocation.tags.filter((t) => t.id !== tag.id),
-  //   }));
-  // }
-
   async function handleNewLocation(e) {
     e.preventDefault();
     setLoading(true);
     const token = localStorage.getItem('jwtToken');
+    console.log(newLocation);
 
     try {
       const response = await fetch('/api/locations', {
@@ -128,12 +87,10 @@ function NewLocationForm() {
       >
         <h1 className='font-bold text-3xl text-center mb-8'>Create New Location</h1>
 
-        {/* Basic Information */}
         <LocationForm location={newLocation} setLocation={setNewLocation} onHoursChange={handleOpeningHoursChange} />
 
-        {/* Tags */}
         <div className='mt-6'>
-          <TagOptions onChange={handleNewTag} />
+          <TagOptions onChange={(e) => handleNewTag(e)} />
           <ul className='grid grid-cols-2 md:grid-cols-4 gap-4'>
             {newLocation.tags.map((tag) => (
               <li key={tag.id}>
@@ -143,12 +100,10 @@ function NewLocationForm() {
           </ul>
         </div>
 
-        {/* Map */}
         <div className='mt-6'>
           <GoogleMapComponent position={position} setPosition={setPosition} address={address} setAddress={setAddress} />
         </div>
 
-        {/* Submit Button */}
         <div className='w-full flex justify-center mt-6'>
           {loading ? (
             <Loading />

@@ -8,7 +8,9 @@ import TagOptions from '../tag/components/TagOptions.jsx';
 import TagCard from '../tag/components/TagCard.jsx';
 import LocationForm from './LocationForm.jsx';
 import { useFetchTags } from '../main/components/hooks/useFetchTags.jsx';
-
+import { useTagHandlers } from '../main/tagHandling/useTagHandlers.jsx';
+import useOpeningHours from './hooks/useOpeningHours.jsx';
+import axios from 'axios';
 function UpdateLocationForm() {
   const { locationId } = useParams();
   const [location, setLocation] = useState(null);
@@ -19,106 +21,49 @@ function UpdateLocationForm() {
   const navigate = useNavigate();
   const { tags } = useFetchTags();
 
+  const { handleNewTag, handleDeleteTag } = useTagHandlers(location, setLocation, tags);
+  const { handleOpeningHoursChange } = useOpeningHours(setLocation);
+
   const token = localStorage.getItem('jwtToken');
 
-  // Fetch location details
   useEffect(() => {
-    async function fetchLocation() {
+    const fetchData = async () => {
       try {
-        const response = await fetch(`/api/locations/${locationId}`);
-        if (!response.ok) throw new Error(`Failed to fetch location`);
-        const data = await response.json();
+        const { data } = await axios.get(`/api/locations/${locationId}`);
+        console.log(data)
         setLocation(data);
-      } catch (error) {
-        console.error('Error fetching location:', error);
-        setError('Failed to fetch location');
+      } catch (err) {
+        console.error("Error fetching locations:", err);
       }
-    }
-    fetchLocation();
-  }, [locationId, tagChange]);
+    };
 
-  // Handle opening hours change
-  function handleOpeningHoursChange(day, field, value) {
-    setLocation((prevLocation) => {
-      const updatedHours = prevLocation.openingHours || [];
-      const existingDayIndex = updatedHours.findIndex((hour) => hour.day === day);
-
-      if (existingDayIndex !== -1) {
-        updatedHours[existingDayIndex] = {
-          ...updatedHours[existingDayIndex],
-          [field]: value,
-        };
-      } else {
-        updatedHours.push({ day, [field]: value });
-      }
-
-      return { ...prevLocation, openingHours: updatedHours };
-    });
-  }
-
-  function handleNewTag(e) {
-    const selectedTagName = e.target.value;
-    const tagToAdd = findTag(selectedTagName);
-
-    if (!tagToAdd) {
-      console.warn(`Tag with name ${selectedTagName} not found.`);
-      return;
-    }
-
-    // Add the tag to the `newEvent.tags` if it's not already present
-    setLocation((prevLocation) => {
-      const isTagAlreadyAdded = prevLocation.tags.includes(tagToAdd);
-
-      if (isTagAlreadyAdded) {
-        console.warn(`Tag with ID ${tagToAdd.id} is already added.`);
-        return prevLocation; // No changes if the tag is already in the array
-      }
-
-      return {
-        ...prevLocation,
-        tags: [...prevLocation.tags, tagToAdd],
-      };
-    });
-  }
-
-  function handleDeleteTag(tag) {
-    // Remove the tag from `newEvent.tags`
-    setLocation((prevLocation) => ({
-      ...prevLocation,
-      tags: prevLocation.tags.filter((existingTag) => existingTag.id !== tag.id),
-    }));
-  }
-
-  function findTag(tagName) {
-    if (!tags) {
-      console.warn('Tags not loaded yet.');
-      return null;
-    }
-
-    // Find the tag by name from the `tags` state
-    return tags.find((tag) => tag.name === tagName) || null;
-  }
-
-  // Handle location update submission
+    fetchData();
+  }, [locationId]); 
+  
+  
+  
   async function handleLocationUpdate(e) {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await fetch(`/api/locations`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(location),
-      });
-      if (!response.ok) throw new Error('Failed to update location');
+
+      await axios.patch(
+        `/api/locations`,
+        location,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      
       navigate(`/locations/${locationId}`);
-    } catch (error) {
-      console.error('Error updating location:', error);
-      setError('Failed to update location');
-    } finally {
-      setLoading(false);
+  } catch (error) {
+    console.error('Error updating location:', error);
+    setError('Failed to update location');
+  } finally {
+    setLoading(false);
     }
   }
 

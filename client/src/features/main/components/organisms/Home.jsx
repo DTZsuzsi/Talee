@@ -6,14 +6,12 @@ import TagCard from "../../../tag/components/TagCard.jsx";
 /** @format */
 
 import Loading from "../atoms/Loading.jsx";
-import GoogleMapComponent from "../../../maps/GoogleMapComponent.jsx";
 const Home = () => {
   const [locations, setLocations] = useState();
   const [mode, setMode] = useState("locations");
   const [loading, setLoading] = useState(false);
   const [events, setEvents] = useState();
   const position = { lat: 53.54992, lng: 10.00678 };
-  const googleAPIKEY = "AIzaSyCpdQIVDmlFx3hXi3tz6DN59hXWMJEqLOU";
 
   useEffect(() => {
     async function fetchEvents() {
