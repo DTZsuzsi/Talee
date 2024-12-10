@@ -30,40 +30,33 @@ function UpdateLocationForm() {
     const fetchData = async () => {
       try {
         const { data } = await axios.get(`/api/locations/${locationId}`);
-        console.log(data)
+        console.log(data);
         setLocation(data);
       } catch (err) {
-        console.error("Error fetching locations:", err);
+        console.error('Error fetching locations:', err);
       }
     };
 
     fetchData();
-  }, [locationId]); 
-  
-  
-  
+  }, [locationId]);
+
   async function handleLocationUpdate(e) {
     e.preventDefault();
     setLoading(true);
     try {
+      await axios.patch(`/api/locations`, location, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      await axios.patch(
-        `/api/locations`,
-        location,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      
       navigate(`/locations/${locationId}`);
-  } catch (error) {
-    console.error('Error updating location:', error);
-    setError('Failed to update location');
-  } finally {
-    setLoading(false);
+    } catch (error) {
+      console.error('Error updating location:', error);
+      setError('Failed to update location');
+    } finally {
+      setLoading(false);
     }
   }
 
