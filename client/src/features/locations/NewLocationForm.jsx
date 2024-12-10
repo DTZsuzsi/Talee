@@ -4,7 +4,7 @@ import InputField from "../main/components/atoms/InputField.jsx";
 import TaleeButton from "../main/components/atoms/TaleeButton.jsx";
 import Loading from "../main/components/atoms/Loading.jsx";
 import ServerError from "../main/components/atoms/ServerError.jsx";
-import GoogleMapComponent from "./GoogleMapComponent.jsx";
+import GoogleMapComponent from "../maps/GoogleMapComponent.jsx";
 import TagOptions from "../tag/components/TagOptions.jsx";
 import TagCard from "../tag/components/TagCard.jsx";
 
