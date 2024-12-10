@@ -11,47 +11,13 @@ import BiggerOnHover from "../main/components/atoms/BiggerOnHover";
 import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
 import TaleeButton from "../main/components/atoms/TaleeButton.jsx";
 import MapDisplay from "../maps/MapDisplay.jsx";
+import { useFetchLocationData } from "./hooks/useFetchLocationData.jsx";
 
 function LocationDetailPage() {
   const { locationId } = useParams();
-  const [location, setLocation] = useState(null);
-  const [events, setEvents] = useState([]);
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const apiKey = "AIzaSyCpdQIVDmlFx3hXi3tz6DN59hXWMJEqLOU";
-  const [owner, setOwner] = useState(null);
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    async function fetchLocationData() {
-      try {
-        const [locationResponse, eventsResponse] = await Promise.all([
-          fetch(`/api/locations/${locationId}`),
-          fetch(`/api/events/locations/${locationId}`),
-        ]);
-
-        if (locationResponse.ok) {
-          const data = await locationResponse.json();
-          setLocation(data);
-          setUser(data.adminUser.username);
-          setOwner(localStorage.getItem("userName"));
-        } else {
-          setError(`Failed to fetch location: ${locationResponse.statusText}`);
-        }
-
-        if (eventsResponse.ok) {
-          setEvents(await eventsResponse.json());
-        } else {
-          setError(`Failed to fetch events: ${eventsResponse.statusText}`);
-        }
-      } catch (err) {
-        setError("An error occurred while fetching data.");
-        console.error(err);
-      }
-    }
-
-    if (locationId) fetchLocationData();
-  }, []);
+  const {location, events, error, loading, owner, user}=useFetchLocationData(locationId);
+  
 
   async function deleteLocation() {
     const response = await fetch(`/api/locations/${locationId}`, {
