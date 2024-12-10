@@ -2,6 +2,8 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext(null);
 
+export const useAuth = () => useContext(AuthContext);
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
@@ -12,9 +14,14 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const login = (userData) => {
+  const saveUser = (userData) => {
     setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));
+  };
+
+  const isLoggedIn = () => {
+    const user = localStorage.getItem("user");
+    return !!user;
   };
 
   const logout = () => {
@@ -23,10 +30,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, saveUser, logout, isLoggedIn }}>
       {children}
     </AuthContext.Provider>
   );
 };
-
-export const useAuth = () => useContext(AuthContext);

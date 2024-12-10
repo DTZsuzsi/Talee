@@ -14,6 +14,7 @@ import React, { useEffect, useState } from "react";
 import TaleeButton from "../atoms/TaleeButton.jsx";
 import { Link } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
+import { useAuth } from "../../../auth/AuthContext.jsx";
 
 const navigation = [
   // { name: 'Add Event', href: '#', current: true },
@@ -27,22 +28,8 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const username = localStorage.getItem("userName");
-
-  const checkLogin = () => {
-    return localStorage.getItem("jwtToken");
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("jwtToken");
-    localStorage.removeItem("userName");
-    setIsLoggedIn(false);
-  };
-
-  useEffect(() => {
-    setIsLoggedIn(checkLogin());
-  }, []);
+  const { logout, user, isLoggedIn } = useAuth();
+  const username = user?.userData?.userName ? user.userData.userName : null;
 
   return (
     <Disclosure as="nav" className="">
@@ -99,7 +86,7 @@ export default function Navbar() {
               <div>
                 <MenuButton className="relative flex rounded-full text-sm focus:outline-none">
                   <BiggerOnHover>
-                    {isLoggedIn ? (
+                    {isLoggedIn() ? (
                       // <ProfileDropdown handleLogout={handleLogout} />
                       <CgProfile size={36} />
                     ) : (
@@ -137,7 +124,7 @@ export default function Navbar() {
                 </MenuItem>
                 <MenuItem>
                   <button
-                    onClick={handleLogout}
+                    onClick={logout}
                     className="block px-4 py-2 text-base text-black hover:bg-gray-500"
                     role="menuitem"
                   >

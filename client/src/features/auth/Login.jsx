@@ -5,17 +5,20 @@ import TaleeLogo from "../main/components/atoms/TaleeLogo.jsx";
 import TaleeButton from "../main/components/atoms/TaleeButton.jsx";
 import BiggerOnHover from "../main/components/atoms/BiggerOnHover.jsx";
 import { useLogin } from "./hooks/useLogin.jsx";
+import { useAuth } from "./AuthContext.jsx";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login, error, success } = useLogin(); // Use the custom hook
+  const { login, error, success } = useLogin();
+  const { saveUser } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const userData = await login(username, password); // Call the login function
+    const userData = await login(username, password);
+    saveUser(userData);
 
     if (userData) {
       setTimeout(() => {
