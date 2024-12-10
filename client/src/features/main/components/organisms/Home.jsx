@@ -17,7 +17,7 @@ const Home = () => {
 
   useEffect(() => {
     async function fetchEvents() {
-      const response = await fetch("/api/events");
+      const response = await fetch("/api/events/all");
       const data = await response.json();
       if (!response.ok) {
         return;

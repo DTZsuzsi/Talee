@@ -37,7 +37,8 @@ public class Event {
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private Set<UserEntity> users;
-    private String owner;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private UserEntity owner;
     private String size;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(
@@ -49,7 +50,7 @@ public class Event {
     private String status;
 
 
-    public Event(long id, LocalDate date, String name, String description, Location location, Set<UserEntity> users, String owner, String size, Set<Tag> tags, String status) {
+    public Event(long id, LocalDate date, String name, String description, Location location, Set<UserEntity> users, UserEntity owner, String size, Set<Tag> tags, String status) {
 
         this.id = id;
         this.date = date;
@@ -63,7 +64,7 @@ public class Event {
         this.status = status;
     }
 
-    public Event(LocalDate date, String name, String description, Location location, String owner, String size, Set<Tag> tags, String status) {
+    public Event(LocalDate date, String name, String description, Location location, UserEntity owner, String size, Set<Tag> tags, String status) {
         this.date = date;
         this.name = name;
         this.description = description;
