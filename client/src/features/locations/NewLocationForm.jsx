@@ -7,6 +7,7 @@ import ServerError from "../main/components/atoms/ServerError.jsx";
 import GoogleMapComponent from "../maps/GoogleMapComponent.jsx";
 import TagOptions from "../tag/components/TagOptions.jsx";
 import TagCard from "../tag/components/TagCard.jsx";
+import { useFetchTags } from "./hooks/useFetchTags.jsx";
 
 function NewLocationForm() {
   const [error, setError] = useState(null);
@@ -29,7 +30,6 @@ function NewLocationForm() {
     tags: [],
   });
 
-  const [tags, setTags] = useState(null);
   const navigate = useNavigate();
 
   const daysOfWeek = [
@@ -42,21 +42,7 @@ function NewLocationForm() {
     "SUNDAY",
   ];
 
-  // Fetch tags
-  useEffect(() => {
-    async function fetchTags() {
-      try {
-        const response = await fetch("/api/tags");
-        if (!response.ok) throw new Error("Failed to fetch tags");
-        const data = await response.json();
-        setTags(data);
-      } catch (error) {
-        console.error("Error fetching tags:", error);
-        setError("Failed to fetch tags");
-      }
-    }
-    fetchTags();
-  }, []);
+  const {tags}=useFetchTags;
 
   // Update coordinates when position changes
   useEffect(() => {
