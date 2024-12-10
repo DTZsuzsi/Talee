@@ -1,12 +1,12 @@
-/* eslint-disable no-unused-vars */
-
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { HiMiniPencilSquare } from "react-icons/hi2";
 import { MdDeleteForever } from "react-icons/md";
 import ServerError from "../main/components/atoms/ServerError";
 import Loading from "../main/components/atoms/Loading";
+import TagCard from "../tag/components/TagCard";
 import BiggerOnHover from "../main/components/atoms/BiggerOnHover";
+import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
 import TaleeButton from "../main/components/atoms/TaleeButton.jsx";
 import MapDisplay from "../maps/MapDisplay.jsx";
 import { useFetchLocationData } from "./hooks/useFetchLocationData.jsx";
@@ -19,7 +19,7 @@ function LocationDetailPage() {
   const { locationId } = useParams();
   const navigate = useNavigate();
   const {location, events, error, loading, owner, user}=useFetchLocationData(locationId);
-  
+
 
   async function deleteLocation() {
     const response = await fetch(`/api/locations/${locationId}`, {

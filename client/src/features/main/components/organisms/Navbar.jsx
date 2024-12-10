@@ -2,18 +2,14 @@ import {
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
 } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import TaleeLogo from "../atoms/TaleeLogo.jsx";
 import BiggerOnHover from "../atoms/BiggerOnHover.jsx";
-import React, { useEffect, useState } from "react";
 import TaleeButton from "../atoms/TaleeButton.jsx";
 import { Link } from "react-router-dom";
-import { CgProfile } from "react-icons/cg";
+import { useAuth } from "../../../auth/AuthContext.jsx";
+import ProfileMenu from "../molecules/ProfileMenu.jsx";
 
 const navigation = [
   // { name: 'Add Event', href: '#', current: true },
@@ -27,22 +23,7 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const username = localStorage.getItem("userName");
-
-  const checkLogin = () => {
-    return localStorage.getItem("jwtToken");
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("jwtToken");
-    localStorage.removeItem("userName");
-    setIsLoggedIn(false);
-  };
-
-  useEffect(() => {
-    setIsLoggedIn(checkLogin());
-  }, []);
+  const { logout, user, isLoggedIn } = useAuth();
 
   return (
     <Disclosure as="nav" className="">
@@ -87,65 +68,22 @@ export default function Navbar() {
                       "rounded-md px-3 py-2 text-sm font-medium",
                     )}
                   >
-                    {item.name}
+                    <BiggerOnHover>{item.name}</BiggerOnHover>
                   </a>
                 ))}
               </div>
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            {/* Profile dropdown */}
-            <Menu as="div" className="relative ml-3">
-              <div>
-                <MenuButton className="relative flex rounded-full text-sm focus:outline-none">
-                  <BiggerOnHover>
-                    {isLoggedIn ? (
-                      // <ProfileDropdown handleLogout={handleLogout} />
-                      <CgProfile size={36} />
-                    ) : (
-                      <TaleeButton>
-                        <Link to="/register">Sign Up</Link>
-                      </TaleeButton>
-                    )}
-                  </BiggerOnHover>
-                </MenuButton>
-              </div>
-              <MenuItems
-                transition
-                className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-              >
-                <MenuItem>
-                  <p className="text-center font-semibold text-lg">
-                    {username}
-                  </p>
-                </MenuItem>
-                <MenuItem>
-                  <a
-                    href="/users/profile"
-                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
-                  >
-                    Your Profile
-                  </a>
-                </MenuItem>
-                <MenuItem>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
-                  >
-                    Settings
-                  </a>
-                </MenuItem>
-                <MenuItem>
-                  <button
-                    onClick={handleLogout}
-                    className="block px-4 py-2 text-base text-black hover:bg-gray-500"
-                    role="menuitem"
-                  >
-                    Logout
-                  </button>
-                </MenuItem>
-              </MenuItems>
-            </Menu>
+            <BiggerOnHover>
+              {isLoggedIn() ? (
+                <ProfileMenu logout={logout} user={user} />
+              ) : (
+                <TaleeButton>
+                  <Link to="/register">Sign Up</Link>
+                </TaleeButton>
+              )}
+            </BiggerOnHover>
           </div>
         </div>
       </div>

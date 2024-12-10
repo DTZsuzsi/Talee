@@ -3,44 +3,24 @@ import { Link } from "react-router-dom";
 import TaleeLogo from "../main/components/atoms/TaleeLogo.jsx";
 import TaleeButton from "../main/components/atoms/TaleeButton.jsx";
 import BiggerOnHover from "../main/components/atoms/BiggerOnHover.jsx";
+import { useRegister } from "./hooks/useRegister.jsx";
 
 function Register() {
   const [email, setEmail] = useState("");
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const { register, success, error } = useRegister();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const body = { email, username, password };
+    const response = await register(email, username, password);
 
-    try {
-      const response = await fetch(`/api/auth/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-
-      if (!response.ok) {
-        setError("Something went wrong");
-      }
-
-      const data = await response.json();
-      setSuccess(data.message);
-
+    if (response) {
       setTimeout(() => {
         window.location.href = "/login";
       }, 1000);
-
-      console.log("Login successful", data);
-    } catch (err) {
-      setError(`Authentication failed. ${err}`);
-
-      console.error(err);
     }
   };
 
@@ -139,7 +119,10 @@ function Register() {
           <p className="mt-10 text-center text-lg text-light-mutedText dark:text-dark-mutedText">
             Already have an account?
             <BiggerOnHover>
-              <Link className="font-semibold text-indigo-500" to="/login">
+              <Link
+                className="font-semibold text-button hover:text-button-hover"
+                to="/login"
+              >
                 {" "}
                 Login
               </Link>

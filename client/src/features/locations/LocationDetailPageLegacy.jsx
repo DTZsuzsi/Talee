@@ -9,7 +9,6 @@ import TagCard from "../tag/components/TagCard";
 import TagOptions from "../tag/components/TagOptions";
 import HomeCard from "../main/components/molecules/HomeCard";
 import BiggerOnHover from "../main/components/atoms/BiggerOnHover";
-import GlobalContext from "../auth/GlobalContext";
 import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
 
 function LocationDetailPageLegacy() {
