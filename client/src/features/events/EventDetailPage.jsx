@@ -25,9 +25,8 @@ function EventDetailPage() {
       if (response.ok) {
         const data = await response.json();
         setEvent(data);
-        console.log(data);
         setOwner(localStorage.getItem("userName"));
-        setUser(data.owner);
+        setUser(data.owner.username);
       }
     }
 
@@ -92,7 +91,7 @@ function EventDetailPage() {
               <div>
                 <p className="text-lg font-semibold">Owner:</p>
                 <p className="text-mutedText dark:text-dark-mutedText">
-                  {event.owner}
+                  {event.owner.username}
                 </p>
               </div>
 
