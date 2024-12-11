@@ -8,7 +8,7 @@ function EventsRoutes() {
     <Routes>
       <Route path="new/:locationId" element={<NewEventForm />} />
       <Route path=":eventId" element={<EventDetailPage />} />
-      <Route path=":eventId/modify" element={<ModifyEventForm />} />
+      <Route path=":eventId/update" element={<ModifyEventForm />} />
     </Routes>
   );
 }

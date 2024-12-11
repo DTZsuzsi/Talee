@@ -15,7 +15,7 @@ export function useFetchEventData(eventId) {
         const {data} = await  axios.get(`/api/events/${eventId}`);
         setEvent(data);
         setUser(data.adminUser.username);
-setOwner(data.owner.username);
+setOwner(data.owner);
 
         
       } catch (err) {
