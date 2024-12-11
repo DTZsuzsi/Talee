@@ -32,6 +32,7 @@ export function useFetchLocationData(locationId) {
 
     if (locationId) fetchData();
   }, [locationId]);
+  console.log(location);
 
   return { location, events, error, loading, owner, user };
 }

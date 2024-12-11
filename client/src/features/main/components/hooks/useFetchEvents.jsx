@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export function useFetchLocations(id) {
-  const [location, setLocation] = useState(null);
+export function useFetchEvents() {
+  const [events, setEvents] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get(`/api/locations/${id}`);
-        setLocation(data);
+        const { data } = await axios.get(`/api/events/all`);
+        setEvents(data);
       } catch (err) {
         console.error("Error fetching locations:", err);
       }
@@ -17,5 +17,7 @@ export function useFetchLocations(id) {
     fetchData();
   }, []); 
 
-  return { location };
+  return { events };
 }
+
+
