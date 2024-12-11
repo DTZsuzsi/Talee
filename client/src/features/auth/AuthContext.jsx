@@ -8,29 +8,49 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
+    getUser();
   }, []);
+
+  const getUser = () => {
+    if (user) {
+      return user;
+    }
+
+    const username = JSON.parse(localStorage.getItem("username"));
+    const jwtToken = JSON.parse(localStorage.getItem("jwtToken"));
+    const roles = JSON.parse(localStorage.getItem("roles"));
+
+    const storageUser = { username, jwtToken, roles };
+    if (storageUser) {
+      setUser(storageUser);
+    }
+
+    return storageUser;
+  };
 
   const saveUser = (userData) => {
     setUser(userData);
-    localStorage.setItem("user", JSON.stringify(userData));
+    localStorage.setItem("username", JSON.stringify(userData.userName));
+    localStorage.setItem("jwtToken", JSON.stringify(userData.jwtToken));
+    localStorage.setItem("roles", JSON.stringify(userData.roles));
   };
 
   const isLoggedIn = () => {
-    const user = localStorage.getItem("user");
+    const user = localStorage.getItem("username");
     return !!user;
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem("user");
+    localStorage.removeItem("username");
+    localStorage.removeItem("jwtToken");
+    localStorage.removeItem("roles");
   };
 
   return (
-    <AuthContext.Provider value={{ user, saveUser, logout, isLoggedIn }}>
+    <AuthContext.Provider
+      value={{ user, saveUser, logout, isLoggedIn, getUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
