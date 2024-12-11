@@ -5,7 +5,6 @@ import StateChangeButton from "../molecules/StateChangeButton.jsx";
 import TagCard from "../../../tag/components/TagCard.jsx";
 import Loading from "../atoms/Loading.jsx";
 import { useTheme } from "../../ThemeContext.jsx";
-import axios from "axios";
 import { useFetchLocations } from "../hooks/useFetchLocations.jsx";
 import { useFetchEvents } from "../hooks/useFetchEvents.jsx";
 

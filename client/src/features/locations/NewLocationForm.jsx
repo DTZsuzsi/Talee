@@ -83,7 +83,7 @@ function NewLocationForm() {
 
         <LocationForm location={newLocation} setLocation={setNewLocation} onHoursChange={handleOpeningHoursChange} />
 
-        <TagListModify location={newLocation} setLocation={setNewLocation} tags={tags} />
+        <TagListModify partName={newLocation} setter={setNewLocation} tags={tags} />
         <div className='mt-6'>
           <GoogleMapComponent position={position} setPosition={setPosition} address={address} setAddress={setAddress} />
         </div>
