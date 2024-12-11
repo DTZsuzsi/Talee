@@ -14,11 +14,12 @@ function LocationDetailPage() {
   const { locationId } = useParams();
   const navigate = useNavigate();
   const { location, events, error, loading, owner, user } = useFetchLocationData(locationId);
+  console.log(location);
 
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="p-6 my-10 border rounded-lg shadow-md bg-light-secondaryBg dark:bg-dark-secondaryBg border-light-border dark:border-dark-border w-full max-w-4xl">
-        <LocationInfo location={location} />
+       { location && < LocationInfo location={location} />}
 
         {location?.latitude && <MapDisplay lat={location?.latitude} lng={location?.longitude} />}
         {events.length > 0 && (

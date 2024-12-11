@@ -7,7 +7,7 @@ import { useTagHandlers } from "../../tagHandling/useTagHandlers";
 function TagListModify({location, setLocation, tags}){
   
     const { handleNewTag, handleDeleteTag } = useTagHandlers(location, setLocation, tags);
-
+return (
   <div className='mt-6'>
     <TagOptions onChange={(e) => handleNewTag(e)} />
     <ul className='grid grid-cols-2 md:grid-cols-4 gap-4'>
@@ -17,7 +17,7 @@ function TagListModify({location, setLocation, tags}){
         </li>
       ))}
     </ul>
-  </div>
+  </div>)
 }
 
 export default TagListModify;

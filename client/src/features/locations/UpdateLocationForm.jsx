@@ -74,20 +74,7 @@ function UpdateLocationForm() {
           <h1 className='font-bold text-3xl text-center mb-8'>Update Location</h1>
 
           <LocationForm location={location} setLocation={setLocation} onHoursChange={handleOpeningHoursChange} />
-
-          {/* <div className='w-full my-5'>
-            <TagOptions onChange={handleNewTag} />
-            <ul className='grid grid-cols-2 md:grid-cols-4 gap-4'>
-              {location.tags?.map((tag) => (
-                <li key={tag.id}>
-                  <TagCard tag={tag} onClick={() => handleDeleteTag(tag)} color={tag.color} className='w-full' />
-                </li>
-              ))}
-            </ul>
-          </div> */}
-
           <TagListModify location={location} setLocation={setLocation} tags={tags} />
-
           <div className='w-full flex justify-center mt-6'>
             {loading ? (
               <Loading />

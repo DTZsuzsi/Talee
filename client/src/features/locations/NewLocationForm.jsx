@@ -4,12 +4,10 @@ import TaleeButton from '../main/components/atoms/TaleeButton.jsx';
 import Loading from '../main/components/atoms/Loading.jsx';
 import ServerError from '../main/components/atoms/ServerError.jsx';
 import GoogleMapComponent from '../maps/GoogleMapComponent.jsx';
-import TagOptions from '../tag/components/TagOptions.jsx';
-import TagCard from '../tag/components/TagCard.jsx';
 import { useFetchTags } from '../main/components/hooks/useFetchTags.jsx';
 import LocationForm from './LocationForm.jsx';
-import { useTagHandlers } from '../main/tagHandling/useTagHandlers.jsx';
 import useOpeningHours from './hooks/useOpeningHours.jsx';
+import TagListModify from '../main/components/molecules/TagListModify.jsx';
 
 function NewLocationForm() {
   const [error, setError] = useState(null);
@@ -36,7 +34,6 @@ function NewLocationForm() {
 
   const { tags } = useFetchTags();
 
-  const { handleNewTag, handleDeleteTag } = useTagHandlers(newLocation, setNewLocation, tags);
   const { handleOpeningHoursChange } = useOpeningHours(setNewLocation);
 
   useEffect(() => {
@@ -89,17 +86,7 @@ function NewLocationForm() {
 
         <LocationForm location={newLocation} setLocation={setNewLocation} onHoursChange={handleOpeningHoursChange} />
 
-        <div className='mt-6'>
-          <TagOptions onChange={(e) => handleNewTag(e)} />
-          <ul className='grid grid-cols-2 md:grid-cols-4 gap-4'>
-            {newLocation.tags.map((tag) => (
-              <li key={tag.id}>
-                <TagCard tag={tag} onClick={() => handleDeleteTag(tag)} color={tag.color} className='w-full' />
-              </li>
-            ))}
-          </ul>
-        </div>
-
+        <TagListModify location={newLocation} setLocation={setNewLocation}  tags={tags} />
         <div className='mt-6'>
           <GoogleMapComponent position={position} setPosition={setPosition} address={address} setAddress={setAddress} />
         </div>
