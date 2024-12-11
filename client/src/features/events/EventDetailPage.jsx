@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { HiMiniPencilSquare } from "react-icons/hi2";
@@ -5,33 +6,33 @@ import { MdDeleteForever } from "react-icons/md";
 import TagCard from "../tag/components/TagCard";
 import BiggerOnHover from "../main/components/atoms/BiggerOnHover.jsx";
 import UserCard from "../users/components/UserCard.jsx";
+import { useFetchEventData } from "./hooks/useFetchEventData.jsx";
 
 function EventDetailPage() {
   const { eventId } = useParams();
-  const [event, setEvent] = useState(null);
   const [userChange, setUserChange] = useState(false);
   const navigate = useNavigate();
-  const [owner, setOwner] = useState(null);
-  const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    async function fetchEvent() {
-      if (!eventId) {
-        console.error("Event ID is undefined");
-        return;
-      }
+ const { event, error, loading, user, owner }=useFetchEventData(eventId);
 
-      const response = await fetch(`/api/events/${eventId}`);
-      if (response.ok) {
-        const data = await response.json();
-        setEvent(data);
-        setOwner(localStorage.getItem("userName"));
-        setUser(data.owner.username);
-      }
-    }
+  // useEffect(() => {
+  //   async function fetchEvent() {
+  //     if (!eventId) {
+  //       console.error("Event ID is undefined");
+  //       return;
+  //     }
 
-    fetchEvent();
-  }, [eventId, userChange]);
+  //     const response = await fetch(`/api/events/${eventId}`);
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       setEvent(data);
+  //       setOwner(localStorage.getItem("userName"));
+  //       setUser(data.owner.username);
+  //     }
+  //   }
+
+  //   fetchEvent();
+  // }, [eventId, userChange]);
 
   async function handleDeleteUser(event, user) {
     setUserChange(false);
