@@ -8,6 +8,7 @@ import { useFetchTags } from '../main/components/hooks/useFetchTags.jsx';
 import LocationForm from './LocationForm.jsx';
 import useOpeningHours from './hooks/useOpeningHours.jsx';
 import TagListModify from '../main/components/molecules/TagListModify.jsx';
+import axios from 'axios';
 
 function NewLocationForm() {
   const [error, setError] = useState(null);
@@ -51,18 +52,14 @@ function NewLocationForm() {
     console.log(newLocation);
 
     try {
-      const response = await fetch('/api/locations', {
-        method: 'POST',
+      const response = await axios.post('/api/locations', newLocation, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(newLocation),
       });
 
-      if (!response.ok) throw new Error('Failed to create location');
-
-      const createdLocationId = await response.json();
+      const createdLocationId = response.data;
       navigate(`/locations/${createdLocationId}`);
     } catch (error) {
       console.error('Error creating location:', error);
@@ -86,7 +83,7 @@ function NewLocationForm() {
 
         <LocationForm location={newLocation} setLocation={setNewLocation} onHoursChange={handleOpeningHoursChange} />
 
-        <TagListModify location={newLocation} setLocation={setNewLocation}  tags={tags} />
+        <TagListModify location={newLocation} setLocation={setNewLocation} tags={tags} />
         <div className='mt-6'>
           <GoogleMapComponent position={position} setPosition={setPosition} address={address} setAddress={setAddress} />
         </div>

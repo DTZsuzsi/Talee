@@ -1,41 +1,20 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import HomeCard from "../molecules/HomeCard.jsx";
 import StateChangeButton from "../molecules/StateChangeButton.jsx";
 import TagCard from "../../../tag/components/TagCard.jsx";
 import Loading from "../atoms/Loading.jsx";
 import { useTheme } from "../../ThemeContext.jsx";
+import axios from "axios";
+import { useFetchLocations } from "../hooks/useFetchLocations.jsx";
+import { useFetchEvents } from "../hooks/useFetchEvents.jsx";
 
 const Home = () => {
-  const [locations, setLocations] = useState();
   const { darkMode, setDarkMode } = useTheme();
   const [mode, setMode] = useState(darkMode ? "events" : "locations");
   const [loading, setLoading] = useState(false);
-  const [events, setEvents] = useState();
-
-  useEffect(() => {
-    async function fetchEvents() {
-      const response = await fetch("/api/events/all");
-      const data = await response.json();
-      if (!response.ok) {
-        return;
-      }
-      setEvents(data);
-      setLoading(false);
-    }
-
-    async function fetchLocations() {
-      const response = await fetch("/api/locations/all");
-      const data = await response.json();
-      if (!response.ok) {
-        return;
-      }
-      setLocations(data);
-      setLoading(false);
-    }
-
-    fetchEvents();
-    fetchLocations();
-  }, []);
+  const {locations}=useFetchLocations();
+  const {events}=useFetchEvents();
 
   function setEventState() {
     setMode("events");

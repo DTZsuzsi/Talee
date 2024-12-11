@@ -14,7 +14,6 @@ function LocationDetailPage() {
   const { locationId } = useParams();
   const navigate = useNavigate();
   const { location, events, error, loading, owner, user } = useFetchLocationData(locationId);
-  console.log(location);
 
   return (
     <div className="flex flex-col items-center justify-center">
