@@ -18,7 +18,7 @@ function LocationDetailPage() {
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="p-6 my-10 border rounded-lg shadow-md bg-light-secondaryBg dark:bg-dark-secondaryBg border-light-border dark:border-dark-border w-full max-w-4xl">
-       { location && < LocationInfo location={location} />}
+       { loading? (<Loading/>) : (< LocationInfo location={location} />)}
 
         {location?.latitude && <MapDisplay lat={location?.latitude} lng={location?.longitude} />}
         {events.length > 0 && (
