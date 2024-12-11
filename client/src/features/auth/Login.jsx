@@ -102,7 +102,7 @@ function Login() {
           {error && <p className="text-red-500">{error}</p>}
           {success && <p className="text-green-500">{success}</p>}
 
-          <p className="mt-10 text-center text-lg text-black dark:text-dark-mutedText">
+          <div className="mt-10 text-center text-lg text-black dark:text-dark-mutedText">
             Don&#39;t have an account yet?
             <BiggerOnHover>
               <Link
@@ -113,7 +113,7 @@ function Login() {
                 Register
               </Link>
             </BiggerOnHover>
-          </p>
+          </div>
         </div>
       </div>
     </div>

@@ -116,7 +116,7 @@ function Register() {
           {error && <p className="text-red-500">{error}</p>}
           {success && <p className="text-green-500">{success}</p>}
 
-          <p className="mt-10 text-center text-lg text-light-mutedText dark:text-dark-mutedText">
+          <div className="mt-10 text-center text-lg text-light-mutedText dark:text-dark-mutedText">
             Already have an account?
             <BiggerOnHover>
               <Link
@@ -127,7 +127,7 @@ function Register() {
                 Login
               </Link>
             </BiggerOnHover>
-          </p>
+          </div>
         </div>
       </div>
     </div>
