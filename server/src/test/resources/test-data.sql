@@ -20,8 +20,7 @@ VALUES ('MONDAY', '09:00', '16:00', 1),
        ('WEDNESDAY', '09:00', '16:00', 1),
        ('THURSDAY', '09:00', '16:00', 1),
        ('FRIDAY', '09:00', '16:00', 1),
-       ('SATURDAY', '09:00', '16:00', 1),
-       ('SUNDAY', '09:00', '16:00', 1);
+       ('SATURDAY', '09:00', '16:00', 1);
 
 INSERT INTO event (date, name, description, location_id, owner_id, size, status)
 VALUES ('2025-05-01', 'Munka Ünnepe a Margitszigeten', 'Május 1-jei piknik és koncertek', 1, 1, 'BIG', 'PLANNED');
