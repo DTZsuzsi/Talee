@@ -4,14 +4,14 @@ import { useTagHandlers } from "../../tagHandling/useTagHandlers";
 
 
 
-function TagListModify({location, setLocation, tags}){
+function TagListModify({partName, setter, tags}){
   
-    const { handleNewTag, handleDeleteTag } = useTagHandlers(location, setLocation, tags);
+    const { handleNewTag, handleDeleteTag } = useTagHandlers(partName, setter, tags);
 return (
   <div className='mt-6'>
     <TagOptions onChange={(e) => handleNewTag(e)} />
     <ul className='grid grid-cols-2 md:grid-cols-4 gap-4'>
-      {location.tags.map((tag) => (
+      {partName.tags.map((tag) => (
         <li key={tag.id}>
           <TagCard tag={tag} onClick={() => handleDeleteTag(tag)} color={tag.color} className='w-full' />
         </li>

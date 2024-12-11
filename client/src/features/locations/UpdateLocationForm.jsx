@@ -74,7 +74,7 @@ function UpdateLocationForm() {
           <h1 className='font-bold text-3xl text-center mb-8'>Update Location</h1>
 
           <LocationForm location={location} setLocation={setLocation} onHoursChange={handleOpeningHoursChange} />
-          <TagListModify location={location} setLocation={setLocation} tags={tags} />
+          <TagListModify partName={location} setter={setLocation} tags={tags} />
           <div className='w-full flex justify-center mt-6'>
             {loading ? (
               <Loading />
