@@ -97,15 +97,17 @@ function EventDetailPage() {
 
               <div className="mt-4">
                 <p className="text-lg font-semibold">Events Location:</p>
-                <Link
-                  to={`/locations/${event.location.locationId}`}
-                  className="block p-4 border rounded-lg shadow-md bg-light-bg dark:bg-dark-bg"
-                >
-                  <h3 className="text-xl font-bold">{event.location.name}</h3>
-                  <p className="text-mutedText dark:text-dark-mutedText">
-                    {event.location.description}
-                  </p>
-                </Link>
+                <BiggerOnHover>
+                  <Link
+                    to={`/locations/${event.location.locationId}`}
+                    className="block p-4 border rounded-lg shadow-md bg-light-bg dark:bg-dark-bg"
+                  >
+                    <h3 className="text-xl font-bold">{event.location.name}</h3>
+                    <p className="text-mutedText dark:text-dark-mutedText">
+                      {event.location.description}
+                    </p>
+                  </Link>
+                </BiggerOnHover>
               </div>
             </div>
           </div>
@@ -138,7 +140,6 @@ function EventDetailPage() {
             </div>
           )}
           {owner === user && (
-
             <div className="flex justify-end gap-4 mt-6">
               <BiggerOnHover>
                 <Link
@@ -159,7 +160,6 @@ function EventDetailPage() {
               </BiggerOnHover>
             </div>
           )}
-
         </div>
       </div>
     )

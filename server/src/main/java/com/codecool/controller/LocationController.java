@@ -29,7 +29,7 @@ public class LocationController {
   }
 
   @GetMapping("/{id}")
-  public LocationDTO getLocationById(@PathVariable int id) {
+  public LocationDTO getLocationById(@PathVariable long id) {
     return locationService.getLocationById(id);
   }
 
