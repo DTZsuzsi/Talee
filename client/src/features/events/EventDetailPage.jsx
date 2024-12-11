@@ -15,7 +15,7 @@ function EventDetailPage() {
   const { event, error, loading, user, owner } = useFetchEventData(eventId);
 
   return (
-    event && (
+    loading? <loading/>: (
       <div className='flex flex-col items-center justify-center'>
         <div className='p-6 my-10 border rounded-lg shadow-md bg-light-secondaryBg dark:bg-dark-secondaryBg border-light-border dark:border-dark-border w-full max-w-4xl'>
           <EventInfo event={event} />
