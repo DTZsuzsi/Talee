@@ -8,5 +8,5 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.time.LocalDate;
 import java.util.Set;
 
-public record NewEventDTO(LocalDate date, String name, String description,  LocationInEventDTO locationInEventDTO,  Set<UserInEventDTO> users, String owner, String size, Set<TaginFrontendDTO> tags, String status) {
+public record NewEventDTO(LocalDate date, String name, String description,  LocationInEventDTO locationInEventDTO,  Set<UserInEventDTO> users, UserInEventDTO owner, String size, Set<TaginFrontendDTO> tags, String status) {
 }

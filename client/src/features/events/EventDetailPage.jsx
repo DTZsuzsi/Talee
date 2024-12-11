@@ -11,6 +11,8 @@ function EventDetailPage() {
   const [event, setEvent] = useState(null);
   const [userChange, setUserChange] = useState(false);
   const navigate = useNavigate();
+  const [owner, setOwner] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     async function fetchEvent() {
@@ -23,7 +25,8 @@ function EventDetailPage() {
       if (response.ok) {
         const data = await response.json();
         setEvent(data);
-        console.log(data);
+        setOwner(localStorage.getItem("userName"));
+        setUser(data.owner.username);
       }
     }
 
@@ -88,7 +91,7 @@ function EventDetailPage() {
               <div>
                 <p className="text-lg font-semibold">Owner:</p>
                 <p className="text-mutedText dark:text-dark-mutedText">
-                  {event.owner}
+                  {event.owner.username}
                 </p>
               </div>
 
@@ -134,26 +137,29 @@ function EventDetailPage() {
               </ul>
             </div>
           )}
+          {owner === user && (
 
-          <div className="flex justify-end gap-4 mt-6">
-            <BiggerOnHover>
-              <Link
-                to={`/events/${eventId}/modify`}
-                className="flex items-center justify-center w-12 h-12 rounded-full bg-button text-white hover:bg-buttonHover"
-              >
-                <HiMiniPencilSquare className="w-6 h-6" />
-              </Link>
-            </BiggerOnHover>
+            <div className="flex justify-end gap-4 mt-6">
+              <BiggerOnHover>
+                <Link
+                  to={`/events/${eventId}/modify`}
+                  className="flex items-center justify-center w-12 h-12 rounded-full bg-button text-white hover:bg-buttonHover"
+                >
+                  <HiMiniPencilSquare className="w-6 h-6" />
+                </Link>
+              </BiggerOnHover>
 
-            <BiggerOnHover>
-              <button
-                onClick={deleteEvent}
-                className="flex items-center justify-center w-12 h-12 rounded-full bg-button text-white hover:bg-red-600"
-              >
-                <MdDeleteForever className="w-6 h-6" />
-              </button>
-            </BiggerOnHover>
-          </div>
+              <BiggerOnHover>
+                <button
+                  onClick={deleteEvent}
+                  className="flex items-center justify-center w-12 h-12 rounded-full bg-button text-white hover:bg-red-600"
+                >
+                  <MdDeleteForever className="w-6 h-6" />
+                </button>
+              </BiggerOnHover>
+            </div>
+          )}
+
         </div>
       </div>
     )

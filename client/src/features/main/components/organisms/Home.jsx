@@ -1,21 +1,20 @@
-/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import HomeCard from "../molecules/HomeCard.jsx";
 import StateChangeButton from "../molecules/StateChangeButton.jsx";
 import TagCard from "../../../tag/components/TagCard.jsx";
-/** @format */
-
 import Loading from "../atoms/Loading.jsx";
+import { useTheme } from "../../ThemeContext.jsx";
+
 const Home = () => {
   const [locations, setLocations] = useState();
-  const [mode, setMode] = useState("locations");
+  const { darkMode, setDarkMode } = useTheme();
+  const [mode, setMode] = useState(darkMode ? "events" : "locations");
   const [loading, setLoading] = useState(false);
   const [events, setEvents] = useState();
-  const position = { lat: 53.54992, lng: 10.00678 };
 
   useEffect(() => {
     async function fetchEvents() {
-      const response = await fetch("/api/events");
+      const response = await fetch("/api/events/all");
       const data = await response.json();
       if (!response.ok) {
         return;
@@ -37,17 +36,6 @@ const Home = () => {
     fetchEvents();
     fetchLocations();
   }, []);
-
-  const [darkMode, setDarkMode] = useState(false);
-
-  // Effect to apply the dark mode class to the body
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [darkMode]);
 
   function setEventState() {
     setMode("events");
