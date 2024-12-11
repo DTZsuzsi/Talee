@@ -2,7 +2,6 @@ import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
 
 function MapDisplay({  lat, lng }) {
   const apiKey=import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-  console.log(apiKey);
   
     return (
     <div className="my-6">
