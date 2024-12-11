@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import ServerError from '../main/components/atoms/ServerError';
 import Loading from '../main/components/atoms/Loading';
@@ -14,32 +15,12 @@ function LocationDetailPage() {
   const navigate = useNavigate();
   const { location, events, error, loading, owner, user } = useFetchLocationData(locationId);
 
-  async function deleteLocation() {
-    const response = await fetch(`/api/locations/${locationId}`, {
-      method: 'DELETE',
-    });
-
-    if (response.ok) {
-      navigate('/');
-    } else {
-      console.error('Failed to delete location');
-    }
-  }
-
-  if (error) {
-    return <ServerError error={error} />;
-  }
-
-  if (!location) {
-    return <Loading />;
-  }
-
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="p-6 my-10 border rounded-lg shadow-md bg-light-secondaryBg dark:bg-dark-secondaryBg border-light-border dark:border-dark-border w-full max-w-4xl">
-        <LocationInfo location={location} />
+       { location && < LocationInfo location={location} />}
 
-        {location.latitude && <MapDisplay lat={location.latitude} lng={location.longitude} />}
+        {location?.latitude && <MapDisplay lat={location?.latitude} lng={location?.longitude} />}
         {events.length > 0 && (
           <div>
             <EventList events={events} />

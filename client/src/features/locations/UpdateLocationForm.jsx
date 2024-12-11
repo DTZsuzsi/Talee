@@ -4,13 +4,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import TaleeButton from '../main/components/atoms/TaleeButton.jsx';
 import Loading from '../main/components/atoms/Loading';
 import ServerError from '../main/components/atoms/ServerError';
-import TagOptions from '../tag/components/TagOptions.jsx';
-import TagCard from '../tag/components/TagCard.jsx';
+
 import LocationForm from './LocationForm.jsx';
 import { useFetchTags } from '../main/components/hooks/useFetchTags.jsx';
-import { useTagHandlers } from '../main/tagHandling/useTagHandlers.jsx';
+import { useTagHandlers } from '../main/tagHandling/useTagHandlers.jsx'
 import useOpeningHours from './hooks/useOpeningHours.jsx';
 import axios from 'axios';
+import TagListModify from '../main/components/molecules/TagListModify.jsx';
 function UpdateLocationForm() {
   const { locationId } = useParams();
   const [location, setLocation] = useState(null);
@@ -74,18 +74,7 @@ function UpdateLocationForm() {
           <h1 className='font-bold text-3xl text-center mb-8'>Update Location</h1>
 
           <LocationForm location={location} setLocation={setLocation} onHoursChange={handleOpeningHoursChange} />
-
-          <div className='w-full my-5'>
-            <TagOptions onChange={handleNewTag} />
-            <ul className='grid grid-cols-2 md:grid-cols-4 gap-4'>
-              {location.tags?.map((tag) => (
-                <li key={tag.id}>
-                  <TagCard tag={tag} onClick={() => handleDeleteTag(tag)} color={tag.color} className='w-full' />
-                </li>
-              ))}
-            </ul>
-          </div>
-
+          <TagListModify location={location} setLocation={setLocation} tags={tags} />
           <div className='w-full flex justify-center mt-6'>
             {loading ? (
               <Loading />
