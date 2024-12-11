@@ -10,7 +10,6 @@ import EventList from "./EventList.jsx";
 import TagList from "../main/components/molecules/TagList.jsx";
 import ActionButtons from "../main/components/molecules/ActionButtons.jsx";
 import { useAuth } from "../auth/AuthContext.jsx";
-import { useEffect } from "react";
 
 function LocationDetailPage() {
   const { locationId } = useParams();
