@@ -8,17 +8,18 @@ import { useNavigate } from "react-router-dom";
 
 import BiggerOnHover from "../atoms/BiggerOnHover";
 import Loading from "../atoms/Loading";
+import axiosInstance from "../../../../axiosInstance.jsx";
 
 function ActionButtons({ id, partName }) {
   const [loading, setLoading] = useState(false);
   const [deleteError, setDeleteError] = useState(null);
   const navigate = useNavigate();
 
-  async function deleter() {
+  async function handleDelete() {
     setLoading(true);
     setDeleteError(null);
     try {
-      const response = await axios.delete(`/api/${partName}s/${id}`);
+      const response = await axiosInstance.delete(`/${partName}s/${id}`);
       console.log(response);
       if (response.status === 200) {
         console.log("deleted");
@@ -51,7 +52,7 @@ function ActionButtons({ id, partName }) {
 
       <BiggerOnHover>
         <button
-          onClick={deleter}
+          onClick={handleDelete}
           className="flex items-center justify-center w-12 h-12 rounded-full bg-button text-white hover:bg-red-600"
         >
           <MdDeleteForever className="w-6 h-6" />
