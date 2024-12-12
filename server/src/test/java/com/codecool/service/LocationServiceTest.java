@@ -7,6 +7,7 @@ import com.codecool.mapper.LocationMapper;
 import com.codecool.mapper.TagMapper;
 import com.codecool.mapper.UserMapper;
 import com.codecool.model.locations.Location;
+import com.codecool.model.locations.OpeningHours;
 import com.codecool.model.users.Role;
 import com.codecool.model.users.UserEntity;
 import com.codecool.repository.LocationRepository;
@@ -22,11 +23,15 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doReturn;
+
 @ExtendWith(MockitoExtension.class)
 class LocationServiceTest {
   @Mock
@@ -172,6 +177,25 @@ class LocationServiceTest {
   }
 
   @Test
-  void updateLocation() {
+  void whenUpdateLocation_thenUpdatesAndReturnsTrue() {
+    LocationDTO mockLocationDTO = Mockito.mock(LocationDTO.class);
+    long mockLocationId = 1L;
+    Mockito.when(mockLocationDTO.id()).thenReturn(mockLocationId);
+    Mockito.when(mockLocationDTO.name()).thenReturn("Updated Location");
+    Mockito.when(mockLocationDTO.address()).thenReturn("123 Street");
+    Mockito.when(mockLocationDTO.phone()).thenReturn("1234567890");
+    Mockito.when(mockLocationDTO.email()).thenReturn("test@example.com");
+    Mockito.when(mockLocationDTO.description()).thenReturn("Updated Description");
+    Mockito.when(mockLocationDTO.openingHours()).thenReturn(new ArrayList<>());
+
+
+    Location mockLocationInDB = Mockito.mock(Location.class);
+    Mockito.when(mockLocationInDB.getId()).thenReturn(mockLocationId);
+    Mockito.when(locationRepository.findById(mockLocationId)).thenReturn(Optional.of(mockLocationInDB));
+    Mockito.when(openingHoursService.deleteOpeningHoursByLocationId(mockLocationInDB.getId())).thenReturn(true);
+
+    boolean result = locationService.updateLocation(mockLocationDTO);
+    assertTrue(result);
+
   }
 }
