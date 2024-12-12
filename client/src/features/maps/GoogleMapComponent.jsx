@@ -13,6 +13,7 @@ const data=await response.json();
 console.log(data);
  setPosition(data?.results[0].geometry.location);
  console.log(data?.results[0].geometry.location);
+ setAddress(address);
 
 }
 return (
