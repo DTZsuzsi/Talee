@@ -22,7 +22,7 @@ public class OpeningHours {
   private DayOfWeek dayOfWeek;
   private LocalTime openingTime;
   private LocalTime closingTime;
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.REMOVE)
   private Location location;
 
 }

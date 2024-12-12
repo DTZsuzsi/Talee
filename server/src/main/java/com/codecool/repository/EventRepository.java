@@ -13,7 +13,7 @@ import java.util.List;
 public interface EventRepository extends JpaRepository<Event, Long> {
     Event findEventById(long id);
     List<Event> findAllByLocationId(long locationId);
-    @Modifying
-    @Query("DELETE FROM  Event WHERE id = :id")
-    void deleteEventById(@Param("id") long id);
+//    @Modifying
+//    @Query("DELETE FROM  Event WHERE id = :id")
+    void deleteEventById(long id);
 }

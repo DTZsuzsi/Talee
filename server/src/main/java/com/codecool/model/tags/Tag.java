@@ -1,22 +1,16 @@
 package com.codecool.model.tags;
 
-import com.codecool.model.events.Event;
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @Data
 public class Tag {
-@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-private String name;
-    @ManyToMany(mappedBy = "tags", cascade = CascadeType.PERSIST)
-private Set<Event> event;
+    private String name;
+
     @ManyToOne
     @JoinColumn(name="tag_category_id")
     private TagCategory tagCategory;
