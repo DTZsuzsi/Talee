@@ -48,7 +48,6 @@ function NewLocationForm() {
   async function handleNewLocation(e) {
     e.preventDefault();
     setLoading(true);
-    console.log(newLocation);
 
     try {
       const response = await axiosInstance.post('/locations', newLocation);

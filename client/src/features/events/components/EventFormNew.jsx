@@ -34,17 +34,17 @@ function EventFormNew({ newEvent, setNewEvent, location }) {
       />
       {/* Location */}
       <InputField
-        label="Location"
-        type="text"
-        value={location?.name || ""}
-        readOnly
-      />
+            label="Location"
+            type="text"
+            value={location?.name || ""}
+            readOnly
+        />
       {/* Owner */}
       <InputField
-        label="Owner"
-        type="text"
-        value={newEvent.owner}
-        onChange={(e) => setNewEvent({ ...newEvent, owner: e.target.value })}
+          label="Owner"
+          type="text"
+          value={location?.adminUser.username || ""}
+          readOnly
       />
       {/* Size Selector */}
       <SelectField

@@ -16,10 +16,10 @@ export function useFetchLocationData(locationId) {
           axiosInstance.get(`/locations/${locationId}`),
           axiosInstance.get(`/events/locations/${locationId}`),
         ]);
-
+console.log(locationResponse.data);
         setLocation(locationResponse.data);
         setEvents(eventsResponse.data);
-        setOwner(locationResponse.data.adminUser.username);
+        setOwner(locationResponse.data.adminUser);
       } catch (err) {
         setError(
           err.response?.data?.message ||

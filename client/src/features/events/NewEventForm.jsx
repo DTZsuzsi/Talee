@@ -13,12 +13,13 @@ import EventFormNew from "./components/EventFormNew.jsx";
 function NewEventForm() {
   const { locationId } = useParams();
   const {location}=useFetchLocationData(locationId);
+  console.log(location);
   const [newEvent, setNewEvent] = useState({
     date: "",
     name: "",
     description: "",
     locationInEventDTO: { locationId: locationId, name: location?.name },
-    owner: "",
+    owner: {id: 1, username: "matet"},
     size: "SMALL",
     status: "COMING",
     tags: [],
@@ -31,31 +32,30 @@ function NewEventForm() {
  const {tags}=useFetchTags();
 
 
+    async function handleNewEvent(e) {
+        e.preventDefault();
+        setLoading(true);
 
-
-  async function handleNewEvent(e) {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const response = await axiosInstance.post("/events",newEvent);
-
-      if (!response.ok) throw new Error(`Failed to create event`);
-
-      const createdEventId = await response.json();
-      navigate(`/events/${createdEventId}`);
-    } catch (error) {
-      console.error("Error creating event:", error);
-      setError("Failed to create event");
-    } finally {
-      setLoading(false);
+        try {
+            const response = await axiosInstance.post("/events", newEvent);
+            console.log(response);
+            const createdEventId = response.data.id;
+            console.log("levi2");
+            navigate(`/events/${createdEventId}`);
+        } catch (error) {
+            if (error.response?.status === 401) {
+                setError("Unauthorized. Please log in again.");
+            } else {
+                setError("Failed to create event");
+            }
+            console.error("Error creating event:", error);
+        } finally {
+            setLoading(false);
+        }
     }
-  }
 
-  if (error) {
-    return <ServerError error={error} />;
-  }
 
-  return (
+    return (
     <div className="flex justify-center py-10">
       <form
         onSubmit={handleNewEvent}
