@@ -13,7 +13,6 @@ import EventFormNew from "./components/EventFormNew.jsx";
 function NewEventForm() {
   const { locationId } = useParams();
   const {location}=useFetchLocationData(locationId);
-  console.log(location);
   const [newEvent, setNewEvent] = useState({
     date: "",
     name: "",
@@ -39,8 +38,7 @@ function NewEventForm() {
         try {
             const response = await axiosInstance.post("/events", newEvent);
             console.log(response);
-            const createdEventId = response.data.id;
-            console.log("levi2");
+            const createdEventId = response.data;
             navigate(`/events/${createdEventId}`);
         } catch (error) {
             if (error.response?.status === 401) {

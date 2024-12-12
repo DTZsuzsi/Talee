@@ -109,13 +109,6 @@ public class LocationService {
   }
 
 
-  public boolean addTagToLocation(long locationId, TaginFrontendDTO taginFrontendDTO) {
-    Location location = locationRepository.findById(locationId).get();
-    TagCategory tagCategory = tagCategoryRepository.findById(taginFrontendDTO.categoryId());
-    Tag tag = new Tag(taginFrontendDTO.id(), taginFrontendDTO.name(), tagCategory);
-    location.addTag(tag);
-    return locationRepository.save(location).getId() > 0;
-  }
 
   public boolean deleteTagFromLocation(long locationId, long tagId) {
     Location location = locationRepository.findById(locationId).get();
@@ -130,12 +123,14 @@ public class LocationService {
     Location existingLocation = locationRepository.findById(location.id()).get();
        //     .orElseThrow(() -> new LocationNotFoundException(location.id()));
 
+    Set<Tag> tags = location.tags().stream().map(tagMapper::tagInFrontendDTOsToTag).collect(Collectors.toSet());
+
     existingLocation.setName(location.name());
+    existingLocation.setTags(tags);
     existingLocation.setAddress(location.address());
     existingLocation.setPhone(location.phone());
     existingLocation.setEmail(location.email());
     existingLocation.setDescription(location.description());
-   // existingLocation.setAdminUser(location.adminUser());
     List<OpeningHoursDTO> updatedOpeningHours = location.openingHours();
 
     List<OpeningHours> existingOpeningHours = existingLocation.getOpeningHours();
