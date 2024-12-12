@@ -37,6 +37,7 @@ function LocationDetailPage() {
         )}
         {owner?.username === user.username && (
           <div className="flex justify-end gap-4 mt-6 items-center">
+
             <ActionButtons id={locationId} partName={"location"} />
             <Link to={`/events/new/${locationId}`}>
               <TaleeButton> Create event</TaleeButton>

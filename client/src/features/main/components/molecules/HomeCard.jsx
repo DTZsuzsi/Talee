@@ -17,13 +17,15 @@ const HomeCard = ({ title, href, description, date }) => {
         </div>
 
         {/* Content Section */}
-        <div className="flex flex-col justify-between w-full gap-y-3">
+        <div className="relative flex flex-col justify-between w-full gap-y-3 flex-grow">
           <div className="flex justify-between items-center">
             <h2 className="text-lg md:text-xl font-bold text-right">{title}</h2>
-            <p className="text-lg font-semibold text-left">{date}</p>
           </div>
           <Reviews />
           <p className="text-md md:text-base">{description}</p>
+
+          {/* Date in the left bottom corner */}
+          <p className="text-lg font-semibold">{date}</p>
         </div>
       </div>
     </a>
