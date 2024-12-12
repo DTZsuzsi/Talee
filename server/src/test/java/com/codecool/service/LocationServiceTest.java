@@ -168,13 +168,6 @@ class LocationServiceTest {
     assertEquals(0L, locationService.deleteLocation(mockLocationId));
   }
 
-  @Test
-  void addTagToLocation() {
-  }
-
-  @Test
-  void deleteTagFromLocation() {
-  }
 
   @Test
   void whenUpdateLocation_thenUpdatesAndReturnsTrue() {
