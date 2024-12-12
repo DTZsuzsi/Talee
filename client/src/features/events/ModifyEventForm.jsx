@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import TaleeButton from "../main/components/atoms/TaleeButton.jsx";
 import EventForm from "./components/EventForm.jsx";
@@ -12,9 +11,8 @@ function ModifyEventForm() {
   const { eventId } = useParams();
   const navigate = useNavigate();
 const {tags}=useFetchTags();
-const { event, error, loading, user, owner, setEvent }= useFetchEventData(eventId);
+const { event,    setEvent }= useFetchEventData(eventId);
 
-  const token = localStorage.getItem("jwtToken");
 
   async function handleModifyingEvent(e) {
     e.preventDefault();
@@ -22,12 +20,12 @@ const { event, error, loading, user, owner, setEvent }= useFetchEventData(eventI
 
     try {
       const response = await axiosInstance.patch(`/events/${eventId}/modify`, event);
+      console.log(response);
 
-      if (!response.ok)
-        throw new Error(`Failed to modify event: ${response.statusText}`);
+     // if (!response.ok)
+      //{throw new Error(`Failed to modify event: ${response.statusText}`);}
 
-      const data = await response.json();
-      console.log("Modified event data:", data);
+      console.log("Modified event data:", response);
 
       navigate(`/events/${eventId}`);
     } catch (error) {

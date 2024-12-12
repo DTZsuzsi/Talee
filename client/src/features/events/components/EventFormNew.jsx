@@ -49,10 +49,8 @@ function EventFormNew({newEvent, setNewEvent, location}) {
         <InputField
             label="Owner"
             type="text"
-            value={newEvent.owner}
-            onChange={(e) =>
-                setNewEvent({...newEvent, owner: e.target.value})
-            }
+            value={location?.adminUser.username || ""}
+            readOnly
         />
         {/* Size Selector */}
         <SelectField

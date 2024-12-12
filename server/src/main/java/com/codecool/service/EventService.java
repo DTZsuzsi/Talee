@@ -62,7 +62,12 @@ public class EventService {
 
     public long addEvent(NewEventDTO newEventDTO) {
         Location location = locationRepository.findById(newEventDTO.locationInEventDTO().locationId()).get();
-        UserEntity eventOwner = userRepository.findById(newEventDTO.owner().id()).get();
+        System.out.println(newEventDTO.owner().toString());
+  UserEntity eventOwner = userRepository.findById(newEventDTO.owner().id()).get();
+//        UserEntity eventOwner=new UserEntity();
+//        eventOwner.setId(1);
+//        eventOwner.setUsername("matet");
+        Set<UserEntity> users=Set.of(eventOwner);
         Event newEvent = new Event(newEventDTO.date(), newEventDTO.name(), newEventDTO.description(), location,
                 eventOwner, newEventDTO.size(), null, newEventDTO.status());
         return eventRepository.save(newEvent).getId();
