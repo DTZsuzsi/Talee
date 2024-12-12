@@ -22,22 +22,39 @@ class AuthControllerTest {
 
   private String userJson;
 
-  @BeforeEach
-  void setUp() {
+//  @BeforeEach
+//  void setUp() {
+//
+//  }
+
+  @Test
+  void whenUsernameNotInDBAndPasswordSent_thenRegisterSuccessfully() throws Exception {
     userJson = """
             {
             "username": "testUser",
             "password": "password"
             }
             """;
-  }
 
-  @Test
-  void whenUsernameNotInDBAndPasswordSent_thenRegisterSuccessfully() throws Exception {
     mockMvc.perform(post("/api/auth/register")
             .contentType(MediaType.APPLICATION_JSON)
             .content(userJson))
             .andExpect(status().isCreated());
+  }
+
+  @Test
+  void whenUsernameInDBAndPasswordSent_thenBadRequestStatusReceived() throws Exception {
+    userJson = """
+            {
+            "username": "matet",
+            "password": "password"
+            }
+            """;
+
+    mockMvc.perform(post("/api/auth/register")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(userJson))
+            .andExpect(status().isBadRequest());
   }
 
   @Test
