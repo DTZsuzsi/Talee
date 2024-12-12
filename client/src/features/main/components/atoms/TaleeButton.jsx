@@ -10,7 +10,7 @@ const TaleeButton = ({
 }) => (
   <BiggerOnHover>
     <button
-      onClick={onClick?.()}
+      onClick={onClick}
       className={`inline-block font-semibold py-2 px-4 rounded-lg shadow-md transition-transform ${bgColor} hover:bg-buttonHover ${textColor} ${className}`}
       {...props}
     >

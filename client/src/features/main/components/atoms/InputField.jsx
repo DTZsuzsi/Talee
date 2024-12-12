@@ -19,7 +19,7 @@ const InputField = ({
       onChange={onChange}
       value={value}
       placeholder={placeholder}
-      className="border border-gray-300 rounded-md px-4 py-2"
+      className="border border-gray-300 rounded-md px-4 py-2 dark:bg-gray-600"
       {...props}
     />
   </div>

@@ -15,6 +15,7 @@ import com.codecool.model.tags.Tag;
 import com.codecool.model.tags.TagCategory;
 import com.codecool.model.users.UserEntity;
 import com.codecool.repository.*;
+import com.codecool.security.JWTUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,14 +35,17 @@ public class EventService {
     private final LocationRepository locationRepository;
     private final UserMapper userMapper= UserMapper.INSTANCE;
     private final UserRepository userRepository;
+    private final JWTUtils jwtUtils;
+
 
     @Autowired
-    public EventService(EventRepository eventRepository, TagRepository tagRepository, TagCategoryRepository tagCategoryRepository, LocationRepository locationRepository, UserRepository userRepository) {
+    public EventService(EventRepository eventRepository, TagRepository tagRepository, TagCategoryRepository tagCategoryRepository, LocationRepository locationRepository, UserRepository userRepository, JWTUtils jwtUtils) {
         this.eventRepository = eventRepository;
         this.tagRepository = tagRepository;
         this.tagCategoryRepository = tagCategoryRepository;
         this.locationRepository = locationRepository;
         this.userRepository = userRepository;
+        this.jwtUtils = jwtUtils;
     }
 
 
@@ -107,6 +111,19 @@ public class EventService {
         Set<Tag> updatedTags = tags.stream().filter(tag -> tag.getId() != tagId).collect(Collectors.toSet());
 
         event.setTags(updatedTags);
+        return eventRepository.save(event).getId() > 0;
+    }
+
+    public boolean applyUserToEvent(long eventId, String token) {
+        String currentUserName = jwtUtils.getUsernameFromJwtToken(token);
+        UserEntity currentUser = userRepository.findByUsername(currentUserName).get();
+
+        Event event = eventRepository.findEventById(eventId);
+        Set<UserEntity> users = event.getUsers();
+
+        if(users.contains(currentUser)) return false;
+
+        users.add(currentUser);
         return eventRepository.save(event).getId() > 0;
     }
 
