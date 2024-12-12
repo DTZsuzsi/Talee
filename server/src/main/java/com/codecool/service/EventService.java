@@ -120,6 +120,9 @@ public class EventService {
 
         Event event = eventRepository.findEventById(eventId);
         Set<UserEntity> users = event.getUsers();
+
+        if(users.contains(currentUser)) return false;
+
         users.add(currentUser);
         return eventRepository.save(event).getId() > 0;
     }

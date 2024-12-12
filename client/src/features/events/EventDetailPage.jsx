@@ -5,6 +5,7 @@ import { MdDeleteForever } from "react-icons/md";
 import TagCard from "../tag/components/TagCard";
 import BiggerOnHover from "../main/components/atoms/BiggerOnHover.jsx";
 import UserCard from "../users/components/UserCard.jsx";
+import EventJoinButton from "./components/EventJoinButton.jsx";
 
 function EventDetailPage() {
   const { eventId } = useParams();
@@ -109,6 +110,7 @@ function EventDetailPage() {
               </div>
             </div>
           </div>
+
           <h2 className="text-2xl font-semibold mt-10">
             {" "}
             Your friends who are coming:{" "}
@@ -137,6 +139,17 @@ function EventDetailPage() {
               </ul>
             </div>
           )}
+
+          <div className="flex my-5 items-center justify-center">
+            {event?.users?.some((u) => u.username === user) ? (
+              <p className="text-2xl font-semibold text-center">
+                You joined this event!
+              </p>
+            ) : (
+              <EventJoinButton eventId={eventId}></EventJoinButton>
+            )}
+          </div>
+
           {owner === user && (
             <div className="flex justify-end gap-4 mt-6">
               <BiggerOnHover>

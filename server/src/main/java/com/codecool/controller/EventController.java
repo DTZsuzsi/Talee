@@ -62,7 +62,7 @@ public class EventController {
         return eventService.deleteTagFromEvent(eventId, tagId);
     }
 
-    @PostMapping("/user/{eventId}")
+    @PostMapping("/apply/{eventId}")
     public boolean userApplyToEvent(@PathVariable long eventId, @RequestHeader (name = "Authorization") String token) {
         if (token.startsWith("Bearer ")) {
             token = token.substring(7);
