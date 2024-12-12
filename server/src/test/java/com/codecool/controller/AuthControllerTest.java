@@ -22,11 +22,6 @@ class AuthControllerTest {
 
   private String userJson;
 
-//  @BeforeEach
-//  void setUp() {
-//
-//  }
-
   @Test
   void whenUsernameNotInDBAndPasswordSent_thenRegisterSuccessfully() throws Exception {
     userJson = """
