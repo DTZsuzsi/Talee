@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import BiggerOnHover from "../main/components/atoms/BiggerOnHover";
+import BiggerOnHover from "../../main/components/atoms/BiggerOnHover";
 
 function EventInfo({event}){
     return(

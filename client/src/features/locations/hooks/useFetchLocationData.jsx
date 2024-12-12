@@ -7,7 +7,6 @@ export function useFetchLocationData(locationId) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [owner, setOwner] = useState(null);
-  const [user, setUser] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -20,10 +19,12 @@ export function useFetchLocationData(locationId) {
 
         setLocation(locationResponse.data);
         setEvents(eventsResponse.data);
-        setUser(locationResponse.data.adminUser.username);
-        setOwner(localStorage.getItem("userName"));
+        setOwner(locationResponse.data.adminUser.username);
       } catch (err) {
-        setError(err.response?.data?.message || "An error occurred while fetching data.");
+        setError(
+          err.response?.data?.message ||
+            "An error occurred while fetching data.",
+        );
         console.error(err);
       } finally {
         setLoading(false);
@@ -33,5 +34,5 @@ export function useFetchLocationData(locationId) {
     if (locationId) fetchData();
   }, [locationId]);
 
-  return { location, events, error, loading, owner, user };
+  return { location, events, error, loading, owner };
 }

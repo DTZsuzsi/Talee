@@ -29,5 +29,5 @@ setOwner(data.owner);
     if (eventId) fetchData();
   }, [eventId]);
 
-  return { event, error, loading, user, owner };
+  return { event, error, loading, user, owner, setEvent };
 }

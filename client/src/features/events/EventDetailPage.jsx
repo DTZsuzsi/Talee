@@ -3,10 +3,9 @@ import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useFetchEventData } from './hooks/useFetchEventData.jsx';
 import ActionButtons from '../main/components/molecules/ActionButtons.jsx';
-import EventInfo from './EventInfo.jsx';
-
 import TagList from '../main/components/molecules/TagList.jsx';
 import UserHandling from '../main/components/molecules/UserHandling.jsx';
+import EventInfo from './components/EventInfo.jsx';
 
 function EventDetailPage() {
   const { eventId } = useParams();
@@ -21,8 +20,10 @@ function EventDetailPage() {
           <EventInfo event={event} />
           {event.users.length > 0 && <UserHandling setUserChange={setUserChange} event={event} />}
 
+
           {event?.tags?.length > 0 && <TagList tags={event?.tags} />}
           {owner === user && <ActionButtons id={eventId} partName={'event'} />}
+
         </div>
       </div>
     )
