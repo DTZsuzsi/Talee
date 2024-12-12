@@ -22,14 +22,7 @@ function LocationForm({ location, setLocation, onHoursChange }) {
           onChange={(e) => setLocation({ ...location, name: e.target.value })}
           required
         />
-        <InputField
-          label="Address"
-          type="text"
-          value={location.address}
-          onChange={(e) =>
-            setLocation({ ...location, address: e.target.value })
-          }
-        />
+
         <InputField
           label="Phone"
           type="text"

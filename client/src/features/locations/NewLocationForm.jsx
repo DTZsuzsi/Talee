@@ -18,7 +18,7 @@ function NewLocationForm() {
 
   const [newLocation, setNewLocation] = useState({
     name: '',
-    address: address,
+    address: '',
     phone: '',
     email: '',
     website: '',
@@ -42,8 +42,10 @@ function NewLocationForm() {
       ...prev,
       latitude: position.lat,
       longitude: position.lng,
+      address: address,
     }));
-  }, [position]);
+
+  }, [position,address]);
 
   async function handleNewLocation(e) {
     e.preventDefault();
