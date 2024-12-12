@@ -141,7 +141,27 @@ class LocationServiceTest {
   }
 
 
+  @Test
+  void whenDeleteLocationIsSuccessful_returnsDeletedLocationsId() {
+    Location mockLocation = Mockito.mock(Location.class);
+    mockLocation.setId(8L);
+    mockLocation.setName("Location8");
+    mockLocations.add(mockLocation);
 
+    long mockLocationId = mockLocation.getId();
+    Mockito.when(locationRepository.deleteLocationById(mockLocationId)).thenReturn(mockLocationId);
+
+    long deletedLocationId = locationService.deleteLocation(mockLocationId);
+    assertEquals(mockLocationId, deletedLocationId);
+
+  }
+
+  @Test
+  void whenDeleteLocationIsUnsuccessful_returnsNull() {
+    long mockLocationId = 9L;
+    Mockito.when(locationRepository.deleteLocationById(mockLocationId)).thenReturn(0L);
+    assertEquals(0L, locationService.deleteLocation(mockLocationId));
+  }
 
   @Test
   void addTagToLocation() {
