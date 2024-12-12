@@ -39,7 +39,7 @@ function ActionButtons({ id, partName }) {
     return <Loading />;
   }
   return (
-    <div className="flex justify-end gap-4">
+    <div className="flex justify-start gap-4">
       <BiggerOnHover>
         <Link
           to={`/${partName}s/${id}/update`}

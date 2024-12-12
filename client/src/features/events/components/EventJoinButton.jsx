@@ -1,17 +1,20 @@
 import TaleeButton from "../../main/components/atoms/TaleeButton.jsx";
 import axiosInstance from "../../../axiosInstance.jsx";
 
-function EventJoinButton({ eventId }) {
+function EventJoinButton({ eventId, setLoading }) {
   async function joinEvent() {
-    await axiosInstance.post(`/events/apply/${eventId}`);
+    setLoading(true);
+    const response = await axiosInstance.post(`/events/apply/${eventId}`);
+
+    if (response.status === 200) {
+      setLoading(false);
+    }
   }
 
   return (
-    <div>
-      <TaleeButton className="p-10" onClick={joinEvent}>
-        Join Event
-      </TaleeButton>
-    </div>
+    <TaleeButton className="m-3" onClick={joinEvent}>
+      Join Event
+    </TaleeButton>
   );
 }
 

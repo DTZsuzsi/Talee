@@ -1,4 +1,5 @@
 import InputField from "../main/components/atoms/InputField";
+import TextArea from "../main/components/atoms/TextArea.jsx";
 
 function LocationForm({ location, setLocation, onHoursChange }) {
   const daysOfWeek = [
@@ -67,18 +68,12 @@ function LocationForm({ location, setLocation, onHoursChange }) {
         />
       </div>
 
-      <div className="mt-6">
-        <label className="block font-medium mb-2">Description</label>
-        <textarea
-          rows="4"
-          value={location.description}
-          onChange={(e) =>
-            setLocation({ ...location, description: e.target.value })
-          }
-          className="block w-full rounded-md border dark:bg-gray-600"
-          placeholder="Enter a description"
-        ></textarea>
-      </div>
+      <TextArea
+        onChange={(e) =>
+          setLocation({ ...location, description: e.target.value })
+        }
+        title="Description"
+      />
 
       <div className="mt-6">
         <h2 className="font-bold text-xl mb-4">Opening Hours</h2>
