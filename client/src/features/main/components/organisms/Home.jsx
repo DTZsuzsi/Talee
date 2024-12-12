@@ -32,7 +32,7 @@ const Home = () => {
     setChosenTag(e.target.value);
 const response= await axiosInstance.get(`/events/tagsfilter/${e.target.value}` );
 setEvents(response.data);
-const responseLoc=await axiosInstance.get(`/locations/${e.target.value}`);
+const responseLoc=await axiosInstance.get(`/locations/tagsfilter/${e.target.value}`);
 setLocations(response.data);
 
   }
