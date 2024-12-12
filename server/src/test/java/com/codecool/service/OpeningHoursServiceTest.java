@@ -1,4 +1,4 @@
-package com.codecool.server;
+package com.codecool.service;
 
 import com.codecool.DTO.location.LocationWithoutOpeningHoursDTO;
 import com.codecool.DTO.location.NewOpeningHoursDTO;
@@ -7,7 +7,6 @@ import com.codecool.model.locations.Location;
 import com.codecool.model.locations.OpeningHours;
 import com.codecool.repository.LocationRepository;
 import com.codecool.repository.OpeningHoursRepository;
-import com.codecool.service.OpeningHoursService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,9 +19,8 @@ import java.time.LocalTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(MockitoExtension.class)
-public class OpeningHoursServiceUnitTest {
+class OpeningHoursServiceTest {
   @Mock
   private OpeningHoursRepository openingHoursRepository;
 
