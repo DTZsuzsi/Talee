@@ -18,7 +18,7 @@ function NewLocationForm() {
 
   const [newLocation, setNewLocation] = useState({
     name: '',
-    address: address,
+    address: '',
     phone: '',
     email: '',
     website: '',
@@ -42,8 +42,10 @@ function NewLocationForm() {
       ...prev,
       latitude: position.lat,
       longitude: position.lng,
+      address: address,
     }));
-  }, [position]);
+
+  }, [position,address]);
 
   async function handleNewLocation(e) {
     e.preventDefault();
@@ -67,31 +69,32 @@ function NewLocationForm() {
   }
 
   return (
-    <div className='flex justify-center py-10'>
-      <form
-        onSubmit={handleNewLocation}
-        className='bg-light-secondaryBg dark:bg-dark-secondaryBg text-light-text dark:text-dark-text shadow-md rounded-lg p-8 w-full max-w-4xl'
-      >
-        <h1 className='font-bold text-3xl text-center mb-8'>Create New Location</h1>
+      <div className='flex justify-center py-10'>
+        <form
+            onSubmit={handleNewLocation}
+            className='bg-light-secondaryBg dark:bg-dark-secondaryBg text-light-text dark:text-dark-text shadow-md rounded-lg p-8 w-full max-w-4xl'
+        >
+          <h1 className='font-bold text-3xl text-center mb-8'>Create New Location</h1>
 
-        <LocationForm location={newLocation} setLocation={setNewLocation} onHoursChange={handleOpeningHoursChange} />
+          <LocationForm location={newLocation} setLocation={setNewLocation} onHoursChange={handleOpeningHoursChange}/>
 
-        <TagListModify partName={newLocation} setter={setNewLocation} tags={tags} />
+          <TagListModify partName={newLocation} setter={setNewLocation} tags={tags}/>
+
+
+          <div className='w-full flex justify-center mt-6'>
+            {loading ? (
+                <Loading/>
+            ) : (
+                <TaleeButton type='submit' className='mt-5'>
+                  Create Location
+                </TaleeButton>
+            )}
+          </div>
+        </form>
         <div className='mt-6'>
-          <GoogleMapComponent position={position} setPosition={setPosition} address={address} setAddress={setAddress} />
+          <GoogleMapComponent position={position} setPosition={setPosition} address={address} setAddress={setAddress}/>
         </div>
-
-        <div className='w-full flex justify-center mt-6'>
-          {loading ? (
-            <Loading />
-          ) : (
-            <TaleeButton type='submit' className='mt-5'>
-              Create Location
-            </TaleeButton>
-          )}
-        </div>
-      </form>
-    </div>
+      </div>
   );
 }
 

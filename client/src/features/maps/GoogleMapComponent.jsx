@@ -12,7 +12,6 @@ const response= await fetch(`https://maps.googleapis.com/maps/api/geocode/json?a
 const data=await response.json();
 console.log(data);
  setPosition(data?.results[0].geometry.location);
- console.log(data?.results[0].geometry.location);
 
 }
 return (
