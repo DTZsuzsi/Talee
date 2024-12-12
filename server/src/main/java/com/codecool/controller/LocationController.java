@@ -61,5 +61,10 @@ public class LocationController {
   public boolean deleteTag(@PathVariable long locationId, @RequestParam int tagId) {
     return locationService.deleteTagFromLocation(locationId, tagId);
   }
+
+  @GetMapping("/tagsfilter/{tagName}")
+  public List<LocationDTO> getLocationsByTagName(@PathVariable String tagName) {
+    return locationService.getLocationsByTag(tagName);
+  }
 }
 

@@ -3,21 +3,39 @@ import { useEffect, useState } from "react";
 import HomeCard from "../molecules/HomeCard.jsx";
 import StateChangeButton from "../molecules/StateChangeButton.jsx";
 import TagCard from "../../../tag/components/TagCard.jsx";
-import Loading from "../atoms/Loading.jsx";
 import { useTheme } from "../../ThemeContext.jsx";
 import { useFetchLocations } from "../hooks/useFetchLocations.jsx";
 import { useFetchEvents } from "../hooks/useFetchEvents.jsx";
+import SelectField from "../atoms/SelectField.jsx";
+import useFetchTags from "../hooks/useFetchTags.jsx";
+import axiosInstance from "../../../../axiosInstance.jsx";
 
 const Home = () => {
   const { darkMode, setDarkMode } = useTheme();
   const [mode, setMode] = useState(darkMode ? "events" : "locations");
-  const { locations } = useFetchLocations();
-  const { events } = useFetchEvents();
+  const { locations, setLocations } = useFetchLocations();
+  const { events, setEvents } = useFetchEvents();
+  const {tags}=useFetchTags();
+
+  const [chosenTag, setChosenTag] = useState("big");
+  const [tagChanged, setTagChanged] = useState(false);
 
   const handleModeChange = (newMode) => {
     setMode(newMode);
     setDarkMode(newMode === "events");
   };
+
+  const tagNameArray=tags?.map(tag => tag.name);
+
+  async function filterTag(e){
+    setTagChanged(false);
+    setChosenTag(e.target.value);
+const response= await axiosInstance.get(`/events/tagsfilter/${e.target.value}` );
+setEvents(response.data);
+const responseLoc=await axiosInstance.get(`/locations/tagsfilter/${e.target.value}`);
+setLocations(response.data);
+
+  }
 
   const renderEventCards = () => {
     if (!events || events.length === 0) return <p>No events available</p>;
@@ -82,6 +100,7 @@ const Home = () => {
             {mode === "events" ? "Events" : "Locations"}
           </h1>
           <div className="flex flex-col gap-4">
+            <SelectField  label={"Choose tag"} options={tagNameArray} value={chosenTag} id={chosenTag.id} onChange={filterTag}/>
             {mode === "events" ? renderEventCards() : renderLocationCards()}
           </div>
         </div>

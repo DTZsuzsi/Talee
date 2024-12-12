@@ -14,10 +14,7 @@ import com.codecool.model.tags.Tag;
 import com.codecool.model.tags.TagCategory;
 import com.codecool.model.users.Role;
 import com.codecool.model.users.UserEntity;
-import com.codecool.repository.LocationRepository;
-import com.codecool.repository.RoleRepository;
-import com.codecool.repository.TagCategoryRepository;
-import com.codecool.repository.UserRepository;
+import com.codecool.repository.*;
 import com.codecool.security.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,12 +37,13 @@ public class LocationService {
   private final TagMapper tagMapper = TagMapper.INSTANCE;
   private final JWTUtils jwtUtils;
   private final UserRepository userRepository;
+  private final TagRepository tagRepository;
 
 
   @Autowired
   public LocationService(LocationRepository locationRepository, OpeningHoursService openingHoursService,
                          TagCategoryRepository tagCategoryRepository, UserService userService, RoleRepository roleRepository,
-                         JWTUtils jwtUtils, UserRepository userRepository) {
+                         JWTUtils jwtUtils, UserRepository userRepository, TagRepository tagRepository) {
     this.locationRepository = locationRepository;
     this.openingHoursService = openingHoursService;
     this.tagCategoryRepository = tagCategoryRepository;
@@ -53,6 +51,7 @@ public class LocationService {
     this.roleRepository = roleRepository;
     this.jwtUtils = jwtUtils;
     this.userRepository = userRepository;
+    this.tagRepository = tagRepository;
   }
 
   public List<LocationDTO> getAllLocations() {
@@ -63,6 +62,10 @@ public class LocationService {
             .toList();
   }
 
+  public List<LocationDTO> getLocationsByTag(String tagName){
+    Tag tag=tagRepository.findByName(tagName);
+    return locationRepository.findAllByTagsContaining(tag).stream().map(this::createLocationDTO).collect(Collectors.toList());
+  }
   public LocationDTO getLocationById(long id) {
     Location location = locationRepository.findById(id).orElseThrow(() -> new LocationNotFoundException(id));
     return createLocationDTO(location);

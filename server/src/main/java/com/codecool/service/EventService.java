@@ -88,6 +88,13 @@ public class EventService {
         return eventDTOS;
     }
 
+    public List<EventDTO> getEventsByTag(String tagName) {
+        Tag tag=tagRepository.findByName(tagName);
+        List<Event> eventsTags=eventRepository.findEventsByTagsContaining(tag);
+        List<EventDTO> eventDTOS = eventsTags.stream().map(event -> getEventById(event.getId())).collect(Collectors.toList());
+        return eventDTOS;
+    }
+
     @Transactional
     public void deleteEventById(long id) {
         eventRepository.deleteEventById(id);
