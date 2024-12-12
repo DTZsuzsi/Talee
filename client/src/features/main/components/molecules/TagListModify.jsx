@@ -11,7 +11,7 @@ return (
   <div className='mt-6'>
     <TagOptions onChange={(e) => handleNewTag(e)} />
     <ul className='grid grid-cols-2 md:grid-cols-4 gap-4'>
-      {partName.tags.map((tag) => (
+      {partName.tags?.map((tag) => (
         <li key={tag.id}>
           <TagCard tag={tag} onClick={() => handleDeleteTag(tag)} color={tag.color} className='w-full' />
         </li>

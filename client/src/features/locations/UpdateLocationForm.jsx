@@ -6,10 +6,9 @@ import Loading from "../main/components/atoms/Loading";
 import ServerError from "../main/components/atoms/ServerError";
 
 import LocationForm from "./LocationForm.jsx";
-import { useFetchTags } from "../main/components/hooks/useFetchTags.jsx";
+import  useFetchTags  from "../main/components/hooks/useFetchTags.jsx";
 import { useTagHandlers } from "../main/tagHandling/useTagHandlers.jsx";
 import useOpeningHours from "./hooks/useOpeningHours.jsx";
-import axios from "axios";
 import TagListModify from "../main/components/molecules/TagListModify.jsx";
 import axiosInstance from "../../axiosInstance.jsx";
 function UpdateLocationForm() {
