@@ -33,7 +33,7 @@ class AuthControllerTest {
   }
 
   @Test
-  void whenUsernameAndPasswordSent_thenRegisterSuccessfully() throws Exception {
+  void whenUsernameNotInDBAndPasswordSent_thenRegisterSuccessfully() throws Exception {
     mockMvc.perform(post("/api/auth/register")
             .contentType(MediaType.APPLICATION_JSON)
             .content(userJson))
