@@ -80,4 +80,9 @@ public class EventController {
     public List<EventDTO> getEventsByLocation(@PathVariable long locationId) {
         return eventService.findAllByLocationId(locationId);
     }
+
+    @GetMapping("/tagsfilter/{tagName}")
+    public List<EventDTO> getEventsByTag(@PathVariable String tagName) {
+        return eventService.getEventsByTag(tagName);
+    }
 }

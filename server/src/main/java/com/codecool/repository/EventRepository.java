@@ -1,6 +1,7 @@
 package com.codecool.repository;
 
 import com.codecool.model.events.Event;
+import com.codecool.model.tags.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +17,5 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @Modifying
     @Query("DELETE FROM  Event WHERE id = :id")
     void deleteEventById(@Param("id") long id);
+    List<Event> findEventsByTagsContaining(Tag tag);
 }

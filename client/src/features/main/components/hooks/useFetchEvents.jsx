@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import axiosInstance from "../../../../axiosInstance.jsx";
 
 export function useFetchEvents() {
@@ -18,7 +17,7 @@ export function useFetchEvents() {
     fetchData();
   }, []); 
 
-  return { events };
+  return { events, setEvents };
 }
 
 

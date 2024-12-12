@@ -17,5 +17,5 @@ export function useFetchLocations() {
     fetchData();
   }, []);
 
-  return { locations };
+  return { locations, setLocations };
 }

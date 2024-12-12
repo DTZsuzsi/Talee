@@ -3,18 +3,18 @@ import { useEffect, useState } from "react";
 import HomeCard from "../molecules/HomeCard.jsx";
 import StateChangeButton from "../molecules/StateChangeButton.jsx";
 import TagCard from "../../../tag/components/TagCard.jsx";
-import Loading from "../atoms/Loading.jsx";
 import { useTheme } from "../../ThemeContext.jsx";
 import { useFetchLocations } from "../hooks/useFetchLocations.jsx";
 import { useFetchEvents } from "../hooks/useFetchEvents.jsx";
 import SelectField from "../atoms/SelectField.jsx";
 import useFetchTags from "../hooks/useFetchTags.jsx";
+import axiosInstance from "../../../../axiosInstance.jsx";
 
 const Home = () => {
   const { darkMode, setDarkMode } = useTheme();
   const [mode, setMode] = useState(darkMode ? "events" : "locations");
-  const { locations } = useFetchLocations();
-  const { events } = useFetchEvents();
+  const { locations, setLocations } = useFetchLocations();
+  const { events, setEvents } = useFetchEvents();
   const {tags}=useFetchTags();
 
   const [chosenTag, setChosenTag] = useState("big");
@@ -27,7 +27,13 @@ const Home = () => {
 
   const tagNameArray=tags?.map(tag => tag.name);
 
-  async function filterTag(){
+  async function filterTag(e){
+    setTagChanged(false);
+    setChosenTag(e.target.value);
+const response= await axiosInstance.get(`/events/tagsfilter/${e.target.value}` );
+setEvents(response.data);
+const responseLoc=await axiosInstance.get(`/locations/${e.target.value}`);
+setLocations(response.data);
 
   }
 
