@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../../axiosInstance.jsx";
 
 export function useFetchEventData(eventId) {
   const [event, setEvent] = useState(null);
@@ -12,7 +12,7 @@ export function useFetchEventData(eventId) {
     async function fetchData() {
       setLoading(true);
       try {
-        const {data} = await  axios.get(`/api/events/${eventId}`);
+        const {data} = await  axiosInstance.get(`/events/${eventId}`);
         setEvent(data);
         setUser(data.adminUser.username);
 setOwner(data.owner);

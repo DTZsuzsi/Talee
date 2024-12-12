@@ -7,8 +7,8 @@ import GoogleMapComponent from '../maps/GoogleMapComponent.jsx';
 import LocationForm from './LocationForm.jsx';
 import useOpeningHours from './hooks/useOpeningHours.jsx';
 import TagListModify from '../main/components/molecules/TagListModify.jsx';
-import axios from 'axios';
 import useFetchTags from "../main/components/hooks/useFetchTags.jsx";
+import axiosInstance from "../../axiosInstance.jsx";
 
 function NewLocationForm() {
   const [error, setError] = useState(null);
@@ -48,16 +48,10 @@ function NewLocationForm() {
   async function handleNewLocation(e) {
     e.preventDefault();
     setLoading(true);
-    const token = localStorage.getItem('jwtToken');
     console.log(newLocation);
 
     try {
-      const response = await axios.post('/api/locations', newLocation, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axiosInstance.post('/locations', newLocation);
 
       const createdLocationId = response.data;
       navigate(`/locations/${createdLocationId}`);

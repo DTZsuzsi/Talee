@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import axiosInstance from "../../../../axiosInstance.jsx";
 
 export function useFetchEvents() {
   const [events, setEvents] = useState(null);
@@ -7,7 +8,7 @@ export function useFetchEvents() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get(`/api/events/all`);
+        const { data } = await axiosInstance.get(`/events/all`);
         setEvents(data);
       } catch (err) {
         console.error("Error fetching locations:", err);

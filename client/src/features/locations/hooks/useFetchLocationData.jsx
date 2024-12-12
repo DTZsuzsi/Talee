@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../../axiosInstance.jsx";
 
 export function useFetchLocationData(locationId) {
   const [location, setLocation] = useState(null);
@@ -13,8 +13,8 @@ export function useFetchLocationData(locationId) {
       setLoading(true);
       try {
         const [locationResponse, eventsResponse] = await Promise.all([
-          axios.get(`/api/locations/${locationId}`),
-          axios.get(`/api/events/locations/${locationId}`),
+          axiosInstance.get(`/locations/${locationId}`),
+          axiosInstance.get(`/events/locations/${locationId}`),
         ]);
 
         setLocation(locationResponse.data);
