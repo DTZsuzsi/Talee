@@ -143,7 +143,7 @@ function EventDetailPage() {
           <div className="flex my-5 items-center justify-center">
             {event?.users?.some((u) => u.username === user) ? (
               <p className="text-2xl font-semibold text-center">
-                You joined this event!
+                You&#39;ve joined this event!
               </p>
             ) : (
               <EventJoinButton eventId={eventId}></EventJoinButton>

@@ -1,27 +1,24 @@
 import InputField from "../main/components/atoms/InputField";
 
-function LocationForm({location, setLocation, onHoursChange}){
-    const daysOfWeek = [
-        "MONDAY",
-        "TUESDAY",
-        "WEDNESDAY",
-        "THURSDAY",
-        "FRIDAY",
-        "SATURDAY",
-        "SUNDAY",
-      ];
-    
-    
-    return(
-        <div> 
-        <div className="grid grid-cols-2 gap-4">
+function LocationForm({ location, setLocation, onHoursChange }) {
+  const daysOfWeek = [
+    "MONDAY",
+    "TUESDAY",
+    "WEDNESDAY",
+    "THURSDAY",
+    "FRIDAY",
+    "SATURDAY",
+    "SUNDAY",
+  ];
+
+  return (
+    <div>
+      <div className="grid md:grid-cols-2 gap-4 sm:grid-cols-1">
         <InputField
           label="Name"
           type="text"
           value={location.name}
-          onChange={(e) =>
-            setLocation({ ...location, name: e.target.value })
-          }
+          onChange={(e) => setLocation({ ...location, name: e.target.value })}
           required
         />
         <InputField
@@ -36,17 +33,13 @@ function LocationForm({location, setLocation, onHoursChange}){
           label="Phone"
           type="text"
           value={location.phone}
-          onChange={(e) =>
-            setLocation({ ...location, phone: e.target.value })
-          }
+          onChange={(e) => setLocation({ ...location, phone: e.target.value })}
         />
         <InputField
           label="Email"
           type="email"
           value={location.email}
-          onChange={(e) =>
-            setLocation({ ...location, email: e.target.value })
-          }
+          onChange={(e) => setLocation({ ...location, email: e.target.value })}
         />
         <InputField
           label="Website"
@@ -82,7 +75,7 @@ function LocationForm({location, setLocation, onHoursChange}){
           onChange={(e) =>
             setLocation({ ...location, description: e.target.value })
           }
-          className="block w-full rounded-md border"
+          className="block w-full rounded-md border dark:bg-gray-600"
           placeholder="Enter a description"
         ></textarea>
       </div>
@@ -109,8 +102,8 @@ function LocationForm({location, setLocation, onHoursChange}){
           </div>
         ))}
       </div>
-      </div>
-    )
+    </div>
+  );
 }
 
 export default LocationForm;
