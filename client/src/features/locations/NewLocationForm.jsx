@@ -4,11 +4,11 @@ import TaleeButton from '../main/components/atoms/TaleeButton.jsx';
 import Loading from '../main/components/atoms/Loading.jsx';
 import ServerError from '../main/components/atoms/ServerError.jsx';
 import GoogleMapComponent from '../maps/GoogleMapComponent.jsx';
-import { useFetchTags } from '../main/components/hooks/useFetchTags.jsx';
 import LocationForm from './LocationForm.jsx';
 import useOpeningHours from './hooks/useOpeningHours.jsx';
 import TagListModify from '../main/components/molecules/TagListModify.jsx';
 import axios from 'axios';
+import useFetchTags from "../main/components/hooks/useFetchTags.jsx";
 
 function NewLocationForm() {
   const [error, setError] = useState(null);

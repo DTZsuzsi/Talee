@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
- function useFetchTags() {
+  function useFetchTags() {
   const [tags, setTags] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -31,5 +31,5 @@ import axios from "axios";
 
   return { tags };
 }
-
 export default useFetchTags;
+

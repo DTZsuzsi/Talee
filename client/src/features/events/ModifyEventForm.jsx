@@ -6,6 +6,7 @@ import EventForm from "./components/EventForm.jsx";
 import TagListModify from "../main/components/molecules/TagListModify.jsx";
 import useFetchTags from "../main/components/hooks/useFetchTags.jsx"
 import { useFetchEventData } from "./hooks/useFetchEventData.jsx";
+import axiosInstance from "../../axiosInstance.jsx";
 
 function ModifyEventForm() {
   const { eventId } = useParams();
@@ -20,14 +21,7 @@ const { event, error, loading, user, owner, setEvent }= useFetchEventData(eventI
     console.log("Submitting event:", event);
 
     try {
-      const response = await fetch(`/api/events/${eventId}/modify`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(event),
-      });
+      const response = await axiosInstance.patch(`/events/${eventId}/modify`, event);
 
       if (!response.ok)
         throw new Error(`Failed to modify event: ${response.statusText}`);
