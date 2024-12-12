@@ -58,6 +58,17 @@ class AuthControllerTest {
   }
 
   @Test
-  void login() {
+  void whenLoginWithValidCredentials_thenLoginSuccessfully() throws Exception {
+    userJson = """
+            {
+            "username": "matet",
+            "password": "admin"
+            }
+            """;
+
+    mockMvc.perform(post("/api/auth/login")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(userJson))
+            .andExpect(status().isOk());
   }
 }
