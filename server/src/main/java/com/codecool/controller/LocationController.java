@@ -55,11 +55,6 @@ public class LocationController {
   }
 
 
-  @PostMapping("/{locationId}")
-  @PreAuthorize("hasRole('LOCATION_OWNER')")
-  public boolean addTagToLocation(@PathVariable long locationId, @RequestBody TaginFrontendDTO taginFrontendDTO) {
-    return locationService.addTagToLocation(locationId, taginFrontendDTO);
-  }
 
   @DeleteMapping("/tag/{locationId}")
   @PreAuthorize("hasRole('LOCATION_OWNER')")
