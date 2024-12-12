@@ -4,6 +4,7 @@ package com.codecool.service;
 import com.codecool.DTO.location.*;
 import com.codecool.DTO.tag.TaginFrontendDTO;
 import com.codecool.DTO.user.UserDTO;
+import com.codecool.exception.LocationNotFoundException;
 import com.codecool.mapper.LocationMapper;
 import com.codecool.mapper.TagMapper;
 import com.codecool.mapper.UserMapper;
@@ -66,7 +67,7 @@ public class LocationService {
     return locationRepository.findAllByTagsContaining(tag).stream().map(this::createLocationDTO).collect(Collectors.toList());
   }
   public LocationDTO getLocationById(long id) {
-    Location location = locationRepository.findById(id).get();
+    Location location = locationRepository.findById(id).orElseThrow(() -> new LocationNotFoundException(id));
     return createLocationDTO(location);
   }
 

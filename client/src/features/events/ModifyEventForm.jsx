@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useNavigate, useParams } from "react-router-dom";
 import TaleeButton from "../main/components/atoms/TaleeButton.jsx";
 import EventForm from "./components/EventForm.jsx";
@@ -6,32 +5,33 @@ import TagListModify from "../main/components/molecules/TagListModify.jsx";
 import useFetchTags from "../main/components/hooks/useFetchTags.jsx";
 import { useFetchEventData } from "./hooks/useFetchEventData.jsx";
 import axiosInstance from "../../axiosInstance.jsx";
+import UserList from "../main/components/molecules/UserList.jsx";
 
 function ModifyEventForm() {
   const { eventId } = useParams();
   const navigate = useNavigate();
   const { tags } = useFetchTags();
-  const { event, error, loading, user, owner, setEvent } =
-    useFetchEventData(eventId);
-
+  const { event, setEvent } = useFetchEventData(eventId);
 
   async function handleModifyingEvent(e) {
     e.preventDefault();
-    console.log("Submitting event:", event);
 
     try {
-      const response = await axiosInstance.patch(`/events/${eventId}/modify`, event);
-      console.log(response);
-
-     // if (!response.ok)
-      //{throw new Error(`Failed to modify event: ${response.statusText}`);}
-
-      console.log("Modified event data:", response);
-
+      const response = await axiosInstance.patch(
+        `/events/${eventId}/modify`,
+        event,
+      );
       navigate(`/events/${eventId}`);
     } catch (error) {
       console.error("Error modifying event:", error);
     }
+  }
+
+  function handleDeleteUser(user) {
+    setEvent((prevPartName) => ({
+      ...prevPartName,
+      users: prevPartName.users.filter((e) => e.id !== user.id),
+    }));
   }
 
   return (
@@ -46,6 +46,9 @@ function ModifyEventForm() {
           <EventForm event={event} setEvent={setEvent} />
 
           <TagListModify partName={event} setter={setEvent} tags={tags} />
+          {event.users.length > 0 && (
+            <UserList onDeleteUser={handleDeleteUser} event={event} />
+          )}
 
           <div className="w-full flex justify-center">
             <TaleeButton type="submit" className="mt-5">
