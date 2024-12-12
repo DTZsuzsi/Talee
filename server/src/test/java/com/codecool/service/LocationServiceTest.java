@@ -1,6 +1,7 @@
 package com.codecool.service;
 
 import com.codecool.DTO.location.LocationDTO;
+import com.codecool.exception.LocationNotFoundException;
 import com.codecool.mapper.LocationMapper;
 import com.codecool.mapper.TagMapper;
 import com.codecool.mapper.UserMapper;
@@ -20,6 +21,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
@@ -54,7 +56,7 @@ class LocationServiceTest {
   void setUp() {
     mockLocations = new ArrayList<>();
 
-    Mockito.when(locationRepository.findAll()).thenReturn(mockLocations);
+
   }
 
   @Test
@@ -69,6 +71,8 @@ class LocationServiceTest {
     mockLocation2.setName("Location2");
     mockLocations.add(mockLocation2);
 
+    Mockito.when(locationRepository.findAll()).thenReturn(mockLocations);
+
     List<LocationDTO> locations = locationService.getAllLocations();
 
     assertEquals(mockLocations.size(), locations.size());
@@ -79,13 +83,32 @@ class LocationServiceTest {
 
   @Test
   void whenNoLocationsGetAllLocations_returnsEmptyList() {
+    Mockito.when(locationRepository.findAll()).thenReturn(mockLocations);
     List<LocationDTO> locations = locationService.getAllLocations();
     assertTrue(locations.isEmpty());
 
   }
 
   @Test
-  void getLocationById() {
+  void whenExistingLocationGetLocationById_returnsLocationDTO() {
+    Location mockLocation = Mockito.mock(Location.class);
+    mockLocation.setId(1L);
+    mockLocation.setName("Location1");
+    mockLocations.add(mockLocation);
+
+    assertEquals(mockLocations.get(0).getId(), mockLocation.getId());
+    assertEquals(mockLocations.get(0).getName(), mockLocation.getName());
+
+  }
+
+  @Test
+  void whenNotExistingLocationGetLocationById_throwException() {
+    Location mockNotExistingLocation = Mockito.mock(Location.class);
+    mockNotExistingLocation.setId(33L);
+
+    Mockito.when(locationRepository.findById(33L)).thenReturn(Optional.empty());
+    assertThrows(LocationNotFoundException.class, () -> locationService.getLocationById(33L));
+
   }
 
   @Test
