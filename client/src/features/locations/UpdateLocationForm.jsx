@@ -20,12 +20,6 @@ function UpdateLocationForm() {
 
   const navigate = useNavigate();
   const { tags } = useFetchTags();
-
-  const { handleNewTag, handleDeleteTag } = useTagHandlers(
-    location,
-    setLocation,
-    tags,
-  );
   const { handleOpeningHoursChange } = useOpeningHours(setLocation);
 
   useEffect(() => {
