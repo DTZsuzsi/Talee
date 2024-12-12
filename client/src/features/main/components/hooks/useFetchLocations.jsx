@@ -8,7 +8,6 @@ export function useFetchLocations() {
     const fetchData = async () => {
       try {
         const { data } = await axios.get(`/api/locations/all`);
-        console.log(data)
         setLocations(data);
       } catch (err) {
         console.error("Error fetching locations:", err);
@@ -16,9 +15,7 @@ export function useFetchLocations() {
     };
 
     fetchData();
-  }, []); 
+  }, []);
 
   return { locations };
 }
-
-

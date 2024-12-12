@@ -1,19 +1,30 @@
-import Divider from "../atoms/Divider";
 import Reviews from "../atoms/Reviews";
+
 const HomeCard = ({ title, href, description, date }) => {
   return (
-    <a className="w-full" href={href}>
-      <Divider />
-      <div className="flex justify-between w-full p-3">
-        <div className="min-w-fit">
-          <img src="https://picsum.photos/200" alt="" />
+    <a
+      className="block w-full bg-light-secondaryBg dark:bg-dark-secondaryBg shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300"
+      href={href}
+    >
+      <div className="flex flex-col md:flex-row items-start p-4 gap-4">
+        {/* Image Section */}
+        <div className="flex-shrink-0 w-full md:w-48">
+          <img
+            src="https://picsum.photos/200"
+            alt={title}
+            className="w-full h-48 object-cover rounded-lg"
+          />
         </div>
-        <div className="w-full max-w-lg flex flex-col items-center gap-y-4">
-          <h2 className="text-xl font-bold mx-8">{title}</h2>
+
+        {/* Content Section */}
+        <div className="flex flex-col justify-between w-full gap-y-3">
+          <div className="flex justify-between items-center">
+            <h2 className="text-lg md:text-xl font-bold text-right">{title}</h2>
+            <p className="text-lg font-semibold text-left">{date}</p>
+          </div>
           <Reviews />
-          <p>{date}</p>
+          <p className="text-md md:text-base">{description}</p>
         </div>
-        <p className="w-full max-w-sm">{description}</p>
       </div>
     </a>
   );

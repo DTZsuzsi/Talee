@@ -11,54 +11,44 @@ import { useFetchEvents } from "../hooks/useFetchEvents.jsx";
 const Home = () => {
   const { darkMode, setDarkMode } = useTheme();
   const [mode, setMode] = useState(darkMode ? "events" : "locations");
-  const [loading, setLoading] = useState(false);
-  const {locations}=useFetchLocations();
-  const {events}=useFetchEvents();
+  const { locations } = useFetchLocations();
+  const { events } = useFetchEvents();
 
-  function setEventState() {
-    setMode("events");
-    setDarkMode(true);
-  }
+  const handleModeChange = (newMode) => {
+    setMode(newMode);
+    setDarkMode(newMode === "events");
+  };
 
-  function setLocationState() {
-    setMode("locations");
-    setDarkMode(false);
-  }
-
-  // Render event cards
-  let eventCards = [];
-  if (events) {
-    eventCards = events?.map((event) => (
-      <div key={event.id}>
-        <HomeCard
-          key={event.id}
-          title={event.name}
-          href={`/events/${event.id}`}
-          description={event.description}
-          date={event.date}
-        />
-      </div>
+  const renderEventCards = () => {
+    if (!events || events.length === 0) return <p>No events available</p>;
+    return events.map((event) => (
+      <HomeCard
+        key={event.id}
+        title={event.name}
+        href={`/events/${event.id}`}
+        description={event.description}
+        date={event.date}
+      />
     ));
-  }
+  };
 
-  let locationCards = [];
-  if (locations)
-    locationCards = locations.map((location) => (
-      <div key={location.id}>
+  const renderLocationCards = () => {
+    if (!locations || locations.length === 0)
+      return <p>No locations available</p>;
+    return locations.map((location) => (
+      <div key={location.id} className="mb-6">
         <HomeCard
           title={location.name}
           href={`/locations/${location.id}`}
           description={location.description}
           date={location.date}
-        ></HomeCard>
-        <ul className="flex flex-wrap justify-around">
+        />
+        <ul className="flex flex-wrap justify-around mt-4">
           {location.locationTags?.map((tag) => (
             <li key={tag.id} className="mx-auto">
               <TagCard
                 tag={tag}
-                onClick={() => {
-                  console.log("hi");
-                }}
+                onClick={() => console.log(tag.name)}
                 color={tag.color}
               />
             </li>
@@ -66,37 +56,34 @@ const Home = () => {
         </ul>
       </div>
     ));
+  };
 
   return (
     <div className="w-full mx-auto p-4">
       <div className="flex flex-col items-center">
         <div className="w-full max-w-sm">
-          <div className="h-20 flex items-center">
+          <div className="h-20 flex items-center justify-between">
             <StateChangeButton
-              onClick={setEventState}
+              onClick={() => handleModeChange("events")}
               active={mode === "events"}
             >
               Events
             </StateChangeButton>
             <StateChangeButton
-              onClick={setLocationState}
+              onClick={() => handleModeChange("locations")}
               active={mode === "locations"}
             >
               Locations
             </StateChangeButton>
           </div>
         </div>
-        <div className="grow">
+        <div className="grow w-full">
           <h1 className="text-3xl font-bold my-5 text-center">
             {mode === "events" ? "Events" : "Locations"}
           </h1>
-          {loading ? (
-            <Loading />
-          ) : (
-            <div className="flex w-full flex-col">
-              {mode === "events" ? eventCards : locationCards}
-            </div>
-          )}
+          <div className="flex flex-col gap-4">
+            {mode === "events" ? renderEventCards() : renderLocationCards()}
+          </div>
         </div>
       </div>
     </div>
