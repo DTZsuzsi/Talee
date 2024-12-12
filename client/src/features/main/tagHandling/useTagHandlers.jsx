@@ -1,6 +1,6 @@
 export function useTagHandlers( partName, setter, tags ) {
     function handleNewTag(e) {
-      const selectedTagName = e.target.value;
+        const selectedTagName = e.target.value;
       const tagToAdd = tags?.find((tag) => tag.name === selectedTagName);
   
       if (!tagToAdd) {

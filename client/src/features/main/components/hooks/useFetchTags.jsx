@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import axios from "axios";
+import axiosInstance from "../../../../axiosInstance.jsx";
 
-export function useFetchTags() {
+  function useFetchTags() {
   const [tags, setTags] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -13,7 +14,7 @@ export function useFetchTags() {
       setLoading(true);
       try {
         const [tagResponse] = await Promise.all([
-          axios.get(`/api/tags`)
+          axiosInstance.get(`/tags`)
         ]);
 
         setTags(tagResponse.data);
@@ -31,3 +32,5 @@ export function useFetchTags() {
 
   return { tags };
 }
+export default useFetchTags;
+

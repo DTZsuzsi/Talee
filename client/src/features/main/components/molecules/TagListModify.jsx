@@ -12,7 +12,7 @@ function TagListModify({ partName, setter, tags }) {
     <div className="mt-6">
       <TagOptions onChange={(e) => handleNewTag(e)} />
       <ul className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        {partName.tags.map((tag) => (
+        {partName.tags?.map((tag) => (
           <li key={tag.id}>
             <TagCard
               tag={tag}
