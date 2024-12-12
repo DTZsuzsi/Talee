@@ -7,6 +7,7 @@ import com.codecool.model.users.UserEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -31,16 +32,14 @@ public class Location {
   private UserEntity adminUser;
 
 
-  @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE)
+  @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<OpeningHours> openingHours;
 
+
   @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-  private List<Event> events;
+  private List<Event> events = new ArrayList<>();
 
-
-  private String description;
-
-  @ManyToMany( fetch = FetchType.EAGER)
+  @ManyToMany( fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
   @JoinTable(
           name = "location_tag",
           joinColumns = @JoinColumn(name = "location_id"),
@@ -48,6 +47,7 @@ public class Location {
   )
   private Set<Tag> tags;
 
+  private String description;
 
   public boolean addEvent(Event event) {
     return events.add(event);

@@ -26,8 +26,8 @@ public class Event {
     private String name;
     private String description;
 
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "location_id")
     private Location location;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
@@ -37,9 +37,12 @@ public class Event {
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private Set<UserEntity> users;
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     private UserEntity owner;
+
     private String size;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "event_tag",
@@ -47,8 +50,8 @@ public class Event {
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private Set<Tag> tags;
-    private String status;
 
+    private String status;
 
     public Event(long id, LocalDate date, String name, String description, Location location, Set<UserEntity> users, UserEntity owner, String size, Set<Tag> tags, String status) {
 
