@@ -1,11 +1,14 @@
 package com.codecool.service;
 
 import com.codecool.DTO.location.LocationDTO;
+import com.codecool.DTO.location.NewLocationDTO;
 import com.codecool.exception.LocationNotFoundException;
 import com.codecool.mapper.LocationMapper;
 import com.codecool.mapper.TagMapper;
 import com.codecool.mapper.UserMapper;
 import com.codecool.model.locations.Location;
+import com.codecool.model.users.Role;
+import com.codecool.model.users.UserEntity;
 import com.codecool.repository.LocationRepository;
 import com.codecool.repository.RoleRepository;
 import com.codecool.repository.TagCategoryRepository;
@@ -112,12 +115,33 @@ class LocationServiceTest {
   }
 
   @Test
-  void addLocation() {
+  void whenLoggedInUserAddLocation_returnsSavedLocationsId() {
+    NewLocationDTO newLocationDTO = Mockito.mock(NewLocationDTO.class);
+    Mockito.when(newLocationDTO.name()).thenReturn("New Location");
+    String mockToken = "valid.token";
+    String mockUserName = "valid.username";
+    Mockito.when(jwtUtils.getUsernameFromJwtToken(mockToken)).thenReturn(mockUserName);
+
+    UserEntity mockUser = Mockito.mock(UserEntity.class);
+    Mockito.when(userRepository.findByUsername(mockUserName)).thenReturn(Optional.of(mockUser));
+
+    Role locationOwnerRole = Mockito.mock(Role.class);
+    locationOwnerRole.setId(1L);
+    locationOwnerRole.setName("ROLE_LOCATION_OWNER");
+    Mockito.when(roleRepository.findByName("ROLE_LOCATION_OWNER")).thenReturn(Optional.of(locationOwnerRole));
+
+    Location savedMockLocation = Mockito.mock(Location.class);
+    Mockito.when(savedMockLocation.getId()).thenReturn(3L);
+    Mockito.when(locationRepository.save(Mockito.any(Location.class))).thenReturn(savedMockLocation);
+
+    long savedId = locationService.addLocation(newLocationDTO, mockToken);
+    assertEquals(savedMockLocation.getId(), savedId);
+
+
   }
 
-  @Test
-  void deleteLocation() {
-  }
+
+
 
   @Test
   void addTagToLocation() {
