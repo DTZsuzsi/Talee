@@ -19,6 +19,9 @@ function ActionButtons({ id, partName }) {
     setLoading(true);
     setDeleteError(null);
     try {
+
+      //s ne legyen
+
       const response = await axiosInstance.delete(`/${partName}s/${id}`);
       if (response.status === 200) {
         console.log("deleted");

@@ -1,3 +1,5 @@
+//ezeket még refaktorálni kell, tagChange ne legyen, setTag-t állítsuk újra
+
 import { useState, useEffect } from "react";
 import InputField from "../main/components/atoms/InputField";
 import { Link } from "react-router-dom";
@@ -31,6 +33,8 @@ function AllTagCategoriesPage(){
         })
         const data= await response.json();
         console.log(data);
+
+        //fetchTags()-t hívjuk meg újra
         setChange(true);
     }
 
