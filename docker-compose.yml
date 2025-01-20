@@ -1,0 +1,48 @@
+version: '3.9'
+
+services:
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_DB=talee_db
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 20s
+      timeout: 10s
+      retries: 10
+
+  app:
+    depends_on:
+      db:
+        condition: service_healthy
+    image: talee-app:latest
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: app
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/talee_db
+      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - codecool.app.jwtSecret=${jwtSecret}
+      - codecool.app.jwtExpirationMs=${jwtExpirationMs}
+    ports:
+      - "8080:8080" # Add this if your app exposes a port
+
+  frontend:
+    depends_on:
+      - app
+    image: talee-frontend:latest
+    ports:
+      - "80:80"
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: frontend
