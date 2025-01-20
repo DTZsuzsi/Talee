@@ -1,3 +1,6 @@
+//vagy a név nem jó, vagy a state-t is ő hozza létre
+
+
 export function useTagHandlers( partName, setter, tags ) {
     function handleNewTag(e) {
         const selectedTagName = e.target.value;

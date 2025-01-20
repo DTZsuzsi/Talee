@@ -1,6 +1,6 @@
 import InputField from "../main/components/atoms/InputField";
 //import { Button } from "@headlessui/react";
-import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
+import {AdvancedMarker, APIProvider, Map, Marker} from "@vis.gl/react-google-maps";
 
 function GoogleMapComponent({position, setPosition, address, setAddress}){
 
@@ -36,7 +36,8 @@ return (
     </form>
     </div>
 
-    <APIProvider 
+    <APIProvider
+        //not good
       apiKey="AIzaSyCpdQIVDmlFx3hXi3tz6DN59hXWMJEqLOU"  
       onLoad={() => console.log('Maps API has loaded.')}
     >
@@ -45,7 +46,7 @@ return (
           zoom={13}
           center={position}  
         >
-			<Marker position={position} />
+			<AdvancedMarker position={position} map={1}/>
 			</Map>
       </div>
     </APIProvider>

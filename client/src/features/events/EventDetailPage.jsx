@@ -12,6 +12,8 @@ import EventJoinButton from "./components/EventJoinButton.jsx";
 
 function EventDetailPage() {
   const { eventId } = useParams();
+
+  //setloadingot ne csináljuk, ez nem szép megoldás
   const { event, error, loading, setLoading, owner } =
     useFetchEventData(eventId);
 
@@ -47,6 +49,9 @@ function EventDetailPage() {
               <p className="text-2xl font-semibold text-center">
                 You need to log in to join this event!
               </p>
+            ) : (
+              <EventJoinButton setLoading={setLoading} eventId={eventId} />
+                //callbackel onjoin oldjuk meg
             )}
           </div>
         </div>

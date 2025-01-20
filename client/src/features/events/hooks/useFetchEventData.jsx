@@ -1,3 +1,6 @@
+//csináljunk általános getes hookot, load, error, data
+
+
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../axiosInstance.jsx";
 

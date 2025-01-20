@@ -8,16 +8,21 @@ function UserDetailPage() {
     useEffect(() => {
         async function fetchUser() {
             if (!userId) {
+
+                //nem szerencsés ez az állítás
                 console.error('User ID is undefined');
                 return;
             }
 
+            //ez is axios
             const response = await fetch(`/api/users/${userId}`);
 
             if (response.ok) {
                 const data = await response.json();
                 setUser(data);
             }
+
+            //legyen else, bár axiosnak nem kell
         }
 
         fetchUser();

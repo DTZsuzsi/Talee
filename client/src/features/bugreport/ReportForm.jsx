@@ -1,5 +1,7 @@
 /** @format */
 
+//loadingra és errorra csinálhatunk usePost custom hookot, vagy itt írjuk át, mindenesetre itt loading nem jó
+
 import { useState } from "react";
 import Loading from "../main/components/atoms/Loading";
 import axiosInstance from "../../axiosInstance.jsx";
