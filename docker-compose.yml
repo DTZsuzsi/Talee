@@ -37,6 +37,8 @@ services:
       - "8080:8080" # Add this if your app exposes a port
 
   frontend:
+    depends_on:
+      - app
     image: talee-frontend:latest
     ports:
       - "80:80"
