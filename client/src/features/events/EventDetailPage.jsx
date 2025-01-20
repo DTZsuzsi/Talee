@@ -35,12 +35,18 @@ function EventDetailPage() {
           </div>
 
           <div className="flex items-center justify-end">
-            {event?.users?.some((u) => u.username === user.username) ? (
-              <p className="text-2xl font-semibold text-center">
-                You joined this event!
-              </p>
+            {user?.username ? (
+              event?.users?.some((u) => u.username === user.username) ? (
+                <p className="text-2xl font-semibold text-center">
+                  You joined this event!
+                </p>
+              ) : (
+                <EventJoinButton setLoading={setLoading} eventId={eventId} />
+              )
             ) : (
-              <EventJoinButton setLoading={setLoading} eventId={eventId} />
+              <p className="text-2xl font-semibold text-center">
+                You need to log in to join this event!
+              </p>
             )}
           </div>
         </div>
