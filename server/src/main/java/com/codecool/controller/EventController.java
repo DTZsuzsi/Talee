@@ -3,7 +3,6 @@ package com.codecool.controller;
 import com.codecool.DTO.event.EventDTO;
 import com.codecool.DTO.event.NewEventDTO;
 import com.codecool.DTO.tag.TaginFrontendDTO;
-import com.codecool.DTO.user.UserInEventDTO;
 import com.codecool.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

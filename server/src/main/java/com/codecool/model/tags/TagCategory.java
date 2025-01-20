@@ -2,13 +2,13 @@ package com.codecool.model.tags;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class TagCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +24,4 @@ public class TagCategory {
         this.color = color;
     }
 
-    public TagCategory() {
-    }
 }

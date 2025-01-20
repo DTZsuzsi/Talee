@@ -8,7 +8,6 @@ import java.util.List;
 
 @Repository
 public interface TagRepository extends JpaRepository<Tag, Long> {
-    Tag findById(long id);
     List<Tag>findByTagCategoryId(long tagCategoryId);
     Tag findByName(String name);
 }

@@ -4,6 +4,7 @@ import com.codecool.model.tags.Tag;
 import com.codecool.model.locations.Location;
 import com.codecool.model.users.UserEntity;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,8 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class Event {
     @Id

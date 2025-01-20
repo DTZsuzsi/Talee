@@ -6,6 +6,7 @@ import com.codecool.model.users.UserEntity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +14,12 @@ import java.util.Set;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Location {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
   private String name;
-//  private ContactInfo contactInfo;
   private String address;
   private double latitude;
   private double longitude;
@@ -48,39 +49,6 @@ public class Location {
   private Set<Tag> tags;
 
   private String description;
-
-  public boolean addEvent(Event event) {
-    return events.add(event);
-  }
-
-  public boolean addOpeningHours(OpeningHours openingHours) {
-    return this.openingHours.add(openingHours);
-  }
-
-  public void addTag(Tag tag) {
-    tags.add(tag);
-  }
-
-  public Location() {
-  }
-
-  public Location(long id, String name, String address, String phone, String email, String website, String facebook, String instagram, UserEntity adminUser, List<OpeningHours> openingHours, List<Event> events, String description, Set<Tag> tags, double latitude, double longitude) {
-    this.id = id;
-    this.name = name;
-    this.address = address;
-    this.phone = phone;
-    this.email = email;
-    this.website = website;
-    this.facebook = facebook;
-    this.instagram = instagram;
-    this.adminUser = adminUser;
-    this.openingHours = openingHours;
-    this.events = events;
-    this.description = description;
-    this.tags = tags;
-    this.latitude = latitude;
-    this.longitude = longitude;
-  }
 
   public Location(long id, String name){
     this.id = id;

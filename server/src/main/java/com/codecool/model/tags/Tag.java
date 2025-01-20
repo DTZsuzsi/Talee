@@ -2,9 +2,11 @@ package com.codecool.model.tags;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,10 +16,6 @@ public class Tag {
     @ManyToOne
     @JoinColumn(name="tag_category_id")
     private TagCategory tagCategory;
-
-
-    public Tag() {
-    }
 
     public Tag(String name, TagCategory category) {
         this.name = name;

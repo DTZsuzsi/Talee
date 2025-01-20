@@ -55,8 +55,6 @@ public class AuthController {
   @PostMapping("/register")
   public ResponseEntity<RegistrationDTO> register(@RequestBody CredentialsDTO credentials) {
     logger.info(String.valueOf(credentials));
-//      if (userRepository.existsByEmail(credentials.email())) {
-//      return new ResponseEntity<>(new RegistrationDTO("There is already an account with this email!"), HttpStatus.BAD_REQUEST);
     if (userRepository.existsByUsername(credentials.username())) {
       return new ResponseEntity<>(new RegistrationDTO("Username is taken!"), HttpStatus.BAD_REQUEST);
     }
@@ -64,7 +62,6 @@ public class AuthController {
     UserEntity user = new UserEntity();
     user.setUsername(credentials.username());
     user.setPassword(passwordEncoder.encode(credentials.password()));
-
     Role role = roleRepository.findByName("ROLE_USER").get();
     user.setRoles(Set.of(role));
     userRepository.save(user);
