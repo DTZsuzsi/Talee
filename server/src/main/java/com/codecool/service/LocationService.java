@@ -2,7 +2,6 @@ package com.codecool.service;
 
 
 import com.codecool.DTO.location.*;
-import com.codecool.DTO.tag.TaginFrontendDTO;
 import com.codecool.DTO.user.UserDTO;
 import com.codecool.exception.LocationNotFoundException;
 import com.codecool.mapper.LocationMapper;
@@ -11,7 +10,6 @@ import com.codecool.mapper.UserMapper;
 import com.codecool.model.locations.Location;
 import com.codecool.model.locations.OpeningHours;
 import com.codecool.model.tags.Tag;
-import com.codecool.model.tags.TagCategory;
 import com.codecool.model.users.Role;
 import com.codecool.model.users.UserEntity;
 import com.codecool.repository.*;
