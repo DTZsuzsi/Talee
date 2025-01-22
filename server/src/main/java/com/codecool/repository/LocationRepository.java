@@ -11,4 +11,5 @@ import java.util.List;
 public interface LocationRepository extends JpaRepository<Location, Long> {
     long deleteLocationById(long id);
     List<Location> findAllByTagsContaining(Tag tag);
+    Location findLocationByNameAndAddress(String name, String address);
 }

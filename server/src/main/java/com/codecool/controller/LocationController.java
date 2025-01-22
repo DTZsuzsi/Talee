@@ -54,13 +54,7 @@ public class LocationController {
     return locationService.updateLocation(location);
   }
 
-
-
-  @DeleteMapping("/tag/{locationId}")
-  @PreAuthorize("hasRole('LOCATION_OWNER')")
-  public boolean deleteTag(@PathVariable long locationId, @RequestParam int tagId) {
-    return locationService.deleteTagFromLocation(locationId, tagId);
-  }
+  
 
   @GetMapping("/tagsfilter/{tagName}")
   public List<LocationDTO> getLocationsByTagName(@PathVariable String tagName) {
