@@ -2,6 +2,7 @@ package com.codecool.mapper;
 
 import com.codecool.DTO.location.LocationDTO;
 import com.codecool.DTO.location.LocationInEventDTO;
+import com.codecool.DTO.location.LocationWithoutOpeningHoursDTO;
 import com.codecool.DTO.location.NewLocationDTO;
 import com.codecool.model.locations.Location;
 import org.mapstruct.Mapper;
@@ -19,7 +20,9 @@ public interface LocationMapper {
     LocationInEventDTO locationToLocationInEventDTO(Location location);
 
     Location locationInEventDTOToLocation(LocationInEventDTO locationInEventDTO);
+
     LocationDTO locationToLocationDTO(Location location);
 
+    LocationWithoutOpeningHoursDTO locationToLocationWithoutOpeningHoursDTO(Location location);
 
 }

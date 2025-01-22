@@ -77,9 +77,11 @@ public class LocationService {
     return locationDTO;
   }
 
-  //TODO check if there is already a location with that name and specific other details? (eg. address),
-  // after saving the location call addOpeningHours method to add the openinghours
   public long addLocation(NewLocationDTO location, String token) {
+    if (locationRepository.findLocationByNameAndAddress(location.name(), location.address()) != null) {
+      throw new RuntimeException("Sorry, already existing the location");
+    }
+    else {
     Location newLocation = locationMapper.newLocationDTOToLocation(location);
     String currentUserName = jwtUtils.getUsernameFromJwtToken(token);
     UserEntity currentUser = userRepository.findByUsername(currentUserName).get();
@@ -88,24 +90,14 @@ public class LocationService {
     currentUserRoles.add(locationOwnerRole);
     currentUser.setRoles(currentUserRoles);
     newLocation.setAdminUser(currentUser);
-
     UserDTO updatedUserDTO = userMapper.userToUserDTO(currentUser);
     userService.modifyUser(updatedUserDTO);
 
     Location savedLocation = locationRepository.save(newLocation);
 
-    for (NewOpeningHoursWithoutLocationDTO newOpeningHours : location.openingHours()) {
-      LocationWithoutOpeningHoursDTO locationWithoutOpeningHoursDTO = createLocationWithoutOpeningHoursDTO(savedLocation);
-      NewOpeningHoursDTO newOpeningHoursDTO = new NewOpeningHoursDTO(
-              newOpeningHours.day(),
-              newOpeningHours.openingTime(),
-              newOpeningHours.closingTime(),
-              locationWithoutOpeningHoursDTO
-      );
-      openingHoursService.addNewOpeningHours(newOpeningHoursDTO);
-    }
-
-    return savedLocation.getId();
+    List<NewOpeningHoursDTO> newOpeningHoursDTOList=location.openingHours().stream().map(openingHoursMapper::openingHourstoNewOpeningHoursDTO).collect(Collectors.toList());
+    newOpeningHoursDTOList.forEach(openingHoursDTO -> {openingHoursService.addNewOpeningHours(openingHoursDTO);});
+    return savedLocation.getId();}
   }
 
   @Transactional
@@ -116,10 +108,7 @@ public class LocationService {
 
   public boolean updateLocation(LocationDTO location) {
     Location existingLocation = locationRepository.findById(location.id()).get();
-       //     .orElseThrow(() -> new LocationNotFoundException(location.id()));
-
     Set<Tag> tags = location.tags().stream().map(tagMapper::tagInFrontendDTOsToTag).collect(Collectors.toSet());
-
     existingLocation.setName(location.name());
     existingLocation.setTags(tags);
     existingLocation.setAddress(location.address());
@@ -127,7 +116,6 @@ public class LocationService {
     existingLocation.setEmail(location.email());
     existingLocation.setDescription(location.description());
     List<OpeningHoursDTO> updatedOpeningHours = location.openingHours();
-
     List<OpeningHours> existingOpeningHours = existingLocation.getOpeningHours();
 
     if (updatedOpeningHours.isEmpty()) {
@@ -153,26 +141,12 @@ public class LocationService {
   }
 
   private NewOpeningHoursDTO createNewOpeningHoursDTO(OpeningHoursDTO newHours, Location existingLocation) {
-    LocationWithoutOpeningHoursDTO locationWithoutOpeningHoursDTO = createLocationWithoutOpeningHoursDTO(existingLocation);
-
+    LocationWithoutOpeningHoursDTO locationWithoutOpeningHoursDTO = locationMapper.locationToLocationWithoutOpeningHoursDTO(existingLocation);
     return new NewOpeningHoursDTO(
             newHours.day(),
             newHours.openingTime(),
             newHours.closingTime(),
             locationWithoutOpeningHoursDTO
-    );
-  }
-
-  private LocationWithoutOpeningHoursDTO createLocationWithoutOpeningHoursDTO(Location existingLocation) {
-    return new LocationWithoutOpeningHoursDTO(
-            existingLocation.getId(),
-            existingLocation.getName(),
-            existingLocation.getAddress(),
-            existingLocation.getPhone(),
-            existingLocation.getEmail(),
-            existingLocation.getDescription(),
-            userMapper.userToUserDTO(existingLocation.getAdminUser()
-                    ),existingLocation.getLatitude(), existingLocation.getLongitude()
     );
   }
 
