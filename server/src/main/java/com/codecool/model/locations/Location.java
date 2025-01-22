@@ -37,10 +37,12 @@ public class Location {
   private List<OpeningHours> openingHours;
 
 
-  @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+  @OneToMany(mappedBy = "location", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
   private List<Event> events = new ArrayList<>();
 
-  @ManyToMany( fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+
+  @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.DETACH})
+
   @JoinTable(
           name = "location_tag",
           joinColumns = @JoinColumn(name = "location_id"),

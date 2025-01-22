@@ -136,7 +136,7 @@ public class LocationService {
         }
       }
     }
-
+    System.out.println();
     return locationRepository.save(existingLocation).getId() != 0;
   }
 
