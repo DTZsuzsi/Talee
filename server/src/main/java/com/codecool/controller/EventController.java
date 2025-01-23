@@ -2,8 +2,6 @@ package com.codecool.controller;
 
 import com.codecool.DTO.event.EventDTO;
 import com.codecool.DTO.event.NewEventDTO;
-import com.codecool.DTO.tag.TaginFrontendDTO;
-import com.codecool.DTO.user.UserInEventDTO;
 import com.codecool.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -50,17 +48,6 @@ public class EventController {
         eventService.deleteEventById(eventId);
     }
 
-    @PostMapping("/tag/{eventId}")
-    @PreAuthorize("hasRole('EVENT_OWNER')")
-    public boolean addTagToEvent(@PathVariable long eventId, @RequestBody TaginFrontendDTO taginFrontendDTO) {
-        return eventService.addTagToEvent(eventId, taginFrontendDTO);
-    }
-
-    @DeleteMapping("/tag/{eventId}")
-    @PreAuthorize("hasRole('EVENT_OWNER')")
-    public boolean deleteTag(@PathVariable long eventId, @RequestParam int tagId) {
-        return eventService.deleteTagFromEvent(eventId, tagId);
-    }
 
     @PostMapping("/apply/{eventId}")
     public boolean userApplyToEvent(@PathVariable long eventId, @RequestHeader (name = "Authorization") String token) {
@@ -78,7 +65,7 @@ public class EventController {
 
     @GetMapping("/locations/{locationId}")
     public List<EventDTO> getEventsByLocation(@PathVariable long locationId) {
-        return eventService.findAllByLocationId(locationId);
+        return eventService.findAllEventsByLocationId(locationId);
     }
 
     @GetMapping("/tagsfilter/{tagName}")

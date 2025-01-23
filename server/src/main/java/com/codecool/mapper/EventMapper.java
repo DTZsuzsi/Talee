@@ -7,14 +7,13 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper//(componentModel = "spring")
+@Mapper
 public interface EventMapper {
     EventMapper INSTANCE = Mappers.getMapper(EventMapper.class);
     @Mapping(target = "tags", source = "tags")
     EventDTO eventToEventDTO(Event event);
     @Mapping(target = "tags", source = "tags")
     Event eventDTOToEvent(EventDTO eventDTO);
-    Event newEventDTOToEvent(NewEventDTO newEventDTO);
 
 
 

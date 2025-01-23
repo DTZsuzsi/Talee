@@ -43,16 +43,18 @@ public class OpeningHoursService {
   public long addNewOpeningHours(NewOpeningHoursDTO openingHoursPerDay) {
     OpeningHours newOpeningHoursPerDay = new OpeningHours();
     //TODO if existing location - source from DB -> throw exception if not found
-//    if (openingHoursPerDay.location() != null) {
+  if (openingHoursPerDay.location() != null) {
       Location existingLocation = locationRepository.findById(openingHoursPerDay.location().id())
               .orElseThrow(() -> new LocationNotFoundException(openingHoursPerDay.location().id())
               );
       newOpeningHoursPerDay.setDayOfWeek(openingHoursPerDay.day());
       newOpeningHoursPerDay.setOpeningTime(openingHoursPerDay.openingTime());
       newOpeningHoursPerDay.setClosingTime(openingHoursPerDay.closingTime());
-//      newOpeningHoursPerDay.setLocation(existingLocation);
-      return openingHoursRepository.save(newOpeningHoursPerDay).getId();
-//    }
+   newOpeningHoursPerDay.setLocation(existingLocation);
+
+
+  }
+    return openingHoursRepository.save(newOpeningHoursPerDay).getId();
 
   }
 

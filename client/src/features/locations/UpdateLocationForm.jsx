@@ -37,6 +37,7 @@ function UpdateLocationForm() {
   }, [locationId]);
 
   async function handleLocationUpdate(e) {
+    console.log(location);
     e.preventDefault();
     setLoading(true);
     try {

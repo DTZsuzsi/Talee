@@ -2,9 +2,6 @@ package com.codecool.model.reports;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +13,7 @@ public class Report {
     private long id;
     private String title;
     private String description;
-    @Enumerated(EnumType.STRING)  // Store ReportType as a String (e.g., "BUG" or "CONTENT")
+    @Enumerated(EnumType.STRING)
     private ReportType reportType;
     private boolean issued;
     private boolean solved;
