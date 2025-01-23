@@ -181,8 +181,6 @@ Run docker-compose down and then docker-compose up --build to restart services.
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
 * [React Icons](https://react-icons.github.io/react-icons/search)
 * [Axios](https://axios-http.com/docs/intro)
 
