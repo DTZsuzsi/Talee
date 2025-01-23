@@ -1,3 +1,16 @@
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a>
+    <img src="pictures/logo.svg" alt="Logo" width="80" height="80">
+  </a>
+<h1 align="center">Talee</h1>
+
+  <p align="center">
+    Your platform for discovering and hosting events in Budapest, with seamless friend invitations and event tagging!
+</p>
+</div>
+
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
@@ -24,9 +37,6 @@
   </ol>
 </details>
 
-
-# Talee
-
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 Talee is a website for searching and hosting events in Budapest.
@@ -36,23 +46,26 @@ All three components are containerized using Docker for easy deployment and scal
 We hope you will enjoy it!
 
 ### Built With
-- Backend: 
-  * [![SpringBoot][SpringBoot]][SpringBoot-url]
-- Database:
-  * [![PostgreSQL][PostgreSQL]][PostgreSQL-url]
-- Frontend:
-  * [![React][React.js]][React-url]
-  * [![Vite][Vite]][Vite-url]
-  * [![TailwindCSS][TailwindCSS]][TailwindCSS-url]
-- Containerization: Docker
-  * [![Docker][Docker]][Docker-url]
+- Backend:   
+  [![SpringBoot][SpringBoot]][SpringBoot-url]
+- Database:  
+  [![PostgreSQL][PostgreSQL]][PostgreSQL-url]
+- Frontend:  
+  [![React][React.js]][React-url] 
+  [![Vite][Vite]][Vite-url] 
+  [![TailwindCSS][TailwindCSS]][TailwindCSS-url]
+- Containerization:  
+  [![Docker][Docker]][Docker-url]
+  [![NGINX][NGINX]][NGINX-url]
 
 ### Contributors:
 
 - Molnár Mariann: https://github.com/MariannaMolnar
-- Pojbics Máté: https://github.com/matet2001 - matet2001@gmail.com
+- Pojbics Máté: https://github.com/matet2001 - matet2001@gmail.com  
+  [![LinkedIn][linkedin-shield]][linkedin-url]
 - dr. Ditrói-Tóth Zsuzsa: https://github.com/DTZsuzsi
 - Sárosdi Márton: https://github.com/mmarci96
+
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -75,37 +88,49 @@ Here you find the steps of the installation of our project:
     cd talee
     ```
 
-2. Configure environment variables
+### Installation
 
-    If you have postgresql installed then please change the credentials for the project. 
-    
-    Create a .env file in the root directory, and add the following environment variables:
+Here you find the steps of the installation of our project:
+1. Clone the repository
     ```
-    - DB_PASSWORD=yourpassword
-    - DB_USERNAME=yourusername
-    - jwtSecret=======================CodeCool=Spring===========================
-    - jwtExpirationMs=86400000
+    git clone https://github.com/DTZsuzsi/Talee.git
+    cd Talee
     ```
-    
-    Ensure that the values match your environment and security requirements.
+
+2. Configure Environment Variables
+
+   To set up your environment variables, simply copy and rename the `.env.example` file to `.env` in the root directory. You can do this using the following terminal command:
+
+    ```bash
+    cp .env.example .env
+    ```
+
+   Once copied, open the `.env` file and update the values to match your credentials and environment settings. For example:
+
+    ```plaintext
+    DB_PASSWORD=yourpassword
+    DB_USERNAME=yourusername
+    jwtSecret=======================CodeCool=Spring===========================
+    jwtExpirationMs=86400000
+    ```
+
+   Make sure that the credentials you provide are secure and appropriate for your environment.
+
 
 3. Run the project with Docker
 
-    Please enter in your terminal the following comment:
+   Please enter in your terminal the following comment:
     ````
     docker-compose up --build
     ````
 
-    This command will:
-   - Build and start the PostgreSQL database.
-   - Start the Spring Boot backend.
-   - Start the Vite React frontend.
+   This command will:
+    - Build and start the PostgreSQL database.
+    - Start the Spring Boot backend.
+    - Start the Vite React frontend.
 
    The services will be available at:
-
-   Frontend: http://localhost:5173
-
-   Backend: http://localhost:8080
+   http://localhost
 
 ### Usage
 
@@ -119,12 +144,12 @@ We have security on the website, not users just can see higlights from the websi
 
 This is the main page of the locations: 
 
-![Website Location Screenshot](screenshots/ScreenshotLocations.png)
+![Website Location Screenshot](pictures/ScreenshotLocations.png)
 
 
 This is the main page of the events: 
 
-![Website Event Screenshot](screenshots/ScreenshotEvents.png)
+![Website Event Screenshot](pictures/ScreenshotEvents.png)
 
 If you click to any box, you can see the details, you can edit and invite friends here too. 
 
@@ -176,5 +201,11 @@ Use this space to list resources you find helpful and would like to give credit 
 [TailwindCSS]: https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white
 [TailwindCSS-url]: https://tailwindcss.com/
 
-[Docker]: https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white
-[Docker-url]: https://tailwindcss.com/
+[Docker]: https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white
+[Docker-url]: https://www.docker.com/
+
+[NGINX]: https://img.shields.io/badge/NGINX-009639?style=for-the-badge&logo=nginx&logoColor=white
+[NGINX-url]: https://nginx.org/
+
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://www.linkedin.com/in/m%C3%A1t%C3%A9-pojbics/
