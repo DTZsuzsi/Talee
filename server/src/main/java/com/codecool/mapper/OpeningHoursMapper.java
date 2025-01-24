@@ -10,7 +10,6 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface OpeningHoursMapper {
     OpeningHoursMapper INSTANCE = Mappers.getMapper(OpeningHoursMapper.class);
-    OpeningHours openingHoursDTOtoOpeningHours(OpeningHoursDTO dto);
     OpeningHoursDTO openingHourstoOpeningHoursDTO(OpeningHours openingHours);
     NewOpeningHoursDTO openingHourstoNewOpeningHoursDTO(NewOpeningHoursWithoutLocationDTO openingHours);
 }

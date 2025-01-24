@@ -22,8 +22,6 @@ import java.util.stream.Collectors;
 public class UserDetailsServiceImpl implements UserDetailsService {
   private final UserRepository userRepository;
 
-  private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
-
   @Autowired
   public UserDetailsServiceImpl(UserRepository userRepository) {
     this.userRepository = userRepository;
@@ -39,8 +37,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             user.getPassword(),
             mapRolesToAuthorities(user.getRoles())
     );
-
-//    logger.info(newUser.toString(), newUser.getAuthorities());
     return newUser;
   }
 

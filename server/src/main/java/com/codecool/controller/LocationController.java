@@ -3,15 +3,12 @@ package com.codecool.controller;
 
 import com.codecool.DTO.location.LocationDTO;
 import com.codecool.DTO.location.NewLocationDTO;
-import com.codecool.DTO.tag.TaginFrontendDTO;
 import com.codecool.service.LocationService;
-import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/locations")

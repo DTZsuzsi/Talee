@@ -21,7 +21,7 @@ public interface LocationMapper {
 
     Location locationInEventDTOToLocation(LocationInEventDTO locationInEventDTO);
 
-    LocationDTO locationToLocationDTO(Location location);
+    //LocationDTO locationToLocationDTO(Location location);
 
     LocationWithoutOpeningHoursDTO locationToLocationWithoutOpeningHoursDTO(Location location);
 

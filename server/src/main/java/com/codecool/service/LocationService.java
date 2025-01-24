@@ -33,8 +33,8 @@ public class LocationService {
   private final LocationMapper locationMapper = LocationMapper.INSTANCE;
   private final UserMapper userMapper = UserMapper.INSTANCE;
   private final TagMapper tagMapper = TagMapper.INSTANCE;
-  private final EventMapper eventMapper=EventMapper.INSTANCE;
-  private final OpeningHoursMapper openingHoursMapper=OpeningHoursMapper.INSTANCE;
+  private final EventMapper eventMapper = EventMapper.INSTANCE;
+  private final OpeningHoursMapper openingHoursMapper = OpeningHoursMapper.INSTANCE;
   private final JWTUtils jwtUtils;
   private final UserRepository userRepository;
   private final TagRepository tagRepository;
@@ -62,17 +62,18 @@ public class LocationService {
             .toList();
   }
 
-  public List<LocationDTO> getLocationsByTag(String tagName){
-    Tag tag=tagRepository.findByName(tagName);
+  public List<LocationDTO> getLocationsByTag(String tagName) {
+    Tag tag = tagRepository.findByName(tagName);
     return locationRepository.findAllByTagsContaining(tag).stream().map(location -> getLocationById(location.getId())).collect(Collectors.toList());
   }
+
   public LocationDTO getLocationById(long id) {
     Location location = locationRepository.findById(id).orElseThrow(() -> new LocationNotFoundException(id));
-    Set<EventDTO> events=location.getEvents().stream().map(eventMapper::eventToEventDTO).collect(Collectors.toSet());
-    List<OpeningHoursDTO> openingHoursDTOs=location.getOpeningHours().stream().map(openingHoursMapper::openingHourstoOpeningHoursDTO).collect(Collectors.toList());
-    Set<TaginFrontendDTO> tags=location.getTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toSet());
-    LocationDTO locationDTO=new LocationDTO(id,location.getName(),location.getAddress(),location.getPhone(),location.getEmail(),location.getDescription(),
-            userMapper.userToUserDTO(location.getAdminUser()),openingHoursDTOs,tags,location.getLatitude(),location.getLongitude(),events);
+    Set<EventDTO> events = location.getEvents().stream().map(eventMapper::eventToEventDTO).collect(Collectors.toSet());
+    List<OpeningHoursDTO> openingHoursDTOs = location.getOpeningHours().stream().map(openingHoursMapper::openingHourstoOpeningHoursDTO).collect(Collectors.toList());
+    Set<TaginFrontendDTO> tags = location.getTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toSet());
+    LocationDTO locationDTO = new LocationDTO(id, location.getName(), location.getAddress(), location.getPhone(), location.getEmail(), location.getDescription(),
+            userMapper.userToUserDTO(location.getAdminUser()), openingHoursDTOs, tags, location.getLatitude(), location.getLongitude(), events);
 
     return locationDTO;
   }
@@ -80,24 +81,26 @@ public class LocationService {
   public long addLocation(NewLocationDTO location, String token) {
     if (locationRepository.findLocationByNameAndAddress(location.name(), location.address()) != null) {
       throw new RuntimeException("Sorry, already existing the location");
+    } else {
+      Location newLocation = locationMapper.newLocationDTOToLocation(location);
+      String currentUserName = jwtUtils.getUsernameFromJwtToken(token);
+      UserEntity currentUser = userRepository.findByUsername(currentUserName).get();
+      Set<Role> currentUserRoles = currentUser.getRoles();
+      Role locationOwnerRole = roleRepository.findByName("ROLE_LOCATION_OWNER").get();
+      currentUserRoles.add(locationOwnerRole);
+      currentUser.setRoles(currentUserRoles);
+      newLocation.setAdminUser(currentUser);
+      UserDTO updatedUserDTO = userMapper.userToUserDTO(currentUser);
+      userService.modifyUser(updatedUserDTO);
+
+      Location savedLocation = locationRepository.save(newLocation);
+
+      List<NewOpeningHoursDTO> newOpeningHoursDTOList = location.openingHours().stream().map(openingHoursMapper::openingHourstoNewOpeningHoursDTO).collect(Collectors.toList());
+      newOpeningHoursDTOList.forEach(openingHoursDTO -> {
+        openingHoursService.addNewOpeningHours(openingHoursDTO);
+      });
+      return savedLocation.getId();
     }
-    else {
-    Location newLocation = locationMapper.newLocationDTOToLocation(location);
-    String currentUserName = jwtUtils.getUsernameFromJwtToken(token);
-    UserEntity currentUser = userRepository.findByUsername(currentUserName).get();
-    Set<Role> currentUserRoles = currentUser.getRoles();
-    Role locationOwnerRole = roleRepository.findByName("ROLE_LOCATION_OWNER").get();
-    currentUserRoles.add(locationOwnerRole);
-    currentUser.setRoles(currentUserRoles);
-    newLocation.setAdminUser(currentUser);
-    UserDTO updatedUserDTO = userMapper.userToUserDTO(currentUser);
-    userService.modifyUser(updatedUserDTO);
-
-    Location savedLocation = locationRepository.save(newLocation);
-
-    List<NewOpeningHoursDTO> newOpeningHoursDTOList=location.openingHours().stream().map(openingHoursMapper::openingHourstoNewOpeningHoursDTO).collect(Collectors.toList());
-    newOpeningHoursDTOList.forEach(openingHoursDTO -> {openingHoursService.addNewOpeningHours(openingHoursDTO);});
-    return savedLocation.getId();}
   }
 
   @Transactional
@@ -149,11 +152,6 @@ public class LocationService {
             locationWithoutOpeningHoursDTO
     );
   }
-
-
-
-
-
 
 
 }
