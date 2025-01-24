@@ -6,12 +6,10 @@ const ProfileDropdown = ({ handleLogout }) => {
     const dropdownRef = useRef(null); // Ref for the dropdown menu
     const buttonRef = useRef(null);   // Ref for the toggle button
 
-    // Toggle the dropdown visibility
     const toggleDropdown = () => {
         setDropdownVisible(!isDropdownVisible);
     };
 
-    // Close dropdown when clicking outside
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (

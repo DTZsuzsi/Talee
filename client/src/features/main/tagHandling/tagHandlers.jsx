@@ -1,7 +1,6 @@
-//vagy a név nem jó, vagy a state-t is ő hozza létre
 
 
-export function useTagHandlers( partName, setter, tags ) {
+export function TagHandlers(partName, setter, tags ) {
     function handleNewTag(e) {
         const selectedTagName = e.target.value;
       const tagToAdd = tags?.find((tag) => tag.name === selectedTagName);

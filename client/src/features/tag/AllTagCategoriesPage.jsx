@@ -1,4 +1,3 @@
-//ezeket még refaktorálni kell, tagChange ne legyen, setTag-t állítsuk újra
 
 import { useState, useEffect } from "react";
 import InputField from "../main/components/atoms/InputField";

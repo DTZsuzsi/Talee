@@ -6,7 +6,6 @@ const AuthContext = createContext(null);
 
 export const useAuth = () => useContext(AuthContext);
 
-//ezt még esetleg írjuk át, JSON-t se érdemes csinálni tokenből és usernameből
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
