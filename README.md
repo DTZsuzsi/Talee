@@ -60,15 +60,23 @@ We hope you will enjoy it!
 
 ### Contributors:
 
-- Molnár Mariann: https://github.com/MariannaMolnar - molnarmariann91@gmail.com
-  [![LinkedIn][linkedin-shield]][linkedin-url-m]
-- Pojbics Máté: https://github.com/matet2001 - matet2001@gmail.com  
-  [![LinkedIn][linkedin-shield]][linkedin-url]
-- dr. Ditrói-Tóth Zsuzsa: https://github.com/DTZsuzsi
-  [![LinkedIn][linkedin-shield]][linkedin-url-d]
-- Sárosdi Márton: https://github.com/mmarci96
+- **Molnár Marianna** 
+    GitHub: https://github.com/MariannaMolnar
+    Email: molnarmariann91@gmail.com
+    [![LinkedIn][linkedin-shield]][linkedin-url-m]
+- **Pojbics Máté**
+    GitHub: https://github.com/matet2001
+    Email: matet2001@gmail.com
+    [![LinkedIn][linkedin-shield]][linkedin-url]
+- **dr. Ditrói-Tóth Zsuzsa** 
+    GitHub: https://github.com/DTZsuzsi
+    [![LinkedIn][linkedin-shield]][linkedin-url-d]
+- **Sárosdi Márton**
+    GitHub: https://github.com/mmarci96
+    Email: sarosdimarci@gmail.com
+    [![LinkedIn][linkedin-shield]][linkedin-url-ms]
 
-
+  
 <!-- GETTING STARTED -->
 ## Getting Started
 
@@ -204,3 +212,4 @@ Run docker-compose down and then docker-compose up --build to restart services.
 
 [linkedin-url-m]: https://www.linkedin.com/in/marianna-molnar-21956289
 [linkedin-url-d]: https://www.linkedin.com/in/zsuzsa-ditroi-toth-8b339a54/
+[linkedin-url-ms]: https://www.linkedin.com/in/maton-sarosdi
