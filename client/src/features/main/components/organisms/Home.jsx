@@ -13,7 +13,6 @@ import axiosInstance from "../../../../axiosInstance.jsx";
 const Home = () => {
   const { darkMode, setDarkMode } = useTheme();
 
-  //nevek nem szerencsések- routing vagy egy komponens két különre és mást renderel
   const [mode, setMode] = useState(darkMode ? "events" : "locations");
   const { locations, setLocations } = useFetchLocations();
   const { events, setEvents } = useFetchEvents();

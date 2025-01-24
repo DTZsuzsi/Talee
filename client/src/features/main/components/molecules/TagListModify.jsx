@@ -1,9 +1,9 @@
 import TagCard from "../../../tag/components/TagCard";
 import TagOptions from "../../../tag/components/TagOptions";
-import { useTagHandlers } from "../../tagHandling/useTagHandlers";
+import { TagHandlers } from "../../tagHandling/tagHandlers.jsx";
 
 function TagListModify({ partName, setter, tags }) {
-  const { handleNewTag, handleDeleteTag } = useTagHandlers(
+  const { handleNewTag, handleDeleteTag } = TagHandlers(
     partName,
     setter,
     tags,

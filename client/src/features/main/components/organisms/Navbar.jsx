@@ -12,10 +12,9 @@ import { useAuth } from "../../../auth/AuthContext.jsx";
 import ProfileMenu from "../molecules/ProfileMenu.jsx";
 
 const navigation = [
-  // { name: 'Add Event', href: '#', current: true },
+
   { name: "Add Location", href: "/locations/new", current: false },
-  // { name: 'Projects', href: '#', current: false },
-  // { name: 'Calendar', href: '#', current: false },
+
 ];
 
 function classNames(...classes) {

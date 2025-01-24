@@ -62,7 +62,6 @@ const ReportButton = () => {
 				onClick={handleButtonClick}
 				className='flex items-center justify-center p-1 bg-slate-600 text-white rounded-full shadow-lg'
 			>
-				{/* Conditional rendering of icons using React Icons */}
 				{isClicked ? (
 					<FaTimesCircle size={24} />
 				) : (
@@ -70,7 +69,6 @@ const ReportButton = () => {
 				)}
 			</button>
 
-			{/* Popup Modal */}
 			{showPopup && (
 				<div className='fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50'>
 					<div className='bg-white p-6 rounded-lg shadow-lg w-96'>
