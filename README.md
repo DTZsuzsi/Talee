@@ -116,12 +116,13 @@ Here you find the steps of the installation of our project:
     jwtExpirationMs=86400000
     ```
 
-   Make sure that the credentials you provide are secure and appropriate for your environment.
+   Make sure that the credentials you provide are secure and appropriate for your environment.  
+   The jwtSecret should be at least 64 characters long and cannot use "-" or "_". Alternatively, you can also generate one online: https://jwtsecret.com/generate.
 
 
 3. Run the project with Docker
 
-   Please enter in your terminal the following comment:
+   Please enter in your terminal the following command:
     ````
     docker-compose up --build
     ````
@@ -138,7 +139,7 @@ Here you find the steps of the installation of our project:
 
 Once the services are running, you can access the frontend to interact with the application and the backend API for examining purposes.
 
-We have security on the website, not users just can see higlights from the website. Once you made the login, you can also:
+We have security on the website, without logging in users are only able to see highlights of the website. Once you made the login, you can also:
 - add new location,
 - add new events (events are chained to locations, therefore you can find it there),
 - modify locations, events, including adding or deleting tags
@@ -153,7 +154,7 @@ This is the main page of the events:
 
 ![Website Event Screenshot](pictures/ScreenshotEvents.png)
 
-If you click to any box, you can see the details, you can edit and invite friends here too. 
+If you click on any box, you can see the details, you can edit and invite friends here too. 
 
 
 
