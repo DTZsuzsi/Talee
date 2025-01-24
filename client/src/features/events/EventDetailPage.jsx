@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useFetchEventData } from "./hooks/useFetchEventData.jsx";
 import ActionButtons from "../main/components/molecules/ActionButtons.jsx";
@@ -13,7 +12,7 @@ import EventJoinButton from "./components/EventJoinButton.jsx";
 function EventDetailPage() {
   const { eventId } = useParams();
 
-  //setloadingot ne csináljuk, ez nem szép megoldás
+
   const { event, error, loading, setLoading, owner } =
       useFetchEventData(eventId);
 
@@ -50,8 +49,7 @@ function EventDetailPage() {
                     You need to log in to join this event!
                   </p>
               )
-                //<EventJoinButton setLoading={setLoading} eventId={eventId} />
-            //callbackel onjoin oldjuk meg
+
             )}
           </div>
         </div>
