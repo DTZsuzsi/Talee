@@ -65,6 +65,7 @@ We hope you will enjoy it!
 - Pojbics Máté: https://github.com/matet2001 - matet2001@gmail.com  
   [![LinkedIn][linkedin-shield]][linkedin-url]
 - dr. Ditrói-Tóth Zsuzsa: https://github.com/DTZsuzsi
+  [![LinkedIn][linkedin-shield]][linkedin-url-d]
 - Sárosdi Márton: https://github.com/mmarci96
 
 
@@ -80,14 +81,6 @@ Before running the project, ensure you have the following installed:
 - Docker, you can install it from this link: https://docs.docker.com/engine/install/
 - Docker Compose, you can install it from this link: https://docs.docker.com/compose/install/
 
-### Installation
-
-Here you find the steps of the installation of our project:
-1. Clone the repository
-    ```
-    git clone https://github.com/your-repo/talee.git
-    cd talee
-    ```
 
 ### Installation
 
@@ -210,3 +203,4 @@ Run docker-compose down and then docker-compose up --build to restart services.
 [linkedin-url]: https://www.linkedin.com/in/m%C3%A1t%C3%A9-pojbics/
 
 [linkedin-url-m]: https://www.linkedin.com/in/marianna-molnar-21956289
+[linkedin-url-d]: https://www.linkedin.com/in/zsuzsa-ditroi-toth-8b339a54/
