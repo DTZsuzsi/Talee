@@ -207,3 +207,5 @@ Run docker-compose down and then docker-compose up --build to restart services.
 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/m%C3%A1t%C3%A9-pojbics/
+
+[linkedin-url]: https://www.linkedin.com/in/marianna-molnar-21956289
