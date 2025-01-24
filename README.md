@@ -60,7 +60,8 @@ We hope you will enjoy it!
 
 ### Contributors:
 
-- Molnár Mariann: https://github.com/MariannaMolnar
+- Molnár Mariann: https://github.com/MariannaMolnar - molnarmariann91@gmail.com
+  [![LinkedIn][linkedin-shield]][linkedin-url-m]
 - Pojbics Máté: https://github.com/matet2001 - matet2001@gmail.com  
   [![LinkedIn][linkedin-shield]][linkedin-url]
 - dr. Ditrói-Tóth Zsuzsa: https://github.com/DTZsuzsi
@@ -208,4 +209,4 @@ Run docker-compose down and then docker-compose up --build to restart services.
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/m%C3%A1t%C3%A9-pojbics/
 
-[linkedin-url]: https://www.linkedin.com/in/marianna-molnar-21956289
+[linkedin-url-m]: https://www.linkedin.com/in/marianna-molnar-21956289
