@@ -107,7 +107,7 @@ Here you find the steps of the installation of our project:
     cp .env.example .env
     ```
 
-   Once copied, open the `.env` file and update the values to match your credentials and environment settings. For example:
+   Once copied, you can open the .env file and update the values to match your credentials and environment settings, if desired. For example:
 
     ```plaintext
     DB_PASSWORD=yourpassword
@@ -116,7 +116,7 @@ Here you find the steps of the installation of our project:
     jwtExpirationMs=86400000
     ```
 
-   Make sure that the credentials you provide are secure and appropriate for your environment.  
+   Modifying the .env file is optional, but if you choose to do so, make sure that the credentials you provide are secure and appropriate for your environment.  
    The jwtSecret should be at least 64 characters long and cannot use "-" or "_". Alternatively, you can also generate one online: https://jwtsecret.com/generate.
 
 
