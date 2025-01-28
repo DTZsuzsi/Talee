@@ -22,9 +22,5 @@ public class GlobalExceptionHandler {
     public String handleLocationNotFoundException(LocationNotFoundException ex) {
         return ex.getMessage();
     }
-
-    @ExceptionHandler(OpeningHoursNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handleOpeningHoursNotFoundException(OpeningHoursNotFoundException ex) {return ex.getMessage();}
 }
 
