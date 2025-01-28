@@ -112,8 +112,8 @@ Here you find the steps of the installation of our project:
     ```plaintext
     DB_PASSWORD=yourpassword
     DB_USERNAME=yourusername
-    jwtSecret=======================CodeCool=Spring===========================
-    jwtExpirationMs=86400000
+    JWT_SECRET=======================CodeCool=Spring===========================
+    JWT_EXP=86400000
     ```
 
    Modifying the .env file is optional, but if you choose to do so, make sure that the credentials you provide are secure and appropriate for your environment.  
