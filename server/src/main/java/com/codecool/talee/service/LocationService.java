@@ -19,8 +19,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.toList;
-
 @Service
 public class LocationService {
 
@@ -88,7 +86,7 @@ public class LocationService {
     Location savedLocation = locationRepository.save(newLocation);
 
     location.openingHours().stream()
-            .map(openingHoursMapper::openingHourstoNewOpeningHoursDTO)
+            .map(openingHoursMapper::openingHoursToNewOpeningHoursDTO)
             .forEach(openingHoursService::addNewOpeningHours);
 
     return savedLocation.getId();

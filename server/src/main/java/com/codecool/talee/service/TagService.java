@@ -31,19 +31,17 @@ public class TagService {
                 .collect(Collectors.toList());
     }
 
-    public long addTag(TagDTO taginFrontendDTO) {
-       TagCategory tagCategory=tagCategoryRepository.findById(taginFrontendDTO.categoryId());
-        Tag newTag=new Tag(taginFrontendDTO.name(), tagCategory);
+    public long addTag(TagDTO tagInFrontendDTO) {
+       TagCategory tagCategory=tagCategoryRepository.findById(tagInFrontendDTO.categoryId());
+        Tag newTag=new Tag(tagInFrontendDTO.name(), tagCategory);
         return tagRepository.save(newTag).getId();
     }
 
     @Transactional
     public boolean deleteById(long id) {
-        if (tagRepository.existsById(id)) {
-            tagRepository.deleteById(id);
-            return true;
-        }
-        return false;
+        tagRepository.deleteById(id);
+        return true;
+
     }
 
 }

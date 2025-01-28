@@ -4,6 +4,6 @@ import com.codecool.talee.model.tags.TagCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TagCategoryRepository extends JpaRepository<TagCategory, Long> {
-TagCategory findById(long id);
+    TagCategory findById(long id);
 
 }
