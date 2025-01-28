@@ -22,13 +22,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig {
   private final JwtAuthEntryPoint jwtAuthEntryPoint;
   private final UserDetailsService userDetailsService;
-  private final JWTUtils jwtUtils;
 
   @Autowired
-  public WebSecurityConfig(JwtAuthEntryPoint jwtAuthEntryPoint, UserDetailsService userDetailsService, JWTUtils jwtUtils) {
+  public WebSecurityConfig(JwtAuthEntryPoint jwtAuthEntryPoint, UserDetailsService userDetailsService) {
     this.jwtAuthEntryPoint = jwtAuthEntryPoint;
     this.userDetailsService = userDetailsService;
-    this.jwtUtils = jwtUtils;
   }
 
   @Bean
@@ -41,8 +39,6 @@ public class WebSecurityConfig {
                     .requestMatchers("/api/events/tagsfilter/**").permitAll()
                     .requestMatchers("/api/auth/**", "/api/locations/all", "/api/locations/{id}",
                             "/api/events/{eventId}", "/api/events/locations/{locationId}", "/api/events/all").permitAll()
-                    .requestMatchers("/api/locations/**", "/api/events/**", "/api/events").authenticated()
-                    .requestMatchers(HttpMethod.GET).permitAll()
                     .anyRequest().authenticated()
             );
 
