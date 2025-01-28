@@ -1,7 +1,7 @@
 package com.codecool.DTO.event;
 
 import com.codecool.DTO.location.LocationInEventDTO;
-import com.codecool.DTO.tag.TaginFrontendDTO;
+import com.codecool.DTO.tag.TagInFrontendDTO;
 import com.codecool.DTO.user.UserInEventDTO;
 
 import java.time.LocalDate;
@@ -18,6 +18,6 @@ public record EventDTO(
         List<UserInEventDTO> users,
         UserInEventDTO owner,
         String size,
-        Set<TaginFrontendDTO> tags,
+        Set<TagInFrontendDTO> tags,
         String status) {
 }

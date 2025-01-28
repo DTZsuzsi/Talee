@@ -1,6 +1,6 @@
 package com.codecool.service;
 
-import com.codecool.DTO.tag.TaginFrontendDTO;
+import com.codecool.DTO.tag.TagInFrontendDTO;
 import com.codecool.mapper.TagMapper;
 import com.codecool.model.tags.Tag;
 import com.codecool.model.tags.TagCategory;
@@ -17,20 +17,21 @@ import java.util.stream.Collectors;
 public class TagService {
     private final TagRepository tagRepository;
     private final TagCategoryRepository tagCategoryRepository;
-    private final TagMapper tagMapper=TagMapper.INSTANCE;
+    private final TagMapper tagMapper = TagMapper.INSTANCE;
+
     @Autowired
     public TagService(TagRepository tagRepository, TagCategoryRepository tagCategoryRepository) {
         this.tagRepository = tagRepository;
         this.tagCategoryRepository = tagCategoryRepository;
     }
-    public List<TaginFrontendDTO> getAllTags() {
+
+    public List<TagInFrontendDTO> getAllTags() {
         return tagRepository.findAll().stream()
                 .map(tagMapper::tagToTaginFrontendDTO)
                 .collect(Collectors.toList());
     }
 
-
-    public long addTag(TaginFrontendDTO taginFrontendDTO) {
+    public long addTag(TagInFrontendDTO taginFrontendDTO) {
        TagCategory tagCategory=tagCategoryRepository.findById(taginFrontendDTO.categoryId());
         Tag newTag=new Tag(taginFrontendDTO.name(), tagCategory);
         return tagRepository.save(newTag).getId();

@@ -3,7 +3,7 @@ package com.codecool.service;
 import com.codecool.DTO.event.EventDTO;
 import com.codecool.DTO.event.NewEventDTO;
 import com.codecool.DTO.location.LocationInEventDTO;
-import com.codecool.DTO.tag.TaginFrontendDTO;
+import com.codecool.DTO.tag.TagInFrontendDTO;
 import com.codecool.DTO.user.UserInEventDTO;
 import com.codecool.mapper.EventMapper;
 import com.codecool.mapper.TagMapper;
@@ -48,7 +48,7 @@ public class EventService {
 
     public EventDTO getEventById(long id) {
         Event event = eventRepository.findEventById(id);
-        Set<TaginFrontendDTO> tags = event.getTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toSet());
+        Set<TagInFrontendDTO> tags = event.getTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toSet());
         List<UserInEventDTO> users = event.getUsers().stream().map(userEntity -> new UserInEventDTO(userEntity.getId(), userEntity.getUsername())).collect(Collectors.toList());
         EventDTO eventDTO = new EventDTO(event.getId(), event.getDate(), event.getName(), event.getDescription(), new LocationInEventDTO(event.getLocation().getId(), event.getLocation().getName(), event.getLocation().getLatitude(), event.getLocation().getLongitude()),
                 users, userMapper.userToUserInEventDTO(event.getOwner()), event.getSize(), tags, event.getStatus());
@@ -59,7 +59,6 @@ public class EventService {
 
     public long addEvent(NewEventDTO newEventDTO) {
         Location location = locationRepository.findById(newEventDTO.locationInEventDTO().locationId()).get();
-        System.out.println(newEventDTO.owner().toString());
         UserEntity eventOwner = userRepository.findById(newEventDTO.owner().id()).get();
         Set<UserEntity> users = Set.of(eventOwner);
         Event newEvent = new Event(newEventDTO.date(), newEventDTO.name(), newEventDTO.description(), location,

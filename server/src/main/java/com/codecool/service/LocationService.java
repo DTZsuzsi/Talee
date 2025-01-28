@@ -3,7 +3,7 @@ package com.codecool.service;
 
 import com.codecool.DTO.event.EventDTO;
 import com.codecool.DTO.location.*;
-import com.codecool.DTO.tag.TaginFrontendDTO;
+import com.codecool.DTO.tag.TagInFrontendDTO;
 import com.codecool.DTO.user.UserDTO;
 import com.codecool.exception.LocationNotFoundException;
 import com.codecool.mapper.*;
@@ -71,7 +71,7 @@ public class LocationService {
     Location location = locationRepository.findById(id).orElseThrow(() -> new LocationNotFoundException(id));
     Set<EventDTO> events = location.getEvents().stream().map(eventMapper::eventToEventDTO).collect(Collectors.toSet());
     List<OpeningHoursDTO> openingHoursDTOs = location.getOpeningHours().stream().map(openingHoursMapper::openingHourstoOpeningHoursDTO).collect(Collectors.toList());
-    Set<TaginFrontendDTO> tags = location.getTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toSet());
+    Set<TagInFrontendDTO> tags = location.getTags().stream().map(tagMapper::tagToTaginFrontendDTO).collect(Collectors.toSet());
     LocationDTO locationDTO = new LocationDTO(id, location.getName(), location.getAddress(), location.getPhone(), location.getEmail(), location.getDescription(),
             userMapper.userToUserDTO(location.getAdminUser()), openingHoursDTOs, tags, location.getLatitude(), location.getLongitude(), events);
 

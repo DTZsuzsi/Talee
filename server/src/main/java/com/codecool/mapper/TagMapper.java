@@ -1,6 +1,6 @@
 package com.codecool.mapper;
 
-import com.codecool.DTO.tag.TaginFrontendDTO;
+import com.codecool.DTO.tag.TagInFrontendDTO;
 import com.codecool.model.tags.Tag;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -13,11 +13,11 @@ public interface TagMapper {
 
     @Mapping(source = "tagCategory.id", target = "categoryId")
     @Mapping(source = "tagCategory.color", target = "color")
-    TaginFrontendDTO tagToTaginFrontendDTO(Tag tag);
+    TagInFrontendDTO tagToTaginFrontendDTO(Tag tag);
 
     @Mapping(target = "tagCategory.id", source = "categoryId")
     @Mapping(target = "tagCategory.color", source = "color")
-    Tag tagInFrontendDTOsToTag(TaginFrontendDTO taginFrontendDTO);
+    Tag tagInFrontendDTOsToTag(TagInFrontendDTO taginFrontendDTO);
 }
 
 
