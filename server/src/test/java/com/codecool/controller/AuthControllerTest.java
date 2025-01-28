@@ -20,61 +20,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-//@SpringBootTest
-//@AutoConfigureMockMvc
-//@ActiveProfiles("test")
-//class AuthControllerTest {
-//  @Autowired
-//  private MockMvc mockMvc;
-//
-//  private String userJson;
-//
-//  @Test
-//  void whenUsernameNotInDBAndPasswordSent_thenRegisterSuccessfully() throws Exception {
-//    userJson = """
-//            {
-//            "username": "testUser",
-//            "password": "password"
-//            }
-//            """;
-//
-//    mockMvc.perform(post("/api/auth/register")
-//            .contentType(MediaType.APPLICATION_JSON)
-//            .content(userJson))
-//            .andExpect(status().isCreated());
-//  }
-//
-//  @Test
-//  void whenUsernameInDBAndPasswordSent_thenBadRequestStatusReceived() throws Exception {
-//    userJson = """
-//            {
-//            "username": "matet",
-//            "password": "password"
-//            }
-//            """;
-//
-//    mockMvc.perform(post("/api/auth/register")
-//                    .contentType(MediaType.APPLICATION_JSON)
-//                    .content(userJson))
-//            .andExpect(status().isBadRequest());
-//  }
-//
-//  @Test
-//  void whenLoginWithValidCredentials_thenLoginSuccessfully() throws Exception {
-//    userJson = """
-//            {
-//            "username": "matet",
-//            "password": "admin"
-//            }
-//            """;
-//
-//    mockMvc.perform(post("/api/auth/login")
-//            .contentType(MediaType.APPLICATION_JSON)
-//            .content(userJson))
-//            .andExpect(status().isOk());
-//  }
-//}
-
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application-test.properties")
