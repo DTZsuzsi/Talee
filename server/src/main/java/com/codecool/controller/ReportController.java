@@ -6,6 +6,8 @@ import com.codecool.DTO.report.ReportResDTO;
 import com.codecool.model.reports.ReportType;
 import com.codecool.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,7 +39,7 @@ public class ReportController {
     }
 
     @PostMapping
-    public ReportResDTO addReport(@RequestBody ReportReqDTO reportDTO) {
-        return reportService.addReport(reportDTO);
+    public ResponseEntity<ReportResDTO> addReport(@RequestBody ReportReqDTO reportDTO) {
+        return new ResponseEntity<>(reportService.addReport(reportDTO), HttpStatus.CREATED);
     }
 }

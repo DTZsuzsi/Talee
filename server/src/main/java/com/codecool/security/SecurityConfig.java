@@ -3,7 +3,6 @@ package com.codecool.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -19,12 +18,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig {
+public class SecurityConfig {
   private final JwtAuthEntryPoint jwtAuthEntryPoint;
   private final UserDetailsService userDetailsService;
 
   @Autowired
-  public WebSecurityConfig(JwtAuthEntryPoint jwtAuthEntryPoint, UserDetailsService userDetailsService) {
+  public SecurityConfig(JwtAuthEntryPoint jwtAuthEntryPoint, UserDetailsService userDetailsService) {
     this.jwtAuthEntryPoint = jwtAuthEntryPoint;
     this.userDetailsService = userDetailsService;
   }
