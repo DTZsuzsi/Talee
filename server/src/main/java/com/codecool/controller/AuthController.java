@@ -83,6 +83,6 @@ public class AuthController {
     User userDetails = (User) authentication.getPrincipal();
     List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
 
-    return new ResponseEntity<>(new AuthResponseDTO(token, userDetails.getUsername(), roles), HttpStatus.OK);
+    return new ResponseEntity<>(new AuthResponseDTO(token, userDetails.getUsername(), roles, "User login successfully"), HttpStatus.OK);
   }
 }
