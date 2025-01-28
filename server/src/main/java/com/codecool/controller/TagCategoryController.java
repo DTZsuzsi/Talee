@@ -3,6 +3,8 @@ package com.codecool.controller;
 import com.codecool.DTO.tag.TagCategoryDTO;
 import com.codecool.service.TagCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,12 +25,12 @@ public class TagCategoryController {
     }
 
     @PostMapping
-    public long addTagCategory(@RequestBody TagCategoryDTO tagCategoryDTO) {
-        return tagCategoryService.createNewTagCategory(tagCategoryDTO);
+    public ResponseEntity<Long> addTagCategory(@RequestBody TagCategoryDTO tagCategoryDTO) {
+        return new ResponseEntity<>(tagCategoryService.createNewTagCategory(tagCategoryDTO), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{categoryId}")
-    public boolean deleteTagCategory(@PathVariable long categoryId) {
+    public Boolean deleteTagCategory(@PathVariable long categoryId) {
         return tagCategoryService.deleteCategoryById(categoryId);
     }
 }
