@@ -28,6 +28,7 @@ public class TagService {
     public List<TagDTO> getAllTags() {
         return tagRepository.findAll().stream()
                 .map(tagMapper::tagToTagDTO)
+                .distinct()
                 .collect(Collectors.toList());
     }
 
