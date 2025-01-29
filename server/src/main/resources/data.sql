@@ -154,7 +154,6 @@ INSERT INTO tag(name, tag_category_id) VALUES
 INSERT INTO tag(name, tag_category_id) VALUES
                                            ('dinner date', 4),
                                            ('sunset', 4),
-                                           ('picnic', 4),
                                            ('candlelight', 4),
                                            ('weekend getaway', 4),
                                            ('honeymoon', 4),
@@ -232,7 +231,6 @@ INSERT INTO event_users (event_id, user_id) VALUES
                                             (4,2);
 
 INSERT INTO tag_category(name, color) VALUES('company reportType', 'green'), ('sporty', 'blue'), ('culture', 'black'),('romantic', 'red'), ('family', 'yellow'),('prices', 'grey'),('gastronomy', 'brown'), ('other', 'purple');
---INSERT INTO tag(name, tag_category_id) VALUES ('big',1), ('romantic',4),('family friendly',5), ('hiking',2);
 
 INSERT INTO event_tag (event_id, tag_id)
 SELECT 1, id FROM tag ORDER BY RANDOM() LIMIT 3;
