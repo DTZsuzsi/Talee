@@ -2,18 +2,13 @@ package com.codecool.talee.service;
 
 import com.codecool.talee.DTO.event.EventDTO;
 import com.codecool.talee.DTO.event.NewEventDTO;
-import com.codecool.talee.DTO.location.LocationInEventDTO;
-import com.codecool.talee.DTO.tag.TagDTO;
-import com.codecool.talee.DTO.user.UserInEventDTO;
 import com.codecool.talee.exception.EventNotFoundException;
-import com.codecool.talee.exception.LocationNotFoundException;
 import com.codecool.talee.exception.TagNotFoundException;
 import com.codecool.talee.exception.UserNotFoundException;
 import com.codecool.talee.mapper.EventMapper;
 import com.codecool.talee.mapper.TagMapper;
 import com.codecool.talee.mapper.UserMapper;
 import com.codecool.talee.model.events.Event;
-import com.codecool.talee.model.locations.Location;
 import com.codecool.talee.model.tags.Tag;
 import com.codecool.talee.model.users.UserEntity;
 import com.codecool.talee.repository.*;
@@ -30,60 +25,27 @@ import java.util.stream.Collectors;
 public class EventService {
     private final EventRepository eventRepository;
     private final TagRepository tagRepository;
-    private final EventMapper eventMapper = EventMapper.INSTANCE;
-    private final TagMapper tagMapper = TagMapper.INSTANCE;
-    private final LocationRepository locationRepository;
-    private final UserMapper userMapper = UserMapper.INSTANCE;
+    private final EventMapper eventMapper;
     private final UserRepository userRepository;
     private final JWTUtils jwtUtils;
-
-
     @Autowired
-    public EventService(EventRepository eventRepository, TagRepository tagRepository, LocationRepository locationRepository, UserRepository userRepository, JWTUtils jwtUtils) {
+    public EventService(EventRepository eventRepository, TagRepository tagRepository, EventMapper eventMapper, UserRepository userRepository, JWTUtils jwtUtils) {
         this.eventRepository = eventRepository;
         this.tagRepository = tagRepository;
-        this.locationRepository = locationRepository;
+        this.eventMapper = eventMapper;
         this.userRepository = userRepository;
         this.jwtUtils = jwtUtils;
     }
-
 
     public EventDTO getEventById(long id) {
         Event event = eventRepository.findEventById(id)
                 .orElseThrow(() -> new EventNotFoundException(id));
 
-        Set<TagDTO> tags = event.getTags().stream()
-                .map(tagMapper::tagToTagDTO)
-                .collect(Collectors.toSet());
-
-        List<UserInEventDTO> users = event.getUsers().stream()
-                .map(userEntity -> new UserInEventDTO(userEntity.getId(), userEntity.getUsername()))
-                .collect(Collectors.toList());
-
-        Location location = event.getLocation();
-        LocationInEventDTO locationInEventDTO = new LocationInEventDTO(
-                location.getId(), location.getName(), location.getLatitude(), location.getLongitude());
-
-        return new EventDTO(
-                event.getId(), event.getDate(), event.getName(), event.getDescription(),
-                locationInEventDTO, users, userMapper.userToUserInEventDTO(event.getOwner()),
-                event.getSize(), tags, event.getStatus());
+        return eventMapper.eventToEventDTO(event);
     }
 
     public long addEvent(NewEventDTO newEventDTO) {
-        Location location = locationRepository.findById(newEventDTO.locationInEventDTO().locationId())
-                .orElseThrow(() -> new LocationNotFoundException(newEventDTO.locationInEventDTO().locationId()));
-
-        UserEntity eventOwner = userRepository.findById(newEventDTO.owner().id())
-                .orElseThrow(() -> new UserNotFoundException(newEventDTO.owner().id()));
-
-        Event newEvent = new Event(
-                newEventDTO.date(), newEventDTO.name(), newEventDTO.description(), location,
-                eventOwner, newEventDTO.size(), null, newEventDTO.status());
-
-        Set<UserEntity> users = Set.of(eventOwner);
-        newEvent.setUsers(users);
-
+        Event newEvent = eventMapper.newEventDTOtoEvent(newEventDTO);
         return eventRepository.save(newEvent).getId();
     }
 
@@ -108,7 +70,6 @@ public class EventService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     public void deleteEventById(long id) {
         eventRepository.deleteEventById(id);
     }

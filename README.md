@@ -156,6 +156,9 @@ This is the main page of the events:
 
 If you click on any box, you can see the details, you can edit and invite friends here too. 
 
+We added fake data in the project for showing purposes, but you can also create, modify events, locations.
+As we are still in the development phase, we use "create-drop" method for creating the database, which means, 
+that every time you restart the server, all the data will be deleted and the base data will be created again.
 
 
 ### Stopping the Containers

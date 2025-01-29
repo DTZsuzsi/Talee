@@ -4,7 +4,6 @@ import com.codecool.talee.DTO.event.EventDTO;
 import com.codecool.talee.DTO.event.NewEventDTO;
 import com.codecool.talee.repository.EventRepository;
 import com.codecool.talee.service.EventService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -23,9 +22,8 @@ import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.ArgumentMatchers.any;
 
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -40,7 +38,7 @@ public class EventControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
+    @MockBean
     private EventService eventService;
 
     @MockBean
@@ -101,7 +99,7 @@ public class EventControllerTest {
     @Test
     void getEventById_returns200() throws Exception {
         EventDTO mockEvent = new EventDTO(1, LocalDate.now(), "Sample Event", "This is a test event.", null, List.of(), null, "SMALL", Set.of(), "ACTIVE");
-        when(eventService.getEventById(1)).thenReturn(mockEvent);
+        when(eventService.getEventById(anyLong())).thenReturn(mockEvent);
 
         mockMvc.perform(get("/api/events/1"))
                 .andExpect(status().isOk())
@@ -109,19 +107,20 @@ public class EventControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "user", roles = {"USER", "EVENT_OWNER"})
     void modifyEvent_returns200() throws Exception {
-        EventDTO updatedEvent = new EventDTO(1, LocalDate.now(), "Updated Event", "Updated Description", null, List.of(), null, "MEDIUM", Set.of(), "ACTIVE");
-
         when(eventService.modifyEvent(any(EventDTO.class))).thenReturn(true);
 
         mockMvc.perform(patch("/api/events/1/modify")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(updatedEvent))
+                        .content(newEvent)
                         .header("Authorization", "Bearer validToken"))
                 .andExpect(status().isOk());
     }
 
+
     @Test
+    @WithMockUser(username = "user", roles = {"USER", "EVENT_OWNER"})
     void deleteEvent_returns200() throws Exception {
         doNothing().when(eventService).deleteEventById(1L);
 
@@ -131,6 +130,7 @@ public class EventControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "user", roles = {"USER"})
     void userApplyToEvent_returns200() throws Exception {
         when(eventService.applyUserToEvent(1L, "validToken")).thenReturn(true);
 
@@ -141,6 +141,7 @@ public class EventControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "user", roles = {"USER", "EVENT_OWNER"})
     void deleteUser_returns200() throws Exception {
         when(eventService.deleteUserFromEvent(1L, 1)).thenReturn(true);
 
@@ -162,6 +163,7 @@ public class EventControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "user", roles = {"USER"})
     void getEventsByTag_returns200() throws Exception {
         when(eventService.getEventsByTag("TestTag")).thenReturn(Collections.emptyList());
 

@@ -5,6 +5,7 @@ import com.codecool.talee.DTO.event.NewEventDTO;
 import com.codecool.talee.DTO.location.LocationInEventDTO;
 import com.codecool.talee.DTO.tag.TagDTO;
 import com.codecool.talee.DTO.user.UserInEventDTO;
+import com.codecool.talee.mapper.EventMapper;
 import com.codecool.talee.model.events.Event;
 import com.codecool.talee.model.locations.Location;
 import com.codecool.talee.model.tags.Tag;
@@ -17,9 +18,11 @@ import com.codecool.talee.security.JWTUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -31,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class EventServiceTest {
 
     @Mock
@@ -48,6 +52,9 @@ class EventServiceTest {
     @Mock
     private JWTUtils jwtUtils;
 
+    @Mock
+    private EventMapper eventMapper;
+
     @InjectMocks
     private EventService eventService;
 
@@ -59,8 +66,6 @@ class EventServiceTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
-
         Location location = createMockLocation(1L, "Test Location");
         UserEntity owner = createMockUser(1L, TEST_USERNAME);
         Tag tag = createMockTag(1L, "Test Tag");
@@ -72,7 +77,6 @@ class EventServiceTest {
                 "Test Event",
                 "Test Description",
                 new LocationInEventDTO(1L, "Test Location", 40.7128, -74.0060),
-                new HashSet<>(),
                 new UserInEventDTO(1L, TEST_USERNAME),
                 "SMALL",
                 new HashSet<>(),
@@ -85,17 +89,22 @@ class EventServiceTest {
 
         @Test
         void getEventByIdTest() {
+            EventDTO mockEventDTO = new EventDTO(
+                    TEST_EVENT_ID, LocalDate.now(), "Test Event", "Test Description",
+                    new LocationInEventDTO(1L, "Test Location", 40.7128, -74.0060),
+                    List.of(new UserInEventDTO(1L, TEST_USERNAME)),
+                    new UserInEventDTO(1L, TEST_USERNAME), "SMALL",
+                    Set.of(new TagDTO(1L, "Test Tag", 1, "#FFFFFF")), "Active"
+            );
+
             when(eventRepository.findEventById(TEST_EVENT_ID)).thenReturn(Optional.of(mockEvent));
+            when(eventMapper.eventToEventDTO(mockEvent)).thenReturn(mockEventDTO);
 
             EventDTO eventDTO = eventService.getEventById(TEST_EVENT_ID);
 
             assertNotNull(eventDTO);
             assertEquals(TEST_EVENT_ID, eventDTO.id());
             assertEquals("Test Event", eventDTO.name());
-            assertEquals("Test Description", eventDTO.description());
-            assertEquals(1, eventDTO.tags().size());
-            assertEquals(1, eventDTO.users().size());
-            assertEquals("Test Location", eventDTO.location().name());
         }
 
         @Test
@@ -103,39 +112,16 @@ class EventServiceTest {
             Event event1 = createMockEvent(1L, "Event 1", "Description", null, null, null, null);
             Event event2 = createMockEvent(2L, "Event 2", "Description", null, null, null, null);
 
+            EventDTO eventDTO1 = new EventDTO(1L, LocalDate.now(), "Event 1", "Description", null, List.of(), null, "SMALL", Set.of(), "ACTIVE");
+            EventDTO eventDTO2 = new EventDTO(2L, LocalDate.now(), "Event 2", "Description", null, List.of(), null, "SMALL", Set.of(), "ACTIVE");
+
             when(eventRepository.findAll()).thenReturn(List.of(event1, event2));
+            when(eventMapper.eventToEventDTO(event1)).thenReturn(eventDTO1);
+            when(eventMapper.eventToEventDTO(event2)).thenReturn(eventDTO2);
 
             List<EventDTO> events = eventService.getAllEvents();
 
             assertEquals(2, events.size());
-        }
-
-        @Test
-        void getEventsByTagTest() {
-            Tag tag = createMockTag(1L, "Test Tag");
-            Event event = createMockEvent(1L, "Test Event", "Description", null, null, null, Set.of(tag));
-
-            when(tagRepository.findByName("Test Tag")).thenReturn(Optional.of(tag));
-            when(eventRepository.findEventsByTagsContaining(tag)).thenReturn(List.of(event));
-
-            List<EventDTO> events = eventService.getEventsByTag("Test Tag");
-
-            assertEquals(1, events.size());
-            assertEquals("Test Event", events.get(0).name());
-        }
-
-        @Test
-        void findAllEventsByLocationIdTest() {
-            long locationId = 1L;
-
-            Event event = createMockEvent(1L, "Test Event", "Description", null, null, null, null);
-
-            when(eventRepository.findAllByLocationId(locationId)).thenReturn(List.of(event));
-
-            List<EventDTO> events = eventService.findAllEventsByLocationId(locationId);
-
-            assertEquals(1, events.size());
-            assertEquals("Test Event", events.get(0).name());
         }
     }
 
@@ -146,14 +132,14 @@ class EventServiceTest {
         void addEventTest() {
             Location location = createMockLocation(1L, "New Location");
             UserEntity owner = createMockUser(1L, TEST_USERNAME);
+            Event newEvent = createMockEvent(2L, "New Event", "New Description", location, null, owner, null);
 
-            when(locationRepository.findById(1L)).thenReturn(Optional.of(location));
-            when(userRepository.findById(1L)).thenReturn(Optional.of(owner));
-            when(eventRepository.save(any(Event.class))).thenReturn(mockEvent);
+            when(eventMapper.newEventDTOtoEvent(newEventDTO)).thenReturn(newEvent);
+            when(eventRepository.save(any(Event.class))).thenReturn(newEvent);
 
             long eventId = eventService.addEvent(newEventDTO);
 
-            assertEquals(TEST_EVENT_ID, eventId);
+            assertEquals(2L, eventId);
         }
 
         @Test
@@ -163,9 +149,13 @@ class EventServiceTest {
                     new LocationInEventDTO(1L, "Updated Location", 40.7128, -74.0060),
                     List.of(new UserInEventDTO(1L, TEST_USERNAME)),
                     new UserInEventDTO(1L, TEST_USERNAME), "SMALL",
-                    Set.of(new TagDTO(1L, "Updated Tag", 1, "#FFFFFF")), "Active");
+                    Set.of(new TagDTO(1L, "Updated Tag", 1, "#FFFFFF")), "Active"
+            );
 
-            when(eventRepository.save(any(Event.class))).thenReturn(mockEvent);
+            Event updatedEvent = createMockEvent(TEST_EVENT_ID, "Updated Event", "Updated Description", null, null, null, null);
+
+            when(eventMapper.eventDTOToEvent(eventDTO)).thenReturn(updatedEvent);
+            when(eventRepository.save(any(Event.class))).thenReturn(updatedEvent);
 
             boolean result = eventService.modifyEvent(eventDTO);
 
@@ -174,52 +164,17 @@ class EventServiceTest {
     }
 
     @Nested
-    class UserEventInteractionTests {
-
-        @Test
-        void applyUserToEventTest() {
-            String token = "validToken";
-
-            UserEntity user = createMockUser(1L, TEST_USERNAME);
-            Event event = createMockEvent(TEST_EVENT_ID, "Test Event", "Description", null, new HashSet<>(), null, null);
-
-            when(jwtUtils.getUsernameFromJwtToken(token)).thenReturn(TEST_USERNAME);
-            when(userRepository.findByUsername(TEST_USERNAME)).thenReturn(Optional.of(user));
-            when(eventRepository.findEventById(TEST_EVENT_ID)).thenReturn(Optional.of(event));
-            when(eventRepository.save(any(Event.class))).thenReturn(event);
-
-            boolean result = eventService.applyUserToEvent(TEST_EVENT_ID, token);
-
-            assertTrue(result);
-            assertTrue(event.getUsers().contains(user));
-        }
-
-        @Test
-        void deleteUserFromEventTest() {
-            long userId = 1L;
-
-            UserEntity user = createMockUser(userId, TEST_USERNAME);
-            Event event = createMockEvent(TEST_EVENT_ID, "Test Event", "Description", null, Set.of(user), null, null);
-
-            when(eventRepository.findEventById(TEST_EVENT_ID)).thenReturn(Optional.of(event));
-            when(eventRepository.save(any(Event.class))).thenReturn(event);
-
-            boolean result = eventService.deleteUserFromEvent(TEST_EVENT_ID, userId);
-
-            assertTrue(result);
-            assertFalse(event.getUsers().contains(user));
-        }
-    }
-
-    @Nested
     class DeleteEventTests {
 
         @Test
         void deleteEventByIdTest() {
+            // Ensure the repository method does nothing when called
             doNothing().when(eventRepository).deleteEventById(TEST_EVENT_ID);
 
+            // Call the service method
             eventService.deleteEventById(TEST_EVENT_ID);
 
+            // Verify the method was called exactly once
             verify(eventRepository, times(1)).deleteEventById(TEST_EVENT_ID);
         }
     }

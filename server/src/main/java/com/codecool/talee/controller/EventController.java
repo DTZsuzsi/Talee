@@ -4,6 +4,8 @@ import com.codecool.talee.DTO.event.EventDTO;
 import com.codecool.talee.DTO.event.NewEventDTO;
 import com.codecool.talee.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +28,8 @@ public class EventController {
 
     @PostMapping
     @PreAuthorize("hasRole('USER')")
-    public long createEvent(@RequestBody NewEventDTO newEventDTO) {
-        return eventService.addEvent(newEventDTO);
+    public ResponseEntity<Long> createEvent(@RequestBody NewEventDTO newEventDTO) {
+        return new ResponseEntity<>(eventService.addEvent(newEventDTO), HttpStatus.CREATED);
     }
 
     @GetMapping("/all")
