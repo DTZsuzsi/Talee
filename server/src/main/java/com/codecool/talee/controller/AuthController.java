@@ -2,7 +2,6 @@ package com.codecool.talee.controller;
 
 import com.codecool.talee.DTO.auth.AuthResponseDTO;
 import com.codecool.talee.DTO.auth.CredentialsDTO;
-import com.codecool.talee.DTO.auth.RegistrationDTO;
 import com.codecool.talee.model.users.Role;
 import com.codecool.talee.model.users.UserEntity;
 import com.codecool.talee.repository.RoleRepository;
@@ -53,10 +52,10 @@ public class AuthController {
   }
 
   @PostMapping("/register")
-  public ResponseEntity<RegistrationDTO> register(@RequestBody CredentialsDTO credentials) {
+  public ResponseEntity<String> register(@RequestBody CredentialsDTO credentials) {
     logger.info(String.valueOf(credentials));
     if (userRepository.existsByUsername(credentials.username())) {
-      return new ResponseEntity<>(new RegistrationDTO("Username is taken!"), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>("Username is taken!", HttpStatus.BAD_REQUEST);
     }
 
     UserEntity user = new UserEntity();
@@ -66,7 +65,7 @@ public class AuthController {
     user.setRoles(Set.of(role));
     userRepository.save(user);
 
-    return new ResponseEntity<>(new RegistrationDTO("Registration was successful"), HttpStatus.CREATED);
+    return new ResponseEntity<>("Registration was successful", HttpStatus.CREATED);
   }
 
   @PostMapping("/login")

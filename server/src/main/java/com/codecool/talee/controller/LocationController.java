@@ -5,6 +5,8 @@ import com.codecool.talee.DTO.location.LocationDTO;
 import com.codecool.talee.DTO.location.NewLocationDTO;
 import com.codecool.talee.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,11 +34,15 @@ public class LocationController {
 
   @PostMapping
   @PreAuthorize("hasRole('USER')")
-  public long addLocation(@RequestBody NewLocationDTO location, @RequestHeader (name = "Authorization") String token) {
-    if (token.startsWith("Bearer ")) {
-      token = token.substring(7);
+  public ResponseEntity<String> addLocation(@RequestBody NewLocationDTO location, @RequestHeader (name = "Authorization") String token) {
+    if (token == null || !token.startsWith("Bearer ")) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or missing Authorization header");
     }
-    return locationService.addLocation(location, token);
+
+    String jwtToken = token.substring(7);
+    boolean success = locationService.addLocation(location, jwtToken);
+
+    return ResponseEntity.ok(success ? "true" : "false");
   }
 
   @DeleteMapping("/{id}")

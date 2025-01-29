@@ -52,7 +52,7 @@ public class AuthControllerTest {
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(credentials))
             .andExpect(status().isCreated())
-            .andExpect(jsonPath("$.message").value("Registration was successful"));
+            .andExpect(content().string("Registration was successful"));
 
     assertTrue(userRepository.findByUsername("testuser").isPresent());
   }
@@ -77,6 +77,6 @@ public class AuthControllerTest {
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(credentials))
             .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("$.message").value("Username is taken!"));
+            .andExpect(content().string("Username is taken!"));
   }
 }

@@ -74,7 +74,7 @@ public class LocationControllerTest {
     @Test
     @WithMockUser(username = "user", roles = {"USER"})
     void addLocation_returns201() throws Exception {
-        when(locationService.addLocation(any(NewLocationDTO.class), any())).thenReturn(1L);
+        when(locationService.addLocation(any(NewLocationDTO.class), any())).thenReturn(true);
 
         mockMvc.perform(post("/api/locations")
                         .contentType(MediaType.APPLICATION_JSON)
