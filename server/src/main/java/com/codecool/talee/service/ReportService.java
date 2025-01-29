@@ -26,27 +26,52 @@ public class ReportService {
 
     public List<ReportDTO> getAllReports(ReportType reportType, Boolean issued, Boolean solved, String sortBy, String order) {
         final Sort.Direction direction = "desc".equalsIgnoreCase(order) ? Sort.Direction.DESC : Sort.Direction.ASC;
-        final String sortField = sortBy != null ? sortBy : "id";
+        final String sortField = (sortBy != null) ? sortBy : "id";
 
-        return reportRepository.findAll().stream()
-                               .filter(report -> (reportType == null || report.getReportType() == reportType))
-                               .filter(report -> (issued == null || report.isIssued() == issued))
-                               .filter(report -> (solved == null || report.isSolved() == solved))
-                               .sorted((report1, report2) -> {
-                                   if ("createdAt".equals(sortField)) {
-                                       return direction == Sort.Direction.DESC
-                                               ? report2.getCreatedAt().compareTo(report1.getCreatedAt())
-                                               : report1.getCreatedAt().compareTo(report2.getCreatedAt());
-                                   } else if ("title".equals(sortField)) {
-                                       return direction == Sort.Direction.DESC
-                                               ? report2.getTitle().compareTo(report1.getTitle())
-                                               : report1.getTitle().compareTo(report2.getTitle());
-                                   }
-                                   return 0;
-                               })
-                               .map(report -> reportMapper.reportToReportDTO(report))
-                               .collect(Collectors.toList());
+        List<Report> filteredReports = reportRepository.findAll().stream()
+                .filter(report -> isMatchingReportType(report, reportType))
+                .filter(report -> isMatchingIssuedStatus(report, issued))
+                .filter(report -> isMatchingSolvedStatus(report, solved))
+                .collect(Collectors.toList());
+
+        List<Report> sortedReports = filteredReports.stream()
+                .sorted((report1, report2) -> compareReports(report1, report2, sortField, direction))
+                .collect(Collectors.toList());
+
+        return sortedReports.stream()
+                .map(reportMapper::reportToReportDTO)
+                .collect(Collectors.toList());
     }
+
+    private boolean isMatchingReportType(Report report, ReportType reportType) {
+        return reportType == null || report.getReportType() == reportType;
+    }
+
+    private boolean isMatchingIssuedStatus(Report report, Boolean issued) {
+        return issued == null || report.isIssued() == issued;
+    }
+
+    private boolean isMatchingSolvedStatus(Report report, Boolean solved) {
+        return solved == null || report.isSolved() == solved;
+    }
+
+    private int compareReports(Report report1, Report report2, String sortField, Sort.Direction direction) {
+        switch (sortField) {
+            case "createdAt":
+                return compareValues(report1.getCreatedAt(), report2.getCreatedAt(), direction);
+            case "title":
+                return compareValues(report1.getTitle(), report2.getTitle(), direction);
+            default:
+                return 0;
+        }
+    }
+
+    private <T extends Comparable<T>> int compareValues(T value1, T value2, Sort.Direction direction) {
+        return (direction == Sort.Direction.DESC)
+                ? value2.compareTo(value1)
+                : value1.compareTo(value2);
+    }
+
 
     public ReportResDTO addReport(ReportReqDTO reportRequest) {
         var report = new Report();
