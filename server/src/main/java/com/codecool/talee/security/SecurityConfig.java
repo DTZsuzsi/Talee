@@ -35,9 +35,8 @@ public class SecurityConfig {
             .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthEntryPoint))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests((requests) -> requests
-                    .requestMatchers("/api/events/tagsfilter/**").permitAll()
                     .requestMatchers("/api/auth/**", "/api/locations/all", "/api/locations/{id}",
-                            "/api/events/{eventId}", "/api/events/locations/{locationId}", "/api/events/all").permitAll()
+                            "/api/events/{eventId}", "/api/events/locations/{locationId}", "/api/events/all", "/api/events/tagsfilter/**").permitAll()
                     .anyRequest().authenticated()
             );
 
