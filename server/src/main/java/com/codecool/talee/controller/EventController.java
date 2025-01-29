@@ -51,11 +51,15 @@ public class EventController {
 
 
     @PostMapping("/apply/{eventId}")
-    public boolean userApplyToEvent(@PathVariable long eventId, @RequestHeader (name = "Authorization") String token) {
-        if (token.startsWith("Bearer ")) {
-            token = token.substring(7);
+    public ResponseEntity<String> userApplyToEvent(@PathVariable long eventId, @RequestHeader (name = "Authorization") String token) {
+        if (token == null || !token.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or missing Authorization header");
         }
-        return eventService.applyUserToEvent(eventId, token);
+
+        String jwtToken = token.substring(7);
+        boolean success = eventService.applyUserToEvent(eventId, jwtToken);
+
+        return ResponseEntity.ok(success ? "true" : "false");
     }
 
     @DeleteMapping("/user/{eventId}")
