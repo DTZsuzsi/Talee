@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.time.Instant;
 import java.util.Date;
 
 
@@ -30,8 +31,8 @@ public class JWTUtils {
 
     return Jwts.builder()
             .setSubject((userPrincipal.getUsername()))
-            .setIssuedAt(new Date())
-            .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+            .setIssuedAt(Date.from(Instant.now()))
+            .setExpiration(Date.from(Instant.now().plusMillis(jwtExpirationMs)))
             .signWith(key(), SignatureAlgorithm.HS256)
             .compact();
   }
