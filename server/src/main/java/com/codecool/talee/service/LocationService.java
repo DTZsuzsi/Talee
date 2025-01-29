@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 @Service
 public class LocationService {
 
+
     private final LocationRepository locationRepository;
     private final OpeningHoursService openingHoursService;
     private final UserService userService;
@@ -171,6 +172,7 @@ public class LocationService {
 
         // Update the user using the userService
         userService.modifyUser(userMapper.userToUserDTO(user));
+
     }
 
 }
