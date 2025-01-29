@@ -122,7 +122,7 @@ public class EventControllerTest {
     @Test
     @WithMockUser(username = "user", roles = {"USER", "EVENT_OWNER"})
     void deleteEvent_returns200() throws Exception {
-        doNothing().when(eventService).deleteEventById(1L);
+        when(eventService.deleteEventById(1L)).thenReturn(true);;
 
         mockMvc.perform(delete("/api/events/1")
                         .header("Authorization", "Bearer validToken"))

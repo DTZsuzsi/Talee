@@ -45,8 +45,8 @@ public class EventController {
 
     @DeleteMapping("/{eventId}")
     @PreAuthorize("hasRole('EVENT_OWNER')")
-    public void deleteEvent(@PathVariable long eventId) {
-        eventService.deleteEventById(eventId);
+    public boolean deleteEvent(@PathVariable long eventId) {
+        return eventService.deleteEventById(eventId);
     }
 
 
