@@ -86,7 +86,7 @@ public class LocationControllerTest {
     @Test
     @WithMockUser(username = "owner", roles = {"LOCATION_OWNER"})
     void deleteLocation_returns200() throws Exception {
-        when(locationService.deleteLocation(anyLong())).thenReturn(1L);
+        when(locationService.deleteLocation(anyLong())).thenReturn(true);
 
         mockMvc.perform(delete("/api/locations/1"))
                 .andExpect(status().isOk());

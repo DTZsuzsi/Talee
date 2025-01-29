@@ -159,11 +159,10 @@ class LocationServiceTest {
 
     @Test
     void deleteLocationTest() {
-      when(locationRepository.deleteLocationById(1L)).thenReturn(1L);
+      when(locationRepository.deleteLocationById(1L)).thenReturn(true);
 
-      long result = locationService.deleteLocation(1L);
+      assertTrue(locationService.deleteLocation(1L));
 
-      assertEquals(1L, result);
       verify(locationRepository, times(1)).deleteLocationById(1L);
     }
   }

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OpeningHoursRepository extends JpaRepository<OpeningHours, Long> {
-  long deleteByLocationId(Long locationId);
+  boolean deleteByLocationId(Long locationId);
 }
