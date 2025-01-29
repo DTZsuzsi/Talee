@@ -3,6 +3,7 @@ package com.codecool.talee.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -35,8 +36,10 @@ public class SecurityConfig {
             .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthEntryPoint))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests((requests) -> requests
-                    .requestMatchers("/api/auth/**", "/api/locations/all", "/api/locations/{id}",
-                            "/api/events/{eventId}", "/api/events/locations/{locationId}", "/api/events/all", "/api/events/tagsfilter/**").permitAll()
+                    .requestMatchers(HttpMethod.GET,"/api/events/tagsfilter/{tagName}", "/api/locations/tagsfilter/{tagName}",
+                            "/api/locations/all", "/api/locations/{id}", "/api/events/{eventId}", "/api/events/locations/{locationId}",
+                            "/api/events/all", "/api/tags").permitAll()
+                    .requestMatchers(HttpMethod.POST,"/api/auth/**").permitAll()
                     .anyRequest().authenticated()
             );
 
