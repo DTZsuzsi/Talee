@@ -161,7 +161,8 @@ INSERT INTO tag(name, tag_category_id) VALUES
                                            ('date night', 4),
                                            ('cozy', 4),
                                            ('flowers', 4),
-                                           ('proposal', 4);
+                                           ('proposal', 4),
+                                           ('romantic',4);
 
 -- Tags for category id 5 ('family')
 INSERT INTO tag(name, tag_category_id) VALUES
@@ -231,7 +232,7 @@ INSERT INTO event_users (event_id, user_id) VALUES
                                             (4,2);
 
 INSERT INTO tag_category(name, color) VALUES('company reportType', 'green'), ('sporty', 'blue'), ('culture', 'black'),('romantic', 'red'), ('family', 'yellow'),('prices', 'grey'),('gastronomy', 'brown'), ('other', 'purple');
-INSERT INTO tag(name, tag_category_id) VALUES ('big',1), ('romantic',4),('family friendly',5), ('hiking',2);
+--INSERT INTO tag(name, tag_category_id) VALUES ('big',1), ('romantic',4),('family friendly',5), ('hiking',2);
 
 INSERT INTO event_tag (event_id, tag_id)
 SELECT 1, id FROM tag ORDER BY RANDOM() LIMIT 3;
