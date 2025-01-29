@@ -22,7 +22,7 @@ public class EventController {
     }
 
     @GetMapping("/{eventId}")
-    public EventDTO getEventById(@PathVariable int eventId) {
+    public EventDTO getEventById(@PathVariable long eventId) {
         return eventService.getEventById(eventId);
     }
 
@@ -39,7 +39,7 @@ public class EventController {
 
     @PatchMapping("/{eventId}/modify")
     @PreAuthorize("hasRole('EVENT_OWNER')")
-    public boolean modifyEvent(@PathVariable int eventId, @RequestBody EventDTO eventDTO) {
+    public boolean modifyEvent(@PathVariable long eventId, @RequestBody EventDTO eventDTO) {
         return eventService.modifyEvent(eventDTO);
     }
 
@@ -64,7 +64,7 @@ public class EventController {
 
     @DeleteMapping("/user/{eventId}")
     @PreAuthorize("hasRole('EVENT_OWNER')")
-    public boolean deleteUser(@PathVariable long eventId, @RequestParam int userId) {
+    public boolean deleteUser(@PathVariable long eventId, @RequestParam long userId) {
         return eventService.deleteUserFromEvent(eventId, userId);
     }
 
