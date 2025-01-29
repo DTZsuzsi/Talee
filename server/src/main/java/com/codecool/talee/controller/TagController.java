@@ -25,8 +25,8 @@ public class TagController {
     }
 
     @PostMapping
-    public ResponseEntity<Long> addTag(@RequestBody TagDTO taginFrontendDTO) {
-        return new ResponseEntity<>(tagService.addTag(taginFrontendDTO), HttpStatus.CREATED);
+    public ResponseEntity<Long> addTag(@RequestBody TagDTO tagInFrontendDTO) {
+        return new ResponseEntity<>(tagService.addTag(tagInFrontendDTO), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{tagId}")
