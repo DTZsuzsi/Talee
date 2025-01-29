@@ -22,7 +22,7 @@ public class EventController {
     }
 
     @GetMapping("/{eventId}")
-    public EventDTO getEventById(@PathVariable int eventId) {
+    public EventDTO getEventById(@PathVariable long eventId) {
         return eventService.getEventById(eventId);
     }
 
@@ -39,7 +39,7 @@ public class EventController {
 
     @PatchMapping("/{eventId}/modify")
     @PreAuthorize("hasRole('EVENT_OWNER')")
-    public boolean modifyEvent(@PathVariable int eventId, @RequestBody EventDTO eventDTO) {
+    public boolean modifyEvent(@PathVariable long eventId, @RequestBody EventDTO eventDTO) {
         return eventService.modifyEvent(eventDTO);
     }
 
@@ -51,16 +51,20 @@ public class EventController {
 
 
     @PostMapping("/apply/{eventId}")
-    public boolean userApplyToEvent(@PathVariable long eventId, @RequestHeader (name = "Authorization") String token) {
-        if (token.startsWith("Bearer ")) {
-            token = token.substring(7);
+    public ResponseEntity<String> userApplyToEvent(@PathVariable long eventId, @RequestHeader (name = "Authorization") String token) {
+        if (token == null || !token.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or missing Authorization header");
         }
-        return eventService.applyUserToEvent(eventId, token);
+
+        String jwtToken = token.substring(7);
+        boolean success = eventService.applyUserToEvent(eventId, jwtToken);
+
+        return ResponseEntity.ok(success ? "true" : "false");
     }
 
     @DeleteMapping("/user/{eventId}")
     @PreAuthorize("hasRole('EVENT_OWNER')")
-    public boolean deleteUser(@PathVariable long eventId, @RequestParam int userId) {
+    public boolean deleteUser(@PathVariable long eventId, @RequestParam long userId) {
         return eventService.deleteUserFromEvent(eventId, userId);
     }
 
