@@ -37,9 +37,9 @@ public class EventController {
         return eventService.getAllEvents();
     }
 
-    @PatchMapping("/{eventId}/modify")
+    @PatchMapping("/modify")
     @PreAuthorize("hasRole('EVENT_OWNER')")
-    public boolean modifyEvent(@PathVariable int eventId, @RequestBody EventDTO eventDTO) {
+    public boolean modifyEvent( @RequestBody EventDTO eventDTO) {
         return eventService.modifyEvent(eventDTO);
     }
 

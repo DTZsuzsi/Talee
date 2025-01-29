@@ -111,7 +111,7 @@ public class EventControllerTest {
     void modifyEvent_returns200() throws Exception {
         when(eventService.modifyEvent(any(EventDTO.class))).thenReturn(true);
 
-        mockMvc.perform(patch("/api/events/1/modify")
+        mockMvc.perform(patch("/api/events/modify")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(newEvent)
                         .header("Authorization", "Bearer validToken"))
