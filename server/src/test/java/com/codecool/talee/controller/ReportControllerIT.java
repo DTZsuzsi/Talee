@@ -50,7 +50,7 @@ public class ReportControllerIT {
 
     @BeforeAll
     void setUpOnce() {
-        when(reportService.getAllReports(null, null, null, "createdAt", "asc"))
+        when(reportService.getAllReports())
                 .thenReturn(Collections.emptyList());
     }
 
@@ -75,14 +75,14 @@ public class ReportControllerIT {
 
     @Test
     void addReport_returns201() throws Exception {
-        ReportResDTO mockResponse = new ReportResDTO(1L, "Report successfully created", LocalDateTime.now());
-        when(reportService.addReport(any(ReportReqDTO.class))).thenReturn(mockResponse);
+        ReportDTO mockResponse = new ReportDTO(1L, "Report", "", ReportType.BUG, false, false , LocalDateTime.now(), LocalDateTime.now());
+        when(reportService.createReport(any(ReportReqDTO.class))).thenReturn(mockResponse);
 
         mockMvc.perform(post("/api/reports")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(newReport))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(1L))
-                .andExpect(jsonPath("$.title").value("Report successfully created"));
+                .andExpect(jsonPath("$.title").value("Report"));
     }
 }

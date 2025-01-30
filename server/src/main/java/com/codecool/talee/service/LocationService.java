@@ -79,7 +79,7 @@ public class LocationService {
         return locationMapper.locationToLocationDTO(location);
     }
 
-    public boolean addLocation(NewLocationDTO location, String token) {
+    public boolean createLocation(NewLocationDTO location, String token) {
         if (locationRepository.findLocationByNameAndAddress(location.name(), location.address()) != null) {
             throw new RuntimeException("Location already exists.");
         }

@@ -132,7 +132,7 @@ class LocationServiceTest {
       when(roleRepository.findByName("ROLE_LOCATION_OWNER")).thenReturn(Optional.of(new Role("ROLE_LOCATION_OWNER")));
       when(locationRepository.save(any(Location.class))).thenReturn(mockLocation);
 
-      boolean result = locationService.addLocation(newLocationDTO, token);
+      boolean result = locationService.createLocation(newLocationDTO, token);
 
       assertTrue(result);
     }

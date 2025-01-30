@@ -34,13 +34,13 @@ public class LocationController {
 
   @PostMapping
   @PreAuthorize("hasRole('USER')")
-  public ResponseEntity<String> addLocation(@RequestBody NewLocationDTO location, @RequestHeader (name = "Authorization") String token) {
+  public ResponseEntity<String> createLocation(@RequestBody NewLocationDTO location, @RequestHeader (name = "Authorization") String token) {
     if (token == null || !token.startsWith("Bearer ")) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or missing Authorization header");
     }
 
     String jwtToken = token.substring(7);
-    boolean success = locationService.addLocation(location, jwtToken);
+    boolean success = locationService.createLocation(location, jwtToken);
 
     return ResponseEntity.ok(success ? "true" : "false");
   }

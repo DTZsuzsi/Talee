@@ -3,7 +3,6 @@ package com.codecool.talee.controller;// ReportController.java
 import com.codecool.talee.DTO.report.ReportDTO;
 import com.codecool.talee.DTO.report.ReportReqDTO;
 import com.codecool.talee.DTO.report.ReportResDTO;
-import com.codecool.talee.model.reports.ReportType;
 import com.codecool.talee.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,13 +23,8 @@ public class ReportController {
     }
 
     @GetMapping
-    public List<ReportDTO> getReports(
-            @RequestParam(required = false) ReportType reportType,
-            @RequestParam(required = false) Boolean issued,
-            @RequestParam(required = false) Boolean solved,
-            @RequestParam(defaultValue = "createdAt") String sortBy,
-            @RequestParam(defaultValue = "asc") String order) {
-        return reportService.getAllReports(reportType, issued, solved, sortBy, order);
+    public List<ReportDTO> getReports() {
+        return reportService.getAllReports();
     }
 
     @GetMapping("/{id}")
@@ -39,7 +33,7 @@ public class ReportController {
     }
 
     @PostMapping
-    public ResponseEntity<ReportResDTO> addReport(@RequestBody ReportReqDTO reportDTO) {
-        return new ResponseEntity<>(reportService.addReport(reportDTO), HttpStatus.CREATED);
+    public ResponseEntity<ReportDTO> addReport(@RequestBody ReportReqDTO reportDTO) {
+        return new ResponseEntity<>(reportService.createReport(reportDTO), HttpStatus.CREATED);
     }
 }

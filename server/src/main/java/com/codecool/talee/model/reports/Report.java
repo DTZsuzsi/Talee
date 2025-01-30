@@ -32,4 +32,9 @@ public class Report {
         updatedAt = LocalDateTime.now();
     }
 
+    public Report(String title, String description, ReportType reportType) {
+        this.title = title;
+        this.description = description;
+        this.reportType = reportType;
+    }
 }
