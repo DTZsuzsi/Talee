@@ -31,8 +31,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> addUser(@RequestBody NewUserDTO newUserDTO) {
-        return new ResponseEntity<>(userService.addUser(newUserDTO), HttpStatus.CREATED);
+    public ResponseEntity<UserDTO> createUser(@RequestBody NewUserDTO newUserDTO) {
+        return new ResponseEntity<>(userService.createUser(newUserDTO), HttpStatus.CREATED);
     }
 
     @PatchMapping

@@ -2,11 +2,13 @@ package com.codecool.talee.controller;
 
 import com.codecool.talee.DTO.auth.AuthResponseDTO;
 import com.codecool.talee.DTO.auth.CredentialsDTO;
+import com.codecool.talee.DTO.user.NewUserDTO;
 import com.codecool.talee.model.users.Role;
 import com.codecool.talee.model.users.UserEntity;
 import com.codecool.talee.repository.RoleRepository;
 import com.codecool.talee.repository.UserRepository;
 import com.codecool.talee.security.JWTUtils;
+import com.codecool.talee.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,38 +34,29 @@ import java.util.Set;
 public class AuthController {
   private final AuthenticationManager authenticationManager;
   private final UserRepository userRepository;
-  private final RoleRepository roleRepository;
-  private final PasswordEncoder passwordEncoder;
+  private final UserService userService;
   private final JWTUtils jwtUtils;
 
   private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
   @Autowired
   public AuthController(AuthenticationManager authenticationManager,
-                        UserRepository userRepository,
-                        RoleRepository roleRepository,
-                        PasswordEncoder passwordEncoder, JWTUtils jwtUtils) {
-
+                        UserRepository userRepository, UserService userService,
+                        JWTUtils jwtUtils) {
     this.authenticationManager = authenticationManager;
     this.userRepository = userRepository;
-    this.roleRepository = roleRepository;
-    this.passwordEncoder = passwordEncoder;
+    this.userService = userService;
     this.jwtUtils = jwtUtils;
   }
 
   @PostMapping("/register")
-  public ResponseEntity<String> register(@RequestBody CredentialsDTO credentials) {
-    logger.info(String.valueOf(credentials));
-    if (userRepository.existsByUsername(credentials.username())) {
+  public ResponseEntity<String> register(@RequestBody NewUserDTO newUserDTO) {
+    logger.info(String.valueOf(newUserDTO));
+    if (userRepository.existsByUsername(newUserDTO.username())) {
       return new ResponseEntity<>("Username is taken!", HttpStatus.BAD_REQUEST);
     }
 
-    UserEntity user = new UserEntity();
-    user.setUsername(credentials.username());
-    user.setPassword(passwordEncoder.encode(credentials.password()));
-    Role role = roleRepository.findByName("ROLE_USER").get();
-    user.setRoles(Set.of(role));
-    userRepository.save(user);
+    userService.createUser(newUserDTO);
 
     return new ResponseEntity<>("Registration was successful", HttpStatus.CREATED);
   }

@@ -74,9 +74,9 @@ public class UserControllerIT {
     }
 
     @Test
-    void addUser_returns201() throws Exception {
+    void createUser_returns201() throws Exception {
         UserDTO userDTO = new UserDTO(1, "newuser", Collections.emptySet(), Collections.emptySet());
-        when(userService.addUser(any(NewUserDTO.class))).thenReturn(userDTO);
+        when(userService.createUser(any(NewUserDTO.class))).thenReturn(userDTO);
 
         mockMvc.perform(post("/api/users")
                         .contentType(MediaType.APPLICATION_JSON)

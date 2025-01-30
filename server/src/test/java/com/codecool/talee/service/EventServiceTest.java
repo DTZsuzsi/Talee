@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.awt.*;
@@ -169,16 +168,12 @@ class EventServiceTest {
 
         @Test
         void deleteEventByIdTest() {
-            // Mock the repository to return true when the delete method is called
             when(eventRepository.deleteEventById(TEST_EVENT_ID)).thenReturn(true);
 
-            // Call the service method and capture the return value
             boolean result = eventService.deleteEventById(TEST_EVENT_ID);
 
-            // Assert the result is true
             assertTrue(result, "The deleteEventById method should return true for successful deletion");
 
-            // Verify the method was called exactly once
             verify(eventRepository, times(1)).deleteEventById(TEST_EVENT_ID);
         }
     }

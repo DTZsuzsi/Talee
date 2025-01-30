@@ -27,4 +27,11 @@ public class UserEntity {
         this.username = username;
         this.password = password;
     }
+
+    public UserEntity(String username, String password, Set<Event> events, Set<Role> roles) {
+        this.username = username;
+        this.password = password;
+        this.events = events;
+        this.roles = roles;
+    }
 }
