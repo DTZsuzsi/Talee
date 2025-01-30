@@ -70,7 +70,7 @@ class OpeningHoursServiceTest {
   @Test
   public void whenDeleteOpeningHoursSuccessful_thenReturnTrue() {
     long locationId = 1L;
-    Mockito.when(openingHoursRepository.deleteByLocationId(locationId)).thenReturn(locationId);
+    Mockito.when(openingHoursRepository.deleteByLocationId(locationId)).thenReturn(true);
 
     boolean result = openingHoursService.deleteOpeningHoursByLocationId(locationId);
 
@@ -80,8 +80,7 @@ class OpeningHoursServiceTest {
   @Test
   public void whenDeleteOpeningHoursFails_thenReturnFalse() {
     long locationId = 2L;
-    long mockReturn = -1;
-    Mockito.when(openingHoursRepository.deleteByLocationId(locationId)).thenReturn(mockReturn);
+    Mockito.when(openingHoursRepository.deleteByLocationId(locationId)).thenReturn(false);
     boolean result = openingHoursService.deleteOpeningHoursByLocationId(locationId);
     assertFalse(result, "");
   }

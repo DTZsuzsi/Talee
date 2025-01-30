@@ -37,16 +37,18 @@ public class EventController {
         return eventService.getAllEvents();
     }
 
-    @PatchMapping("/{eventId}/modify")
+    @PatchMapping("/modify")
     @PreAuthorize("hasRole('EVENT_OWNER')")
-    public boolean modifyEvent(@PathVariable long eventId, @RequestBody EventDTO eventDTO) {
+
+    public boolean modifyEvent( @RequestBody EventDTO eventDTO) {
+
         return eventService.modifyEvent(eventDTO);
     }
 
     @DeleteMapping("/{eventId}")
     @PreAuthorize("hasRole('EVENT_OWNER')")
-    public void deleteEvent(@PathVariable long eventId) {
-        eventService.deleteEventById(eventId);
+    public boolean deleteEvent(@PathVariable long eventId) {
+        return eventService.deleteEventById(eventId);
     }
 
 

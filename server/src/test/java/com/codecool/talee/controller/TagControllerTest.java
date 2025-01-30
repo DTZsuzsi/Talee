@@ -38,8 +38,11 @@ public class TagControllerTest {
             {
                 "id": 0,
                 "name": "Sample Tag",
-                "categoryId": 1,
-                "color": "#FFFFFF"
+                "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255
+                }
             }
             """;
 
