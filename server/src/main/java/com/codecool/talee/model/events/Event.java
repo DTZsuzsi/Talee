@@ -37,8 +37,8 @@ public class Event {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     private UserEntity owner;
-
-    private String size;
+    @Enumerated(EnumType.STRING)
+    private EventSize size;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(
@@ -50,7 +50,7 @@ public class Event {
 
     private String status;
 
-    public Event(LocalDate date, String name, String description, Location location, UserEntity owner, String size, Set<Tag> tags, String status) {
+    public Event(LocalDate date, String name, String description, Location location, UserEntity owner, EventSize size, Set<Tag> tags, String status) {
         this.date = date;
         this.name = name;
         this.description = description;
