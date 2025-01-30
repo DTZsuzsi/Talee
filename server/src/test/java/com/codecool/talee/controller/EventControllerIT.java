@@ -109,7 +109,7 @@ public class EventControllerIT {
     @Test
     @WithMockUser(username = "user", roles = {"USER", "EVENT_OWNER"})
     void modifyEvent_returns200() throws Exception {
-        when(eventService.modifyEvent(any(EventDTO.class))).thenReturn(true);
+        when(eventService.modifyEvent(any(EventDTO.class))).thenReturn(1L);
 
         mockMvc.perform(patch("/api/events/modify")
                         .contentType(MediaType.APPLICATION_JSON)

@@ -95,7 +95,7 @@ public class LocationControllerIT {
     @Test
     @WithMockUser(username = "owner", roles = {"LOCATION_OWNER"})
     void updateLocation_returns200() throws Exception {
-        when(locationService.updateLocation(any(LocationDTO.class))).thenReturn(true);
+        when(locationService.updateLocation(any(LocationDTO.class))).thenReturn(1L);
 
         mockMvc.perform(patch("/api/locations")
                         .contentType(MediaType.APPLICATION_JSON)

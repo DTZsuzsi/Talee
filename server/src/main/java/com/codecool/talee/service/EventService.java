@@ -45,9 +45,9 @@ public class EventService {
     }
 
 
-    public boolean modifyEvent(EventDTO eventDTO) {
+    public long modifyEvent(EventDTO eventDTO) {
         Event updatedEvent = eventMapper.eventDTOToEvent(eventDTO);
-        return eventRepository.save(updatedEvent).getId() > 0;
+        return eventRepository.save(updatedEvent).getId() ;
     }
 
     public List<EventDTO> getAllEvents() {

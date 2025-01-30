@@ -144,11 +144,9 @@ class UserServiceTest {
             when(userRepository.save(any(UserEntity.class))).thenReturn(mockUserEntity);
             when(userMapper.userToUserDTO(any(UserEntity.class))).thenReturn(mockUserDTO);
 
-            UserDTO updatedUser = userService.modifyUser(mockUserDTO);
+            long updatedUserId = userService.modifyUser(mockUserDTO);
 
-            assertNotNull(updatedUser);
-            assertEquals(TEST_USER_ID, updatedUser.id());
-            assertEquals(TEST_USERNAME, updatedUser.username());
+            assertEquals(TEST_USER_ID, updatedUserId);
 
             verify(userRepository).findById(TEST_USER_ID);
             verify(userRepository).save(any(UserEntity.class));

@@ -58,12 +58,12 @@ public class UserService {
         return userMapper.userToUserDTO(savedUserEntity);
     }
 
-    public UserDTO modifyUser(UserDTO userDTO) {
+    public long modifyUser(UserDTO userDTO) {
         return userRepository.findById(userDTO.id())
                 .map(existingUser -> updateUser(existingUser, userDTO))
                 .map(userRepository::save)
                 .map(userMapper::userToUserDTO)
-                .orElseThrow(() -> new EntityNotFoundException("User", userDTO.id()));
+                .orElseThrow(() -> new EntityNotFoundException("User", userDTO.id())).id();
     }
 
     private UserEntity updateUser(UserEntity existingUser, UserDTO userDTO) {

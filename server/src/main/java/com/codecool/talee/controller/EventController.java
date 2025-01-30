@@ -40,8 +40,7 @@ public class EventController {
     @PatchMapping("/modify")
     @PreAuthorize("hasRole('EVENT_OWNER')")
 
-    public boolean modifyEvent( @RequestBody EventDTO eventDTO) {
-
+    public long modifyEvent( @RequestBody EventDTO eventDTO) {
         return eventService.modifyEvent(eventDTO);
     }
 
