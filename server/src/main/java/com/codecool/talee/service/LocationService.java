@@ -79,7 +79,7 @@ public class LocationService {
         return locationMapper.locationToLocationDTO(location);
     }
 
-    public long addLocation(NewLocationDTO location, String token) {
+    public boolean addLocation(NewLocationDTO location, String token) {
         if (locationRepository.findLocationByNameAndAddress(location.name(), location.address()) != null) {
             throw new RuntimeException("Location already exists.");
         }
@@ -96,7 +96,7 @@ public class LocationService {
                 .map(openingHoursMapper::openingHoursToNewOpeningHoursDTO)
                 .forEach(openingHoursService::addNewOpeningHours);
 
-        return savedLocation.getId();
+        return savedLocation.getId()>0;
     }
 
     @Transactional
