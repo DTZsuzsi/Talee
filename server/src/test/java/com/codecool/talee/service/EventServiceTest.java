@@ -7,6 +7,7 @@ import com.codecool.talee.DTO.tag.TagDTO;
 import com.codecool.talee.DTO.user.UserInEventDTO;
 import com.codecool.talee.mapper.EventMapper;
 import com.codecool.talee.model.events.Event;
+import com.codecool.talee.model.events.EventSize;
 import com.codecool.talee.model.locations.Location;
 import com.codecool.talee.model.tags.Tag;
 import com.codecool.talee.model.users.UserEntity;
@@ -181,7 +182,7 @@ class EventServiceTest {
 
     // Helper Methods
     private Event createMockEvent(long id, String name, String description, Location location, Set<UserEntity> users, UserEntity owner, Set<Tag> tags) {
-        return new Event(id, LocalDate.now(), name, description, location, users, owner, "SMALL", tags, "ACTIVE");
+        return new Event(id, LocalDate.now(), name, description, location, users, owner, EventSize.SMALL, tags, "ACTIVE");
     }
 
     private UserEntity createMockUser(long id, String username) {
