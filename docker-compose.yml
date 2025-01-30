@@ -7,7 +7,7 @@ services:
     env_file:
       - .env
     environment:
-      - POSTGRES_DB=talee_db
+      - POSTGRES_DB=talee
       - POSTGRES_USER=${DB_USERNAME}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
     ports:
@@ -27,14 +27,17 @@ services:
       context: ./server
       dockerfile: Dockerfile
     container_name: app
+    env_file:
+      - .env
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/talee_db
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/talee
       - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
       - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
-      - codecool.app.jwtSecret=${jwtSecret}
-      - codecool.app.jwtExpirationMs=${jwtExpirationMs}
+      - codecool.app.jwtSecret=${JWT_SECRET}
+      - codecool.app.jwtExpirationMs=${JWT_EXP}
     ports:
-      - "8080:8080" # Add this if your app exposes a port
+      - "8080:8080"
 
   frontend:
     depends_on:

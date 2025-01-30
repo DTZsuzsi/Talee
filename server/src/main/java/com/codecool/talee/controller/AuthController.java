@@ -3,9 +3,6 @@ package com.codecool.talee.controller;
 import com.codecool.talee.DTO.auth.AuthResponseDTO;
 import com.codecool.talee.DTO.auth.CredentialsDTO;
 import com.codecool.talee.DTO.user.NewUserDTO;
-import com.codecool.talee.model.users.Role;
-import com.codecool.talee.model.users.UserEntity;
-import com.codecool.talee.repository.RoleRepository;
 import com.codecool.talee.repository.UserRepository;
 import com.codecool.talee.security.JWTUtils;
 import com.codecool.talee.service.UserService;
@@ -20,14 +17,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/auth")

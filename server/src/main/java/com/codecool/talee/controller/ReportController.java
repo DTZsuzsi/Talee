@@ -2,7 +2,6 @@ package com.codecool.talee.controller;// ReportController.java
 
 import com.codecool.talee.DTO.report.ReportDTO;
 import com.codecool.talee.DTO.report.ReportReqDTO;
-import com.codecool.talee.DTO.report.ReportResDTO;
 import com.codecool.talee.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

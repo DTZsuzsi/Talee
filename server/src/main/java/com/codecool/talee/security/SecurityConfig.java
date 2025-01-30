@@ -22,13 +22,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
   private final JwtAuthEntryPoint jwtAuthEntryPoint;
   private final UserDetailsService userDetailsService;
-  private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
   @Autowired
-  public SecurityConfig(JwtAuthEntryPoint jwtAuthEntryPoint, UserDetailsService userDetailsService, JwtAuthenticationFilter jwtAuthenticationFilter) {
+  public SecurityConfig(JwtAuthEntryPoint jwtAuthEntryPoint, UserDetailsService userDetailsService) {
     this.jwtAuthEntryPoint = jwtAuthEntryPoint;
     this.userDetailsService = userDetailsService;
-      this.jwtAuthenticationFilter = jwtAuthenticationFilter;
   }
 
   @Bean
@@ -46,7 +44,7 @@ public class SecurityConfig {
             );
 
     http.authenticationProvider(authenticationProvider());
-    http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+    http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     return http.build();
   }
 
@@ -57,6 +55,11 @@ public class SecurityConfig {
     authProvider.setPasswordEncoder(passwordEncoder());
 
     return authProvider;
+  }
+
+  @Bean
+  public JwtAuthenticationFilter jwtAuthenticationFilter() {
+    return new JwtAuthenticationFilter();
   }
 
   @Bean
