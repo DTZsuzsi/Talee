@@ -2,18 +2,13 @@ package com.codecool.talee.service;
 
 import com.codecool.talee.DTO.event.EventDTO;
 import com.codecool.talee.DTO.event.NewEventDTO;
-import com.codecool.talee.exception.EventNotFoundException;
-import com.codecool.talee.exception.TagNotFoundException;
-import com.codecool.talee.exception.UserNotFoundException;
+import com.codecool.talee.exception.EntityNotFoundException;
 import com.codecool.talee.mapper.EventMapper;
-import com.codecool.talee.mapper.TagMapper;
-import com.codecool.talee.mapper.UserMapper;
 import com.codecool.talee.model.events.Event;
 import com.codecool.talee.model.tags.Tag;
 import com.codecool.talee.model.users.UserEntity;
 import com.codecool.talee.repository.*;
 import com.codecool.talee.security.JWTUtils;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +34,7 @@ public class EventService {
 
     public EventDTO getEventById(long id) {
         Event event = eventRepository.findEventById(id)
-                .orElseThrow(() -> new EventNotFoundException(id));
+                .orElseThrow(() -> new EntityNotFoundException("Event", id));
 
         return eventMapper.eventToEventDTO(event);
     }
@@ -63,7 +58,7 @@ public class EventService {
 
     public List<EventDTO> getEventsByTag(String tagName) {
         Tag tag = tagRepository.findByName(tagName)
-                .orElseThrow(() -> new TagNotFoundException(tagName));
+                .orElseThrow(() -> new EntityNotFoundException("Tag", tagName));
 
         return eventRepository.findEventsByTagsContaining(tag).stream()
                 .map(eventMapper::eventToEventDTO)
@@ -78,10 +73,10 @@ public class EventService {
         String currentUserName = jwtUtils.getUsernameFromJwtToken(token);
 
         UserEntity currentUser = userRepository.findByUsername(currentUserName)
-                .orElseThrow(() -> new UserNotFoundException(currentUserName));
+                .orElseThrow(() -> new EntityNotFoundException("User", currentUserName));
 
         Event event = eventRepository.findEventById(eventId)
-                .orElseThrow(() -> new EventNotFoundException(eventId));
+                .orElseThrow(() -> new EntityNotFoundException("Event", eventId));
 
         Set<UserEntity> users = event.getUsers();
         if (users.contains(currentUser)) return false;
@@ -92,7 +87,7 @@ public class EventService {
 
     public boolean deleteUserFromEvent(long eventId, long userId) {
         Event event = eventRepository.findEventById(eventId)
-                .orElseThrow(() -> new EventNotFoundException(eventId));
+                .orElseThrow(() -> new EntityNotFoundException("Event", eventId));
 
         Set<UserEntity> updatedUsers = event.getUsers().stream()
                 .filter(user -> user.getId() != userId)

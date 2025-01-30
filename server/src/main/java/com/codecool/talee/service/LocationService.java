@@ -2,7 +2,7 @@ package com.codecool.talee.service;
 
 
 import com.codecool.talee.DTO.location.*;
-import com.codecool.talee.exception.LocationNotFoundException;
+import com.codecool.talee.exception.EntityNotFoundException;
 import com.codecool.talee.mapper.*;
 import com.codecool.talee.model.locations.Location;
 import com.codecool.talee.model.tags.Tag;
@@ -67,7 +67,7 @@ public class LocationService {
 
   public LocationDTO getLocationById(long id) {
     Location location = locationRepository.findById(id)
-            .orElseThrow(() -> new LocationNotFoundException(id));
+            .orElseThrow(() -> new EntityNotFoundException("Location", id));
 
     return locationMapper.locationToLocationDTO(location);
   }

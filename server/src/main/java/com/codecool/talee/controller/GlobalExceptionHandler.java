@@ -1,7 +1,6 @@
 package com.codecool.talee.controller;
 
-import com.codecool.talee.exception.LocationNotFoundException;
-import com.codecool.talee.exception.UserNotFoundException;
+import com.codecool.talee.exception.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -10,16 +9,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(UserNotFoundException.class)
+    @ExceptionHandler({EntityNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handleUserNotFoundException(UserNotFoundException ex) {
-        return ex.getMessage();
-    }
-
-    @ExceptionHandler(LocationNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handleLocationNotFoundException(LocationNotFoundException ex) {
+    public String handleNotFoundExceptions(RuntimeException ex) {
         return ex.getMessage();
     }
 }
+
 

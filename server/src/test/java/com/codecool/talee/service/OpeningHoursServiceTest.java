@@ -2,7 +2,7 @@ package com.codecool.talee.service;
 
 import com.codecool.talee.DTO.location.LocationWithoutOpeningHoursDTO;
 import com.codecool.talee.DTO.location.NewOpeningHoursDTO;
-import com.codecool.talee.exception.LocationNotFoundException;
+import com.codecool.talee.exception.EntityNotFoundException;
 import com.codecool.talee.model.locations.Location;
 import com.codecool.talee.model.locations.OpeningHours;
 import com.codecool.talee.repository.LocationRepository;
@@ -63,7 +63,7 @@ class OpeningHoursServiceTest {
 
     Mockito.when(locationRepository.findById(999L)).thenReturn(Optional.empty());
 
-    assertThrows(LocationNotFoundException.class, () -> openingHoursService.addNewOpeningHours(mockOpeningHours));
+    assertThrows(EntityNotFoundException.class, () -> openingHoursService.addNewOpeningHours(mockOpeningHours));
 
   }
 

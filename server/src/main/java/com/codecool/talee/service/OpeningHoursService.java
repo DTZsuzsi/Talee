@@ -1,7 +1,7 @@
 package com.codecool.talee.service;
 
 import com.codecool.talee.DTO.location.NewOpeningHoursDTO;
-import com.codecool.talee.exception.LocationNotFoundException;
+import com.codecool.talee.exception.EntityNotFoundException;
 import com.codecool.talee.model.locations.Location;
 import com.codecool.talee.model.locations.OpeningHours;
 import com.codecool.talee.repository.LocationRepository;
@@ -26,7 +26,7 @@ public class OpeningHoursService {
     OpeningHours newOpeningHoursPerDay = new OpeningHours();
     if (openingHoursPerDay.location() != null) {
       Location existingLocation = locationRepository.findById(openingHoursPerDay.location().id())
-              .orElseThrow(() -> new LocationNotFoundException(openingHoursPerDay.location().id())
+              .orElseThrow(() -> new EntityNotFoundException("Location", openingHoursPerDay.location().id())
               );
       newOpeningHoursPerDay.setDayOfWeek(openingHoursPerDay.day());
       newOpeningHoursPerDay.setOpeningTime(openingHoursPerDay.openingTime());

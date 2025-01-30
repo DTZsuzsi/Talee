@@ -2,7 +2,7 @@ package com.codecool.talee.service;
 
 import com.codecool.talee.DTO.user.NewUserDTO;
 import com.codecool.talee.DTO.user.UserDTO;
-import com.codecool.talee.exception.UserNotFoundException;
+import com.codecool.talee.exception.EntityNotFoundException;
 import com.codecool.talee.mapper.UserMapper;
 import com.codecool.talee.model.users.UserEntity;
 import com.codecool.talee.repository.UserRepository;
@@ -24,7 +24,7 @@ public class UserService {
     public UserDTO getUserById(long id) {
         return userRepository.findById(id)
                 .map(userMapper::userToUserDTO)
-                .orElseThrow(() -> new UserNotFoundException(id));
+                .orElseThrow(() -> new EntityNotFoundException("User", id));
     }
 
     public List<UserDTO> getAllUsers() {
@@ -45,7 +45,7 @@ public class UserService {
 
     public UserDTO modifyUser(UserDTO userDTO) {
         UserEntity existingUserEntity = userRepository.findById(userDTO.id())
-                .orElseThrow(() -> new UserNotFoundException(userDTO.id()));
+                .orElseThrow(() -> new EntityNotFoundException("User", userDTO.id()));
 
         existingUserEntity.setUsername(userDTO.username());
         existingUserEntity.setRoles(userDTO.roles());
