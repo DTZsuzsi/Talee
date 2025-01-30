@@ -104,14 +104,14 @@ public class LocationService {
         return locationRepository.deleteLocationById(id);
     }
 
-    public boolean updateLocation(LocationDTO location) {
+    public long updateLocation(LocationDTO location) {
         Location existingLocation = locationRepository.findById(location.id())
                 .orElseThrow(() -> new RuntimeException("Location not found."));
 
         updateLocationDetails(existingLocation, location);
         updateOpeningHours(existingLocation, location.openingHours());
 
-        return locationRepository.save(existingLocation).getId() > 0;
+        return locationRepository.save(existingLocation).getId();
     }
 
     private void updateLocationDetails(Location existingLocation, LocationDTO locationDTO) {

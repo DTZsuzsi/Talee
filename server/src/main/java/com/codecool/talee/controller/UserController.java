@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @PatchMapping
-    public UserDTO updateUser(@RequestBody UserDTO userDTO) {
+    public long updateUser(@RequestBody UserDTO userDTO) {
         return userService.modifyUser(userDTO);
     }
 

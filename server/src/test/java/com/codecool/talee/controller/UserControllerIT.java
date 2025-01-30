@@ -88,7 +88,7 @@ public class UserControllerIT {
     @Test
     void updateUser_returns200() throws Exception {
         UserDTO userDTO = new UserDTO(1, "updateduser", Collections.emptySet(), Collections.emptySet());
-        when(userService.modifyUser(any(UserDTO.class))).thenReturn(userDTO);
+        when(userService.modifyUser(any(UserDTO.class))).thenReturn(1L);
 
         mockMvc.perform(patch("/api/users")
                         .contentType(MediaType.APPLICATION_JSON)

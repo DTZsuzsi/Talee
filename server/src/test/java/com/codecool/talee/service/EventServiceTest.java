@@ -158,9 +158,10 @@ class EventServiceTest {
             when(eventMapper.eventDTOToEvent(eventDTO)).thenReturn(updatedEvent);
             when(eventRepository.save(any(Event.class))).thenReturn(updatedEvent);
 
-            boolean result = eventService.modifyEvent(eventDTO);
+            long result = eventService.modifyEvent(eventDTO);
+            long expected=1L;
+            assertEquals(expected, result);
 
-            assertTrue(result);
         }
     }
 

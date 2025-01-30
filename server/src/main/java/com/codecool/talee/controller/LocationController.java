@@ -53,7 +53,7 @@ public class LocationController {
 
   @PatchMapping
   @PreAuthorize("hasRole('LOCATION_OWNER')")
-  public boolean updateLocation(@RequestBody LocationDTO location) {
+  public long updateLocation(@RequestBody LocationDTO location) {
     return locationService.updateLocation(location);
   }
 
