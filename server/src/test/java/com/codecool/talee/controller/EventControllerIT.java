@@ -2,6 +2,7 @@ package com.codecool.talee.controller;
 
 import com.codecool.talee.DTO.event.EventDTO;
 import com.codecool.talee.DTO.event.NewEventDTO;
+import com.codecool.talee.model.events.EventSize;
 import com.codecool.talee.repository.EventRepository;
 import com.codecool.talee.service.EventService;
 import org.junit.jupiter.api.BeforeAll;
@@ -97,7 +98,7 @@ public class EventControllerIT {
 
     @Test
     void getEventById_returns200() throws Exception {
-        EventDTO mockEvent = new EventDTO(1, LocalDate.now(), "Sample Event", "This is a test event.", null, List.of(), null, "SMALL", Set.of(), "ACTIVE");
+        EventDTO mockEvent = new EventDTO(1, LocalDate.now(), "Sample Event", "This is a test event.", null, List.of(), null, EventSize.SMALL, Set.of(), "ACTIVE");
         when(eventService.getEventById(anyLong())).thenReturn(mockEvent);
 
         mockMvc.perform(get("/api/events/1"))
