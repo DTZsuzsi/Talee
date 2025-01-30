@@ -18,7 +18,7 @@ function ModifyEventForm() {
 
     try {
       const response = await axiosInstance.patch(
-        `/events/${eventId}/modify`,
+        `/events/modify`,
         event,
       );
       navigate(`/events/${eventId}`);

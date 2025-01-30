@@ -37,7 +37,11 @@ class TagCategoryControllerTest {
             {
                 "id": 0,
                 "name": "Sample Tag",
-                "color": "#FFFFFF"
+                "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255
+                }
             }
             """;
 

@@ -65,8 +65,8 @@ public class EventService {
                 .collect(Collectors.toList());
     }
 
-    public void deleteEventById(long id) {
-        eventRepository.deleteEventById(id);
+    public boolean deleteEventById(long id) {
+      return  eventRepository.deleteEventById(id);
     }
 
     public boolean applyUserToEvent(long eventId, String token) {

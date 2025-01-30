@@ -38,6 +38,6 @@ public class OpeningHoursService {
 
   @Transactional
   public boolean deleteOpeningHoursByLocationId(long locationId) {
-    return openingHoursRepository.deleteByLocationId(locationId) != -1;
+    return openingHoursRepository.deleteByLocationId(locationId);
   }
 }
