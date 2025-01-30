@@ -67,7 +67,7 @@ class TagCategoryControllerIT {
 
     @Test
     void deleteById_returns200() throws Exception {
-        when(tagCategoryService.deleteCategoryById(1L)).thenReturn(true);
+        when(tagCategoryService.deleteById(1L)).thenReturn(true);
 
         mockMvc.perform(delete("/api/tagcategories/1"))
                 .andExpect(status().isOk())

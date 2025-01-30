@@ -31,6 +31,6 @@ public class TagCategoryController {
 
     @DeleteMapping("/{categoryId}")
     public Boolean deleteTagCategory(@PathVariable long categoryId) {
-        return tagCategoryService.deleteCategoryById(categoryId);
+        return tagCategoryService.deleteById(categoryId);
     }
 }
