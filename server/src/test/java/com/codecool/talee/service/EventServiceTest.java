@@ -79,7 +79,7 @@ class EventServiceTest {
                 "Test Description",
                 new LocationInEventDTO(1L, "Test Location", 40.7128, -74.0060),
                 new UserInEventDTO(1L, TEST_USERNAME),
-                "SMALL",
+                EventSize.SMALL,
                 new HashSet<>(),
                 "ACTIVE"
         );
@@ -94,7 +94,7 @@ class EventServiceTest {
                     TEST_EVENT_ID, LocalDate.now(), "Test Event", "Test Description",
                     new LocationInEventDTO(1L, "Test Location", 40.7128, -74.0060),
                     List.of(new UserInEventDTO(1L, TEST_USERNAME)),
-                    new UserInEventDTO(1L, TEST_USERNAME), "SMALL",
+                    new UserInEventDTO(1L, TEST_USERNAME), EventSize.SMALL,
                     Set.of(new TagDTO(1L, "Test Tag", 1, Color.white)), "Active"
             );
 
@@ -113,8 +113,8 @@ class EventServiceTest {
             Event event1 = createMockEvent(1L, "Event 1", "Description", null, null, null, null);
             Event event2 = createMockEvent(2L, "Event 2", "Description", null, null, null, null);
 
-            EventDTO eventDTO1 = new EventDTO(1L, LocalDate.now(), "Event 1", "Description", null, List.of(), null, "SMALL", Set.of(), "ACTIVE");
-            EventDTO eventDTO2 = new EventDTO(2L, LocalDate.now(), "Event 2", "Description", null, List.of(), null, "SMALL", Set.of(), "ACTIVE");
+            EventDTO eventDTO1 = new EventDTO(1L, LocalDate.now(), "Event 1", "Description", null, List.of(), null, EventSize.SMALL, Set.of(), "ACTIVE");
+            EventDTO eventDTO2 = new EventDTO(2L, LocalDate.now(), "Event 2", "Description", null, List.of(), null, EventSize.SMALL, Set.of(), "ACTIVE");
 
             when(eventRepository.findAll()).thenReturn(List.of(event1, event2));
             when(eventMapper.eventToEventDTO(event1)).thenReturn(eventDTO1);
@@ -149,7 +149,7 @@ class EventServiceTest {
                     TEST_EVENT_ID, LocalDate.now(), "Updated Event", "Updated Description",
                     new LocationInEventDTO(1L, "Updated Location", 40.7128, -74.0060),
                     List.of(new UserInEventDTO(1L, TEST_USERNAME)),
-                    new UserInEventDTO(1L, TEST_USERNAME), "SMALL",
+                    new UserInEventDTO(1L, TEST_USERNAME), EventSize.SMALL,
                     Set.of(new TagDTO(1L, "Updated Tag", 1, Color.BLUE)), "Active"
             );
 
