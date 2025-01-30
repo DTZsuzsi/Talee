@@ -169,16 +169,20 @@ class EventServiceTest {
 
         @Test
         void deleteEventByIdTest() {
-            // Ensure the repository method does nothing when called
-            doNothing().when(eventRepository).deleteEventById(TEST_EVENT_ID);
+            // Mock the repository to return true when the delete method is called
+            when(eventRepository.deleteEventById(TEST_EVENT_ID)).thenReturn(true);
 
-            // Call the service method
-            eventService.deleteEventById(TEST_EVENT_ID);
+            // Call the service method and capture the return value
+            boolean result = eventService.deleteEventById(TEST_EVENT_ID);
+
+            // Assert the result is true
+            assertTrue(result, "The deleteEventById method should return true for successful deletion");
 
             // Verify the method was called exactly once
             verify(eventRepository, times(1)).deleteEventById(TEST_EVENT_ID);
         }
     }
+
 
     // Helper Methods
     private Event createMockEvent(long id, String name, String description, Location location, Set<UserEntity> users, UserEntity owner, Set<Tag> tags) {
