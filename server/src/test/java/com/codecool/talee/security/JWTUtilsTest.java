@@ -15,12 +15,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-test.properties")
 @AutoConfigureMockMvc
-class JwtUtilsTests {
+class JwtUtilsIT {
 
     private JWTUtils jwtUtils;
 
     @Autowired
-    JwtUtilsTests(JWTUtils jwtUtils) {
+    JwtUtilsIT(JWTUtils jwtUtils) {
         this.jwtUtils = jwtUtils;
     }
 

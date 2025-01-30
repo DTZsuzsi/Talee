@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(locations = "classpath:application-test.properties")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @WithMockUser(username = "user", roles = {"USER"})
-public class ReportControllerTest {
+public class ReportControllerIT {
 
     @Autowired
     private MockMvc mockMvc;

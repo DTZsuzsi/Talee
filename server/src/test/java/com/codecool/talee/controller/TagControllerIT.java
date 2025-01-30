@@ -1,7 +1,7 @@
 package com.codecool.talee.controller;
 
-import com.codecool.talee.DTO.tag.TagCategoryDTO;
-import com.codecool.talee.service.TagCategoryService;
+import com.codecool.talee.DTO.tag.TagDTO;
+import com.codecool.talee.service.TagService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +26,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(locations = "classpath:application-test.properties")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @WithMockUser(username = "user", roles = {"USER"})
-class TagCategoryControllerTest {
+public class TagControllerIT {
+
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private TagCategoryService tagCategoryService;
+    private TagService tagService;
 
     String newTag = """
             {
@@ -47,9 +48,9 @@ class TagCategoryControllerTest {
 
     @Test
     void getTags_returns200AndEmptyList() throws Exception {
-        when(tagCategoryService.getAllTagCategories()).thenReturn(Collections.emptyList());
+        when(tagService.getAllTags()).thenReturn(Collections.emptyList());
 
-        mockMvc.perform(get("/api/tagcategories"))
+        mockMvc.perform(get("/api/tags"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(0)));
@@ -57,9 +58,9 @@ class TagCategoryControllerTest {
 
     @Test
     void addTag_returns201() throws Exception {
-        when(tagCategoryService.createNewTagCategory(any(TagCategoryDTO.class))).thenReturn(1L);
+        when(tagService.addTag(any(TagDTO.class))).thenReturn(1L);
 
-        mockMvc.perform(post("/api/tagcategories")
+        mockMvc.perform(post("/api/tags")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(newTag))
                 .andExpect(status().isCreated());
@@ -67,9 +68,9 @@ class TagCategoryControllerTest {
 
     @Test
     void deleteById_returns200() throws Exception {
-        when(tagCategoryService.deleteCategoryById(1L)).thenReturn(true);
+        when(tagService.deleteById(1L)).thenReturn(true);
 
-        mockMvc.perform(delete("/api/tagcategories/1"))
+        mockMvc.perform(delete("/api/tags/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("true"));
     }
