@@ -1,6 +1,7 @@
 package com.codecool.talee.service;
 
 import com.codecool.talee.DTO.tag.TagDTO;
+import com.codecool.talee.exception.EntityNotFoundException;
 import com.codecool.talee.mapper.TagMapper;
 import com.codecool.talee.model.tags.Tag;
 import com.codecool.talee.model.tags.TagCategory;
@@ -11,38 +12,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TagService {
     private final TagRepository tagRepository;
     private final TagCategoryRepository tagCategoryRepository;
-    private final TagMapper tagMapper = TagMapper.INSTANCE;
+    private final TagMapper tagMapper;
 
     @Autowired
-    public TagService(TagRepository tagRepository, TagCategoryRepository tagCategoryRepository) {
+    public TagService(TagRepository tagRepository, TagCategoryRepository tagCategoryRepository, TagMapper tagMapper) {
         this.tagRepository = tagRepository;
         this.tagCategoryRepository = tagCategoryRepository;
+        this.tagMapper = tagMapper;
     }
 
     public List<TagDTO> getAllTags() {
         return tagRepository.findAll().stream()
                 .map(tagMapper::tagToTagDTO)
                 .distinct()
-                .collect(Collectors.toList());
+                .toList();
     }
 
-    public long addTag(TagDTO tagInFrontendDTO) {
-       TagCategory tagCategory=tagCategoryRepository.findById(tagInFrontendDTO.categoryId());
-        Tag newTag=new Tag(tagInFrontendDTO.name(), tagCategory);
+    public long addTag(TagDTO tagDTO) {
+        TagCategory tagCategory = tagCategoryRepository.findById(tagDTO.categoryId())
+                .orElseThrow(() -> new EntityNotFoundException("TagCategory", tagDTO.categoryId()));
+
+        Tag newTag = new Tag(tagDTO.name(), tagCategory);
         return tagRepository.save(newTag).getId();
     }
 
-    @Transactional
     public boolean deleteById(long id) {
-        tagRepository.deleteById(id);
-        return true;
-
+        return tagRepository.findById(id)
+                .map(tag -> {
+                    tagRepository.delete(tag);
+                    return true;
+                })
+                .orElseThrow(() -> new EntityNotFoundException("Tag", id));
     }
-
 }
