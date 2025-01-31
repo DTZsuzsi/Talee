@@ -95,7 +95,7 @@ class EventServiceTest {
                     new LocationInEventDTO(1L, "Test Location", 40.7128, -74.0060),
                     List.of(new UserInEventDTO(1L, TEST_USERNAME)),
                     new UserInEventDTO(1L, TEST_USERNAME), EventSize.SMALL,
-                    Set.of(new TagDTO(1L, "Test Tag", 1, Color.white)), "Active"
+                    Set.of(new TagDTO(1L, "Test Tag", 1, "black")), "Active"
             );
 
             when(eventRepository.findEventById(TEST_EVENT_ID)).thenReturn(Optional.of(mockEvent));
@@ -150,7 +150,7 @@ class EventServiceTest {
                     new LocationInEventDTO(1L, "Updated Location", 40.7128, -74.0060),
                     List.of(new UserInEventDTO(1L, TEST_USERNAME)),
                     new UserInEventDTO(1L, TEST_USERNAME), EventSize.SMALL,
-                    Set.of(new TagDTO(1L, "Updated Tag", 1, Color.BLUE)), "Active"
+                    Set.of(new TagDTO(1L, "Updated Tag", 1, "black")), "Active"
             );
 
             Event updatedEvent = createMockEvent(TEST_EVENT_ID, "Updated Event", "Updated Description", null, null, null, null);

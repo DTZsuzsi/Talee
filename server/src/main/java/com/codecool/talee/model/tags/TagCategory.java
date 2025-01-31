@@ -15,12 +15,12 @@ public class TagCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-    private Color color;
+    private String color;
     @OneToMany (mappedBy = "tagCategory")
     private Set<Tag> tags;
 
 
-    public TagCategory(String name, Color color) {
+    public TagCategory(String name, String color) {
         this.name = name;
         this.color = color;
     }
