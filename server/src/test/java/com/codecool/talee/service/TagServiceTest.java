@@ -40,7 +40,7 @@ class TagServiceTest {
     @BeforeEach
     void setUp() {
         mockTag = new Tag("TestTag", null);
-        mockTagDTO = new TagDTO(1L, "TestTag", 1L, Color.BLUE);
+        mockTagDTO = new TagDTO(1L, "TestTag", 1L, "black");
     }
 
     @Test
@@ -56,7 +56,7 @@ class TagServiceTest {
 
     @Test
     void addTag_WhenCategoryExists_ReturnsTagId() {
-        TagCategory tagCategory = new TagCategory("TestCategory", Color.BLUE);
+        TagCategory tagCategory = new TagCategory("TestCategory", "black");
         when(tagCategoryRepository.findById(1L)).thenReturn(Optional.of(tagCategory));
         when(tagRepository.save(any(Tag.class))).thenReturn(mockTag);
 

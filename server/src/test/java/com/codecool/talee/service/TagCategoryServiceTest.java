@@ -11,15 +11,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
-
-import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -36,8 +33,8 @@ class TagCategoryServiceTest {
 
     @BeforeEach
     void setUp() {
-        mockTagCategory = new TagCategory("TestCategory", Color.black);
-        mockTagCategoryDTO = new TagCategoryDTO(1L, "TestCategory", Color.black);
+        mockTagCategory = new TagCategory("TestCategory", "black");
+        mockTagCategoryDTO = new TagCategoryDTO(1L, "TestCategory", "black");
     }
 
     @Test
