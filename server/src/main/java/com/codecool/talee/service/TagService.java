@@ -7,7 +7,6 @@ import com.codecool.talee.model.tags.Tag;
 import com.codecool.talee.model.tags.TagCategory;
 import com.codecool.talee.repository.TagCategoryRepository;
 import com.codecool.talee.repository.TagRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

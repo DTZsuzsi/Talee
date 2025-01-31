@@ -40,6 +40,7 @@ public class SecurityConfig {
                             "/api/locations/all", "/api/locations/{id}", "/api/events/{eventId}", "/api/events/locations/{locationId}",
                             "/api/events/all", "/api/tags").permitAll()
                     .requestMatchers(HttpMethod.POST,"/api/auth/**").permitAll()
+                    .requestMatchers("/error").permitAll()
                     .anyRequest().authenticated()
             );
 
