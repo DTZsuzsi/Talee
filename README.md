@@ -119,8 +119,15 @@ Here you find the steps of the installation of our project:
    Modifying the .env file is optional, but if you choose to do so, make sure that the credentials you provide are secure and appropriate for your environment.  
    The jwtSecret should be at least 64 characters long and cannot use "-" or "_". Alternatively, you can also generate one online: https://jwtsecret.com/generate.
 
+3. Google MAP API KEY
 
-3. Run the project with Docker
+   We used the Google MAP API for the locations and searching the locations. To see and enjoy the website fully, you have to add
+   a Google MAP API KEY. You can find an .env.example file in the client folder, please copy it and make a .env file with the valid API key.
+   If you don't have a Google MAP API key yet, here you can find the tutorial how to register one: 
+
+https://www.youtube.com/watch?v=hsNlz7-abd0 
+
+4. Run the project with Docker
 
    Please enter in your terminal the following command:
     ````
